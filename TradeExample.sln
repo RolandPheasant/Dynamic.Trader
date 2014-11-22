@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeExample", "TradeExample\TradeExample.csproj", "{0CF230F0-1A2D-4843-8F36-62F831E8CB23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trader.Console", "Trader.Console\Trader.Console.csproj", "{60403335-8033-46C7-81BC-006539FE0E69}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CF230F0-1A2D-4843-8F36-62F831E8CB23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF230F0-1A2D-4843-8F36-62F831E8CB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF230F0-1A2D-4843-8F36-62F831E8CB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF230F0-1A2D-4843-8F36-62F831E8CB23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60403335-8033-46C7-81BC-006539FE0E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60403335-8033-46C7-81BC-006539FE0E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60403335-8033-46C7-81BC-006539FE0E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60403335-8033-46C7-81BC-006539FE0E69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
