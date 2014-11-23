@@ -65,7 +65,9 @@
     <Compile Include="Infrastucture\SortDirection.cs" />
     <Compile Include="Infrastucture\SortExpression.cs" />
     <Compile Include="Infrastucture\SortExpressionComparer.cs" />
+    <Compile Include="IStaticData.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="StaticData.cs" />
     <Compile Include="TradeGenerator.cs" />
     <Compile Include="TradePriceUpdateJob.cs" />
     <Compile Include="ITradeService.cs" />

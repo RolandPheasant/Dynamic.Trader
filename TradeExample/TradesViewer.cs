@@ -9,11 +9,110 @@ using TradeExample.Infrastucture;
 
 namespace TradeExample
 {
+
+    public class TradeProxy:AbstractNotifyPropertyChanged, IDisposable, IEquatable<TradeProxy>
+    {
+        private readonly Trade _trade;
+        private readonly IDisposable _cleanUp;
+
+        public TradeProxy(Trade trade)
+        {
+            _trade = trade;
+
+            _cleanUp = trade.MarketPriceChanged
+                .Subscribe(_ => OnPropertyChanged("MarketPrice"));
+
+        }
+
+        #region Delegating Members
+        
+        public long Id
+        {
+            get { return _trade.Id; }
+        }
+
+        public string CurrencyPair
+        {
+            get { return _trade.CurrencyPair; }
+        }
+
+        public string Customer
+        {
+            get { return _trade.Customer; }
+        }
+
+        public TradeStatus Status
+        {
+            get { return _trade.Status; }
+        }
+
+        public DateTime Timestamp
+        {
+            get { return _trade.Timestamp; }
+        }
+
+        public decimal TradePrice
+        {
+            get { return _trade.TradePrice; }
+        }
+
+        public decimal MarketPrice
+        {
+            get { return _trade.MarketPrice; }
+        }
+
+        public decimal PercentFromMarket
+        {
+            get { return _trade.PercentFromMarket; }
+        }
+
+        #endregion
+
+        #region Equaility Members
+
+        public bool Equals(TradeProxy other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(_trade, other._trade);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TradeProxy) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_trade != null ? _trade.GetHashCode() : 0);
+        }
+
+        public static bool operator ==(TradeProxy left, TradeProxy right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TradeProxy left, TradeProxy right)
+        {
+            return !Equals(left, right);
+        }
+
+        #endregion
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
+    }
+
     public class TradesViewer :AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<Trade> _data = new ObservableCollectionExtended<Trade>();
+        private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
 
         private readonly FilterController<Trade> _filter = new FilterController<Trade>();
         private string _searchText;
@@ -27,10 +126,12 @@ namespace TradeExample
                                 .Subscribe(_ => ApplyFilter());
 
             ApplyFilter();
+
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live)
                 .Filter(_filter)
-                .Sort(SortExpressionComparer<Trade>.Descending(t => t.Timestamp))
+                .Transform(trade => new TradeProxy(trade))
+                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp))
                 .ObserveOnDispatcher()
                 .Bind(_data)
                 .Subscribe();
@@ -64,7 +165,7 @@ namespace TradeExample
             }
         }
 
-        public IObservableCollection<Trade> Data
+        public IObservableCollection<TradeProxy> Data
         {
             get { return _data; }
         }

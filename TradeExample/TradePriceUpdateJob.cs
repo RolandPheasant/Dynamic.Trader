@@ -12,7 +12,7 @@ namespace TradeExample
     {
         private IDisposable _job;
 
-        public TradePriceUpdateJob(ITradeService tradeService)
+        public TradePriceUpdateJob(ITradeService tradeService, IMarketPriceService marketPriceService)
         {
             _job = tradeService.Trades.Connect()
                 .Filter(trade => trade.Status == TradeStatus.Live)
@@ -23,7 +23,7 @@ namespace TradeExample
                                    decimal latestPrice = 0;
 
                                    //subscribe to price and update trades with the latest price
-                                   var priceHasChanged = MarketPriceService.ObservePrice(groupedData.Key)
+                                   var priceHasChanged = marketPriceService.ObservePrice(groupedData.Key)
                                        .Synchronize(locker)
                                        .Subscribe(price =>
                                                   {
@@ -47,7 +47,7 @@ namespace TradeExample
         {
             foreach (var trade in trades)
             {
-                trade.Price = price;
+                trade.SetMarketPrice(price);
             }
         }
     }

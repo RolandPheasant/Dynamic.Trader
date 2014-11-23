@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using StructureMap;
+using TradeExample;
 
 namespace TraderWpf
 {
@@ -16,6 +17,8 @@ namespace TraderWpf
 
             var boundViewModel = container.GetInstance<ViewsCollection>();
 
+            //run start up jobs
+            var priveUpdater = container.GetInstance<TradePriceUpdateJob>();
             var items = container.GetInstance<MenuItems>();
             boundViewModel.Items.Add(new ViewContainer("Menu", items));
             new TraderWindow()

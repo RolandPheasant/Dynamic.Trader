@@ -95,14 +95,17 @@
                                             Header="Currency Pair" 
                                             Binding="{Binding CurrencyPair,Mode=OneWay}"/>
 
-                            <DataGridTextColumn Width="40" 
-                                            Header="Price" 
-                                            Binding="{Binding  Price,Mode=OneWay}"/>
+                            <DataGridTextColumn 
+                                            Header="Trade Price" 
+                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Market Price" 
+                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
 
                             <DataGridTextColumn Width="50" 
                                             Header="Status" 
                                             Binding="{Binding  Status,Mode=OneWay}"/>
-
 
                             <DataGridTextColumn 
                                             Header="Time" 

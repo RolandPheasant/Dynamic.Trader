@@ -3,17 +3,22 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
+using TradeExample.Infrastucture;
 
 namespace TradeExample
 {
     public class TradeService : ITradeService, IDisposable
     {
+        private readonly ILogger _logger;
+        private readonly TradeGenerator _tradeGenerator;
         private readonly ISourceCache<Trade, long> _tradesSource;
         private readonly IObservableCache<Trade, long> _tradesCache;
         private readonly IDisposable _cleanup;
 
-        public TradeService()
+        public TradeService(ILogger logger,TradeGenerator tradeGenerator)
         {
+            _logger = logger;
+            _tradeGenerator = tradeGenerator;
             //construct a cache specifying that the unique key is Trade.Id
             _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
 
@@ -30,28 +35,27 @@ namespace TradeExample
         private IDisposable GenerateTradesAndMaintainCache()
         {
             //bit of code to generate trades
-            var generator = new TradeGenerator();
             var random = new Random();
 
             //initally create 1000 trades then create up to 10 every second
-            var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(1))
+            var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(2.5))
                 .Select(_ => random.Next(1, 10))
                 .StartWith(1000)
-                .Do(number => Console.WriteLine("Adding {0} trades", number))
-                .Select(generator.Generate)
+                .Do(number => _logger.Info("Adding {0} trades", number))
+                .Select(_tradeGenerator.Generate)
                 .Subscribe(_tradesSource.AddOrUpdate);
 
             //close up to 10 trades every  second
-            var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(1))
+            var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(2.5))
                 .Select(_ => random.Next(1, 10))
-                .Do(number => Console.WriteLine("Closing {0} trades", number))
+                .Do(number => _logger.Info("Closing {0} trades", number))
                 .Select(number=> _tradesSource.Items
                                     .Where(trade=>trade.Status== TradeStatus.Live)
                                     .OrderBy(t=>Guid.NewGuid()).Take(number))
                 .Subscribe(trades =>
                            {
                                var toClose = trades
-                                   .Select(trade => new Trade(trade.Id,trade.Customer,trade.CurrencyPair,TradeStatus.Closed,trade.Price));
+                                   .Select(trade => new Trade(trade.Id,trade.Customer,trade.CurrencyPair,TradeStatus.Closed,trade.MarketPrice));
                                _tradesSource.AddOrUpdate(toClose);                  
                            });
 

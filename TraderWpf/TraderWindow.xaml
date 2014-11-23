@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"  
          GlowBrush="{DynamicResource AccentColorBrush3}"
-        Title="Dynamic Trader" Height="450" Width="550"
+        Title="Dynamic Trader" Height="500" Width="650"
       d:DataContext="{d:DesignInstance traderWpf:ViewsCollection, IsDesignTimeCreatable=False}">
 
 
