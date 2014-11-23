@@ -32,14 +32,14 @@ namespace TradeExample
                                                   observer.OnNext(currentPrice);
 
                                                   var random = new Random();
-                                                  var period = random.Next(50, 1000);
+                                                  var period = random.Next(250, 1500);
                                                   
                                                   //for a given period, move prices by up to 5 pips
                                                   return Observable.Interval(TimeSpan.FromMilliseconds(period))
                                                       .Select(_ => (decimal)random.Next(1, 5) / (decimal)1000)
                                                       .Subscribe(pips =>
                                                                  {
-                                                                     currentPrice = random.Next(1, 3) == 1
+                                                                     currentPrice = random.NextDouble() > 0.5
                                                                          ? currentPrice + pips
                                                                          : currentPrice - pips;
 

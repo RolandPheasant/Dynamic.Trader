@@ -33,7 +33,7 @@ namespace TradeExample
             var pcFromMarket = _random.Next(1, 1000)/(decimal) 10000;
 
             //logic says I should enter 2 as the upper but alas no
-            var positive = _random.Next(1, 3) == 1;
+            var positive = _random.NextDouble() > 0.5;
 
             return positive
                 ? initalPrice + (pcFromMarket*initalPrice)
