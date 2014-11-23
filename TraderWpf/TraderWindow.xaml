@@ -1,0 +1,73 @@
+﻿<controls:MetroWindow x:Class="TraderWpf.TraderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:traderWpf="clr-namespace:TraderWpf"
+        xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"  
+         GlowBrush="{DynamicResource AccentColorBrush3}"
+        Title="Dynamic Trader" Height="450" Width="550"
+      d:DataContext="{d:DesignInstance traderWpf:ViewsCollection, IsDesignTimeCreatable=False}">
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <dockablz:Layout Partition="2AE89D18-F236-4D20-9605-6C03319038E6" x:Name="Layout">
+        <dockablz:Layout.BranchTemplate>
+            <DataTemplate>
+                <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
+                                         
+                                         ItemsSource="{Binding Items}"
+                                         CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
+                    <dragablz:TabablzControl.InterTabController>
+                        <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                    </dragablz:TabablzControl.InterTabController>
+                    <dragablz:TabablzControl.CustomHeaderItemTemplate>
+                        <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                            <TextBlock Text="{Binding Title}" />
+                        </DataTemplate>
+                    </dragablz:TabablzControl.CustomHeaderItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                            <ContentControl Content="{Binding Content}" />
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </dragablz:TabablzControl>
+            </DataTemplate>
+        </dockablz:Layout.BranchTemplate>
+        <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
+                                 x:Name="InitialTabablzControl"
+                                 ItemsSource="{Binding Items}"
+                                 CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
+                                             Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+            </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl.CustomHeaderItemTemplate>
+                <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </dragablz:TabablzControl.CustomHeaderItemTemplate>
+
+            
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                    <ContentControl Content="{Binding Content}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </dragablz:TabablzControl>
+    </dockablz:Layout>
+
+</controls:MetroWindow>

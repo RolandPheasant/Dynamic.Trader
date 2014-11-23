@@ -7,6 +7,7 @@ using DynamicData;
 
 namespace TradeExample
 {
+
     public class TradePriceUpdateJob
     {
         private IDisposable _job;

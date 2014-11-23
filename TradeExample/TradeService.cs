@@ -33,16 +33,16 @@ namespace TradeExample
             var generator = new TradeGenerator();
             var random = new Random();
 
-            //initally create 1000 trades then create up to 10 every 5 seconds
-            var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(5))
+            //initally create 1000 trades then create up to 10 every second
+            var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Select(_ => random.Next(1, 10))
                 .StartWith(1000)
                 .Do(number => Console.WriteLine("Adding {0} trades", number))
                 .Select(generator.Generate)
                 .Subscribe(_tradesSource.AddOrUpdate);
 
-            //close up to 10 trades every 5 seconds
-            var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(5))
+            //close up to 10 trades every  second
+            var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Select(_ => random.Next(1, 10))
                 .Do(number => Console.WriteLine("Closing {0} trades", number))
                 .Select(number=> _tradesSource.Items
@@ -51,7 +51,7 @@ namespace TradeExample
                 .Subscribe(trades =>
                            {
                                var toClose = trades
-                                   .Select(trade => new Trade(trade.Id,trade.Customer,trade.CurrencyPair,TradeStatus.Closed));
+                                   .Select(trade => new Trade(trade.Id,trade.Customer,trade.CurrencyPair,TradeStatus.Closed,trade.Price));
                                _tradesSource.AddOrUpdate(toClose);                  
                            });
 
