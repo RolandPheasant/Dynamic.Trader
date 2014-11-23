@@ -55,8 +55,9 @@
     <ApplicationIcon>Themes\dynamic.data.BLUE.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dragablz">
-      <HintPath>..\packages\Dragablz.0.0.0.47\lib\net45\Dragablz.dll</HintPath>
+    <Reference Include="Dragablz, Version=0.0.0.48, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dragablz.0.0.0.48\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="DynamicData, Version=3.0.0.204, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

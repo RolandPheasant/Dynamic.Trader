@@ -32,7 +32,6 @@ namespace TradeExample
             //generate percent price 1-10% away from the market
             var pcFromMarket = _random.Next(1, 1000)/(decimal) 10000;
 
-            //logic says I should enter 2 as the upper but alas no
             var positive = _random.NextDouble() > 0.5;
 
             return positive
