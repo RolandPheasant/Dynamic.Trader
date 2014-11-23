@@ -8,6 +8,7 @@
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d"
+        Icon="Themes/dynamic.data.BLUE.ico"
         WindowStartupLocation="CenterScreen"  
          GlowBrush="{DynamicResource AccentColorBrush3}"
         Title="Dynamic Trader" Height="500" Width="650"

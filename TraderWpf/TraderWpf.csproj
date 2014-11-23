@@ -51,6 +51,9 @@
   <PropertyGroup>
     <StartupObject>TraderWpf.BootStrap</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Themes\dynamic.data.BLUE.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dragablz">
       <HintPath>..\packages\Dragablz.0.0.0.47\lib\net45\Dragablz.dll</HintPath>
@@ -127,6 +130,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IntertabClient.cs" />
+    <Page Include="Themes\Blue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Themes\Steel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
     <Page Include="TraderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +198,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\dynamic.data.BLUE.ico" />
+    <Resource Include="Themes\dynamic.data.steel.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
