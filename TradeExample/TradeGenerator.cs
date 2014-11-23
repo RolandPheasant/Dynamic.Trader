@@ -19,8 +19,8 @@ namespace TradeExample
             Func<Trade> newTrade = () =>
                                    {
                                        var id = Guid.NewGuid().GetHashCode();
-                                       var bank = _staticData.Customers[_random.Next(0, _staticData.Customers.Length - 1)];
-                                       var pair = _staticData.CurrencyPairs[_random.Next(0, _staticData.CurrencyPairs.Length - 1)];
+                                       var bank = _staticData.Customers[_random.Next(0, _staticData.Customers.Length)];
+                                       var pair = _staticData.CurrencyPairs[_random.Next(0, _staticData.CurrencyPairs.Length )];
                                        return new Trade(id, bank, pair.Code, TradeStatus.Live, GererateRandomPrice(pair.InitialPrice));
                                    };
             return Enumerable.Range(1, numberToGenerate).Select(_ => newTrade());
