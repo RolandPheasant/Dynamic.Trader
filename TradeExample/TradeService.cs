@@ -19,6 +19,7 @@ namespace TradeExample
         {
             _logger = logger;
             _tradeGenerator = tradeGenerator;
+
             //construct a cache specifying that the unique key is Trade.Id
             _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
 
@@ -37,8 +38,10 @@ namespace TradeExample
             //bit of code to generate trades
             var random = new Random();
 
+            var updatePeriod = 3;
+
             //initally create 1000 trades then create up to 10 every second
-            var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(2.5))
+            var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(updatePeriod))
                 .Select(_ => random.Next(1, 10))
                 .StartWith(1000)
                 .Do(number => _logger.Info("Adding {0} trades", number))
@@ -46,7 +49,7 @@ namespace TradeExample
                 .Subscribe(_tradesSource.AddOrUpdate);
 
             //close up to 10 trades every  second
-            var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(2.5))
+            var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(updatePeriod))
                 .Select(_ => random.Next(1, 10))
                 .Do(number => _logger.Info("Closing {0} trades", number))
                 .Select(number=> _tradesSource.Items

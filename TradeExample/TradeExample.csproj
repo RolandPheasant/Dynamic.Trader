@@ -77,7 +77,7 @@
     <Compile Include="TradeProxy.cs" />
     <Compile Include="TradeService.cs" />
     <Compile Include="TradeStatus.cs" />
-    <Compile Include="TradesViewer.cs" />
+    <Compile Include="LiveTradesViewer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

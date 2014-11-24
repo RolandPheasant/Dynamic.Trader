@@ -43,7 +43,7 @@
                 </ItemsControl>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample:TradesViewer}">
+            <DataTemplate DataType="{x:Type tradeExample:LiveTradesViewer}">
                 <Grid>
 
                     <Grid.RowDefinitions>
@@ -55,13 +55,9 @@
                                 Orientation="Horizontal">
 
 
-                        <TextBlock  
-                             Margin="4 0 0 0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Text="Enter filter:"/>
                         
                         <TextBox 
+                            controls:TextboxHelper.Watermark="Enter search text..."
                              Margin="4 0 0 0"
                              VerticalAlignment="Center"
                              MinWidth="70"
@@ -108,7 +104,7 @@
                                             Binding="{Binding  Status,Mode=OneWay}"/>
 
                             <DataGridTextColumn 
-                                            Header="Time" 
+                                            Header="Created At" 
                                             Binding="{Binding  Timestamp,Mode=OneWay}"/>
                         </DataGrid.Columns>
                         

@@ -9,16 +9,15 @@ using TradeExample.Infrastucture;
 
 namespace TradeExample
 {
-    public class TradesViewer :AbstractNotifyPropertyChanged, IDisposable
+    public class LiveTradesViewer :AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
         private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
-
         private readonly FilterController<Trade> _filter = new FilterController<Trade>();
         private string _searchText;
 
-        public TradesViewer(ILogger logger,ITradeService tradeService)
+        public LiveTradesViewer(ILogger logger,ITradeService tradeService)
         {
             _logger = logger;
 
@@ -29,12 +28,13 @@ namespace TradeExample
             ApplyFilter();
 
             var loader = tradeService.Trades
-                .Connect(trade => trade.Status == TradeStatus.Live)
-                .Filter(_filter)
+                .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
+                .Filter(_filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp))
                 .ObserveOnDispatcher()
-                .Bind(_data)
+                .Bind(_data)   // update observable collection bindings
+                .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
             _cleanUp = new CompositeDisposable(loader, _filter, filterApplier);

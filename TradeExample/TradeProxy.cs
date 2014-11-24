@@ -12,10 +12,19 @@ namespace TradeExample
         {
             _trade = trade;
 
+
+            //market price changed is a obserble on the trade object
             _cleanUp = trade.MarketPriceChanged
                 .Subscribe(_ => OnPropertyChanged("MarketPrice"));
 
         }
+
+        public decimal MarketPrice
+        {
+            get { return _trade.MarketPrice; }
+        }
+
+        // delegating menbers below
 
         #region Delegating Members
         
@@ -49,10 +58,6 @@ namespace TradeExample
             get { return _trade.TradePrice; }
         }
 
-        public decimal MarketPrice
-        {
-            get { return _trade.MarketPrice; }
-        }
 
         public decimal PercentFromMarket
         {

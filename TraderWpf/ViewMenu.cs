@@ -22,7 +22,7 @@ namespace TraderWpf
             _viewsCollection = viewsCollection;
             _menu = new List<MenuItem>
                 {
-                    new MenuItem("Live Trades",    () => Show<TradesViewer>("Live Trades")),
+                    new MenuItem("Live Trades",    () => Show<LiveTradesViewer>("Live Trades")),
                     //new MenuItem("Sort",        TileGroups.GettingStarted, () => Open<SortViewModel>("Sort")),
                     //new MenuItem("Data Virtualisation",  TileGroups.GettingStarted, () => Open<VirtualisationViewModel>("Virtualisation")),
                     //new MenuItem("Page",        TileGroups.GettingStarted, () => Open<PageViewModel>("Pagination")),

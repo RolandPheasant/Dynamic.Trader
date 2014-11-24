@@ -16,7 +16,6 @@ namespace TradeExample
         
         public MarketPriceService(IStaticData staticData)
         {
-
             foreach (var item in staticData.CurrencyPairs)
             {
                 _prices[item.Code] = GenerateStream(item.InitialPrice);
@@ -51,7 +50,8 @@ namespace TradeExample
         
         public  IObservable<decimal> ObservePrice(string currencyPair)
         {
-            return _prices.Lookup(currencyPair).ValueOrThrow(() => new Exception(currencyPair + " is an unknown currency pair"));
+            return _prices.Lookup(currencyPair)
+                .ValueOrThrow(() => new Exception(currencyPair + " is an unknown currency pair"));
         }
     }
 }
