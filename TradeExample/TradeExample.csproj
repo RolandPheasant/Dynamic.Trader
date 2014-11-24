@@ -58,6 +58,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="INearToMarketService.cs" />
     <Compile Include="Infrastucture\AbstractNotifyPropertyChanged.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />
     <Compile Include="Infrastucture\ILogger.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Infrastucture\SortExpression.cs" />
     <Compile Include="Infrastucture\SortExpressionComparer.cs" />
     <Compile Include="IStaticData.cs" />
+    <Compile Include="NearToMarketService.cs" />
+    <Compile Include="NearToMarketViewer.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="StaticData.cs" />
     <Compile Include="TradeGenerator.cs" />

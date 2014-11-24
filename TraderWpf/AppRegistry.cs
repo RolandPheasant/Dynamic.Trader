@@ -30,6 +30,8 @@ namespace TraderWpf
             For<ITradeService>().Singleton().Use<TradeService>();
             For<IStaticData>().Singleton().Use<StaticData>();
             For<IMarketPriceService>().Singleton().Use<MarketPriceService>();
+            For<INearToMarketService>().Singleton().Use<NearToMarketService>();
+            
 
             ForConcreteType<ViewsCollection>().Configure.Singleton();
             For<UnhandledExceptionEventHandler>().Singleton();

@@ -23,16 +23,8 @@ namespace TraderWpf
             _menu = new List<MenuItem>
                 {
                     new MenuItem("Live Trades",    () => Show<LiveTradesViewer>("Live Trades")),
-                    //new MenuItem("Sort",        TileGroups.GettingStarted, () => Open<SortViewModel>("Sort")),
-                    //new MenuItem("Data Virtualisation",  TileGroups.GettingStarted, () => Open<VirtualisationViewModel>("Virtualisation")),
-                    //new MenuItem("Page",        TileGroups.GettingStarted, () => Open<PageViewModel>("Pagination")),
-                    //new MenuItem("Group",        TileGroups.GettingStarted, () => Open<GroupViewModel>("Group")),
-                    //new MenuItem("Expiry",        TileGroups.GettingStarted, () => Open<ExpiryViewModel>("Expiry")),
-                    //new MenuItem("Distinct Values", TileGroups.GettingStarted, () => Open<DistinctViewModel>("Distinct")),
-                    //new MenuItem("Log Viewer",  TileGroups.Advanced, () => Open<LogEntryViewModel>("Log Viewer"),container.Resolver.Get<LogEntryTile>()),
-                    //new MenuItem("Market Data", TileGroups.Advanced, () => logger.Info("Page clicked")),
-                    //new MenuItem("Data Grid", TileGroups.Advanced,() => Open<DataGridExample>("Data Grid")),
-         
+                    new MenuItem("Near to Market",    () => Show<NearToMarketViewer>("Near to Market")),
+
                 };
         }
 

@@ -54,13 +54,11 @@
                     <StackPanel Grid.Row="0" Grid.Column="0"
                                 Orientation="Horizontal">
 
-
-                        
                         <TextBox 
                             controls:TextboxHelper.Watermark="Enter search text..."
                              Margin="4 0 0 0"
                              VerticalAlignment="Center"
-                             MinWidth="70"
+                             Width="125"
                              Height="18"
                             controls:TextboxHelper.ClearTextButton="True"
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -70,8 +68,6 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
                             Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
-                        
-                        
                     </StackPanel>
 
                     
@@ -80,7 +76,6 @@
                               EnableColumnVirtualization="True"
                               EnableRowVirtualization="True"
                               ItemsSource="{Binding Data}">
-                         
 
                         <DataGrid.Columns>
                             <DataGridTextColumn
@@ -114,7 +109,98 @@
 
             </DataTemplate>
 
-                <Style TargetType="{x:Type dragablz:DragablzItem}" 
+
+            <DataTemplate DataType="{x:Type tradeExample:NearToMarketViewer}">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0"
+                                Orientation="Horizontal">
+
+                        <TextBox 
+                            controls:TextboxHelper.Watermark="Enter search text..."
+                             Margin="4 0 0 0"
+                             VerticalAlignment="Center"
+                             Width="125"
+                             Height="18"
+                            controls:TextboxHelper.ClearTextButton="True"
+                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                        <Slider Width="100" 
+                                 Margin="4 0 0 0"
+                                 VerticalAlignment="Center"
+                                Minimum="0.1"
+                                Maximum="10"
+                                TickFrequency=".1"
+                                Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+                        </Slider>
+
+                        <TextBlock
+                             Margin="4 0 0 0"
+                             VerticalAlignment="Center"
+                             Width="125"
+                             Height="18"
+                             Text="{Binding NearToMarketPercent, StringFormat='\{0} %'}"/>
+
+                        <TextBlock  
+                             Margin="4 0 0 0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
+   
+
+                    </StackPanel>
+
+
+                    <DataGrid
+                        Grid.Row="1" AutoGenerateColumns="False"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ItemsSource="{Binding Data}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                            Header="Customer"  
+                                            Binding="{Binding Customer,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Currency Pair" 
+                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Trade Price" 
+                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Market Price" 
+                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="%" 
+                                            Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
+
+                            <DataGridTextColumn Width="50" 
+                                            Header="Status" 
+                                            Binding="{Binding  Status,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Created At" 
+                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Grid>
+
+            </DataTemplate>
+
+            <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
             <Style.Setters>
                 <Setter Property="Template">

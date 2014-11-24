@@ -15,7 +15,11 @@ namespace TradeExample
 
             //market price changed is a obserble on the trade object
             _cleanUp = trade.MarketPriceChanged
-                .Subscribe(_ => OnPropertyChanged("MarketPrice"));
+                .Subscribe(_ =>
+                           {
+                               OnPropertyChanged("MarketPrice");
+                               OnPropertyChanged("PercentFromMarket");
+                           });
 
         }
 

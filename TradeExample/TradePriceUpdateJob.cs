@@ -8,9 +8,9 @@ using DynamicData;
 namespace TradeExample
 {
 
-    public class TradePriceUpdateJob
+    public class TradePriceUpdateJob: IDisposable
     {
-        private IDisposable _job;
+        private readonly IDisposable _job;
 
         public TradePriceUpdateJob(ITradeService tradeService, IMarketPriceService marketPriceService)
         {
@@ -49,6 +49,11 @@ namespace TradeExample
             {
                 trade.SetMarketPrice(price);
             }
+        }
+
+        public void Dispose()
+        {
+            _job.Dispose();
         }
     }
 }

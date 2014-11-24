@@ -8,6 +8,7 @@ namespace TradeExample
     {
         private readonly ISubject<decimal> _marketPriceChangedSubject = new ReplaySubject<decimal>(1); 
 
+
         public long Id { get; private set; }
         public string CurrencyPair { get; private set; }
         public string Customer { get; private set; }
@@ -15,6 +16,7 @@ namespace TradeExample
         public DateTime Timestamp { get; private set; }
         public decimal TradePrice { get; private set; }
         public decimal MarketPrice { get; private set; }
+        public decimal PercentFromMarket { get; private set; }
 
         public Trade(long id, string customer, string currencyPair, TradeStatus status,decimal tradePrice, decimal marketPrice=0)
         {
@@ -30,12 +32,9 @@ namespace TradeExample
         public void SetMarketPrice(decimal marketPrice)
         {
             MarketPrice = marketPrice;
+            PercentFromMarket = Math.Round((TradePrice - MarketPrice / ((TradePrice + MarketPrice) / 2)) * 100,2); 
+            ;
             _marketPriceChangedSubject.OnNext(marketPrice);
-        }
-
-        public decimal PercentFromMarket
-        {
-            get { return (TradePrice - MarketPrice)/100; }
         }
 
         public IObservable<decimal> MarketPriceChanged
