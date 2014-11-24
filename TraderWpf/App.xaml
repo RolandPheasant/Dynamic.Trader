@@ -136,6 +136,7 @@
                                  VerticalAlignment="Center"
                                 Minimum="0.1"
                                 Maximum="10"
+                                     ToolTip="Move slider to filter by % from the market"
                                 TickFrequency=".1"
                                 Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
 
@@ -144,8 +145,8 @@
                         <TextBlock
                              Margin="4 0 0 0"
                              VerticalAlignment="Center"
-                             Width="125"
                              Height="18"
+                        
                              Text="{Binding NearToMarketPercent, StringFormat='\{0} %'}"/>
 
                         <TextBlock  
@@ -228,7 +229,7 @@
 
         <Style TargetType="{x:Type dragablz:TabablzControl}" x:Key="BasicExamplesTabStyle">
             <Setter Property="Margin" Value="8 8 8 8" />
-                <Setter Property="HeaderSuffixContent" Value="Drag those tabs chrome style" />
+                <Setter Property="HeaderSuffixContent" Value="Drag tabs chrome style" />
                 <!--<Setter Property="HeaderPrefixContent" Value="☺" />
            
             <Setter Property="HeaderSuffixContentTemplate">
