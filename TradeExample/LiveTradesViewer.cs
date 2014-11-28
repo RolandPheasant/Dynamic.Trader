@@ -27,6 +27,8 @@ namespace TradeExample
 
             ApplyFilter();
 
+
+
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter) // apply user filter
