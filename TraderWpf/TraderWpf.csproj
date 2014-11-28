@@ -55,13 +55,13 @@
     <ApplicationIcon>Themes\dynamic.data.BLUE.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dragablz, Version=0.0.0.48, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Dragablz, Version=0.0.0.50, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dragablz.0.0.0.48\lib\net45\Dragablz.dll</HintPath>
+      <HintPath>..\packages\Dragablz.0.0.0.50\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData, Version=3.0.0.204, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData, Version=3.0.1.207, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.3.0.0.204\lib\net45\DynamicData.dll</HintPath>
+      <HintPath>..\packages\DynamicData.3.0.1.207\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
