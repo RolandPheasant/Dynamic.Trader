@@ -21,8 +21,8 @@ namespace TraderWpf
             var priveUpdater = container.GetInstance<TradePriceUpdateJob>();
 
             var windowModel = container.GetInstance<TraderWindowModel>();
-           // var items = container.GetInstance<MenuItems>();
-          //  boundViewModel.Items.Add(new ViewContainer("Menu", items));
+            windowModel.OnShowMenu();
+
             new TraderWindow()
             {
                 DataContext = windowModel

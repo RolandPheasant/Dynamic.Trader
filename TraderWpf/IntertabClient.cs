@@ -21,7 +21,7 @@ namespace TraderWpf
             var model = _objectProvider.Get<TraderWindowModel>();
             window.DataContext = model;
 
-            window.Closed += (sender, e) =>
+            window.Closing += (sender, e) =>
                              {
                                  var todispose = ((TraderWindow) sender).DataContext as IDisposable;
                                  if (todispose!=null) todispose.Dispose();

@@ -25,19 +25,16 @@ namespace TraderWpf
             _interTabClient = new InterTabClient(objectProvider);
             _showMenu =  new Command(OnShowMenu);
 
-
             _cleanUp = Disposable.Create(() =>
                                          {
-                                             foreach (var disposable in  _data.OfType<IDisposable>())
+                                             foreach (var disposable in  _data.Select(vc=>vc.Content).OfType<IDisposable>())
                                                  disposable.Dispose();
-
-
+                                             
                                              _menuDisposer.Dispose();
-                                            
                                          });
         }
 
-        private void OnShowMenu()
+        public void OnShowMenu()
         {
             var existing = _data.FirstOrDefault(vc => vc.Content is MenuItems);
             if (existing == null)

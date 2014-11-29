@@ -29,5 +29,6 @@ namespace TraderWpf
         {
             get { return _content; }
         }
+
     }
 }
