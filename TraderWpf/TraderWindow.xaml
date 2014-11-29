@@ -32,7 +32,7 @@
                 <DataTemplate>
                     <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
                                                             SelectedItem="{Binding Selected}"
-                                                        ItemsSource="{Binding Views.Items}"
+                                                        ItemsSource="{Binding Views}"
                                          CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
                         <dragablz:TabablzControl.InterTabController>
                             <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
@@ -55,7 +55,7 @@
             <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
                                  x:Name="InitialTabablzControl"
                                  SelectedItem="{Binding Selected}"
-                                 ItemsSource="{Binding Views.Items}"
+                                 ItemsSource="{Binding Views}"
                                  
                                  CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
                 <dragablz:TabablzControl.InterTabController>

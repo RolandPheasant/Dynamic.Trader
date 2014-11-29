@@ -16,10 +16,10 @@ namespace TraderWpf
 
         public INewTabHost<Window> GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
         {
-            var view = new TraderWindow();
+            var window = new TraderWindow();
             var model = _objectProvider.Get<TraderWindowModel>();
-            view.DataContext = model;
-            return new NewTabHost<Window>(view, view.InitialTabablzControl);
+            window.DataContext = model;
+            return new NewTabHost<Window>(window, window.InitialTabablzControl);
         }
 
         public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)

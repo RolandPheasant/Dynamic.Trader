@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using Dragablz;
 using TradeExample.Infrastucture;
 
@@ -12,21 +9,27 @@ namespace TraderWpf
     {
         private readonly IInterTabClient _interTabClient;
         private readonly MenuItems _menu;
-        private readonly ViewsCollection _views;
         private ViewContainer _selected;
+        private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
 
-
-        public TraderWindowModel(MenuItems menu, ViewsCollection views,IObjectProvider objectProvider )
+        public TraderWindowModel(MenuItems menu, IObjectProvider objectProvider )
         {
             _menu = menu;
-            _views = views;
             _interTabClient = new InterTabClient(objectProvider);
 
             var opener = Menu.ItemCreated.Subscribe(item =>
                                                     {
-                                                        Views.Add(item);
+                                                        _data.Add(item);
                                                         Selected = item;
                                                     });
+
+
+            _data.CollectionChanged += Items_CollectionChanged;
+
+        }
+
+        void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
 
         }
 
@@ -35,9 +38,9 @@ namespace TraderWpf
             get { return _menu; }
         }
 
-        public ViewsCollection Views
+        public ObservableCollection<ViewContainer> Views
         {
-            get { return _views; }
+            get { return _data; }
         }
 
         public ViewContainer Selected
