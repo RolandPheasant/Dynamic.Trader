@@ -62,7 +62,7 @@
                              Height="18"
                             controls:TextboxHelper.ClearTextButton="True"
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        
+
                         <TextBlock  
                              Margin="4 0 0 0"
                             VerticalAlignment="Center"
@@ -70,7 +70,7 @@
                             Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
                     </StackPanel>
 
-                    
+
                     <DataGrid
                         Grid.Row="1" AutoGenerateColumns="False"
                               EnableColumnVirtualization="True"
@@ -102,7 +102,7 @@
                                             Header="Created At" 
                                             Binding="{Binding  Timestamp,Mode=OneWay}"/>
                         </DataGrid.Columns>
-                        
+
                     </DataGrid>
 
                 </Grid>
@@ -153,7 +153,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
                             Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
-   
+
 
                     </StackPanel>
 
@@ -202,32 +202,48 @@
 
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
-            <Style.Setters>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" SnapsToDevicePixels="True">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Border Background="Cyan"  x:Name="PART_DragableElement">
-                                        <TextBlock>DH</TextBlock>
-                                    </Border>
-                                    <Thumb Grid.Row="1" Width="30" Height="30" Background="Yellow" x:Name="PART_Thumb" />
-                                    <ContentPresenter Grid.Row="2" Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                                </Grid>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style.Setters>
-        </Style>
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" SnapsToDevicePixels="True">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Border Background="Cyan"  x:Name="PART_DragableElement">
+                                            <TextBlock>DH</TextBlock>
+                                        </Border>
+                                        <Thumb Grid.Row="1" Width="30" Height="30" Background="Yellow" x:Name="PART_Thumb" />
+                                        <ContentPresenter Grid.Row="2" Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
 
-            
+            <StackPanel Orientation="Horizontal" Height="18" x:Key="HeaderSuffixContent"
+                        ToolTip="Powered by Dragablz" 
+                        x:Shared="False">
+                <Path  Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" 
+                       Data="F1 M 0,10.7852L 14.0247,21.5698L 14.0247,14.7494L 26.8469,14.7494L 26.8469,6.82025L 14.0247,6.82025L 14.0247,0L 0,10.7852 Z "/>
+                <TextBlock Margin="4 0 0 0" Text="Tabs can be dragged"/>
+            </StackPanel>
+
+            <Style TargetType="{x:Type dragablz:TabablzControl}" x:Key="BasicExamplesTabStyle">
+                <Setter Property="Margin" Value="8 8 8 8" />
+                <Setter Property="HeaderSuffixContent" Value="{StaticResource HeaderSuffixContent}" />
+            </Style>
+
+
+
+
+
         </ResourceDictionary>
-       
+
     </Application.Resources>
 </Application>

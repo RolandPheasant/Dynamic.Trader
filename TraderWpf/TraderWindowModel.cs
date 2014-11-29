@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Dragablz;
+using DynamicData;
 using TradeExample.Infrastucture;
 
 namespace TraderWpf
@@ -12,25 +14,38 @@ namespace TraderWpf
     {
         private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
-        private ViewContainer _selected;
         private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
         private readonly ICommand _showMenu;
-
         private readonly IDisposable _cleanUp;
-        private readonly SerialDisposable _menuDisposer = new SerialDisposable();
+        private readonly SerialDisposable _newMenuItemSubscriber = new SerialDisposable();
 
-        public TraderWindowModel(IObjectProvider objectProvider )
+        private ViewContainer _selected;
+
+        public TraderWindowModel(IObjectProvider objectProvider,TraderWindowFactory traderWindowFactory )
         {
             _objectProvider = objectProvider;
-            _interTabClient = new InterTabClient(objectProvider);
+            _interTabClient = new InterTabClient(traderWindowFactory);
             _showMenu =  new Command(OnShowMenu);
+
+
+            var menuController = _data.WatchChanges(vc => vc.Id)
+                .Filter(vc => vc.Content is MenuItems)
+                .Transform(vc => (MenuItems) vc.Content)
+                .SubscribeMany(menuItem => menuItem.ItemCreated.Subscribe(item =>
+                                                                          {
+                                                                              _data.Add(item);
+                                                                              Selected = item;
+                                                                          }))
+                .Subscribe();
 
             _cleanUp = Disposable.Create(() =>
                                          {
+
+                                             menuController.Dispose();
                                              foreach (var disposable in  _data.Select(vc=>vc.Content).OfType<IDisposable>())
                                                  disposable.Dispose();
                                              
-                                             _menuDisposer.Dispose();
+                                             _newMenuItemSubscriber.Dispose();
                                          });
         }
 
@@ -44,18 +59,17 @@ namespace TraderWpf
                 _data.Add(newItem);
                 Selected = newItem;
 
-                _menuDisposer.Disposable = newmenu.ItemCreated.Subscribe(item =>
-                {
-                    _data.Add(item);
-                    Selected = item;
-                });
+                //_newMenuItemSubscriber.Disposable = newmenu.ItemCreated.Subscribe(item =>
+                //{
+                //    _data.Add(item);
+                //    Selected = item;
+                //});
             }
             else
             {
                 Selected = existing;
             }
         }
-
 
         public ObservableCollection<ViewContainer> Views
         {

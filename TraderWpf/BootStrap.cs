@@ -15,18 +15,10 @@ namespace TraderWpf
 
            var container =  new Container(x=> x.AddRegistry<AppRegistry>());
 
-          //  var boundViewModel = container.GetInstance<ViewsCollection>();
-
             //run start up jobs
-            var priveUpdater = container.GetInstance<TradePriceUpdateJob>();
-
-            var windowModel = container.GetInstance<TraderWindowModel>();
-            windowModel.OnShowMenu();
-
-            new TraderWindow()
-            {
-                DataContext = windowModel
-            }.Show();
+            var priceUpdater = container.GetInstance<TradePriceUpdateJob>();
+            var factory = container.GetInstance<TraderWindowFactory>();
+            factory.Create(true).Show();
 
             app.Resources.Add(SystemParameters.ClientAreaAnimationKey, null);
             app.Resources.Add(SystemParameters.MinimizeAnimationKey, null);
