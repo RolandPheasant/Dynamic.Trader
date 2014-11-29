@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Windows.Input;
 using TradeExample;
 using TradeExample.Infrastucture;
@@ -7,37 +10,56 @@ using TradeExample.Infrastucture;
 namespace TraderWpf
 {
 
-    public class MenuItems
+    public class MenuItems: IDisposable
     {
         private readonly ILogger _logger;
         private readonly IObjectProvider _objectProvider;
-        private readonly ViewsCollection _viewsCollection;
         private readonly IEnumerable<MenuItem> _menu;
 
-        public MenuItems(ILogger logger, IObjectProvider objectProvider,ViewsCollection viewsCollection)
+        private readonly ISubject<ViewContainer> _viewCreatedSubject = new Subject<ViewContainer>();
+        private readonly IDisposable _cleanUp;
+
+        public MenuItems(ILogger logger, IObjectProvider objectProvider)
         {
             _logger = logger;
             _objectProvider = objectProvider;
-            _viewsCollection = viewsCollection;
+
             _menu = new List<MenuItem>
                 {
                     new MenuItem("Live Trades",       () => Open<LiveTradesViewer>("Live Trades")),
                     new MenuItem("Near to Market",    () => Open<NearToMarketViewer>("Near to Market")),
+
                 };
+
+            _cleanUp = Disposable.Create(() =>
+                                         {
+                                             _viewCreatedSubject.OnCompleted();
+                                         });
         }
 
         private void Open<T>(string title)
         {
             _logger.Info("Opening '{0}'", title);
             var content = _objectProvider.Get<T>();
-            _viewsCollection.Add(new ViewContainer(title, content));
+            _viewCreatedSubject.OnNext(new ViewContainer(title, content));
+
             _logger.Info("--Opened '{0}'", title);
         }
 
 
+        public IObservable<ViewContainer> ItemCreated
+        {
+            get { return _viewCreatedSubject.AsObservable(); }
+        }
+
         public IEnumerable<MenuItem> Menu
         {
             get { return _menu; }
+        }
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
         }
     }
 

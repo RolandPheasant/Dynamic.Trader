@@ -31,7 +31,7 @@
             <dockablz:Layout.BranchTemplate>
                 <DataTemplate>
                     <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
-                                                            SelectedItem="{Binding Views.Selected}"
+                                                            SelectedItem="{Binding Selected}"
                                                         ItemsSource="{Binding Views.Items}"
                                          CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
                         <dragablz:TabablzControl.InterTabController>
@@ -54,7 +54,7 @@
             
             <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
                                  x:Name="InitialTabablzControl"
-                                 SelectedItem="{Binding Views.Selected}"
+                                 SelectedItem="{Binding Selected}"
                                  ItemsSource="{Binding Views.Items}"
                                  
                                  CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">

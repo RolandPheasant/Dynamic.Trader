@@ -18,9 +18,7 @@ namespace TraderWpf
         {
             var view = new TraderWindow();
             var model = _objectProvider.Get<TraderWindowModel>();
-            //TODO: For some reason, setting the model fails
-            view.DataContext = new object();
-           // view.DataContext = model;
+            view.DataContext = model;
             return new NewTabHost<Window>(view, view.InitialTabablzControl);
         }
 

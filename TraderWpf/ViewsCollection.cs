@@ -30,18 +30,18 @@ namespace TraderWpf
         {
             if (container == null) throw new ArgumentNullException("container");
             _views.AddOrUpdate(container);
-            Selected = container;
+          //  Selected = container;
         }
 
-        public ViewContainer Selected
-        {
-            get { return _selected; }
-            set
-            {
-                _selected = value;
-                OnPropertyChanged();
-            }
-        }
+        //public ViewContainer Selected
+        //{
+        //    get { return _selected; }
+        //    set
+        //    {
+        //        _selected = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public IObservableCollection<ViewContainer> Items
         {

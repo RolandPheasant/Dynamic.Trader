@@ -27,7 +27,7 @@ namespace TraderWpf
             For<INearToMarketService>().Singleton().Use<NearToMarketService>();
             
 
-            ForConcreteType<ViewsCollection>().Configure.Singleton();
+        //    ForConcreteType<ViewsCollection>().Configure.Singleton();
             For<UnhandledExceptionEventHandler>().Singleton();
             For<TradePriceUpdateJob>().Singleton();
 
