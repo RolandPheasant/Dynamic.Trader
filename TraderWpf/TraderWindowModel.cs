@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Dragablz;
 using DynamicData;
@@ -58,12 +57,6 @@ namespace TraderWpf
                 var newItem = new ViewContainer("Menu", newmenu);
                 _data.Add(newItem);
                 Selected = newItem;
-
-                //_newMenuItemSubscriber.Disposable = newmenu.ItemCreated.Subscribe(item =>
-                //{
-                //    _data.Add(item);
-                //    Selected = item;
-                //});
             }
             else
             {
