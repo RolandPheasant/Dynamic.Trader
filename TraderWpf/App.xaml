@@ -226,21 +226,6 @@
             </Style.Setters>
         </Style>
 
-        <Style TargetType="{x:Type dragablz:TabablzControl}" x:Key="BasicExamplesTabStyle">
-            <Setter Property="Margin" Value="8 8 8 8" />
-                <Setter Property="HeaderSuffixContent">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal" Height="18" ToolTip="Powered by Dragablz">
-                            <Path  Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" 
-                                   
-                                   Data="F1 M 0,10.7852L 14.0247,21.5698L 14.0247,14.7494L 26.8469,14.7494L 26.8469,6.82025L 14.0247,6.82025L 14.0247,0L 0,10.7852 Z "/>
-                            <TextBlock Margin="4 0 0 0" Text="Drag me"/>
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            
-
             
         </ResourceDictionary>
        

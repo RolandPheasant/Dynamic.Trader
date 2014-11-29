@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Dragablz;
 using TradeExample.Infrastucture;
 
@@ -19,6 +20,13 @@ namespace TraderWpf
             var window = new TraderWindow();
             var model = _objectProvider.Get<TraderWindowModel>();
             window.DataContext = model;
+
+            window.Closed += (sender, e) =>
+                             {
+                                 var todispose = ((TraderWindow) sender).DataContext as IDisposable;
+                                 if (todispose!=null) todispose.Dispose();
+                             };
+
             return new NewTabHost<Window>(window, window.InitialTabablzControl);
         }
 

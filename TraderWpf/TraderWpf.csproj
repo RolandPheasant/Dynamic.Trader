@@ -115,7 +115,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="TraderWindowModel.cs" />
-    <Compile Include="ViewsCollection.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
     <Compile Include="Infrastucture\ObjectProvider.cs" />
     <Compile Include="BootStrap.cs" />
