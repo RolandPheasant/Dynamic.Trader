@@ -35,7 +35,6 @@ namespace TraderWpf
                                              _menuDisposer.Dispose();
                                             
                                          });
-            // OnShowMenu();
         }
 
         private void OnShowMenu()
@@ -53,7 +52,6 @@ namespace TraderWpf
                     _data.Add(item);
                     Selected = item;
                 });
-
             }
             else
             {

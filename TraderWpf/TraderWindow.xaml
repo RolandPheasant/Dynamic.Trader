@@ -31,7 +31,7 @@
                             <Path  Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" 
                                    
                                    Data="F1 M 0,10.7852L 14.0247,21.5698L 14.0247,14.7494L 26.8469,14.7494L 26.8469,6.82025L 14.0247,6.82025L 14.0247,0L 0,10.7852 Z "/>
-                            <TextBlock Margin="4 0 0 0" Text="Drag me"/>
+                            <TextBlock Margin="4 0 0 0" Text="Tabs can be dragged"/>
                         </StackPanel>
                     </Setter.Value>
                 </Setter>
@@ -145,6 +145,7 @@
                 <dragablz:TabablzControl.HeaderPrefixContent>
                     <Grid Margin="4 4 4 4">
                         <Button 
+                            ToolTip="Show menu"
                             Command="{Binding ShowMenu}"
                             Style="{StaticResource MetroCircleButtonStyle }">
                             <Path 
