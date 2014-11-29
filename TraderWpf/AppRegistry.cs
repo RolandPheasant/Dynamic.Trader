@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
 using TradeExample;
 using TradeExample.Infrastucture;
 using TraderWpf.Infrastucture;
@@ -16,8 +11,7 @@ namespace TraderWpf
     {
         public AppRegistry()
         {
-            // Because we're using Log4Net .. which requires some configuration information ... lets load that now.
-            // This trick with AppDomain was stolen from NLog :)
+
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
             if (!File.Exists(path))
                 throw new FileNotFoundException("The log4net.config file was not found" + path);

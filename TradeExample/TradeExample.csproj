@@ -58,6 +58,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GroupByTimeViewer.cs" />
     <Compile Include="INearToMarketService.cs" />
     <Compile Include="Infrastucture\AbstractNotifyPropertyChanged.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />

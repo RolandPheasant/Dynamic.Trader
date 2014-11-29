@@ -12,7 +12,6 @@ namespace TraderWpf
         private readonly ILogger _logger;
         private readonly IObjectProvider _objectProvider;
         private readonly ViewsCollection _viewsCollection;
-
         private readonly IEnumerable<MenuItem> _menu;
 
         public MenuItems(ILogger logger, IObjectProvider objectProvider,ViewsCollection viewsCollection)
@@ -22,16 +21,14 @@ namespace TraderWpf
             _viewsCollection = viewsCollection;
             _menu = new List<MenuItem>
                 {
-                    new MenuItem("Live Trades",    () => Show<LiveTradesViewer>("Live Trades")),
-                    new MenuItem("Near to Market",    () => Show<NearToMarketViewer>("Near to Market")),
-
+                    new MenuItem("Live Trades",       () => Open<LiveTradesViewer>("Live Trades")),
+                    new MenuItem("Near to Market",    () => Open<NearToMarketViewer>("Near to Market")),
                 };
         }
 
-        private void Show<T>(string title)
+        private void Open<T>(string title)
         {
             _logger.Info("Opening '{0}'", title);
-
             var content = _objectProvider.Get<T>();
             _viewsCollection.Add(new ViewContainer(title, content));
             _logger.Info("--Opened '{0}'", title);

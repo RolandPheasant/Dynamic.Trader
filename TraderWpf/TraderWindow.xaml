@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen"  
          GlowBrush="{DynamicResource AccentColorBrush3}"
         Title="Dynamic Trader" Height="500" Width="650"
-      d:DataContext="{d:DesignInstance traderWpf:ViewsCollection, IsDesignTimeCreatable=False}">
+      d:DataContext="{d:DesignInstance traderWpf:TraderWindowModel, IsDesignTimeCreatable=False}">
 
 
     <Window.Resources>
@@ -25,50 +25,86 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <dockablz:Layout Partition="2AE89D18-F236-4D20-9605-6C03319038E6" x:Name="Layout">
-        <dockablz:Layout.BranchTemplate>
-            <DataTemplate>
-                <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
-                                         
-                                         ItemsSource="{Binding Items}"
-                                         CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
-                    <dragablz:TabablzControl.InterTabController>
-                        <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-                    </dragablz:TabablzControl.InterTabController>
-                    <dragablz:TabablzControl.CustomHeaderItemTemplate>
-                        <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
-                            <TextBlock Text="{Binding Title}" />
-                        </DataTemplate>
-                    </dragablz:TabablzControl.CustomHeaderItemTemplate>
-                    <TabControl.ContentTemplate>
-                        <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
-                            <ContentControl Content="{Binding Content}" />
-                        </DataTemplate>
-                    </TabControl.ContentTemplate>
-                </dragablz:TabablzControl>
-            </DataTemplate>
-        </dockablz:Layout.BranchTemplate>
-        <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
-                                 x:Name="InitialTabablzControl"
-                                 ItemsSource="{Binding Items}"
-                                 CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
-                                             Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-            </dragablz:TabablzControl.InterTabController>
-            <dragablz:TabablzControl.CustomHeaderItemTemplate>
-                <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
-                    <TextBlock Text="{Binding Title}" />
-                </DataTemplate>
-            </dragablz:TabablzControl.CustomHeaderItemTemplate>
+    <Grid>
 
-            
-            <TabControl.ContentTemplate>
-                <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
-                    <ContentControl Content="{Binding Content}" />
+        <dockablz:Layout Partition="2AE89D18-F236-4D20-9605-6C03319038E6">
+            <dockablz:Layout.BranchTemplate>
+                <DataTemplate>
+                    <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
+                                                            SelectedItem="{Binding Views.Selected}"
+                                                        ItemsSource="{Binding Views.Items}"
+                                         CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
+                        <dragablz:TabablzControl.InterTabController>
+                            <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
+                                                         Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                        </dragablz:TabablzControl.InterTabController>
+                        <dragablz:TabablzControl.CustomHeaderItemTemplate>
+                            <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                                <TextBlock Text="{Binding Title}" />
+                            </DataTemplate>
+                        </dragablz:TabablzControl.CustomHeaderItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                                <ContentControl Content="{Binding Content}" />
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </dragablz:TabablzControl>
                 </DataTemplate>
-            </TabControl.ContentTemplate>
-        </dragablz:TabablzControl>
-    </dockablz:Layout>
+            </dockablz:Layout.BranchTemplate>
+            
+            <dragablz:TabablzControl Style="{StaticResource BasicExamplesTabStyle}"
+                                 x:Name="InitialTabablzControl"
+                                 SelectedItem="{Binding Views.Selected}"
+                                 ItemsSource="{Binding Views.Items}"
+                                 
+                                 CustomHeaderItemStyle="{StaticResource TrapezoidDragableTabItemStyle}">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding  InterTabClient}"
+                                             Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                </dragablz:TabablzControl.InterTabController>
+                <dragablz:TabablzControl.CustomHeaderItemTemplate>
+                    <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                        <TextBlock Text="{Binding Title}" />
+                    </DataTemplate>
+                </dragablz:TabablzControl.CustomHeaderItemTemplate>
+
+                <dragablz:TabablzControl.HeaderPrefixContent>
+                    
+                    <Grid Margin="4 4 4 4">
+                        <Path Height="18" 
+                              Width="18"
+                              Stretch="Uniform" UseLayoutRounding="False" Fill="Black" Data="F1 M 2.88,17.2725C 0.959991,15.3475 0,12.95 0,10.08C 0,7.21002 0.959991,4.8125 2.88,2.88751C 4.80002,0.962494 7.19125,0 10.0537,0C 12.9163,0 15.3163,0.962494 17.2538,2.88751C 19.1913,4.8125 20.16,7.21002 20.16,10.08C 20.16,12.95 19.1913,15.3475 17.2538,17.2725C 15.3163,19.1975 12.9163,20.16 10.0537,20.16C 7.19125,20.16 4.80002,19.1975 2.88,17.2725 Z M 3.84,11.3625L 8.81998,11.3625L 8.81998,16.32L 11.34,16.32L 11.34,11.3625L 16.32,11.3625L 16.32,8.85001L 11.34,8.85001L 11.34,3.84L 8.81998,3.84L 8.81998,8.85001L 3.84,8.85001L 3.84,11.3625 Z "/>
+                    </Grid>
+                </dragablz:TabablzControl.HeaderPrefixContent>
+
+                <TabControl.ContentTemplate>
+                    <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                        <ContentControl Content="{Binding Content}" />
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </dragablz:TabablzControl>
+        </dockablz:Layout>
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <dragablz:DragablzItemsControl Grid.RowSpan="2" Grid.Row="0" 
+                                               Style="{StaticResource AdornerDragablzItemsControlStyle}">
+                <dragablz:HeaderedDragablzItem HeaderContent="Open window"
+                                                   Style="{StaticResource ToolDragablzItemStyle}"
+                                                   X="110" Y="160"
+                                                   >
+                    <Grid>
+                        <ContentControl Content="{Binding Menu}"/>
+                    </Grid>
+
+                </dragablz:HeaderedDragablzItem>
+
+            </dragablz:DragablzItemsControl>
+        </Grid>
+    </Grid>
+
 
 </controls:MetroWindow>
