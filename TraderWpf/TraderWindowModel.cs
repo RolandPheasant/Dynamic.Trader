@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Dragablz;
 using DynamicData;
 using TradeExample.Infrastucture;
+using TraderWpf.Infrastucture;
 
 namespace TraderWpf
 {

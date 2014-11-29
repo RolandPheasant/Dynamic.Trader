@@ -64,6 +64,7 @@
     <Compile Include="Infrastucture\Extensions.cs" />
     <Compile Include="Infrastucture\ILogger.cs" />
     <Compile Include="Infrastucture\IObjectFactory.cs" />
+    <Compile Include="Infrastucture\ISchedulerProvider.cs" />
     <Compile Include="Infrastucture\SortDirection.cs" />
     <Compile Include="Infrastucture\SortExpression.cs" />
     <Compile Include="Infrastucture\SortExpressionComparer.cs" />

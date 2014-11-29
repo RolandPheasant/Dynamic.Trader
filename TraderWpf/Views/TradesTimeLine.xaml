@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="TraderWpf.Views.TradesTimeLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
+             mc:Ignorable="d" 
+              d:DataContext="{d:DesignInstance tradeExample:GroupByTimeViewer, IsDesignTimeCreatable=False}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type tradeExample:TradesByTimeLine}">
+
+                <Grid Width="{Binding ElementName=Control,Path=Width}">
+                    <Expander x:Name="Expander" Margin="8">
+                        <Expander.Header>
+                            <Grid
+                                Margin="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding Grouping}"
+                                           Foreground="{DynamicResource WhiteColorBrush}"
+                                           HorizontalAlignment="Left"/>
+                                <TextBlock Grid.Column="1"
+                                             Foreground="{DynamicResource WhiteBrush}"
+                                               HorizontalAlignment="Right" 
+                                               Text="{Binding Data.Count}"/>
+                            </Grid>
+                        </Expander.Header>
+                      
+                        <DataGrid Height="225"
+                             AutoGenerateColumns="False"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ItemsSource="{Binding Data}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                            Header="Customer"  
+                                            Binding="{Binding Customer,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Currency Pair" 
+                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Trade Price" 
+                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Market Price" 
+                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
+
+                                <DataGridTextColumn Width="50" 
+                                            Header="Status" 
+                                            Binding="{Binding  Status,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Created At" 
+                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                    </Expander>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    
+    <ScrollViewer>
+        <ItemsControl ItemsSource="{Binding  Data}"/>
+    </ScrollViewer>
+
+</UserControl>

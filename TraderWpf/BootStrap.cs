@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Threading;
 using StructureMap;
 using TradeExample;
+using TraderWpf.Infrastucture;
 
 namespace TraderWpf
 {
@@ -17,8 +19,12 @@ namespace TraderWpf
 
             //run start up jobs
             var priceUpdater = container.GetInstance<TradePriceUpdateJob>();
+
+
             var factory = container.GetInstance<TraderWindowFactory>();
-            factory.Create(true).Show();
+            var window = factory.Create(true);
+            container.Configure(x => x.For<Dispatcher>().Add(window.Dispatcher));
+            window.Show();
 
             app.Resources.Add(SystemParameters.ClientAreaAnimationKey, null);
             app.Resources.Add(SystemParameters.MinimizeAnimationKey, null);

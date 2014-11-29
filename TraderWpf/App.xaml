@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              xmlns:traderWpf="clr-namespace:TraderWpf"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample">
+             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
+             xmlns:infrastucture="clr-namespace:TraderWpf.Infrastucture"
+             xmlns:views="clr-namespace:TraderWpf.Views">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -17,186 +18,21 @@
             </ResourceDictionary.MergedDictionaries>
 
 
-            <DataTemplate DataType="{x:Type traderWpf:MenuItems}">
-                <ItemsControl ItemsSource="{Binding Menu}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <controls:Tile  Title="{Binding Title}"
-                                    Command="{Binding Command}" 
-                                     VerticalContentAlignment="Top"
-                                    HorizontalContentAlignment="Left"
-                                    Margin="5"
-                                    Width="110"
-                                    Height="110"
-                                    Padding="8">
-
-                                <ContentControl Content="{Binding TileContent}"/>
-                            </controls:Tile>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+            <DataTemplate DataType="{x:Type infrastucture:MenuItems}">
+                 <traderWpf:MenuView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type tradeExample:LiveTradesViewer}">
-                <Grid>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Grid.Column="0"
-                                Orientation="Horizontal">
-
-                        <TextBox 
-                            controls:TextboxHelper.Watermark="Enter search text..."
-                             Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Width="125"
-                             Height="18"
-                            controls:TextboxHelper.ClearTextButton="True"
-                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-                        <TextBlock  
-                             Margin="4 0 0 0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
-                    </StackPanel>
-
-
-                    <DataGrid
-                        Grid.Row="1" AutoGenerateColumns="False"
-                              EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True"
-                              ItemsSource="{Binding Data}">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                            Header="Customer"  
-                                            Binding="{Binding Customer,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Currency Pair" 
-                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Trade Price" 
-                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Market Price" 
-                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
-
-                            <DataGridTextColumn Width="50" 
-                                            Header="Status" 
-                                            Binding="{Binding  Status,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Created At" 
-                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
-                        </DataGrid.Columns>
-
-                    </DataGrid>
-
-                </Grid>
-
+                <traderWpf:LiveTradesView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type tradeExample:NearToMarketViewer}">
-                <Grid>
+                <traderWpf:NearToMarketView/>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            </DataTemplate>
 
-                    <StackPanel Grid.Row="0" Grid.Column="0"
-                                Orientation="Horizontal">
-
-                        <TextBox 
-                            controls:TextboxHelper.Watermark="Enter search text..."
-                             Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Width="125"
-                             Height="18"
-                            controls:TextboxHelper.ClearTextButton="True"
-                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-
-                        <Slider Width="100" 
-                                 Margin="4 0 0 0"
-                                 VerticalAlignment="Center"
-                                Minimum="0.1"
-                                Maximum="10"
-                                     ToolTip="Move slider to filter by % from the market"
-                                TickFrequency=".1"
-                                Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-
-                        </Slider>
-
-                        <TextBlock
-                             Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Height="18"
-                        
-                             Text="{Binding NearToMarketPercent, StringFormat='\{0} %'}"/>
-
-                        <TextBlock  
-                             Margin="4 0 0 0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
-
-
-                    </StackPanel>
-
-
-                    <DataGrid
-                        Grid.Row="1" AutoGenerateColumns="False"
-                              EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True"
-                              ItemsSource="{Binding Data}">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                            Header="Customer"  
-                                            Binding="{Binding Customer,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Currency Pair" 
-                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Trade Price" 
-                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Market Price" 
-                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="%" 
-                                            Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
-
-                            <DataGridTextColumn Width="50" 
-                                            Header="Status" 
-                                            Binding="{Binding  Status,Mode=OneWay}"/>
-
-                            <DataGridTextColumn 
-                                            Header="Created At" 
-                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
-                        </DataGrid.Columns>
-
-                    </DataGrid>
-
-                </Grid>
+            <DataTemplate DataType="{x:Type tradeExample:GroupByTimeViewer}">
+                <views:TradesTimeLine/>
 
             </DataTemplate>
 

@@ -55,9 +55,9 @@
     <ApplicationIcon>Themes\dynamic.data.BLUE.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dragablz, Version=0.0.0.50, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Dragablz, Version=0.0.0.51, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dragablz.0.0.0.50\lib\net45\Dragablz.dll</HintPath>
+      <HintPath>..\packages\Dragablz.0.0.0.51\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="DynamicData">
       <HintPath>..\packages\DynamicData.3.0.2.6-beta\lib\net45\DynamicData.dll</HintPath>
@@ -114,23 +114,48 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastucture\MenuItems.cs" />
+    <Compile Include="Views\LiveTradesView.xaml.cs">
+      <DependentUpon>LiveTradesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NearToMarketView.xaml.cs">
+      <DependentUpon>NearToMarketView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TraderWindowFactory.cs" />
     <Compile Include="TraderWindowModel.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
     <Compile Include="Infrastucture\ObjectProvider.cs" />
     <Compile Include="BootStrap.cs" />
-    <Compile Include="AppRegistry.cs" />
+    <Compile Include="Infrastucture\AppRegistry.cs" />
     <Compile Include="TraderWindow.xaml.cs">
       <DependentUpon>TraderWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View.cs" />
-    <Compile Include="ViewContainer.cs" />
-    <Compile Include="ViewMenu.cs" />
+    <Compile Include="Infrastucture\Command.cs" />
+    <Compile Include="Infrastucture\ViewContainer.cs" />
+    <Compile Include="Infrastucture\MenuItem.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IntertabClient.cs" />
+    <Compile Include="Views\TradesTimeLine.xaml.cs">
+      <DependentUpon>TradesTimeLine.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\LiveTradesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NearToMarketView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Blue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -142,6 +167,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
     <Page Include="TraderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TradesTimeLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,6 +233,7 @@
     <Resource Include="Themes\dynamic.data.BLUE.ico" />
     <Resource Include="Themes\dynamic.data.steel.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

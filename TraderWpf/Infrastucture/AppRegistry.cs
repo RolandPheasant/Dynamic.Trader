@@ -3,9 +3,8 @@ using System.IO;
 using StructureMap.Configuration.DSL;
 using TradeExample;
 using TradeExample.Infrastucture;
-using TraderWpf.Infrastucture;
 
-namespace TraderWpf
+namespace TraderWpf.Infrastucture
 {
     internal class AppRegistry : Registry
     {
@@ -19,7 +18,7 @@ namespace TraderWpf
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(path));
 
             For<ILogger>().Use<Log4NetLogger>().Ctor<Type>("type").Is(x => x.RootType);
-         
+            For<ISchedulerProvider>().Singleton().Use<SchedulerProvider>();
             For<IObjectProvider>().Singleton().Use<ObjectProvider>();
             For<ITradeService>().Singleton().Use<TradeService>();
             For<IStaticData>().Singleton().Use<StaticData>();
