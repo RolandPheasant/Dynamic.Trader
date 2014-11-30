@@ -4,5 +4,6 @@ namespace TradeExample
     {
         string[] Customers { get; }
         StaticData.CurrencyPair[] CurrencyPairs { get; }
+
     }
 }

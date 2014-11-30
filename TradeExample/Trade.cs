@@ -18,7 +18,7 @@ namespace TradeExample
         public decimal MarketPrice { get; private set; }
         public decimal PercentFromMarket { get; private set; }
 
-        public Trade(long id, string customer, string currencyPair, TradeStatus status,decimal tradePrice, decimal marketPrice=0)
+        public Trade(long id, string customer, string currencyPair, TradeStatus status,decimal tradePrice, decimal marketPrice=0, DateTime? timeStamp=null)
         {
             Id = id;
             Customer = customer;
@@ -26,7 +26,7 @@ namespace TradeExample
             Status = status;
             MarketPrice = marketPrice;
             TradePrice = tradePrice;
-            Timestamp = DateTime.Now;
+            Timestamp =timeStamp.HasValue ? timeStamp.Value : DateTime.Now;
         }
 
         public void SetMarketPrice(decimal marketPrice)

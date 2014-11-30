@@ -24,6 +24,8 @@ namespace TradeExample
 
         private IObservable<decimal> GenerateStream(decimal initalPrice)
         {
+
+
             return Observable.Create<decimal>(observer =>
                                               {
 

@@ -38,17 +38,20 @@ namespace TradeExample
             //bit of code to generate trades
             var random = new Random();
 
-            var updatePeriod = 3;
+            const int updatePeriod = 3;
 
-            //initally create 1000 trades then create up to 10 every second
+            //initally load 1000 trades 
+            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(1000, true));
+
+
+            // create up to 10  periodically
             var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(updatePeriod))
                 .Select(_ => random.Next(1, 10))
-                .StartWith(1000)
                 .Do(number => _logger.Info("Adding {0} trades", number))
-                .Select(_tradeGenerator.Generate)
+                .Select(number=>_tradeGenerator.Generate(number))
                 .Subscribe(_tradesSource.AddOrUpdate);
 
-            //close up to 10 trades every  second
+            //close up to 10 trades periodically
             var tradeCloser = Observable.Interval(TimeSpan.FromSeconds(updatePeriod))
                 .Select(_ => random.Next(1, 10))
                 .Do(number => _logger.Info("Closing {0} trades", number))

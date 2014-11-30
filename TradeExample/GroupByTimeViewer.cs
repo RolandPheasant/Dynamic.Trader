@@ -83,7 +83,8 @@ namespace TradeExample
             var grouperRefresher = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Subscribe(_ => groupController.RefreshGroup());
 
-            var loader = tradeService.Trades.Connect().SkipInitial()
+            var loader = tradeService.Trades.Connect()
+                //.SkipInitial()
                 .Filter(_filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade))
                 .Group(trade =>
