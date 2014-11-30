@@ -31,8 +31,8 @@
 
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample:GroupByTimeViewer}">
-                <views:TradesTimeLine/>
+            <DataTemplate DataType="{x:Type tradeExample:TradesByPercentViewer}">
+                <views:TradesByPercentDiff/>
 
             </DataTemplate>
 

@@ -59,8 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dragablz.0.0.0.51\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData">
-      <HintPath>..\packages\DynamicData.3.0.2.6-beta\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=3.0.2.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamicData.3.0.2.11-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -114,6 +115,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
@@ -141,8 +143,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IntertabClient.cs" />
-    <Compile Include="Views\TradesTimeLine.xaml.cs">
-      <DependentUpon>TradesTimeLine.xaml</DependentUpon>
+    <Compile Include="Views\TradesByPercentDiff.xaml.cs">
+      <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\LiveTradesView.xaml">
       <SubType>Designer</SubType>
@@ -170,7 +172,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TradesTimeLine.xaml">
+    <Page Include="Views\TradesByPercentDiff.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

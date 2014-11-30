@@ -24,6 +24,8 @@ namespace TradeExample
             return Observable.Create<IChangeSet<Trade, long>>
                 (observer =>
                  {
+
+                     var locker = new object();
                      var filter = new FilterController<Trade>();
                      filter.Change(trade =>
                                    {
@@ -32,10 +34,12 @@ namespace TradeExample
                                    });
 
                      var reevaluator = Observable.Interval(TimeSpan.FromMilliseconds(250))
+                         .Synchronize(locker)
                          .Subscribe(_ => filter.Reevaluate());
 
                      var subscriber = _tradeService.Trades
                          .Connect(trade=>trade.Status==TradeStatus.Live)
+                         .Synchronize(locker)
                          .Filter(filter)
                          .SubscribeSafe(observer);
 

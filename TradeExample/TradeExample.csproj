@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicData">
-      <HintPath>..\packages\DynamicData.3.0.2.6-beta\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=3.0.2.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamicData.3.0.2.11-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,7 +59,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GroupByTimeViewer.cs" />
+    <Compile Include="TradesByPercentDiff.cs" />
+    <Compile Include="TradesByPercentViewer.cs" />
     <Compile Include="INearToMarketService.cs" />
     <Compile Include="Infrastucture\AbstractNotifyPropertyChanged.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />

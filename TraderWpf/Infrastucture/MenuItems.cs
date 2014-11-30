@@ -26,7 +26,7 @@ namespace TraderWpf.Infrastucture
             {
                 new MenuItem("Live Trades",       () => Open<LiveTradesViewer>("Live Trades")),
                 new MenuItem("Near to Market",    () => Open<NearToMarketViewer>("Near to Market")),
-                new MenuItem("Trades Timeline",    () => Open<GroupByTimeViewer>("Trades Timeline")),
+                new MenuItem("Trades By %",    () => Open<TradesByPercentViewer>("Trades By % Diff")),
             };
 
             _cleanUp = Disposable.Create(() =>
