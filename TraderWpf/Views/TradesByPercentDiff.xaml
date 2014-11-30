@@ -1,0 +1,194 @@
+﻿<UserControl x:Class="TraderWpf.Views.TradesByPercentDiff"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
+             mc:Ignorable="d" 
+              d:DataContext="{d:DesignInstance tradeExample:TradesByPercentViewer, IsDesignTimeCreatable=False}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            
+            <DataTemplate DataType="{x:Type tradeExample:TradesByPercentDiff}" x:Key="hide">
+
+                <Grid Width="{Binding ElementName=Control,Path=Width}">
+                    
+                    <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" MaxHeight="225"/>
+                    </Grid.RowDefinitions>-->
+                    
+                    <GroupBox x:Name="Expander" Margin="8">
+                        <GroupBox.Header>
+                            <Grid
+                                Margin="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock  VerticalAlignment="Center"
+                                              Foreground="{DynamicResource WhiteColorBrush}"
+                                            Margin="5 0 0 0">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=" {0}-{1} % diff from market">
+                                            <Binding Path="PercentBand"/>
+                                            <Binding Path="PercentBandUpperBound"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <TextBlock Grid.Column="1"
+                                             Foreground="{DynamicResource WhiteBrush}"
+                                               HorizontalAlignment="Right" 
+                                                Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}"/>
+                            </Grid>
+                        </GroupBox.Header>
+                      
+                        <DataGrid Grid.Row="1" MaxHeight="225"
+                             AutoGenerateColumns="False"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ItemsSource="{Binding Data}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                            Header="Customer"  
+                                            Binding="{Binding Customer,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Currency Pair" 
+                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Trade Price" 
+                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Market Price" 
+                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="%" 
+                                            Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
+
+                                <DataGridTextColumn Width="50" 
+                                            Header="Status" 
+                                            Binding="{Binding  Status,Mode=OneWay}"/>
+
+                                <DataGridTextColumn 
+                                            Header="Created At" 
+                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                    </GroupBox>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type tradeExample:TradesByPercentDiff}">
+                <Border Margin="4 4 4 0" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="0">
+                    <Grid >
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" MaxHeight="225"/>
+                    </Grid.RowDefinitions>
+                    
+
+                    <Grid  Height="25" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock  
+
+                            VerticalAlignment="Center" FontWeight="DemiBold"
+                                            Margin="5 0 0 0">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat=" {0}-{1} % diff from market">
+                                    <Binding Path="PercentBand"/>
+                                    <Binding Path="PercentBandUpperBound"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                        <TextBlock  Margin ="4 0 0 0"  Grid.Column="1"
+                                               HorizontalAlignment="Right" 
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}"/>
+
+                        <CheckBox Margin ="4 0 4 0"  
+
+                            Grid.Row="0" Grid.Column="2"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            x:Name="ShowData" Content="Show data"></CheckBox>
+                        
+                    </Grid>
+
+
+                    <DataGrid Grid.Row="1" 
+                      
+                              MaxHeight="250"
+                              Visibility="{Binding Path=IsChecked,ElementName=ShowData, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="4"
+                             AutoGenerateColumns="False"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ItemsSource="{Binding Data}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                            Header="Customer"  
+                                            Binding="{Binding Customer,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Currency Pair" 
+                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Trade Price" 
+                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Market Price" 
+                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="%" 
+                                            Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
+
+                            <DataGridTextColumn Width="50" 
+                                            Header="Status" 
+                                            Binding="{Binding  Status,Mode=OneWay}"/>
+
+                            <DataGridTextColumn 
+                                            Header="Created At" 
+                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+              
+                </Grid>
+                </Border>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    
+    <ScrollViewer>
+        <ItemsControl ItemsSource="{Binding  Data}"/>
+    </ScrollViewer>
+
+</UserControl>
