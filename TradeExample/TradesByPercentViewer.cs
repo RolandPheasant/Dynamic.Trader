@@ -25,7 +25,7 @@ namespace TradeExample
             var grouperRefresher = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Subscribe(_ => groupController.RefreshGroup());
 
-            var loader = tradeService.Query(() => 1)
+            var loader = tradeService.Query(() => 5)
                 .Transform(trade => new TradeProxy(trade))
                 .Group(trade => (int) Math.Abs(trade.PercentFromMarket), groupController)
                 .Transform(group => new TradesByPercentDiff(group, _schedulerProvider))
