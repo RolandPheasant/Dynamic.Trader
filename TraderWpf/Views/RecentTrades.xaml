@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:TraderWpf.Views"
+             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
              mc:Ignorable="d" 
+               d:DataContext="{d:DesignInstance tradeExample:RecentTradesViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
 
@@ -12,11 +14,13 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock 
-            VerticalAlignment="Center"
-            Text="Trades open or closed in the last 1 minute"/>
-        
+        <TextBlock
+                             Margin="4 0 0 0"
+                             VerticalAlignment="Center"
+                             Height="18"
+                        
+                             Text="{Binding Data.Count, StringFormat='\{0} trades open in closed in last 60 seconds'}"/>
+
         <views:TradesGrid Grid.Row="1" DataContext="{Binding Data}"/>
 
     </Grid>
