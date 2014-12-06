@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using TradeExample.Infrastucture;
 
 namespace TradeExample
@@ -7,19 +9,38 @@ namespace TradeExample
     {
         private readonly Trade _trade;
         private readonly IDisposable _cleanUp;
+        private bool _recent;
 
         public TradeProxy(Trade trade)
         {
             _trade = trade;
 
+           // var isRecent = trade.Timestamp.Subtract(DateTime.Now).TotalSeconds < 2;
 
-            //market price changed is a obserble on the trade object
-            _cleanUp = trade.MarketPriceChanged
+            var isRecent = DateTime.Now.Subtract(trade.Timestamp).TotalSeconds < 2;
+            var recentIndicator= Disposable.Empty;
+                         
+            if (isRecent)
+            {
+                Recent = true;
+                recentIndicator = Observable.Timer(TimeSpan.FromSeconds(2))
+                    .Subscribe(_ => Recent = false);
+            }
+
+
+            //market price changed is an observable on the trade object
+            var priceRefresher = trade.MarketPriceChanged
                 .Subscribe(_ =>
                            {
                                OnPropertyChanged("MarketPrice");
                                OnPropertyChanged("PercentFromMarket");
                            });
+        
+            _cleanUp = Disposable.Create(() =>
+                                         {
+                                             recentIndicator.Dispose();
+                                             priceRefresher.Dispose();
+                                         });
 
         }
 
@@ -28,7 +49,16 @@ namespace TradeExample
             get { return _trade.MarketPrice; }
         }
 
-        // delegating menbers below
+        public bool Recent
+        {
+            get { return _recent; }
+            set
+            {
+                if (_recent==value) return;
+                _recent = value;
+                OnPropertyChanged();
+            }
+        }
 
         #region Delegating Members
         

@@ -9,18 +9,18 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
-            
+
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-            
+
             <DataTemplate DataType="{x:Type tradeExample:TradesByPercentDiff}" x:Key="hide">
 
                 <Grid Width="{Binding ElementName=Control,Path=Width}">
-                    
+
                     <!--<Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*" MaxHeight="225"/>
                     </Grid.RowDefinitions>-->
-                    
+
                     <GroupBox x:Name="Expander" Margin="8">
                         <GroupBox.Header>
                             <Grid
@@ -48,7 +48,7 @@
                                                 Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}"/>
                             </Grid>
                         </GroupBox.Header>
-                      
+
                         <DataGrid Grid.Row="1" MaxHeight="225"
                              AutoGenerateColumns="False"
                               EnableColumnVirtualization="True"
@@ -94,49 +94,49 @@
             <DataTemplate DataType="{x:Type tradeExample:TradesByPercentDiff}">
                 <Border Margin="4 4 4 0" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="0">
                     <Grid >
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*" MaxHeight="225"/>
-                    </Grid.RowDefinitions>
-                    
 
-                    <Grid  Height="25" Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" MaxHeight="225"/>
+                        </Grid.RowDefinitions>
 
 
-                        <TextBlock  
+                        <Grid  Height="25" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <TextBlock  
 
                             VerticalAlignment="Center" FontWeight="DemiBold"
                                             Margin="5 0 0 0">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat=" {0}-{1} % diff from market">
-                                    <Binding Path="PercentBand"/>
-                                    <Binding Path="PercentBandUpperBound"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0}-{1} % diff from market">
+                                        <Binding Path="PercentBand"/>
+                                        <Binding Path="PercentBandUpperBound"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
 
-                        <TextBlock  Margin ="4 0 0 0"  Grid.Column="1"
+                            <TextBlock  Margin ="4 0 0 0"  Grid.Column="1"
                                                HorizontalAlignment="Right" 
                                                 VerticalAlignment="Center"
                                                 Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}"/>
 
-                        <CheckBox Margin ="4 0 4 0"  
+                            <CheckBox Margin ="4 0 4 0"  
 
                             Grid.Row="0" Grid.Column="2"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             x:Name="ShowData" Content="Show data"></CheckBox>
-                        
-                    </Grid>
+
+                        </Grid>
 
 
-                    <DataGrid Grid.Row="1" 
+                        <DataGrid Grid.Row="1" 
                       
                               MaxHeight="250"
                               Visibility="{Binding Path=IsChecked,ElementName=ShowData, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -146,47 +146,47 @@
                               EnableRowVirtualization="True"
                               ItemsSource="{Binding Data}">
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
                                             Header="Customer"  
                                             Binding="{Binding Customer,Mode=OneWay}"/>
 
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                             Header="Currency Pair" 
                                             Binding="{Binding CurrencyPair,Mode=OneWay}"/>
 
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                             Header="Trade Price" 
                                             Binding="{Binding  TradePrice,Mode=OneWay}"/>
 
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                             Header="Market Price" 
                                             Binding="{Binding  MarketPrice,Mode=OneWay}"/>
 
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                             Header="%" 
                                             Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
 
-                            <DataGridTextColumn Width="50" 
+                                <DataGridTextColumn Width="50" 
                                             Header="Status" 
                                             Binding="{Binding  Status,Mode=OneWay}"/>
 
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                             Header="Created At" 
                                             Binding="{Binding  Timestamp,Mode=OneWay}"/>
-                        </DataGrid.Columns>
+                            </DataGrid.Columns>
 
-                    </DataGrid>
+                        </DataGrid>
 
-              
-                </Grid>
+
+                    </Grid>
                 </Border>
             </DataTemplate>
 
         </ResourceDictionary>
     </UserControl.Resources>
 
-    
+
     <ScrollViewer>
         <ItemsControl ItemsSource="{Binding  Data}"/>
     </ScrollViewer>
