@@ -26,6 +26,11 @@
                 <traderWpf:LiveTradesView/>
             </DataTemplate>
 
+
+            <DataTemplate DataType="{x:Type tradeExample:RecentTradesViewer}">
+                <views:RecentTrades/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type tradeExample:NearToMarketViewer}">
                 <traderWpf:NearToMarketView/>
 
@@ -33,7 +38,6 @@
 
             <DataTemplate DataType="{x:Type tradeExample:TradesByPercentViewer}">
                 <views:TradesByPercentDiff/>
-
             </DataTemplate>
 
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
@@ -67,7 +71,12 @@
                         x:Shared="False">
                 <Path  Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" 
                        Data="F1 M 0,10.7852L 14.0247,21.5698L 14.0247,14.7494L 26.8469,14.7494L 26.8469,6.82025L 14.0247,6.82025L 14.0247,0L 0,10.7852 Z "/>
-                <TextBlock Margin="4 0 0 0" Text="Tabs can be dragged"/>
+                <TextBlock Margin="4 0 0 0">
+                    <Hyperlink NavigateUri="http://dragablz.net/"
+                               infrastucture:HyperlinkExtensions.IsExternal="true"
+                               >Tabs can be dragged. Chrome style</Hyperlink>
+                </TextBlock>
+
             </StackPanel>
 
             <Style TargetType="{x:Type dragablz:TabablzControl}" x:Key="BasicExamplesTabStyle">

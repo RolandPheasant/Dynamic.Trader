@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
+             xmlns:views="clr-namespace:TraderWpf.Views"
              d:DataContext="{d:DesignInstance tradeExample:NearToMarketViewer, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -34,40 +35,8 @@
                             Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
         </StackPanel>
 
+        <views:TradesGrid Grid.Row="1"  DataContext="{Binding Data}"/>
 
-        <DataGrid
-                        Grid.Row="1" AutoGenerateColumns="False"
-                              EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True"
-                              ItemsSource="{Binding Data}">
-
-            <DataGrid.Columns>
-                <DataGridTextColumn
-                                            Header="Customer"  
-                                            Binding="{Binding Customer,Mode=OneWay}"/>
-
-                <DataGridTextColumn 
-                                            Header="Currency Pair" 
-                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
-
-                <DataGridTextColumn 
-                                            Header="Trade Price" 
-                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
-
-                <DataGridTextColumn 
-                                            Header="Market Price" 
-                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
-
-                <DataGridTextColumn Width="50" 
-                                            Header="Status" 
-                                            Binding="{Binding  Status,Mode=OneWay}"/>
-
-                <DataGridTextColumn 
-                                            Header="Created At" 
-                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
-            </DataGrid.Columns>
-
-        </DataGrid>
 
     </Grid>
 </UserControl>

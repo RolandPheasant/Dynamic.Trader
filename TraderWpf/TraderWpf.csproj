@@ -59,9 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dragablz.0.0.0.51\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData, Version=3.0.2.14, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData, Version=3.0.2.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.3.0.2.14-beta\lib\net45\DynamicData.dll</HintPath>
+      <HintPath>..\packages\DynamicData.3.0.2.15-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -116,6 +116,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
@@ -143,8 +144,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IntertabClient.cs" />
+    <Compile Include="Views\RecentTrades.xaml.cs">
+      <DependentUpon>RecentTrades.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TradesByPercentDiff.xaml.cs">
       <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TradesGrid.xaml.cs">
+      <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\LiveTradesView.xaml">
       <SubType>Designer</SubType>
@@ -172,7 +179,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RecentTrades.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TradesByPercentDiff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TradesGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

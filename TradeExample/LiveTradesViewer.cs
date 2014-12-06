@@ -5,6 +5,7 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
 using DynamicData.Kernel;
+using DynamicData.Operators;
 using TradeExample.Infrastucture;
 
 namespace TradeExample
@@ -27,13 +28,11 @@ namespace TradeExample
 
             ApplyFilter();
 
-
-
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade))
-                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp))
+                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOnDispatcher()
                 .Bind(_data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
