@@ -10,9 +10,11 @@ namespace TradeExample
         private readonly Trade _trade;
         private readonly IDisposable _cleanUp;
         private bool _recent;
+        private readonly long _id;
 
         public TradeProxy(Trade trade)
         {
+            _id = trade.Id;
             _trade = trade;
 
            // var isRecent = trade.Timestamp.Subtract(DateTime.Now).TotalSeconds < 2;
@@ -106,7 +108,7 @@ namespace TradeExample
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(_trade, other._trade);
+            return _id == other._id;
         }
 
         public override bool Equals(object obj)
@@ -119,7 +121,7 @@ namespace TradeExample
 
         public override int GetHashCode()
         {
-            return (_trade != null ? _trade.GetHashCode() : 0);
+            return _id.GetHashCode();
         }
 
         public static bool operator ==(TradeProxy left, TradeProxy right)
