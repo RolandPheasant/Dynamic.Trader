@@ -27,7 +27,7 @@ namespace TradeExample
             var grouperRefresher = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Subscribe(_ => groupController.RefreshGroup());
 
-            var loader = nearToMarketService.Query(() => 1)
+            var loader = nearToMarketService.Query(() => 6)
                 .Group(trade => (int)Math.Truncate(trade.PercentFromMarket), groupController)
                 .Transform(group => new TradesByPercentDiff(group, _schedulerProvider))
                 .Sort(SortExpressionComparer<TradesByPercentDiff>.Ascending(t => t.PercentBand))
