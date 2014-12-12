@@ -41,7 +41,7 @@ namespace TradeExample
             const int updatePeriod = 10;
 
             //initally load 1000 trades 
-            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(1000, true));
+            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
             
             // create up to 10  periodically
             var tradeGenerator = Observable.Interval(TimeSpan.FromSeconds(updatePeriod))

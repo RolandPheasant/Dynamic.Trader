@@ -26,7 +26,7 @@ namespace TradeExample
 
             _cleanUp = @group.Cache.Connect()
                         .Transform(trade => new TradeProxy(trade))
-                        .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
+                        .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp),SortOptimisations.ComparesImmutableValuesOnly,500)
                         .ObserveOn(schedulerProvider.Dispatcher)
                         .Bind(_data)
                         .Subscribe();
