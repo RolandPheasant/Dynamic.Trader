@@ -8,7 +8,18 @@
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />-->
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Tile.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </UserControl.Resources>
+    
+  <Grid>
         <ScrollViewer>
 
 
@@ -18,7 +29,7 @@
                     
                     <Grid 
                       Margin="0 4 4 0"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Top"
                         HorizontalAlignment="Left">
                         
                         <Grid.ColumnDefinitions >
@@ -27,18 +38,41 @@
                         </Grid.ColumnDefinitions>
 
                         <controls:Tile Grid.Column="0"
-                                       
-                                       Title="{Binding Title}"
+                                     x:Name="tile"  
+                                    Title="{Binding Title}"
                                     Command="{Binding Command}" 
                                     VerticalContentAlignment="Center"
                                     HorizontalContentAlignment="Center"
-                                     VerticalAlignment="Center"
+                                     VerticalAlignment="Top"
+                                     
                                     Width="75"
-                                    Height="75"
-                                    >
-
-                            <!--<ContentControl Content="{Binding TileContent}"/>-->
+                                    Height="75">
+                                <controls:Tile.Style>
+                                    <Style TargetType="{x:Type controls:Tile}">
+                                       <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.9" />
+                                                </Trigger>
+                                        </Style.Triggers>
+                                        
+                                    </Style>
+                                </controls:Tile.Style>
                         </controls:Tile>
+
+                            <!--<Button Grid.Column="0"
+                                       Background="{StaticResource AccentColorBrush }"
+                           
+                                    Command="{Binding Command}" 
+                                    VerticalContentAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                     VerticalAlignment="Top"
+                                    Width="75"
+                                    Height="75">
+                                <TextBlock Text="{Binding Title}"
+                                           Foreground="White"
+                                           FontSize="20" FontWeight="SemiBold"></TextBlock>
+                                
+                            </Button>-->
 
                             <Grid Margin="5 4 5 0" 
                                   VerticalAlignment="Top"
