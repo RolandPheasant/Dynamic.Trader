@@ -237,7 +237,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TradeExample\Trader.Domain.csproj">
+    <ProjectReference Include="..\Trader.Domain\Trader.Domain.csproj">
       <Project>{0CF230F0-1A2D-4843-8F36-62F831E8CB23}</Project>
       <Name>Trader.Domain</Name>
     </ProjectReference>
