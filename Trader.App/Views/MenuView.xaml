@@ -10,13 +10,16 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ScrollViewer>
-            
 
-        <ItemsControl ItemsSource="{Binding Menu}">
+
+            <ItemsControl   MinWidth="300" ItemsSource="{Binding Menu}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     
-                    <Grid HorizontalAlignment="Left">
+                    <Grid 
+                      Margin="0 4 4 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
                         
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="Auto"/>
@@ -27,43 +30,64 @@
                                        
                                        Title="{Binding Title}"
                                     Command="{Binding Command}" 
-                                  
-                                    HorizontalContentAlignment="Left"
-                                    Margin="5"
-                                    Width="110"
-                                    Height="110"
-                                    Padding="8">
+                                    VerticalContentAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                     VerticalAlignment="Center"
+                                    Width="75"
+                                    Height="75"
+                                    >
 
                             <!--<ContentControl Content="{Binding TileContent}"/>-->
                         </controls:Tile>
 
-                            <ItemsControl VerticalAlignment="Center" Grid.Column="1" 
-                                      Margin="5 8 5 0"
+                            <Grid Margin="5 4 5 0" 
+                                  VerticalAlignment="Top"
+                                  Grid.Column="1" >
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBlock Grid.Row="0" 
+                                            HorizontalAlignment="Left"
+                                            TextWrapping="WrapWithOverflow"
+                                            Text="{Binding Description}"/>
+
+                                 <ItemsControl Grid.Row="1" VerticalAlignment="Top" 
+                                      Margin="0 3 0 0"
                                       HorizontalAlignment="Left"
                                       ItemsSource="{Binding Link}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
                                     
-                                    <Grid  >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="75"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                                            <Grid  >
                                         
-                                        <TextBlock Text="{Binding Text}"></TextBlock>
-                                        <TextBlock Grid.Column="1" Margin="4 0 0 0">
-                                                <Hyperlink  NavigateUri="{Binding Url}"
-                                                           infrastucture:HyperlinkExtensions.IsExternal="true">
-                                                    <TextBlock Text="{Binding Display}"></TextBlock>
-                                                </Hyperlink>
-                                        </TextBlock>
-                                    </Grid>
-                                </DataTemplate>
-                                
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="75"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
 
-                    </Grid>
+
+                                                    <TextBlock  Text="{Binding Text}"/>
+                                                <TextBlock  Grid.Column="1" 
+                                                           Margin="4 0 0 0"
+                                                           ToolTip="{Binding Url}"
+                                                           >
+                                                        <Hyperlink  NavigateUri="{Binding Url}"
+                                                                   infrastucture:HyperlinkExtensions.IsExternal="true">
+                                                            <TextBlock Text="{Binding Display}"></TextBlock>
+                                                        </Hyperlink>
+                                                </TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </Grid>
+
+                        </Grid>
                     
 
                 </DataTemplate>
