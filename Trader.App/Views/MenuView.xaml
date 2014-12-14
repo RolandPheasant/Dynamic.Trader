@@ -36,24 +36,28 @@
 
                             <!--<ContentControl Content="{Binding TileContent}"/>-->
                         </controls:Tile>
-                        
-                        <ItemsControl Grid.Column="1" 
+
+                            <ItemsControl VerticalAlignment="Center" Grid.Column="1" 
                                       Margin="5 8 5 0"
                                       HorizontalAlignment="Left"
                                       ItemsSource="{Binding Link}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     
-                                    <StackPanel Orientation="Horizontal">
+                                    <Grid  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="75"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
                                         
                                         <TextBlock Text="{Binding Text}"></TextBlock>
-                                        <TextBlock Margin="4 0 0 0">
+                                        <TextBlock Grid.Column="1" Margin="4 0 0 0">
                                                 <Hyperlink  NavigateUri="{Binding Url}"
                                                            infrastucture:HyperlinkExtensions.IsExternal="true">
-                                                    <TextBlock Text="{Binding Url}"></TextBlock>
+                                                    <TextBlock Text="{Binding Display}"></TextBlock>
                                                 </Hyperlink>
                                         </TextBlock>
-                                    </StackPanel>
+                                    </Grid>
                                 </DataTemplate>
                                 
                             </ItemsControl.ItemTemplate>

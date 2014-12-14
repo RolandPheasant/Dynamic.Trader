@@ -117,6 +117,7 @@
     </ApplicationDefinition>
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
+    <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>

@@ -26,9 +26,9 @@ namespace Trader.Client.Infrastucture
             {
                 new MenuItem("Live Trades",       () => Open<LiveTradesViewer>("Live Trades"),new []
                                                                                               {
-                                                                                                  new Link("View Model", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
-                                                                                                  new Link("Service", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
-                                                                                                  new Link("Blog", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
+                                                                                                  new Link("View Model","LiveTradesViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
+                                                                                                  new Link("Service","TradeService.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
+                                                                                                  new Link("Blog","Ui Integration", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
                                                                                               }),
                 new MenuItem("Near to Market",    () => Open<NearToMarketViewer>("Near to Market"),new []
                                                                                               {
