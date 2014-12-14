@@ -5,11 +5,10 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
 using DynamicData.Operators;
-using TradeExample;
 using TradeExample.Infrastucture;
 using TradeExample.Services;
 
-namespace TraderWpf.Views
+namespace Trader.Client.Views
 {
     public class TradesByPercentViewer : AbstractNotifyPropertyChanged, IDisposable
     {

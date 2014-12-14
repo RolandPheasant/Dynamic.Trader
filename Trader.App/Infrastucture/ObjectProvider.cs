@@ -1,6 +1,6 @@
 ﻿using TradeExample.Infrastucture;
 
-namespace TraderWpf.Infrastucture
+namespace Trader.Client.Infrastucture
 {
     public class ObjectProvider : IObjectProvider
     {

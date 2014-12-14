@@ -8,9 +8,8 @@ using TradeExample.Infrastucture;
 using TradeExample.Model;
 using TradeExample.Services;
 
-namespace TradeExample
+namespace Trader.Client.Views
 {
-
     public class TradesByTimeViewer : AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly ISchedulerProvider _schedulerProvider;

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace TraderWpf.Views
+namespace Trader.Client.Views
 {
     /// <summary>
     /// Interaction logic for TradesByPercentDiff.xaml

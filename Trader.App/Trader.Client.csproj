@@ -7,8 +7,8 @@
     <ProjectGuid>{D227E424-B360-4B6D-BFAC-92096515DA89}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TraderWpf</RootNamespace>
-    <AssemblyName>TraderWpf</AssemblyName>
+    <RootNamespace>Trader.Client</RootNamespace>
+    <AssemblyName>Trader.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TraderWpf.BootStrap</StartupObject>
+    <StartupObject>Trader.Client.BootStrap</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Themes\dynamic.data.BLUE.ico</ApplicationIcon>
@@ -154,7 +154,6 @@
       <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TradesByPercentViewer.cs" />
-    <Compile Include="Views\TradesByTime.cs" />
     <Compile Include="Views\TradesByTimeView.xaml.cs">
       <DependentUpon>TradesByTimeView.xaml</DependentUpon>
     </Compile>

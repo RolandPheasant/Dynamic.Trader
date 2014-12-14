@@ -5,12 +5,11 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
 using DynamicData.Kernel;
-using TradeExample;
 using TradeExample.Infrastucture;
 using TradeExample.Model;
 using TradeExample.Services;
 
-namespace TraderWpf.Views
+namespace Trader.Client.Views
 {
     public class NearToMarketViewer : AbstractNotifyPropertyChanged, IDisposable
     {

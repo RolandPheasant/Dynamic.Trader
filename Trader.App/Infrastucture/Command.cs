@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace TraderWpf
+namespace Trader.Client.Infrastucture
 {
     public class Command : ICommand
     {

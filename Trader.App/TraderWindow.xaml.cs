@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
-namespace TraderWpf
+namespace Trader.Client
 {
     /// <summary>
     /// Interaction logic for TraderWindow.xaml

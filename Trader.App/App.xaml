@@ -1,11 +1,9 @@
-﻿<Application x:Class="TraderWpf.App"
+﻿<Application x:Class="Trader.Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-             xmlns:traderWpf="clr-namespace:TraderWpf"
-             xmlns:infrastucture="clr-namespace:TraderWpf.Infrastucture"
-             xmlns:views="clr-namespace:TraderWpf.Views"
-             xmlns:tradeExample1="clr-namespace:TradeExample">
+             xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+             xmlns:views="clr-namespace:Trader.Client.Views">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -15,17 +13,17 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/TraderWpf;component/Themes/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Trader.Client;component/Themes/Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MetroToolTip}"></Style>
 
             <DataTemplate DataType="{x:Type infrastucture:MenuItems}">
-                 <traderWpf:MenuView/>
+                 <views:MenuView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type views:LiveTradesViewer}">
-                <traderWpf:LiveTradesView/>
+                <views:LiveTradesView/>
             </DataTemplate>
 
 
@@ -34,7 +32,7 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type views:NearToMarketViewer}">
-                <traderWpf:NearToMarketView/>
+                <views:NearToMarketView/>
 
             </DataTemplate>
 
@@ -42,7 +40,7 @@
                 <views:TradesByPercentDiff/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample1:TradesByTimeViewer}">
+            <DataTemplate DataType="{x:Type views:TradesByTimeViewer}">
                 <views:TradesByTimeView/>
             </DataTemplate>
 

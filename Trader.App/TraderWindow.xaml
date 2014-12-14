@@ -1,18 +1,19 @@
-﻿<controls:MetroWindow x:Class="TraderWpf.TraderWindow"
+﻿<controls:MetroWindow x:Class="Trader.Client.TraderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:traderWpf="clr-namespace:TraderWpf"
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:client="clr-namespace:Trader.Client"
+        xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
         mc:Ignorable="d"
         Icon="Themes/dynamic.data.BLUE.ico"
         WindowStartupLocation="CenterScreen"  
          GlowBrush="{DynamicResource AccentColorBrush3}"
         Title="Dynamic Trader" Height="500" Width="700"
-      d:DataContext="{d:DesignInstance traderWpf:TraderWindowModel, IsDesignTimeCreatable=False}">
+      d:DataContext="{d:DesignInstance client:TraderWindowModel, IsDesignTimeCreatable=False}">
 
 
     <Window.Resources>
@@ -53,12 +54,12 @@
                         <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
                     </dragablz:TabablzControl.InterTabController>
                     <dragablz:TabablzControl.CustomHeaderItemTemplate>
-                        <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                        <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
                             <TextBlock Text="{Binding Title}" />
                         </DataTemplate>
                     </dragablz:TabablzControl.CustomHeaderItemTemplate>
                     <TabControl.ContentTemplate>
-                        <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                        <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
                             <ContentControl Content="{Binding Content}" />
                         </DataTemplate>
                     </TabControl.ContentTemplate>
@@ -78,14 +79,14 @@
                                              Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
             </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.CustomHeaderItemTemplate>
-                <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </dragablz:TabablzControl.CustomHeaderItemTemplate>
 
             
             <TabControl.ContentTemplate>
-                <DataTemplate DataType="{x:Type traderWpf:ViewContainer}">
+                <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
                     <ContentControl Content="{Binding Content}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using TradeExample;
 using TradeExample.Infrastucture;
-using TraderWpf.Views;
+using Trader.Client.Views;
 
-namespace TraderWpf.Infrastucture
+namespace Trader.Client.Infrastucture
 {
     public class MenuItems: IDisposable
     {

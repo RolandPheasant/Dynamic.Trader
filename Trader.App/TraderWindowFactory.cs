@@ -1,7 +1,8 @@
 ﻿using System;
 using TradeExample.Infrastucture;
+using TraderWpf;
 
-namespace TraderWpf
+namespace Trader.Client
 {
     public class TraderWindowFactory
     {

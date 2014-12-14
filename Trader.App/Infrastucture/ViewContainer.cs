@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TraderWpf
+namespace Trader.Client.Infrastucture
 {
     public class ViewContainer
     {

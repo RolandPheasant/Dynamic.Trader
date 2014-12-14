@@ -2,11 +2,10 @@
 using System.Windows;
 using System.Windows.Threading;
 using StructureMap;
-using TradeExample;
 using TradeExample.Services;
 using TraderWpf.Infrastucture;
 
-namespace TraderWpf
+namespace Trader.Client
 {
     public class BootStrap
     {

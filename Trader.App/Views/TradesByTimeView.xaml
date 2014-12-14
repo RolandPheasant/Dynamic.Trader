@@ -1,14 +1,12 @@
-﻿<UserControl x:Class="TraderWpf.Views.TradesByTimeView"
+﻿<UserControl x:Class="Trader.Client.Views.TradesByTimeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
-             xmlns:views="clr-namespace:TraderWpf.Views"
-             xmlns:tradeExample1="clr-namespace:TradeExample"
+             xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:model="clr-namespace:TradeExample.Model;assembly=TradeExample"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance tradeExample1:TradesByTimeViewer, IsDesignTimeCreatable=False}"
+             d:DataContext="{d:DesignInstance views:TradesByTimeViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>

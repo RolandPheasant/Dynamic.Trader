@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="TraderWpf.MenuView"
+﻿<UserControl x:Class="Trader.Client.Views.MenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:traderWpf="clr-namespace:TraderWpf"
-             xmlns:infrastucture="clr-namespace:TraderWpf.Infrastucture"
+             xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">

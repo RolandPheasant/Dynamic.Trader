@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Documents;
 
-namespace TraderWpf.Infrastucture
+namespace Trader.Client.Infrastucture
 {
     /// <summary>
     /// Thanks to http://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf

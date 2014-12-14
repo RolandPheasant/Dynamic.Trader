@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Dragablz;
 
-namespace TraderWpf
+namespace Trader.Client
 {
     public class InterTabClient : IInterTabClient
     {

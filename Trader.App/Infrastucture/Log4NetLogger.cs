@@ -2,7 +2,7 @@
 using log4net;
 using TradeExample.Infrastucture;
 
-namespace TraderWpf.Infrastucture
+namespace Trader.Client.Infrastucture
 {
     public class Log4NetLogger : ILogger
     {
