@@ -3,7 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using TradeExample.Infrastucture;
 
-namespace TradeExample
+namespace TradeExample.Model
 {
     public class TradeProxy:AbstractNotifyPropertyChanged, IDisposable, IEquatable<TradeProxy>
     {

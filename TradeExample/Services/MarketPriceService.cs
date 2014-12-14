@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using DynamicData.Kernel;
 
-namespace TradeExample
+namespace TradeExample.Services
 {
     public interface IMarketPriceService
     {

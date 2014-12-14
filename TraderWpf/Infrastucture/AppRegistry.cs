@@ -3,6 +3,8 @@ using System.IO;
 using StructureMap.Configuration.DSL;
 using TradeExample;
 using TradeExample.Infrastucture;
+using TradeExample.Model;
+using TradeExample.Services;
 
 namespace TraderWpf.Infrastucture
 {

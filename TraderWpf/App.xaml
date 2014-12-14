@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              xmlns:traderWpf="clr-namespace:TraderWpf"
-             xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
              xmlns:infrastucture="clr-namespace:TraderWpf.Infrastucture"
-             xmlns:views="clr-namespace:TraderWpf.Views">
+             xmlns:views="clr-namespace:TraderWpf.Views"
+             xmlns:tradeExample1="clr-namespace:TradeExample">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -24,25 +24,25 @@
                  <traderWpf:MenuView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample:LiveTradesViewer}">
+            <DataTemplate DataType="{x:Type views:LiveTradesViewer}">
                 <traderWpf:LiveTradesView/>
             </DataTemplate>
 
 
-            <DataTemplate DataType="{x:Type tradeExample:RecentTradesViewer}">
+            <DataTemplate DataType="{x:Type views:RecentTradesViewer}">
                 <views:RecentTrades/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample:NearToMarketViewer}">
+            <DataTemplate DataType="{x:Type views:NearToMarketViewer}">
                 <traderWpf:NearToMarketView/>
 
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample:TradesByPercentViewer}">
+            <DataTemplate DataType="{x:Type views:TradesByPercentViewer}">
                 <views:TradesByPercentDiff/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type tradeExample:TradesByTimeViewer}">
+            <DataTemplate DataType="{x:Type tradeExample1:TradesByTimeViewer}">
                 <views:TradesByTimeView/>
             </DataTemplate>
 

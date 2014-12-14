@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using TradeExample;
 using TradeExample.Infrastucture;
+using TraderWpf.Views;
 
 namespace TraderWpf.Infrastucture
 {

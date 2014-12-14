@@ -4,8 +4,9 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Controllers;
 using TradeExample.Annotations;
+using TradeExample.Model;
 
-namespace TradeExample
+namespace TradeExample.Services
 {
     public class NearToMarketService : INearToMarketService
     {

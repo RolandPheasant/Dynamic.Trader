@@ -121,6 +121,7 @@
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LiveTradesViewer.cs" />
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
@@ -144,15 +145,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IntertabClient.cs" />
+    <Compile Include="Views\NearToMarketViewer.cs" />
     <Compile Include="Views\RecentTrades.xaml.cs">
       <DependentUpon>RecentTrades.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RecentTradesViewer.cs" />
     <Compile Include="Views\TradesByPercentDiff.xaml.cs">
       <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TradesByPercentViewer.cs" />
+    <Compile Include="Views\TradesByTime.cs" />
     <Compile Include="Views\TradesByTimeView.xaml.cs">
       <DependentUpon>TradesByTimeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TradesByTimeViewer.cs" />
     <Compile Include="Views\TradesGrid.xaml.cs">
       <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>

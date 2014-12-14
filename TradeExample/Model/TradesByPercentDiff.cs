@@ -6,7 +6,7 @@ using DynamicData.Operators;
 using TradeExample.Annotations;
 using TradeExample.Infrastucture;
 
-namespace TradeExample
+namespace TradeExample.Model
 {
     public class TradesByPercentDiff: IDisposable, IEquatable<TradesByPercentDiff>
     {

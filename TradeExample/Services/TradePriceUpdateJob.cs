@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
+using TradeExample.Model;
 
-namespace TradeExample
+namespace TradeExample.Services
 {
 
     public class TradePriceUpdateJob: IDisposable

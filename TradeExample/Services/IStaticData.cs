@@ -1,4 +1,4 @@
-namespace TradeExample
+namespace TradeExample.Services
 {
     public interface IStaticData
     {

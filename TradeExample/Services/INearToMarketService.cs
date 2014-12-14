@@ -1,8 +1,9 @@
 ﻿using System;
 using DynamicData;
 using TradeExample.Annotations;
+using TradeExample.Model;
 
-namespace TradeExample
+namespace TradeExample.Services
 {
     public interface INearToMarketService
     {

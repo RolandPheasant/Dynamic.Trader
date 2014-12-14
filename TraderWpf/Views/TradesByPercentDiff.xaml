@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
              xmlns:views="clr-namespace:TraderWpf.Views"
+             xmlns:model="clr-namespace:TradeExample.Model;assembly=TradeExample"
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance tradeExample:TradesByPercentViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -15,7 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-            <DataTemplate DataType="{x:Type tradeExample:TradesByPercentDiff}">
+            <DataTemplate DataType="{x:Type model:TradesByPercentDiff}">
                 <Border Margin="4 4 4 0" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="0">
                     <Grid >
 

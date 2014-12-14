@@ -1,4 +1,4 @@
-﻿namespace TradeExample
+﻿namespace TradeExample.Model
 {
     public enum TradeStatus
     {
