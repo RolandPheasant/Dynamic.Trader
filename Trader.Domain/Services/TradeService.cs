@@ -64,13 +64,8 @@ namespace Trader.Domain.Services
             var tradeCloser = _schedulerProvider.TaskPool
                 .ScheduleRecurringAction(randomInterval, () =>
                 {
-                    
-                    
-                    
                     var number = random.Next(1, 5);
                     _logger.Info("Closing {0} trades", number);
-                    
-                    
                     _tradesSource.BatchUpdate(updater =>
                                               {
                                                   var trades = updater.Items
@@ -82,19 +77,16 @@ namespace Trader.Domain.Services
 
                                                   _tradesSource.AddOrUpdate(toClose);
                                               });
-
                 });
 
             return new CompositeDisposable(tradeGenerator, tradeCloser);
 
         }
-
-
+        
         public IObservableCache<Trade, long> Trades
         {
             get { return _tradesCache; }
         }
-
 
         public void Dispose()
         {

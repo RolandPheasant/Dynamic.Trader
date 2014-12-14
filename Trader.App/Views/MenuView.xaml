@@ -39,14 +39,13 @@
 
                         <controls:Tile Grid.Column="0"
                                      x:Name="tile"  
+                                       Margin="4"
                                     Title="{Binding Title}"
                                     Command="{Binding Command}" 
-                                    VerticalContentAlignment="Center"
-                                    HorizontalContentAlignment="Center"
-                                     VerticalAlignment="Top"
+           
                                      
-                                    Width="75"
-                                    Height="75">
+                                    Width="85"
+                                    Height="85">
                                 <controls:Tile.Style>
                                     <Style TargetType="{x:Type controls:Tile}">
                                        <Style.Triggers>

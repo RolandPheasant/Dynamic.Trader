@@ -18,16 +18,6 @@
         <StackPanel Grid.Row="0" Grid.Column="0"
                                 Orientation="Horizontal">
 
-            <TextBox 
-                            controls:TextboxHelper.Watermark="Enter search text..."
-                             Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Width="125"
-                             Height="18"
-                            controls:TextboxHelper.ClearTextButton="True"
-                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-
             <Slider Width="100" 
                                  Margin="4 0 0 0"
                                  VerticalAlignment="Center"
@@ -36,7 +26,6 @@
                                      ToolTip="Move slider to filter by % from the market"
                                 TickFrequency=".1"
                                 Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-
             </Slider>
 
             <TextBlock
@@ -50,7 +39,7 @@
                              Margin="4 0 0 0"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
+                            Text="{Binding Data.Count, StringFormat='The are \{0} live in within this range'}"/>
 
 
         </StackPanel>
