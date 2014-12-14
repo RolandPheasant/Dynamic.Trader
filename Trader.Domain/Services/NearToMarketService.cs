@@ -25,7 +25,6 @@ namespace Trader.Domain.Services
             return Observable.Create<IChangeSet<Trade, long>>
                 (observer =>
                  {
-
                      var locker = new object();
                      var filter = new FilterController<Trade>();
                      filter.Change(trade =>
