@@ -10,28 +10,63 @@
               d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <ScrollViewer>
+            
+
         <ItemsControl ItemsSource="{Binding Menu}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <controls:Tile  Title="{Binding Title}"
+                    
+                    <Grid HorizontalAlignment="Left">
+                        
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <controls:Tile Grid.Column="0"
+                                       
+                                       Title="{Binding Title}"
                                     Command="{Binding Command}" 
-                                     VerticalContentAlignment="Top"
+                                  
                                     HorizontalContentAlignment="Left"
                                     Margin="5"
                                     Width="110"
                                     Height="110"
                                     Padding="8">
 
-                        <ContentControl Content="{Binding TileContent}"/>
-                    </controls:Tile>
+                            <!--<ContentControl Content="{Binding TileContent}"/>-->
+                        </controls:Tile>
+                        
+                        <ItemsControl Grid.Column="1" 
+                                      Margin="5 8 5 0"
+                                      HorizontalAlignment="Left"
+                                      ItemsSource="{Binding Link}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    
+                                    <StackPanel Orientation="Horizontal">
+                                        
+                                        <TextBlock Text="{Binding Text}"></TextBlock>
+                                        <TextBlock Margin="4 0 0 0">
+                                                <Hyperlink  NavigateUri="{Binding Url}"
+                                                           infrastucture:HyperlinkExtensions.IsExternal="true">
+                                                    <TextBlock Text="{Binding Url}"></TextBlock>
+                                                </Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                                
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </Grid>
+                    
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
         </ItemsControl>
+
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
+using DynamicData.Operators;
 using TradeExample.Infrastucture;
 
 namespace TradeExample
@@ -26,7 +27,7 @@ namespace TradeExample
             var loader = nearToMarketService.Query(() => 6)
                 .Group(trade => (int)Math.Truncate(Math.Abs(trade.PercentFromMarket)), groupController)
                 .Transform(group => new TradesByPercentDiff(group, _schedulerProvider))
-                .Sort(SortExpressionComparer<TradesByPercentDiff>.Ascending(t => t.PercentBand))
+                .Sort(SortExpressionComparer<TradesByPercentDiff>.Ascending(t => t.PercentBand),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(_schedulerProvider.Dispatcher)
                 .Bind(_data)
                 .DisposeMany()

@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Kernel;
 using TradeExample.Infrastucture;
@@ -42,14 +40,12 @@ namespace TradeExample
             //bit of code to generate trades
             var random = new Random();
 
-            const int updatePeriod = 10;
-
-            //initally load 1000 trades 
+            //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
 
             Func<TimeSpan> randomInterval = () =>
                                             {
-                                                var ms = random.Next(500, 5000);
+                                                var ms = random.Next(150, 5000);
                                                 return TimeSpan.FromMilliseconds(ms);
                                             };
 
@@ -76,7 +72,7 @@ namespace TradeExample
                     
                     _tradesSource.BatchUpdate(updater =>
                                               {
-                                                  var trades = _tradesSource.Items
+                                                  var trades = updater.Items
                                                     .Where(trade => trade.Status == TradeStatus.Live)
                                                     .OrderBy(t => Guid.NewGuid()).Take(number).ToArray();
 

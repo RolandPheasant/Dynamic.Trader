@@ -24,12 +24,32 @@ namespace TraderWpf.Infrastucture
 
             _menu = new List<MenuItem>
             {
-                new MenuItem("Live Trades",       () => Open<LiveTradesViewer>("Live Trades")),
-                new MenuItem("Near to Market",    () => Open<NearToMarketViewer>("Near to Market")),
-                new MenuItem("Trades By %",    () => Open<TradesByPercentViewer>("Trades By % Diff")),
-                new MenuItem("Trades By hh:mm",    () => Open<TradesByTimeViewer>("Trades By hh:mm")),
-       
-                new MenuItem("Recent Trades",    () => Open<RecentTradesViewer>("Recent Trades")),
+                new MenuItem("Live Trades",       () => Open<LiveTradesViewer>("Live Trades"),new []
+                                                                                              {
+                                                                                                  new Link("View Model", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
+                                                                                                  new Link("Service", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
+                                                                                                  new Link("Blog", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
+                                                                                              }),
+                new MenuItem("Near to Market",    () => Open<NearToMarketViewer>("Near to Market"),new []
+                                                                                              {
+                                                                                                  new Link("View Model", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
+                                                                                                  new Link("Trade Service", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
+                                                                                              }),
+                new MenuItem("Trades By %",    () => Open<TradesByPercentViewer>("Trades By % Diff"),new []
+                                                                                              {
+                                                                                                  new Link("View Model", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
+                                                                                                  new Link("Trade Service", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
+                                                                                              }),
+                new MenuItem("Trades By hh:mm",    () => Open<TradesByTimeViewer>("Trades By hh:mm"),new []
+                                                                                              {
+                                                                                                  new Link("View Model", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
+                                                                                                  new Link("Trade Service", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
+                                                                                              }),
+                new MenuItem("Recent Trades",    () => Open<RecentTradesViewer>("Recent Trades"),new []
+                                                                                              {
+                                                                                                  new Link("View Model", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/LiveTradesViewer.cs"), 
+                                                                                                  new Link("Trade Service", "https://github.com/RolandPheasant/TradingDemo/blob/master/TradeExample/TradeService.cs"), 
+                                                                                              }),
             };
 
             _cleanUp = Disposable.Create(() =>

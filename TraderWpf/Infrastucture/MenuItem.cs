@@ -1,32 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace TraderWpf
 {
+
+    public enum LinkCategory
+    {
+        Code,
+        Blog
+    }
+
+    public class Link
+    {
+        private readonly string _text;
+        private readonly string _url;
+
+        public Link(string text, string url)
+        {
+            _text = text;
+            _url = url;
+        }
+
+        public string Text
+        {
+            get { return _text; }
+        }
+
+        public string Url
+        {
+            get { return _url; }
+        }
+    }
+
     public class MenuItem
     {
         private readonly string _title;
+        private readonly IEnumerable<Link> _link;
         private readonly ICommand _command;
-        private readonly object _tileContent;
-        private readonly string _group;
 
 
-        public MenuItem(string title, Action action, object tileContent = null)
+
+        public MenuItem(string title, Action action,Link link)
+            : this(title, action, new[] { link })
+        {
+        }
+        
+        public MenuItem(string title, Action action, IEnumerable<Link> link=null )
         {
             _title = title;
+            _link = link ?? Enumerable.Empty<Link>();
             _command = new Command(action); ;
-            _tileContent = tileContent;
-            _group = string.Empty;
         }
-
-
-        public MenuItem(string title, string group, Action action, object tileContent = null)
-        {
-            _title = title;
-            _command = new Command(action); ;
-            _tileContent = tileContent;
-            _group = group;
-        }
+        
 
         public string Title
         {
@@ -38,14 +65,9 @@ namespace TraderWpf
             get { return _command; }
         }
 
-        public object TileContent
+        public IEnumerable<Link> Link
         {
-            get { return _tileContent; }
-        }
-
-        public string Group
-        {
-            get { return _group; }
+            get { return _link; }
         }
     }
 }
