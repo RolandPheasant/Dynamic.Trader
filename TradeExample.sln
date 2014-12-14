@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeExample", "TradeExample\TradeExample.csproj", "{0CF230F0-1A2D-4843-8F36-62F831E8CB23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trader.Domain", "TradeExample\Trader.Domain.csproj", "{0CF230F0-1A2D-4843-8F36-62F831E8CB23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trader.App", "TraderWpf\Trader.App.csproj", "{D227E424-B360-4B6D-BFAC-92096515DA89}"
 EndProject
