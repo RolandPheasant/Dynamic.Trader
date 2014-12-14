@@ -58,7 +58,7 @@ namespace Trader.Client.Infrastucture
                         () => Open<TradesByTimeViewer>("Trades By hh:mm"),new []
                         {
                             new Link("View Model","TradesByTimeViewer.cs" ,"https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/TradesByTimeViewer.cs"), 
-                            new Link("Group Model","TradesByTime.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByPercentDiff.cs"),
+                            new Link("Group Model","TradesByTime.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByTime.cs"),
                         }),
                 
                         new MenuItem("Recent Trades",   
