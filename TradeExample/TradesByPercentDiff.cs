@@ -11,24 +11,25 @@ namespace TradeExample
     public class TradesByPercentDiff: IDisposable, IEquatable<TradesByPercentDiff>
     {
         private readonly IGroup<Trade, long, int> _group;
-        private readonly IObservableCollection<TradeProxy> _data;
+        private readonly IObservableCollection<TradeProxy> _data= new ObservableCollectionExtended<TradeProxy>();
         private readonly IDisposable _cleanUp;
         private readonly int _percentBand;
 
-        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group, 
-            ISchedulerProvider schedulerProvider)
+        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group,
+            [NotNull] ISchedulerProvider schedulerProvider)
         {
             if (@group == null) throw new ArgumentNullException("group");
+            if (schedulerProvider == null) throw new ArgumentNullException("schedulerProvider");
+
             _group = @group;
             _percentBand = @group.Key;
-
-            _data = new ObservableCollectionExtended<TradeProxy>();
 
             _cleanUp = @group.Cache.Connect()
                         .Transform(trade => new TradeProxy(trade))
                         .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp),SortOptimisations.ComparesImmutableValuesOnly,500)
                         .ObserveOn(schedulerProvider.Dispatcher)
                         .Bind(_data)
+                        .DisposeMany()
                         .Subscribe();
         }
 

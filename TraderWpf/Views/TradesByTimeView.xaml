@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TraderWpf.Views.TradesByPercentDiff"
+﻿<UserControl x:Class="TraderWpf.Views.TradesByTimeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,9 @@
              xmlns:tradeExample="clr-namespace:TradeExample;assembly=TradeExample"
              xmlns:views="clr-namespace:TraderWpf.Views"
              mc:Ignorable="d" 
-              d:DataContext="{d:DesignInstance tradeExample:TradesByPercentViewer, IsDesignTimeCreatable=False}"
+             d:DataContext="{d:DesignInstance tradeExample:TradesByTimeViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,7 +16,8 @@
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-            <DataTemplate DataType="{x:Type tradeExample:TradesByPercentDiff}">
+
+            <DataTemplate DataType="{x:Type tradeExample:TradesByTime}">
                 <Border Margin="4 4 4 0" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="0">
                     <Grid >
 
@@ -35,27 +37,19 @@
                             <CheckBox    Grid.Row="0" 
                                   Grid.Column="0"
                                  x:Name="ShowData"
+      
                                 Style="{StaticResource MetroCheckBox}">
-                                    <TextBlock  Grid.Row="0" Grid.Column="1"  
+                                    <TextBlock VerticalAlignment="Center" FontWeight="DemiBold"
+                                         >
 
-                                                VerticalAlignment="Center" FontWeight="DemiBold"
-                                                Margin="5 0 0 0">
                                         <TextBlock.Text>
-                                            <MultiBinding StringFormat=" {0}-{1} % diff from market">
-                                                <Binding Path="PercentBand"/>
-                                                <Binding Path="PercentBandUpperBound"/>
+                                            <MultiBinding StringFormat="{}{0} ({1})">
+                                                <Binding Path="Description"/>
+                                                <Binding Path="Data.Count"/>
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
                             </CheckBox>
-
-
-                            <TextBlock  Margin ="4 0 0 0"  Grid.Column="2"
-                                               HorizontalAlignment="Right" 
-                                                VerticalAlignment="Center"
-                                                Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}"/>
-
-
                         </Grid>
 
                         <views:TradesGrid 
@@ -64,14 +58,13 @@
                             Margin="4"
                             Visibility="{Binding Path=IsChecked,ElementName=ShowData, Converter={StaticResource BooleanToVisibilityConverter}}"
                             DataContext="{Binding Data}"/>
-
+                       
                     </Grid>
                 </Border>
             </DataTemplate>
 
         </ResourceDictionary>
     </UserControl.Resources>
-
 
     <ScrollViewer>
         <ItemsControl ItemsSource="{Binding  Data}"/>

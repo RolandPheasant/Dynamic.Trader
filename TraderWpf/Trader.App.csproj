@@ -150,6 +150,9 @@
     <Compile Include="Views\TradesByPercentDiff.xaml.cs">
       <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TradesByTimeView.xaml.cs">
+      <DependentUpon>TradesByTimeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TradesGrid.xaml.cs">
       <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TradesByPercentDiff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TradesByTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,12 +11,14 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Tooltip.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/TraderWpf;component/Themes/Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MetroToolTip}"></Style>
 
             <DataTemplate DataType="{x:Type infrastucture:MenuItems}">
                  <traderWpf:MenuView/>
@@ -40,6 +42,11 @@
                 <views:TradesByPercentDiff/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type tradeExample:TradesByTimeViewer}">
+                <views:TradesByTimeView/>
+            </DataTemplate>
+
+            
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
                 <Style.Setters>
@@ -83,8 +90,6 @@
                 <Setter Property="Margin" Value="8 8 8 8" />
                 <Setter Property="HeaderSuffixContent" Value="{StaticResource HeaderSuffixContent}" />
             </Style>
-
-
 
 
 

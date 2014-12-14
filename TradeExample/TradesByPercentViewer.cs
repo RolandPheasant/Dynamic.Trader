@@ -8,9 +8,6 @@ using TradeExample.Infrastucture;
 
 namespace TradeExample
 {
-
-
-
     public class TradesByPercentViewer : AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly ISchedulerProvider _schedulerProvider;

@@ -17,13 +17,15 @@ namespace TraderWpf
 
            var container =  new Container(x=> x.AddRegistry<AppRegistry>());
 
+
+           var factory = container.GetInstance<TraderWindowFactory>();
+           var window = factory.Create(true);
+           container.Configure(x => x.For<Dispatcher>().Add(window.Dispatcher));
+
             //run start up jobs
             var priceUpdater = container.GetInstance<TradePriceUpdateJob>();
 
 
-            var factory = container.GetInstance<TraderWindowFactory>();
-            var window = factory.Create(true);
-            container.Configure(x => x.For<Dispatcher>().Add(window.Dispatcher));
             window.Show();
 
             app.Resources.Add(SystemParameters.ClientAreaAnimationKey, null);

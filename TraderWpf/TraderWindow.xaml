@@ -11,7 +11,7 @@
         Icon="Themes/dynamic.data.BLUE.ico"
         WindowStartupLocation="CenterScreen"  
          GlowBrush="{DynamicResource AccentColorBrush3}"
-        Title="Dynamic Trader" Height="500" Width="650"
+        Title="Dynamic Trader" Height="500" Width="700"
       d:DataContext="{d:DesignInstance traderWpf:TraderWindowModel, IsDesignTimeCreatable=False}">
 
 
