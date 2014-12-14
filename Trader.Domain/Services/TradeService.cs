@@ -54,7 +54,7 @@ namespace Trader.Domain.Services
             var tradeGenerator = _schedulerProvider.TaskPool
                             .ScheduleRecurringAction(randomInterval, () =>
                             {
-                                var number = random.Next(1, 5);
+                                var number = random.Next(1,7);
                                 _logger.Info("Adding {0} trades", number);
                                 var trades = _tradeGenerator.Generate(number);
                                 _tradesSource.AddOrUpdate(trades);
@@ -64,7 +64,7 @@ namespace Trader.Domain.Services
             var tradeCloser = _schedulerProvider.TaskPool
                 .ScheduleRecurringAction(randomInterval, () =>
                 {
-                    var number = random.Next(1, 5);
+                    var number = random.Next(1, 8);
                     _logger.Info("Closing {0} trades", number);
                     _tradesSource.BatchUpdate(updater =>
                                               {

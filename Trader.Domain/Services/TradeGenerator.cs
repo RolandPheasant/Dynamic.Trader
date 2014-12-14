@@ -17,8 +17,6 @@ namespace Trader.Domain.Services
 
         public IEnumerable<Trade> Generate(int numberToGenerate, bool initialLoad=false)
         {
-
-
             Func<Trade> newTrade = () =>
                                    {
                                        var id = Guid.NewGuid().GetHashCode();

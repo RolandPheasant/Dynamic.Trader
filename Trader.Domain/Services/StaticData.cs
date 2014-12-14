@@ -22,8 +22,6 @@ namespace Trader.Domain.Services
             {
                 get { return _startingPrice; }
             }
-
-
         }
 
         private readonly CurrencyPair[] _currencyPairs =

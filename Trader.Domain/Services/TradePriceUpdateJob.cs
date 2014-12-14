@@ -8,7 +8,6 @@ using Trader.Domain.Model;
 
 namespace Trader.Domain.Services
 {
-
     public class TradePriceUpdateJob: IDisposable
     {
         private readonly IDisposable _job;

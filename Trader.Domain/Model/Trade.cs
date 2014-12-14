@@ -7,8 +7,7 @@ namespace Trader.Domain.Model
     public class Trade: IDisposable, IEquatable<Trade>
     {
         private readonly ISubject<decimal> _marketPriceChangedSubject = new ReplaySubject<decimal>(1); 
-
-
+        
         public long Id { get; private set; }
         public string CurrencyPair { get; private set; }
         public string Customer { get; private set; }

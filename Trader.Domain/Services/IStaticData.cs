@@ -4,6 +4,5 @@ namespace Trader.Domain.Services
     {
         string[] Customers { get; }
         StaticData.CurrencyPair[] CurrencyPairs { get; }
-
     }
 }

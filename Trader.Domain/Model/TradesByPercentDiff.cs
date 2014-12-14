@@ -33,6 +33,26 @@ namespace Trader.Domain.Model
                         .Subscribe();
         }
 
+        public int PercentBand
+        {
+            get { return _percentBand; }
+        }
+
+        public int PercentBandUpperBound
+        {
+            get { return _group.Key + 1; }
+        }
+
+        public IObservableCollection<TradeProxy> Data
+        {
+            get { return _data; }
+        }
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
+
         #region Equality
 
         public bool Equals(TradesByPercentDiff other)
@@ -67,24 +87,5 @@ namespace Trader.Domain.Model
 
         #endregion
 
-        public int PercentBand
-        {
-            get { return _percentBand; }
-        }
-
-        public int PercentBandUpperBound
-        {
-            get { return _group.Key + 1; }
-        }
-
-        public IObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
     }
 }

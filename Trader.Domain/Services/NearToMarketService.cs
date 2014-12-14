@@ -33,10 +33,12 @@ namespace Trader.Domain.Services
                                        return Math.Abs(trade.PercentFromMarket) <= near;
                                    });
 
+                     //re-evaluate filter periodically
                      var reevaluator = Observable.Interval(TimeSpan.FromMilliseconds(250))
                          .Synchronize(locker)
                          .Subscribe(_ => filter.Reevaluate());
 
+                     //filter on live trades matching % specified
                      var subscriber = _tradeService.Trades
                          .Connect(trade=>trade.Status==TradeStatus.Live)
                          .Synchronize(locker)

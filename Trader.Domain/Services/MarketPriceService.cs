@@ -19,8 +19,6 @@ namespace Trader.Domain.Services
 
         private IObservable<decimal> GenerateStream(decimal initalPrice)
         {
-
-
             return Observable.Create<decimal>(observer =>
                                               {
 
