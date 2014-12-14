@@ -8,7 +8,7 @@ It is blogged about at http://dynamicdataproject.wordpress.com/
 
 - Download TradingDemo source
 - Ensure Nuget Restore is enabled
-- Set Trader.App as the startup project
+- Set Trader.Client as the startup project
 - Press F5
 
 The demo will be regularly maintained so download again to see more examples.
