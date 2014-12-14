@@ -5,8 +5,8 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using Dragablz;
 using DynamicData;
-using TradeExample.Infrastucture;
 using Trader.Client.Infrastucture;
+using Trader.Domain.Infrastucture;
 
 namespace Trader.Client
 {

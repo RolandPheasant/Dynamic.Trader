@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using DynamicData.Kernel;
 
-namespace TradeExample.Services
+namespace Trader.Domain.Services
 {
-    public interface IMarketPriceService
-    {
-        IObservable<decimal> ObservePrice(string currencyPair);
-    }
-
     public  class MarketPriceService : IMarketPriceService
     {
         private readonly Dictionary<string, IObservable<decimal>> _prices =  new Dictionary<string, IObservable<decimal>>();

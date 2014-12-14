@@ -1,7 +1,7 @@
 ﻿using DynamicData;
-using TradeExample.Model;
+using Trader.Domain.Model;
 
-namespace TradeExample.Services
+namespace Trader.Domain.Services
 {
     public interface ITradeService
     {

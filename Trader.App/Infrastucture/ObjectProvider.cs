@@ -1,4 +1,4 @@
-﻿using TradeExample.Infrastucture;
+﻿using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
 {

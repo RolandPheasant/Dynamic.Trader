@@ -7,10 +7,10 @@ using DynamicData.Binding;
 using DynamicData.Kernel;
 using DynamicData.Operators;
 using TradeExample.Annotations;
-using TradeExample.Infrastucture;
-using TradeExample.Services;
+using Trader.Domain.Infrastucture;
+using Trader.Domain.Services;
 
-namespace TradeExample.Model
+namespace Trader.Domain.Model
 {
     public class TradesByTime : IDisposable, IEquatable<TradesByTime>
     {

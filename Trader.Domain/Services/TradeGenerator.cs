@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TradeExample.Model;
+using Trader.Domain.Model;
 
-namespace TradeExample.Services
+namespace Trader.Domain.Services
 {
     public class TradeGenerator
     {

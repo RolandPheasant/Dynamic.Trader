@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TradeExample.Infrastucture
+namespace Trader.Domain.Infrastucture
 {
     public class SortExpressionComparer<T> : List<SortExpression<T>>, IComparer<T>
     {

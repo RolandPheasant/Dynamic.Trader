@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using TradeExample.Infrastucture;
 using Trader.Client.Views;
+using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
 {

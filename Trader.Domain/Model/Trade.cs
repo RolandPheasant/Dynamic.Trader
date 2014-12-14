@@ -2,7 +2,7 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
-namespace TradeExample.Model
+namespace Trader.Domain.Model
 {
     public class Trade: IDisposable, IEquatable<Trade>
     {

@@ -1,4 +1,4 @@
-namespace TradeExample.Services
+namespace Trader.Domain.Services
 {
     public class StaticData : IStaticData
     {

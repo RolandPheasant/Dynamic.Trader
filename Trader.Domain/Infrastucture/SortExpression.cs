@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TradeExample.Infrastucture
+namespace Trader.Domain.Infrastucture
 {
     public class SortExpression<T>
     {

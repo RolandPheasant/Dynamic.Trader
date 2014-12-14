@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TradeExample.Infrastucture
+﻿namespace Trader.Domain.Infrastucture
 {
     public interface IObjectProvider
     {

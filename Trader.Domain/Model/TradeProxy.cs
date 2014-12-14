@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using TradeExample.Infrastucture;
+using Trader.Domain.Infrastucture;
 
-namespace TradeExample.Model
+namespace Trader.Domain.Model
 {
     public class TradeProxy:AbstractNotifyPropertyChanged, IDisposable, IEquatable<TradeProxy>
     {

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Threading;
 using StructureMap;
-using TradeExample.Services;
+using Trader.Domain.Services;
 using TraderWpf.Infrastucture;
 
 namespace Trader.Client

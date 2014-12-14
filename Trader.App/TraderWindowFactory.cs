@@ -1,5 +1,5 @@
 ﻿using System;
-using TradeExample.Infrastucture;
+using Trader.Domain.Infrastucture;
 using TraderWpf;
 
 namespace Trader.Client

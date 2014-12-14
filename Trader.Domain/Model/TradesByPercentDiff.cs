@@ -4,9 +4,9 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Operators;
 using TradeExample.Annotations;
-using TradeExample.Infrastucture;
+using Trader.Domain.Infrastucture;
 
-namespace TradeExample.Model
+namespace Trader.Domain.Model
 {
     public class TradesByPercentDiff: IDisposable, IEquatable<TradesByPercentDiff>
     {

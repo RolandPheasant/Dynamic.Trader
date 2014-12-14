@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
-             xmlns:model="clr-namespace:TradeExample.Model;assembly=TradeExample"
+             xmlns:model1="clr-namespace:Trader.Domain.Model;assembly=Trader.Domain"
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance views:TradesByPercentViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-            <DataTemplate DataType="{x:Type model:TradesByPercentDiff}">
+            <DataTemplate DataType="{x:Type model1:TradesByPercentDiff}">
                 <Border Margin="4 4 4 0" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="0">
                     <Grid >
 

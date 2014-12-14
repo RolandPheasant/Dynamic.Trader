@@ -9,7 +9,7 @@ using DynamicData;
 using DynamicData.Kernel;
 using TradeExample.Annotations;
 
-namespace TradeExample.Infrastucture
+namespace Trader.Domain.Infrastucture
 {
     public static class ObservableCollectionEx
     {

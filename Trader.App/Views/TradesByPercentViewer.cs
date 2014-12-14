@@ -5,8 +5,8 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
 using DynamicData.Operators;
-using TradeExample.Infrastucture;
-using TradeExample.Services;
+using Trader.Domain.Infrastucture;
+using Trader.Domain.Services;
 
 namespace Trader.Client.Views
 {
@@ -14,7 +14,7 @@ namespace Trader.Client.Views
     {
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<TradeExample.Model.TradesByPercentDiff> _data = new ObservableCollectionExtended<TradeExample.Model.TradesByPercentDiff>();
+        private readonly IObservableCollection<Domain.Model.TradesByPercentDiff> _data = new ObservableCollectionExtended<Domain.Model.TradesByPercentDiff>();
 
         public TradesByPercentViewer(INearToMarketService nearToMarketService, ISchedulerProvider schedulerProvider)
         {
@@ -27,8 +27,8 @@ namespace Trader.Client.Views
 
             var loader = nearToMarketService.Query(() => 6)
                 .Group(trade => (int)Math.Truncate(Math.Abs(trade.PercentFromMarket)), groupController)
-                .Transform(group => new TradeExample.Model.TradesByPercentDiff(group, _schedulerProvider))
-                .Sort(SortExpressionComparer<TradeExample.Model.TradesByPercentDiff>.Ascending(t => t.PercentBand),SortOptimisations.ComparesImmutableValuesOnly)
+                .Transform(group => new Domain.Model.TradesByPercentDiff(group, _schedulerProvider))
+                .Sort(SortExpressionComparer<Domain.Model.TradesByPercentDiff>.Ascending(t => t.PercentBand),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(_schedulerProvider.Dispatcher)
                 .Bind(_data)
                 .DisposeMany()
@@ -37,7 +37,7 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
 
-        public IObservableCollection<TradeExample.Model.TradesByPercentDiff> Data
+        public IObservableCollection<Domain.Model.TradesByPercentDiff> Data
         {
             get { return _data; }
         }

@@ -5,9 +5,9 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
 using DynamicData.Kernel;
-using TradeExample.Infrastucture;
-using TradeExample.Model;
-using TradeExample.Services;
+using Trader.Domain.Infrastucture;
+using Trader.Domain.Model;
+using Trader.Domain.Services;
 
 namespace Trader.Client.Views
 {

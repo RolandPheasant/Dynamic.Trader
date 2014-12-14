@@ -1,6 +1,6 @@
 ﻿using System;
 using log4net;
-using TradeExample.Infrastucture;
+using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
 {

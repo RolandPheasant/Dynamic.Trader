@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using StructureMap.Configuration.DSL;
-using TradeExample.Infrastucture;
-using TradeExample.Model;
-using TradeExample.Services;
 using Trader.Client.Infrastucture;
+using Trader.Domain.Infrastucture;
+using Trader.Domain.Model;
+using Trader.Domain.Services;
 
 namespace TraderWpf.Infrastucture
 {
