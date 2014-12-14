@@ -29,7 +29,7 @@
                     
                     <Grid 
                       Margin="0 4 4 0"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Left">
                         
                         <Grid.ColumnDefinitions >
@@ -59,22 +59,7 @@
                                 </controls:Tile.Style>
                         </controls:Tile>
 
-                            <!--<Button Grid.Column="0"
-                                       Background="{StaticResource AccentColorBrush }"
-                           
-                                    Command="{Binding Command}" 
-                                    VerticalContentAlignment="Center"
-                                    HorizontalContentAlignment="Center"
-                                     VerticalAlignment="Top"
-                                    Width="75"
-                                    Height="75">
-                                <TextBlock Text="{Binding Title}"
-                                           Foreground="White"
-                                           FontSize="20" FontWeight="SemiBold"></TextBlock>
-                                
-                            </Button>-->
-
-                            <Grid Margin="5 4 5 0" 
+                        <Grid Margin="5 4 5 0" 
                                   VerticalAlignment="Top"
                                   Grid.Column="1" >
 
@@ -88,7 +73,7 @@
                                             TextWrapping="WrapWithOverflow"
                                             Text="{Binding Description}"/>
 
-                                 <ItemsControl Grid.Row="1" VerticalAlignment="Top" 
+                                 <ItemsControl Grid.Row="1" 
                                       Margin="0 3 0 0"
                                       HorizontalAlignment="Left"
                                       ItemsSource="{Binding Link}">
