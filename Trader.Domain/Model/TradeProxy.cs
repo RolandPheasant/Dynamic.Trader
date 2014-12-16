@@ -79,6 +79,11 @@ namespace Trader.Domain.Model
             get { return _trade.Customer; }
         }
 
+        public decimal Amount
+        {
+            get { return _trade.Amount; }
+        }
+
         public TradeStatus Status
         {
             get { return _trade.Status; }

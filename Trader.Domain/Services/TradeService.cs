@@ -34,8 +34,7 @@ namespace Trader.Domain.Services
 
             _cleanup = new CompositeDisposable(_tradesCache, _tradesSource, tradeLoader);
         }
-
-
+        
         private IDisposable GenerateTradesAndMaintainCache()
         {
             //bit of code to generate trades
@@ -44,11 +43,10 @@ namespace Trader.Domain.Services
             //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
 
-            Func<TimeSpan> randomInterval = () =>
-                                            {
-                                                var ms = random.Next(150, 5000);
-                                                return TimeSpan.FromMilliseconds(ms);
-                                            };
+            Func<TimeSpan> randomInterval = () => {
+                                                        var ms = random.Next(150, 5000);
+                                                        return TimeSpan.FromMilliseconds(ms);
+                                                    };
 
             // create a random number of trades at a random interval
             var tradeGenerator = _schedulerProvider.TaskPool
@@ -73,7 +71,7 @@ namespace Trader.Domain.Services
                                                     .OrderBy(t => Guid.NewGuid()).Take(number).ToArray();
 
                                                   var toClose = trades
-                                                      .Select(trade => new Trade(trade.Id, trade.Customer, trade.CurrencyPair, TradeStatus.Closed, trade.MarketPrice));
+                                                      .Select(trade => new Trade(trade, TradeStatus.Closed));
 
                                                   _tradesSource.AddOrUpdate(toClose);
                                               });

@@ -27,7 +27,6 @@ namespace Trader.Client.Views
             var filterApplier = this.ObserveChanges()
                                 .Sample(TimeSpan.FromMilliseconds(250))
                                 .Subscribe(_ => ApplyFilter());
-
             ApplyFilter();
 
             var loader = tradeService.Trades

@@ -16,8 +16,21 @@ namespace Trader.Domain.Model
         public decimal TradePrice { get; private set; }
         public decimal MarketPrice { get; private set; }
         public decimal PercentFromMarket { get; private set; }
+        public decimal Amount { get; private set; }
 
-        public Trade(long id, string customer, string currencyPair, TradeStatus status,decimal tradePrice, decimal marketPrice=0, DateTime? timeStamp=null)
+        public Trade(Trade trade, TradeStatus status)
+        {
+            Id = trade.Id;
+            Customer = trade.Customer;
+            CurrencyPair = trade.CurrencyPair;
+            Status = status;
+            MarketPrice = trade.MarketPrice;
+            TradePrice = trade.TradePrice;
+            Amount = trade.Amount;
+            Timestamp = DateTime.Now;
+        }
+
+        public Trade(long id, string customer, string currencyPair, TradeStatus status,decimal tradePrice,decimal amount, decimal marketPrice=0, DateTime? timeStamp=null)
         {
             Id = id;
             Customer = customer;
@@ -25,6 +38,7 @@ namespace Trader.Domain.Model
             Status = status;
             MarketPrice = marketPrice;
             TradePrice = tradePrice;
+            Amount = amount;
             Timestamp =timeStamp.HasValue ? timeStamp.Value : DateTime.Now;
         }
 

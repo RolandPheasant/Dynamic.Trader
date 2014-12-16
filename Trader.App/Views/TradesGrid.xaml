@@ -44,6 +44,16 @@
                                             Header="Currency Pair" 
                                             Binding="{Binding CurrencyPair,Mode=OneWay}"/>
 
+                <DataGridTextColumn         Header="Amount" 
+
+                                            Binding="{Binding Amount,Mode=OneWay, StringFormat='N'}">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn 
                                             Header="Trade Price" 
                                             TextBlock.TextAlignment="Right"
