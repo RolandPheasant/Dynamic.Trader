@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+
              xmlns:views="clr-namespace:Trader.Client.Views"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              d:DataContext="{d:DesignInstance views:NearToMarketViewer, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -19,12 +20,13 @@
                                 Orientation="Horizontal">
 
             <TextBox 
-                            controls:TextboxHelper.Watermark="Enter search text..."
-                             Margin="4 0 0 0"
+                            controls:TextBoxHelper.Watermark="Enter search text..."
+                             controls:TextBoxHelper.ClearTextButton="True"
+                            Margin="4 0 0 0"
                              VerticalAlignment="Center"
                              Width="125"
                              Height="18"
-                            controls:TextboxHelper.ClearTextButton="True"
+        
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock  
