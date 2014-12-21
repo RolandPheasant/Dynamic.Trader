@@ -40,8 +40,8 @@ namespace Trader.Client.Infrastucture
                             new Link("Service","NearToMarketService.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/NearToMarketService.cs"),
                             new Link("Rates Updater","TradePriceUpdateJob.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/TradePriceUpdateJob.cs"), 
                             new Link("View Model", "NearToMarketViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/NearToMarketViewer.cs"), 
-                            new Link("Blog","Manage Market Data", "https://dynamicdataproject.wordpress.com/2014/11/22/trading-example-part-2-manage-market-data/"),
-                           
+                            new Link("Blog i","Manage Market Data", "https://dynamicdataproject.wordpress.com/2014/11/22/trading-example-part-2-manage-market-data/"),
+                            new Link("Blog ii","Filter on calculated values", "https://dynamicdataproject.wordpress.com/2014/12/21/trading-example-part-4-filter-on-calculated-values/"),
                             
                         }),
 
