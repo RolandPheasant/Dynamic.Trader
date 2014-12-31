@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicData, Version=3.1.0.42, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData, Version=3.1.0.219, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.3.1.0.42-beta\lib\net45\DynamicData.dll</HintPath>
+      <HintPath>..\packages\DynamicData.3.1.0.219\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

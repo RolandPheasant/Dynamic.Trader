@@ -25,14 +25,14 @@ namespace Trader.Client.Views
             _logger = logger;
 
             var filterApplier = this.ObserveChanges()
-                                .Sample(TimeSpan.FromMilliseconds(250))
+                                .Throttle(TimeSpan.FromMilliseconds(250))
                                 .Subscribe(_ => ApplyFilter());
             ApplyFilter();
-
+         
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter) // apply user filter
-                .Transform(trade => new TradeProxy(trade))
+                .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOnDispatcher()
                 .Bind(_data)   // update observable collection bindings
