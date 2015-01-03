@@ -61,6 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastucture\ObservableCollectionEx.cs" />
     <Compile Include="Infrastucture\SchedulerProvider.cs" />
     <Compile Include="Model\TimePeriod.cs" />
     <Compile Include="Model\TradesByPercentDiff.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Infrastucture\SortDirection.cs" />
     <Compile Include="Infrastucture\SortExpression.cs" />
     <Compile Include="Infrastucture\SortExpressionComparer.cs" />
+    <Compile Include="Services\INotificationPublisher.cs" />
     <Compile Include="Services\IStaticData.cs" />
     <Compile Include="Services\NearToMarketService.cs" />
     <Compile Include="Properties\Annotations.cs" />

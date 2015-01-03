@@ -14,10 +14,11 @@ namespace Trader.Client
     {
         private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
-        private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
+      
         private readonly ICommand _showMenu;
         private readonly IDisposable _cleanUp;
         private readonly SerialDisposable _newMenuItemSubscriber = new SerialDisposable();
+        private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
 
         private ViewContainer _selected;
 
@@ -27,20 +28,18 @@ namespace Trader.Client
             _interTabClient = new InterTabClient(traderWindowFactory);
             _showMenu =  new Command(OnShowMenu);
 
-
-            var menuController = _data.WatchChanges(vc => vc.Id)
-                .Filter(vc => vc.Content is MenuItems)
-                .Transform(vc => (MenuItems) vc.Content)
-                .SubscribeMany(menuItem => menuItem.ItemCreated.Subscribe(item =>
-                                                                          {
-                                                                              _data.Add(item);
-                                                                              Selected = item;
-                                                                          }))
-                .Subscribe();
+            var menuController = _data.AsObservable(vc => vc.Id)
+                                        .Filter(vc => vc.Content is MenuItems)
+                                        .Transform(vc => (MenuItems) vc.Content)
+                                        .MergeMany(menuItem => menuItem.ItemCreated)
+                                        .Subscribe(item =>
+                                        {
+                                            _data.Add(item);
+                                            Selected = item;
+                                        });
 
             _cleanUp = Disposable.Create(() =>
                                          {
-
                                              menuController.Dispose();
                                              foreach (var disposable in  _data.Select(vc=>vc.Content).OfType<IDisposable>())
                                                  disposable.Dispose();

@@ -38,7 +38,7 @@ namespace Trader.Domain.Services
 
         private decimal GererateRandomPrice(decimal initalPrice)
         {
-            //generate percent price 1-10% away from the market
+            //generate percent price 1-10% away from the inital market
             var pcFromMarket = _random.Next(1, 1000)/(decimal) 10000;
 
             var positive = _random.NextDouble() > 0.5;

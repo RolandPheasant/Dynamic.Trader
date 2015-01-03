@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using StructureMap.Configuration.DSL;
-using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
-using Trader.Domain.Model;
 using Trader.Domain.Services;
 
-namespace TraderWpf.Infrastucture
+namespace Trader.Client.Infrastucture
 {
     internal class AppRegistry : Registry
     {
