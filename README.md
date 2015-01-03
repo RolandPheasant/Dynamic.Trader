@@ -1,12 +1,12 @@
 ### Dynamic Data Demo
 
-This is a sample wpf project to illustrate usage of Dynamic Data. For source code go to https://github.com/RolandPheasant/DynamicData/
+This is a c# sample wpf project to help get started with Dynamic Data. For source code go to https://github.com/RolandPheasant/DynamicData/
 
 It is blogged about at http://dynamicdataproject.wordpress.com/
 
 ### Getting Started
 
-- Download TradingDemo source
+- Press 'Download Zip', unpack and open
 - Ensure Nuget Restore is enabled
 - Set 'Trader.Client' as the startup project
 - Press F5
