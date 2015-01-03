@@ -1,6 +1,6 @@
 ### Dynamic Data Demo
 
-This is a c# sample wpf project to help get started with Dynamic Data. For source code go to https://github.com/RolandPheasant/DynamicData/
+This is a c# sample wpf project to help get started with Dynamic Data.
 
 It is blogged about at http://dynamicdataproject.wordpress.com/
 
