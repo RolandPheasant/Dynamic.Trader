@@ -30,13 +30,12 @@ namespace Trader.Client.Views
 
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
-                .Filter(_filter) // apply user filter
+                .Filter(_filter)    // apply user filter
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5)) 
-               //.SubscribeMany(proxy=>Disposable.Empty)
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(_data)    // update observable collection bindings
-                .DisposeMany()  //since TradeProxy is disposable dispose when no longer required
+                .Bind(_data)        // update observable collection bindings
+                .DisposeMany()      //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
             _cleanUp = new CompositeDisposable(loader, _filter, filterApplier);
