@@ -6,6 +6,7 @@ using DynamicData.Binding;
 using DynamicData.Controllers;
 using DynamicData.Kernel;
 using DynamicData.Operators;
+using DynamicData.PLinq;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 using Trader.Domain.Services;

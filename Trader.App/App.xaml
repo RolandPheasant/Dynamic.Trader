@@ -44,7 +44,10 @@
                 <views:TradesByTimeView/>
             </DataTemplate>
 
-            
+            <DataTemplate DataType="{x:Type views:RxUiViewer}">
+                <views:RxUiView/>
+            </DataTemplate>
+
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
                 <Style.Setters>

@@ -17,8 +17,6 @@ namespace Trader.Domain.Model
             _id = trade.Id;
             _trade = trade;
 
-           // var isRecent = trade.Timestamp.Subtract(DateTime.Now).TotalSeconds < 2;
-
             var isRecent = DateTime.Now.Subtract(trade.Timestamp).TotalSeconds < 2;
             var recentIndicator= Disposable.Empty;
                          

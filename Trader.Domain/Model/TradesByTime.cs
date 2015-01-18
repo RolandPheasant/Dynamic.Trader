@@ -31,6 +31,36 @@ namespace Trader.Domain.Model
                 .Subscribe();
         }
 
+
+
+        public TimePeriod Period
+        {
+            get { return _period; }
+        }
+
+        public string Description
+        {
+            get
+            {
+                switch (Period)
+                {
+                    case TimePeriod.LastMinute:
+                        return "Last Minute";
+                    case TimePeriod.LastHour:
+                        return "Last Hour"; ;
+                    case TimePeriod.Older:
+                        return "Old";
+                    default:
+                        return "Unknown";
+                }
+            }
+        }
+
+        public IObservableCollection<TradeProxy> Data
+        {
+            get { return _data; }
+        }
+
         #region Equality
 
         public bool Equals(TradesByTime other)
@@ -64,34 +94,6 @@ namespace Trader.Domain.Model
         }
 
         #endregion
-
-        public TimePeriod Period
-        {
-            get { return _period; }
-        }
-
-        public string Description
-        {
-            get
-            {
-                switch (Period)
-                {
-                    case TimePeriod.LastMinute:
-                        return "Last Minute";
-                    case TimePeriod.LastHour:
-                        return "Last Hour"; ;
-                    case TimePeriod.Older:
-                        return "Old";
-                    default:
-                        return "Unknown";
-                }
-            }
-        }
-
-        public IObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
 
         public void Dispose()
         {

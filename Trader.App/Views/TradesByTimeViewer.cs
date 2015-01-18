@@ -21,7 +21,6 @@ namespace Trader.Client.Views
             _schedulerProvider = schedulerProvider;
 
             var groupController = new GroupController();
-
             var grouperRefresher = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Subscribe(_ => groupController.RefreshGroup());
 
@@ -42,8 +41,7 @@ namespace Trader.Client.Views
             
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
-
-
+        
         public IObservableCollection<TradesByTime> Data
         {
             get { return _data; }

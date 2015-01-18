@@ -33,6 +33,8 @@ namespace Trader.Client.Infrastucture
                             new Link("Blog","Ui Integration", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
                         }),
 
+
+
                 new MenuItem("Near to Market",
                      "Dynamic filtering of calculated values.",
                      () => Open<NearToMarketViewer>("Near to Market"),new []
@@ -67,6 +69,15 @@ namespace Trader.Client.Infrastucture
                             {
                                 new Link("View Model", "RecentTradesViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RecentTradesViewer.cs"), 
                             }),
+
+
+                 new MenuItem("Reactive UI",
+                    "A basic example, illustrating where reactive-ui and dynamic data can work together",
+                    () => Open<RxUiViewer>("Reactive UI Example"),new []
+                        {
+                             new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RxUiViewer.cs "), 
+                            new Link("Blog","Ui Integration", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
+                        }),
             };
 
             _cleanUp = Disposable.Create(() =>
