@@ -31,3 +31,5 @@ _ReSharper*/
 *.resharper
 [Pp]ackages*/
 /*.DotSettings
+
+/TradeExample.sln.GhostDoc.xml

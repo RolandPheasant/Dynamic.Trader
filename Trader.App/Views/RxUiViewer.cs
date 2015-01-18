@@ -15,26 +15,30 @@ namespace Trader.Client.Views
 {
     public class RxUiViewer : ReactiveObject, IDisposable
     {
-        private readonly IDisposable _cleanUp;
+        //this is the target list which we will populate from the dynamic data stream
         private readonly ReactiveList<TradeProxy> _data = new ReactiveList<TradeProxy>();
+        //the filter controller is used to inject filtering into a observable
         private readonly FilterController<Trade> _filter = new FilterController<Trade>();
+        private readonly IDisposable _cleanUp;
         private string _searchText;
 
         public RxUiViewer(ITradeService tradeService)
         {
+            //Change the filter when the user entered search text changes
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
                 .Subscribe(_ => ApplyFilter());
-           
+
             ApplyFilter();
 
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter)    // apply user filter
-                .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5)) 
+                //if targetting Net4 or Net45 platform can use parallelisation for transforms 'cause it's quicker
+                .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(_data)        // update observable collection bindings
+                .Bind(_data)        //bind the results to the ReactiveList 
                 .DisposeMany()      //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
