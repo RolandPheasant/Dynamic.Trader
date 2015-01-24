@@ -1,10 +1,18 @@
-### Dynamic Data Demo
+## Dynamic Data Demo
 
 This is a c# sample wpf project to help get started with Dynamic Data.
 
-It is blogged about at http://dynamicdataproject.wordpress.com/
+See https://github.com/RolandPheasant/DynamicData and blog at http://dynamicdataproject.wordpress.com
 
-### Getting Started
+The UI looks good and behaves well thanks to 
+
+- Mahaps https://github.com/MahApps/MahApps.Metro
+- Dragablz https://github.com/ButchersBoy/Dragablz
+- ReactiveUI https://github.com/ButchersBoy/Dragablz
+
+Feel free to feedback to me on twitter: [@RolandPheasant](https://twitter.com/RolandPheasant)
+
+## Getting Started
 
 - Press 'Download Zip', unpack and open
 - Ensure Nuget Restore is enabled
