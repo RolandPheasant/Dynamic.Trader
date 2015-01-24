@@ -22,11 +22,11 @@ The demo illustrates how a few lines of code can produce this
 - Set 'Trader.Client' as the startup project
 - Press F5
 
-When open, the menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
+The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/MenuImage.PNG "Menu with links")
 
-The demo will be regularly maintained so download again to see more examples.
+The examples will be regularly maintained so download again to see more examples.
 
 Feel free to feedback to me on twitter: [@RolandPheasant](https://twitter.com/RolandPheasant)
 
