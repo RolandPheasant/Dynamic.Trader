@@ -24,7 +24,7 @@ The demo illustrates how a few lines of code can produce this
 
 When open, the menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/MenuImage.PNG.gif "Menu with links")
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/MenuImage.PNG "Menu with links")
 
 The demo will be regularly maintained so download again to see more examples.
 
