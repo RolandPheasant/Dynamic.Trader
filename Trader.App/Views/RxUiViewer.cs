@@ -1,4 +1,5 @@
 using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -26,7 +27,7 @@ namespace Trader.Client.Views
         {
             //Change the filter when the user entered search text changes
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
-                .Throttle(TimeSpan.FromMilliseconds(250))
+                .Throttle(TimeSpan.FromMilliseconds(250))    
                 .Subscribe(_ => ApplyFilter());
 
             ApplyFilter();
