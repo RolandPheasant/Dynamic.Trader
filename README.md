@@ -11,6 +11,9 @@ The UI looks good and behaves well thanks to
 - Dragablz https://github.com/ButchersBoy/Dragablz
 - ReactiveUI https://github.com/reactiveui/ReactiveUI (at the moment only for 1 example but soon to be more)
 
+The demo illustrates how a few lines of code can produce this
+
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/GithubReadmeImage.gif "Demo shot")
 
 ## Getting Started
 
