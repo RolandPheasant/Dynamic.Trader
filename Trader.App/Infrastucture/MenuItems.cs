@@ -38,7 +38,7 @@ namespace Trader.Client.Infrastucture
                     () => Open<RxUiViewer>("Reactive UI Example"),new []
                         {
                              new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RxUiViewer.cs "), 
-                            new Link("Blog","Ui Integration", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
+                            new Link("Blog","Integration with reactive ui", "https://dynamicdataproject.wordpress.com/2015/01/18/integration-with-reactiveui/"), 
                         }),
 
                 new MenuItem("Near to Market",
@@ -80,10 +80,7 @@ namespace Trader.Client.Infrastucture
 
             };
 
-            _cleanUp = Disposable.Create(() =>
-            {
-                _viewCreatedSubject.OnCompleted();
-            });
+            _cleanUp = Disposable.Create(() => _viewCreatedSubject.OnCompleted());
         }
 
         private void Open<T>(string title)
