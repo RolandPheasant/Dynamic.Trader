@@ -13,14 +13,18 @@ The UI looks good and behaves well thanks to
 
 The demo illustrates how a few lines of code can produce this
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/GithubReadmeImage.gif "Demo shot")
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/GithubReadmeImage.gif "Sample Screen Shot")
 
-## Getting Started
+## Run the demo
 
 - Press 'Download Zip', unpack and open
 - Ensure Nuget Restore is enabled
 - Set 'Trader.Client' as the startup project
 - Press F5
+
+When open, the menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
+
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/MenuImage.PNG.gif "Menu with links")
 
 The demo will be regularly maintained so download again to see more examples.
 
