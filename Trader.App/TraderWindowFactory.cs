@@ -1,4 +1,5 @@
 ﻿using System;
+using Dragablz;
 using Trader.Domain.Infrastucture;
 using TraderWpf;
 
@@ -23,7 +24,9 @@ namespace Trader.Client
 
             window.Closing += (sender, e) =>
                               {
-                                  var todispose = ((TraderWindow)sender).DataContext as IDisposable;
+                                  if (TabablzControl.GetIsClosingAsPartOfDragOperation(window)) return;
+
+                                  var todispose = ((TraderWindow) sender).DataContext as IDisposable;
                                   if (todispose != null) todispose.Dispose();
                               };
 
