@@ -30,8 +30,6 @@ namespace Trader.Client.Views
                 .Throttle(TimeSpan.FromMilliseconds(250))    
                 .Subscribe(_ => ApplyFilter());
 
-            ApplyFilter();
-
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter)    // apply user filter

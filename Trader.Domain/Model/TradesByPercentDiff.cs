@@ -23,7 +23,7 @@ namespace Trader.Domain.Model
 
             _group = @group;
             _percentBand = @group.Key;
-
+           
             _cleanUp = @group.Cache.Connect()
                         .Transform(trade => new TradeProxy(trade))
                         .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp),SortOptimisations.ComparesImmutableValuesOnly,500)

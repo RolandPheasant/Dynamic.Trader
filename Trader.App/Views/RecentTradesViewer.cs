@@ -20,7 +20,7 @@ namespace Trader.Client.Views
         private readonly FilterController<Trade> _filter = new FilterController<Trade>();
         private string _searchText;
 
-        public RecentTradesViewer(ILogger logger, ITradeService tradeService)
+        public RecentTradesViewer(ILogger logger, ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
             _logger = logger;
 
@@ -32,10 +32,10 @@ namespace Trader.Client.Views
 
             var loader = tradeService.Trades.Connect()
                 .SkipInitial()
-                .AutoRemove((trade) => TimeSpan.FromSeconds(30)) 
+                .ExpireAfter((trade) => TimeSpan.FromSeconds(30)) 
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
-                .ObserveOnDispatcher()
+                .ObserveOn(schedulerProvider.Dispatcher)
                 .Bind(_data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
