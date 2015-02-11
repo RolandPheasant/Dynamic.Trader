@@ -3,7 +3,7 @@
 This is a c# sample wpf project to help get started with Dynamic Data.
 
 Source code for dynamic data at https://github.com/RolandPheasant/DynamicData 
-and blog at http://dynamicdataproject.wordpress.com
+and blog at http://dynamic-data.org/
 
 The UI looks good and behaves well thanks to 
 
