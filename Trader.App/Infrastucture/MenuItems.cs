@@ -8,12 +8,17 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
 {
+    public enum MenuFilter
+    {
+        ReactiveUI,
+        DynamicData
+    }
+
     public class MenuItems: IDisposable
     {
         private readonly ILogger _logger;
         private readonly IObjectProvider _objectProvider;
         private readonly IEnumerable<MenuItem> _menu;
-
         private readonly ISubject<ViewContainer> _viewCreatedSubject = new Subject<ViewContainer>();
         private readonly IDisposable _cleanUp;
 

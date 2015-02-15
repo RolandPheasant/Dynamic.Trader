@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Trader.Client;component/Themes/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MetroToolTip}"></Style>
@@ -47,6 +48,28 @@
             <DataTemplate DataType="{x:Type views:RxUiViewer}">
                 <views:RxUiView/>
             </DataTemplate>
+
+            <!--<Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
+                <Setter Property="ItemContainerStyle" Value="{StaticResource TrapezoidDragableTabItemStyle}" />
+                <Setter Property="AdjacentHeaderItemOffset" Value="-12" />
+                <Setter Property="NewItemFactory" Value="{Binding NewItemFactory}" />
+                <Setter Property="ShowDefaultAddButton" Value="True" />
+                <Setter Property="ShowDefaultCloseButton" Value="True" />
+                <Setter Property="CustomHeaderItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="{x:Type common:TabContent}">
+                            <TextBlock Text="{Binding Header}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="{x:Type common:TabContent}">
+                            <ContentPresenter Margin="4" Content="{Binding Content}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
 
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">

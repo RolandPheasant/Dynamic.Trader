@@ -24,12 +24,13 @@ namespace Trader.Client.Views
         public LiveTradesViewer(ILogger logger,ITradeService tradeService)
         {
             _logger = logger;
+            ApplyFilter();
 
             var filterApplier = this.ObserveChanges()
                                 .Throttle(TimeSpan.FromMilliseconds(250))
                                 .Subscribe(_ => ApplyFilter());
-            ApplyFilter();
-         
+ 
+
             var loader = tradeService.Trades
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter) // apply user filter

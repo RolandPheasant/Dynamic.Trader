@@ -24,10 +24,18 @@
 
 
             <ItemsControl   MinWidth="300" ItemsSource="{Binding Menu}">
-            <ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+
+                <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     
-                    <Grid 
+                    <Grid
                       Margin="0 4 4 0"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left">
@@ -59,6 +67,7 @@
                         </controls:Tile>
 
                         <Grid Margin="5 4 5 0" 
+                               Width="250"
                                   VerticalAlignment="Top"
                                   Grid.Column="1" >
 
@@ -76,6 +85,8 @@
                                       Margin="0 3 0 0"
                                       HorizontalAlignment="Left"
                                       ItemsSource="{Binding Link}">
+
+                                     
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                     
@@ -101,6 +112,7 @@
                                         </DataTemplate>
                                 
                                     </ItemsControl.ItemTemplate>
+
                                 </ItemsControl>
 
                             </Grid>

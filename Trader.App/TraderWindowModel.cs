@@ -14,7 +14,7 @@ namespace Trader.Client
     {
         private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
-      
+        private readonly Command _showInGitHubCommand;
         private readonly ICommand _showMenu;
         private readonly IDisposable _cleanUp;
         private readonly SerialDisposable _newMenuItemSubscriber = new SerialDisposable();
@@ -27,6 +27,7 @@ namespace Trader.Client
             _objectProvider = objectProvider;
             _interTabClient = new InterTabClient(traderWindowFactory);
             _showMenu =  new Command(OnShowMenu);
+            _showInGitHubCommand = new Command(()=>   System.Diagnostics.Process.Start("https://github.com/RolandPheasant"));
 
             var menuController = _data.AsObservable(vc => vc.Id)
                                         .Filter(vc => vc.Content is MenuItems)
@@ -87,6 +88,11 @@ namespace Trader.Client
         public ICommand ShowMenu
         {
             get { return _showMenu; }
+        }
+
+        public Command ShowInGitHubCommand
+        {
+            get { return _showInGitHubCommand; }
         }
 
         public void Dispose()
