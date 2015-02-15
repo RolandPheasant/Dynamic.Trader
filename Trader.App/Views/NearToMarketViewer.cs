@@ -28,12 +28,7 @@ namespace Trader.Client.Views
         public uint NearToMarketPercent
         {
             get { return _nearToMarketPercent; }
-            set
-            {
-                if (_nearToMarketPercent == value) return;
-                _nearToMarketPercent = value;
-                OnPropertyChanged();
-            }
+            set { SetAndRaise(ref _nearToMarketPercent, value); }
         }
 
         public IObservableCollection<TradeProxy> Data

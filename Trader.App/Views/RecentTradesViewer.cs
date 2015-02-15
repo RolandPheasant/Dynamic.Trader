@@ -61,12 +61,7 @@ namespace Trader.Client.Views
         public string SearchText
         {
             get { return _searchText; }
-            set
-            {
-                if (_searchText == value) return;
-                _searchText = value;
-                OnPropertyChanged();
-            }
+            set { SetAndRaise(ref _searchText, value); }
         }
 
         public IObservableCollection<TradeProxy> Data
