@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
                d:DataContext="{d:DesignInstance views:LogEntryViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -13,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textblock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textbox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -31,47 +33,47 @@
             </Grid.ColumnDefinitions>
 
             <Grid.Resources>
-                <Style  TargetType="{x:Type TextBox}">
+                <Style  TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
                     <Setter Property="Margin" Value="5 5 5 5"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
-                <Style  TargetType="{x:Type TextBlock}">
+                <Style  TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetroTextBlock}">
                     <Setter Property="Margin" Value="5 5 5 5"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
             </Grid.Resources>
 
             <StackPanel Orientation="Horizontal"  >
+                <TextBox controls:TextBoxHelper.Watermark="Enter search text..."
+                           controls:TextBoxHelper.ClearTextButton="True"
+                            Margin="4 0 0 0"
+                             VerticalAlignment="Center"
+                             Width="125"
+                             Height="18"
+                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="Filter by message:" />
-                <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="100" />
-                <CheckBox 
-                Margin="5"
-                VerticalAlignment="Center"
-                Content="Pause Updates"
-                IsChecked="{Binding Paused,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Margin="4 0 0 0"
+                        VerticalAlignment="Center"
+                        Content="Pause Updates"
+                        IsChecked="{Binding Paused,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
 
 
             </StackPanel>
 
-            <TextBlock Grid.Column="1" >
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="Showing {0}">
-                        <Binding Path="Data.Count"/>
-                        <!--<Binding Path="TotalCount"/>-->
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+            <TextBlock
+                Grid.Column="1" Margin="4 0 4 0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Text="{Binding Data.Count, StringFormat='The are \{0} log entries matching filter'}"/>
         </Grid>
 
 
         <ListView
             Grid.Row="1"
             SelectionMode="Extended"
-            ScrollViewer.IsDeferredScrollingEnabled="False"
-            ScrollViewer.CanContentScroll="True"
-                
+
+            Style="{StaticResource VirtualisedMetroListView}"
             ItemsSource="{Binding Data}">
             <!--<ListView.InputBindings>
                 <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>
@@ -79,7 +81,8 @@
             </ListView.InputBindings>-->
 
             <ListView.Resources>
-                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
+                <Style TargetType="{x:Type ListViewItem}" 
+                       BasedOn="{StaticResource MetroListViewItem}">
                     <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }" />
                 </Style>
             </ListView.Resources>
@@ -90,15 +93,8 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
 
-            <!--<ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                   <VirtualizingStackPanel VirtualizationMode="Recycling"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>-->
-
             <ListView.View >
                 <GridView>
-                    <GridViewColumn Width="30"  Header="Row" DisplayMemberBinding="{Binding  Index}" TextBlock.TextAlignment="Left" />
                     <GridViewColumn Width="30"  Header="#" DisplayMemberBinding="{Binding Counter}" TextBlock.TextAlignment="Left" />
                     <GridViewColumn  Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
                     <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />

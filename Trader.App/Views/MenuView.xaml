@@ -52,6 +52,8 @@
                                         ToolTip="{Binding Description}"
                                         Width="85"
                                         Height="85">
+                                <ContentControl Content="{Binding Content}"/>
+
                                 <controls:Tile.Style>
                                     <Style TargetType="{x:Type controls:Tile}">
                                        <Style.Triggers>
