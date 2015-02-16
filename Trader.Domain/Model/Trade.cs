@@ -11,12 +11,13 @@ namespace Trader.Domain.Model
         public long Id { get; private set; }
         public string CurrencyPair { get; private set; }
         public string Customer { get; private set; }
-        public TradeStatus Status { get; private set; }
-        public DateTime Timestamp { get; private set; }
         public decimal TradePrice { get; private set; }
         public decimal MarketPrice { get; private set; }
         public decimal PercentFromMarket { get; private set; }
         public decimal Amount { get; private set; }
+        public BuyOrSell BuyOrSell { get; private set; }
+        public TradeStatus Status { get; private set; }
+        public DateTime Timestamp { get; private set; }
 
         public Trade(Trade trade, TradeStatus status)
         {
@@ -28,9 +29,10 @@ namespace Trader.Domain.Model
             TradePrice = trade.TradePrice;
             Amount = trade.Amount;
             Timestamp = DateTime.Now;
+            BuyOrSell = trade.BuyOrSell;
         }
 
-        public Trade(long id, string customer, string currencyPair, TradeStatus status,decimal tradePrice,decimal amount, decimal marketPrice=0, DateTime? timeStamp=null)
+        public Trade(long id, string customer, string currencyPair, TradeStatus status, BuyOrSell buyOrSell, decimal tradePrice, decimal amount, decimal marketPrice = 0, DateTime? timeStamp = null)
         {
             Id = id;
             Customer = customer;
@@ -39,13 +41,15 @@ namespace Trader.Domain.Model
             MarketPrice = marketPrice;
             TradePrice = tradePrice;
             Amount = amount;
+            BuyOrSell = buyOrSell;
             Timestamp =timeStamp.HasValue ? timeStamp.Value : DateTime.Now;
         }
 
         public void SetMarketPrice(decimal marketPrice)
         {
             MarketPrice = marketPrice;
-            PercentFromMarket = Math.Round((TradePrice - MarketPrice / ((TradePrice + MarketPrice) / 2)) * 100,2); 
+   
+            PercentFromMarket = Math.Round(((TradePrice - MarketPrice) / MarketPrice) * 100, 4);
             ;
             _marketPriceChangedSubject.OnNext(marketPrice);
         }
@@ -55,7 +59,7 @@ namespace Trader.Domain.Model
             get { return _marketPriceChangedSubject.AsObservable(); }
         }
 
-        #region EqualityMembers
+        #region Equality Members
 
         public bool Equals(Trade other)
         {

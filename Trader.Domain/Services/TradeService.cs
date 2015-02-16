@@ -14,7 +14,9 @@ namespace Trader.Domain.Services
         private readonly TradeGenerator _tradeGenerator;
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly ISourceCache<Trade, long> _tradesSource;
-        private readonly IObservableCache<Trade, long> _tradesCache;
+
+        private readonly IObservableCache<Trade, long> _all;
+        private readonly IObservableCache<Trade, long> _live;
         private readonly IDisposable _cleanup;
 
         public TradeService(ILogger logger,TradeGenerator tradeGenerator, ISchedulerProvider schedulerProvider)
@@ -27,12 +29,15 @@ namespace Trader.Domain.Services
             _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
 
             //call AsObservableCache() to hide the update methods as we are exposing the cache
-            _tradesCache = _tradesSource.AsObservableCache();
+            _all = _tradesSource.AsObservableCache();
+
+            //create a child cache 
+            _live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
 
             //code to emulate an external trade provider
             var tradeLoader = GenerateTradesAndMaintainCache();
 
-            _cleanup = new CompositeDisposable(_tradesCache, _tradesSource, tradeLoader);
+            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader);
         }
         
         private IDisposable GenerateTradesAndMaintainCache()
@@ -81,9 +86,14 @@ namespace Trader.Domain.Services
 
         }
         
-        public IObservableCache<Trade, long> Trades
+        public IObservableCache<Trade, long> All
         {
-            get { return _tradesCache; }
+            get { return _all; }
+        }
+
+        public IObservableCache<Trade, long> Live
+        {
+            get { return _live; }
         }
 
         public void Dispose()

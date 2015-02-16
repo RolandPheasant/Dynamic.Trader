@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using Dragablz;
 using DynamicData;
+using DynamicData.Binding;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
@@ -29,7 +30,7 @@ namespace Trader.Client
             _showMenu =  new Command(OnShowMenu);
             _showInGitHubCommand = new Command(()=>   System.Diagnostics.Process.Start("https://github.com/RolandPheasant"));
 
-            var menuController = _data.AsObservable(vc => vc.Id)
+            var menuController = _data.ToObservableChangeSet(vc => vc.Id)
                                         .Filter(vc => vc.Content is MenuItems)
                                         .Transform(vc => (MenuItems) vc.Content)
                                         .MergeMany(menuItem => menuItem.ItemCreated)

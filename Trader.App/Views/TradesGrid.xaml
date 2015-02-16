@@ -20,7 +20,8 @@
     <Grid>
             <DataGrid
                 AutoGenerateColumns="False"
-                              EnableColumnVirtualization="True"
+                IsReadOnly="True"    
+                EnableColumnVirtualization="True"
                               EnableRowVirtualization="True"
                               ItemsSource="{Binding}">
             

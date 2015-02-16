@@ -24,7 +24,7 @@ namespace Trader.Client.Views
             var grouperRefresher = Observable.Interval(TimeSpan.FromSeconds(1))
                 .Subscribe(_ => groupController.RefreshGroup());
 
-            var loader = tradeService.Trades.Connect()
+            var loader = tradeService.All.Connect()
                 .Group(trade =>
                        {
                            var diff = DateTime.Now.Subtract(trade.Timestamp);
@@ -34,7 +34,7 @@ namespace Trader.Client.Views
                        }, groupController)
                 .Transform(group => new TradesByTime(group, _schedulerProvider))
                 .Sort(SortExpressionComparer<TradesByTime>.Ascending(t => t.Period))
-                .ObserveOn(_schedulerProvider.Dispatcher)
+                .ObserveOn(_schedulerProvider.MainThread)
                 .Bind(_data)
                 .DisposeMany()
                 .Subscribe();

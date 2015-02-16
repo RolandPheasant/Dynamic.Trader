@@ -12,20 +12,20 @@ namespace Trader.Client.Views
     {
         private readonly IDisposable _cleanUp;
         private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
-        private uint _nearToMarketPercent=5;
+        private decimal _nearToMarketPercent=0.01M;
 
-        public NearToMarketViewer(INearToMarketService nearToMarketService)
+        public NearToMarketViewer(INearToMarketService nearToMarketService, ISchedulerProvider schedulerProvider)
         {
             _cleanUp = nearToMarketService.Query(() => NearToMarketPercent) 
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp))
-                .ObserveOnDispatcher()
+                .ObserveOn(schedulerProvider.MainThread)
                 .Bind(_data)  
                 .DisposeMany() 
                 .Subscribe();
         }
 
-        public uint NearToMarketPercent
+        public decimal NearToMarketPercent
         {
             get { return _nearToMarketPercent; }
             set { SetAndRaise(ref _nearToMarketPercent, value); }

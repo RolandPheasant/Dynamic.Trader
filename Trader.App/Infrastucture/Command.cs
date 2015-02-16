@@ -3,30 +3,49 @@ using System.Windows.Input;
 
 namespace Trader.Client.Infrastucture
 {
+    /// <summary>
+    /// A command wich accepts no parameter - assumes the view model will do the work
+    /// </summary>
     public class Command : ICommand
     {
-        private readonly Action _action;
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
 
 
-        public Command(Action action)
+        public Command(Action execute, Func<bool> canExecute = null)
         {
-            _action = action;
+            if (execute == null) throw new ArgumentNullException("execute");
+
+            _execute = execute;
+            _canExecute = canExecute ?? (() => true);
         }
 
-        #region Implementation of ICommand
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _canExecute();
         }
 
         public void Execute(object parameter)
         {
-            _action();
+            _execute();
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
-        #endregion
+        public void Refresh()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 }

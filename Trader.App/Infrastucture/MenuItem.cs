@@ -18,23 +18,22 @@ namespace Trader.Client.Infrastucture
         private readonly string _description;
         private readonly IEnumerable<Link> _link;
         private readonly ICommand _command;
+        private readonly MenuCategory _category;
 
-
-
-        
-        public MenuItem(string title, Action action, IEnumerable<Link> link=null )
+        public MenuItem(string title, string description, Action action,  IEnumerable<Link> link = null)
         {
             _title = title;
+            _description = description;
+            _category = MenuCategory.DynamicData;
             _link = link ?? Enumerable.Empty<Link>();
             _command = new Command(action); ;
         }
 
-
-
-        public MenuItem(string title,string description ,Action action, IEnumerable<Link> link = null)
+        public MenuItem(string title,string description ,Action action, MenuCategory category,IEnumerable<Link> link = null)
         {
             _title = title;
             _description = description;
+            _category = category;
             _link = link ?? Enumerable.Empty<Link>();
             _command = new Command(action); ;
         }

@@ -29,7 +29,7 @@ namespace Trader.Client.Views
                 .Group(trade => (int)Math.Truncate(Math.Abs(trade.PercentFromMarket)), groupController)
                 .Transform(group => new Domain.Model.TradesByPercentDiff(group, _schedulerProvider))
                 .Sort(SortExpressionComparer<Domain.Model.TradesByPercentDiff>.Ascending(t => t.PercentBand),SortOptimisations.ComparesImmutableValuesOnly)
-                .ObserveOn(_schedulerProvider.Dispatcher)
+                .ObserveOn(_schedulerProvider.MainThread)
                 .Bind(_data)
                 .DisposeMany()
                 .Subscribe();

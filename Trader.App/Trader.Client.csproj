@@ -136,6 +136,7 @@
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
+    <Compile Include="ScrollViewe.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
@@ -164,6 +165,10 @@
     </Compile>
     <Compile Include="IntertabClient.cs" />
     <Compile Include="Views\NearToMarketViewer.cs" />
+    <Compile Include="Views\PositionsView.xaml.cs">
+      <DependentUpon>PositionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PositionsViewer.cs" />
     <Compile Include="Views\RecentTrades.xaml.cs">
       <DependentUpon>RecentTrades.xaml</DependentUpon>
     </Compile>
@@ -206,6 +211,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
     <Page Include="TraderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PositionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

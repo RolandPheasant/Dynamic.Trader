@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using StructureMap;
 using Trader.Client.Infrastucture;
@@ -31,6 +32,7 @@ namespace Trader.Client
             app.Resources.Add(SystemParameters.ClientAreaAnimationKey, null);
             app.Resources.Add(SystemParameters.MinimizeAnimationKey, null);
             app.Resources.Add(SystemParameters.UIEffectsKey, null);
+
 
 
             app.Run();

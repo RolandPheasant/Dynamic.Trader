@@ -5,6 +5,7 @@ namespace Trader.Domain.Services
 {
     public interface ITradeService
     {
-        IObservableCache<Trade, long> Trades { get; }
+        IObservableCache<Trade, long> All { get; }
+        IObservableCache<Trade, long> Live { get; }
     }
 }

@@ -67,10 +67,14 @@
   <ItemGroup>
     <Compile Include="Infrastucture\ObservableCollectionEx.cs" />
     <Compile Include="Infrastucture\SchedulerProvider.cs" />
+    <Compile Include="Model\BuyOrSell.cs" />
+    <Compile Include="Model\CurrencyPair.cs" />
+    <Compile Include="Model\MarketData.cs" />
     <Compile Include="Model\TimePeriod.cs" />
+    <Compile Include="Model\TradesByCurrencyPair.cs" />
     <Compile Include="Model\TradesByPercentDiff.cs" />
     <Compile Include="Model\TradesByTime.cs" />
-    <Compile Include="Services\IMarketPriceService.cs" />
+    <Compile Include="Services\IMarketDataService.cs" />
     <Compile Include="Services\INearToMarketService.cs" />
     <Compile Include="Infrastucture\AbstractNotifyPropertyChanged.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />
@@ -85,7 +89,7 @@
     <Compile Include="Services\TradeGenerator.cs" />
     <Compile Include="Services\TradePriceUpdateJob.cs" />
     <Compile Include="Services\ITradeService.cs" />
-    <Compile Include="Services\MarketPriceService.cs" />
+    <Compile Include="Services\MarketDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Trade.cs" />
     <Compile Include="Model\TradeProxy.cs" />

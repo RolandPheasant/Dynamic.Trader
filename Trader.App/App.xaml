@@ -49,27 +49,10 @@
                 <views:RxUiView/>
             </DataTemplate>
 
-            <!--<Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
-                <Setter Property="ItemContainerStyle" Value="{StaticResource TrapezoidDragableTabItemStyle}" />
-                <Setter Property="AdjacentHeaderItemOffset" Value="-12" />
-                <Setter Property="NewItemFactory" Value="{Binding NewItemFactory}" />
-                <Setter Property="ShowDefaultAddButton" Value="True" />
-                <Setter Property="ShowDefaultCloseButton" Value="True" />
-                <Setter Property="CustomHeaderItemTemplate">
-                    <Setter.Value>
-                        <DataTemplate DataType="{x:Type common:TabContent}">
-                            <TextBlock Text="{Binding Header}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate DataType="{x:Type common:TabContent}">
-                            <ContentPresenter Margin="4" Content="{Binding Content}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
+            <DataTemplate DataType="{x:Type views:PositionsViewer}">
+                <views:PositionsView/>
+            </DataTemplate>
+
 
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
@@ -97,7 +80,7 @@
                 </Style.Setters>
             </Style>
 
-            <StackPanel Orientation="Horizontal" Height="18" x:Key="HeaderSuffixContent"
+            <StackPanel Orientation="Horizontal" Margin="4 0 0 0" Height="18" x:Key="HeaderSuffixContent"
                         ToolTip="Powered by Dragablz" 
                         x:Shared="False">
                 <Path  Stretch="Uniform" Fill="{DynamicResource AccentColorBrush}" 

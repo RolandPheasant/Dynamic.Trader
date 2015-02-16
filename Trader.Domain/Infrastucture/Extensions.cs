@@ -1,8 +1,5 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
 namespace System
@@ -13,5 +10,37 @@ namespace System
         {
             return source.IndexOf(toCheck, comp) >= 0;
         }
+
+        public static bool NextBoolean(this Random source)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            return source.NextDouble() > 0.5;
+        }
+
+        public static string Pluralise(this string source, int count)
+        {
+            if (count == 1) return string.Format("{0} {1}", count, source);
+            return string.Format("{0} {1}s", count, source); ;
+        }
+    }
+}
+
+namespace System.Collections.Generic
+{
+
+    public static class Extensions
+    {
+
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (action == null) throw new ArgumentNullException("action");
+
+            foreach (var item in source)
+            {
+                action(item);
+            }
+        }
+
     }
 }

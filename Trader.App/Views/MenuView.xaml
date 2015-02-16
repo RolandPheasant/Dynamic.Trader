@@ -10,20 +10,28 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />-->
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Tile.xaml" />-->
-            </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
-        </UserControl.Resources>
-    
-  <Grid>
-        <ScrollViewer>
+
+    <Grid  Margin="4"  >
+      
+      <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          
+
+      </Grid.RowDefinitions>
 
 
-            <ItemsControl   MinWidth="300" ItemsSource="{Binding Menu}">
+        <CheckBox Margin="4" 
+          x:Name="showLinks"
+          Content="Show hyperlinks"
+          IsChecked="{Binding ShowLinks}"/>
+      
+        
+      
+        <ScrollViewer Grid.Row="1">
+
+
+            <ItemsControl  ItemsSource="{Binding Menu}">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -45,15 +53,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <controls:Tile Grid.Column="0"
-                                     x:Name="tile"  
+                        <controls:Tile Grid.Column="0" x:Name="tile"  
                                        Margin="4"
-                                    Title="{Binding Title}"
-                                    Command="{Binding Command}" 
-           
-                                     
-                                    Width="85"
-                                    Height="85">
+                                        Title="{Binding Title}"
+                                        Command="{Binding Command}" 
+                                        ToolTip="{Binding Description}"
+                                        Width="85"
+                                        Height="85">
                                 <controls:Tile.Style>
                                     <Style TargetType="{x:Type controls:Tile}">
                                        <Style.Triggers>
@@ -66,10 +72,11 @@
                                 </controls:Tile.Style>
                         </controls:Tile>
 
-                        <Grid Margin="5 4 5 0" 
-                               Width="250"
-                                  VerticalAlignment="Top"
-                                  Grid.Column="1" >
+                        <Grid Margin="5 4 5 0"
+                         
+                              Visibility="{Binding ElementName=showLinks,Path=IsChecked, Converter={StaticResource  BooleanToVisibilityConverter}}"
+                              VerticalAlignment="Top"
+                              Grid.Column="1" >
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>

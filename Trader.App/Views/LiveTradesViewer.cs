@@ -31,7 +31,7 @@ namespace Trader.Client.Views
                                 .Subscribe(_ => ApplyFilter());
  
 
-            var loader = tradeService.Trades
+            var loader = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))

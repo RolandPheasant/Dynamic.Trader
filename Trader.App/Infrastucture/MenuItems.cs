@@ -8,19 +8,21 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
 {
-    public enum MenuFilter
+    public enum MenuCategory
     {
-        ReactiveUI,
+        ReactiveUi,
         DynamicData
     }
 
-    public class MenuItems: IDisposable
+    public class MenuItems:AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IObjectProvider _objectProvider;
         private readonly IEnumerable<MenuItem> _menu;
         private readonly ISubject<ViewContainer> _viewCreatedSubject = new Subject<ViewContainer>();
         private readonly IDisposable _cleanUp;
+        private bool _showLinks=false;
+
 
         public MenuItems(ILogger logger, IObjectProvider objectProvider)
         {
@@ -40,7 +42,9 @@ namespace Trader.Client.Infrastucture
 
                  new MenuItem("Live Trades (RxUI)",
                     "A basic example, illustrating where reactive-ui and dynamic data can work together",
-                    () => Open<RxUiViewer>("Reactive UI Example"),new []
+                    () => Open<RxUiViewer>("Reactive UI Example"),
+                    MenuCategory.ReactiveUi,
+                    new []
                         {
                              new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RxUiViewer.cs "), 
                             new Link("Blog","Integration with reactive ui", "https://dynamicdataproject.wordpress.com/2015/01/18/integration-with-reactiveui/"), 
@@ -74,14 +78,18 @@ namespace Trader.Client.Infrastucture
                             new Link("Group Model","TradesByTime.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByTime.cs"),
                         }),
                 
-                        new MenuItem("Recent Trades",   
-                            "Operator which only includes trades which have changed in the last minute.",
-                            () => Open<RecentTradesViewer>("Recent Trades"),new []
-                            {
-                                new Link("View Model", "RecentTradesViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RecentTradesViewer.cs"), 
-                            }),
+                new MenuItem("Recent Trades",   
+                    "Operator which only includes trades which have changed in the last minute.",
+                    () => Open<RecentTradesViewer>("Recent Trades"),new []
+                    {
+                        new Link("View Model", "RecentTradesViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RecentTradesViewer.cs"), 
+                    }),
 
-
+                    
+                new MenuItem("Positions",   
+                       "Calculate overall position for each currency pair and aggregate totals",
+                        () => Open<PositionsViewer>("Positions")),
+                
 
             };
 
@@ -95,6 +103,13 @@ namespace Trader.Client.Infrastucture
             _viewCreatedSubject.OnNext(new ViewContainer(title, content));
 
             _logger.Info("--Opened '{0}'", title);
+        }
+
+
+        public bool ShowLinks
+        {
+            get { return _showLinks; }
+            set { SetAndRaise(ref _showLinks,value);}
         }
 
 

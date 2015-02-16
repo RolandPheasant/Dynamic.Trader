@@ -18,7 +18,7 @@ namespace Trader.Domain.Services
             _tradeService = tradeService;
         }
 
-        public IObservable<IChangeSet<Trade, long>> Query(Func<uint> percentFromMarket)
+        public IObservable<IChangeSet<Trade, long>> Query(Func<decimal> percentFromMarket)
         {
             if (percentFromMarket == null) throw new ArgumentNullException("percentFromMarket");
 
@@ -39,7 +39,7 @@ namespace Trader.Domain.Services
                          .Subscribe(_ => filter.Reevaluate());
 
                      //filter on live trades matching % specified
-                     var subscriber = _tradeService.Trades
+                     var subscriber = _tradeService.All
                          .Connect(trade=>trade.Status==TradeStatus.Live)
                          .Synchronize(locker)
                          .Filter(filter)

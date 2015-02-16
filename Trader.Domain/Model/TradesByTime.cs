@@ -25,7 +25,7 @@ namespace Trader.Domain.Model
             _cleanUp = @group.Cache.Connect()
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
-                .ObserveOn(schedulerProvider.Dispatcher)
+                .ObserveOn(schedulerProvider.MainThread)
                 .Bind(_data)
                 .DisposeMany()
                 .Subscribe();

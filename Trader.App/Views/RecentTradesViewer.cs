@@ -30,12 +30,12 @@ namespace Trader.Client.Views
 
             ApplyFilter();
 
-            var loader = tradeService.Trades.Connect()
+            var loader = tradeService.All.Connect()
                 .SkipInitial()
                 .ExpireAfter((trade) => TimeSpan.FromSeconds(30)) 
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
-                .ObserveOn(schedulerProvider.Dispatcher)
+                .ObserveOn(schedulerProvider.MainThread)
                 .Bind(_data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();

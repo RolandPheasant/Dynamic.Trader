@@ -1,41 +1,22 @@
+using Trader.Domain.Model;
+
 namespace Trader.Domain.Services
 {
     public class StaticData : IStaticData
     {
-        public class CurrencyPair
-        {
-            private readonly string _code;
-            private readonly decimal _startingPrice;
-
-            public CurrencyPair(string code, decimal startingPrice)
-            {
-                _code = code;
-                _startingPrice = startingPrice;
-            }
-
-            public string Code
-            {
-                get { return _code; }
-            }
-
-            public decimal InitialPrice
-            {
-                get { return _startingPrice; }
-            }
-        }
-
         private readonly CurrencyPair[] _currencyPairs =
         {
-            new CurrencyPair("GBP/USD",1.6M) ,
-            new CurrencyPair("EUR/USD",1.23904M),
-            new CurrencyPair("EUR/GBP",0.791339614M),
-            new CurrencyPair("NZD/CAD",0.885535855M)  ,
-            new CurrencyPair("HKD/USD",0.128908M) ,
-            new CurrencyPair("NOK/SEK",1.10M) ,
-            new CurrencyPair("XAU/GBP",768.399M) ,
+            new CurrencyPair("GBP/USD",1.6M,4,5M) ,
+            new CurrencyPair("EUR/USD",1.23904M,4,3M),
+            new CurrencyPair("EUR/GBP",0.7913M,4,2M),
+            new CurrencyPair("NZD/CAD",0.8855M,4,0.5M)  ,
+            new CurrencyPair("HKD/USD",0.128908M,6,0.01M) ,
+            new CurrencyPair("NOK/SEK",1.10M,3,2M) ,
+            new CurrencyPair("XAU/GBP",768.399M,3,0.5M) ,
+            new CurrencyPair("USD/JPY",118.81M,2,0.1M),
         };
 
-        private readonly string[] _customers = new[] { "Bank of America", "Bank of Europe", "Bank of England","BNP Paribas" };
+        private readonly string[] _customers = new[] { "Bank of America", "Bank of Europe", "Bank of England", "BNP Paribas" };
 
 
         public string[] Customers

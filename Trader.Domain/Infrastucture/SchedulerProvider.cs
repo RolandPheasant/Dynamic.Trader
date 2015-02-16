@@ -5,16 +5,16 @@ namespace Trader.Domain.Infrastucture
 {
     public class SchedulerProvider : ISchedulerProvider
     {
-        private readonly IScheduler _dispatcher;
+        private readonly IScheduler _mainThread;
 
         public SchedulerProvider(Dispatcher dispatcher)
         {
-            _dispatcher = new DispatcherScheduler(dispatcher);
+            _mainThread = new DispatcherScheduler(dispatcher);
         }
 
-        public IScheduler Dispatcher
+        public IScheduler MainThread
         {
-            get { return _dispatcher; }
+            get { return _mainThread; }
         }
 
         public IScheduler TaskPool

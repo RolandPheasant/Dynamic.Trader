@@ -30,7 +30,7 @@ namespace Trader.Client.Views
                 .Throttle(TimeSpan.FromMilliseconds(250))    
                 .Subscribe(_ => ApplyFilter());
 
-            var loader = tradeService.Trades
+            var loader = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter)    // apply user filter
                 //if targetting Net4 or Net45 platform can use parallelisation for transforms 'cause it's quicker

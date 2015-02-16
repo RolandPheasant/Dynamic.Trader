@@ -1,8 +1,6 @@
 ﻿using System;
 using Dragablz;
 using Trader.Domain.Infrastucture;
-using TraderWpf;
-
 namespace Trader.Client
 {
     public class TraderWindowFactory

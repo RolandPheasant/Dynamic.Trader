@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:views="clr-namespace:Trader.Client.Views"
              d:DataContext="{d:DesignInstance views:NearToMarketViewer, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
@@ -21,10 +20,10 @@
             <Slider Width="100" 
                                  Margin="4 0 0 0"
                                  VerticalAlignment="Center"
-                                Minimum="0.1"
-                                Maximum="10"
-                                     ToolTip="Move slider to filter by % from the market"
-                                TickFrequency=".1"
+                                Minimum="0.01"
+                                Maximum="0.1"
+                               ToolTip="Move slider to filter by % from the market"
+                                TickFrequency=".01"
                                 Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             </Slider>
 
@@ -32,7 +31,6 @@
                              Margin="4 0 0 0"
                              VerticalAlignment="Center"
                              Height="18"
-                        
                              Text="{Binding NearToMarketPercent, StringFormat='\{0} %'}"/>
 
             <TextBlock  

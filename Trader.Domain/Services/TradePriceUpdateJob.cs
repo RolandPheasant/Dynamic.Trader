@@ -12,10 +12,10 @@ namespace Trader.Domain.Services
     {
         private readonly IDisposable _job;
 
-        public TradePriceUpdateJob(ITradeService tradeService, IMarketPriceService marketPriceService)
+        public TradePriceUpdateJob(ITradeService tradeService, IMarketDataService marketDataService)
         {
-            _job = tradeService.Trades.Connect()
-                .Filter(trade => trade.Status == TradeStatus.Live)
+            _job = tradeService.All
+                .Connect(trade => trade.Status == TradeStatus.Live)
                 .Group(trade => trade.CurrencyPair)
                 .SubscribeMany(groupedData =>
                                {
@@ -23,11 +23,11 @@ namespace Trader.Domain.Services
                                    decimal latestPrice = 0;
 
                                    //subscribe to price and update trades with the latest price
-                                   var priceHasChanged = marketPriceService.ObservePrice(groupedData.Key)
+                                   var priceHasChanged = marketDataService.Watch(groupedData.Key)
                                        .Synchronize(locker)
                                        .Subscribe(price =>
                                                   {
-                                                      latestPrice = price;
+                                                      latestPrice = price.Bid;
                                                       UpdateTradesWithPrice(groupedData.Cache.Items, latestPrice);
                                                   });
                                   
@@ -45,10 +45,7 @@ namespace Trader.Domain.Services
 
         private void UpdateTradesWithPrice(IEnumerable<Trade> trades, decimal price)
         {
-            foreach (var trade in trades)
-            {
-                trade.SetMarketPrice(price);
-            }
+            trades.ForEach(t=>t.SetMarketPrice(price));
         }
 
         public void Dispose()
