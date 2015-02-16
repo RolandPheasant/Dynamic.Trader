@@ -74,6 +74,7 @@
     <Compile Include="Model\CurrencyPairPosition.cs" />
     <Compile Include="Model\TradesByPercentDiff.cs" />
     <Compile Include="Model\TradesByTime.cs" />
+    <Compile Include="Model\TradesPosition.cs" />
     <Compile Include="Services\IMarketDataService.cs" />
     <Compile Include="Services\INearToMarketService.cs" />
     <Compile Include="Infrastucture\AbstractNotifyPropertyChanged.cs" />
