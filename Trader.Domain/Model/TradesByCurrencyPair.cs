@@ -1,0 +1,119 @@
+using System;
+using System.Linq;
+using DynamicData;
+using Trader.Domain.Infrastucture;
+
+namespace Trader.Domain.Model
+{
+    public class TradesPosition
+    {
+        private readonly decimal _buy;
+        private readonly decimal _sell;
+        private readonly int _count;
+
+
+        public TradesPosition(decimal buy, decimal sell, int count)
+        {
+            _buy = buy;
+            _sell = sell;
+            _count = count;
+        }
+
+        public decimal Position
+        {
+            get { return _buy - _sell; }
+        }
+
+        public decimal Buy
+        {
+            get { return _buy; }
+        }
+
+        public decimal Sell
+        {
+            get { return _sell; }
+        }
+
+        public string CountText
+        {
+            get { return "Orders".Pluralise(_count); }
+        }
+
+        public int Count
+        {
+            get { return _count; }
+        }
+    }
+
+
+    public class TradesByCurrencyPair: AbstractNotifyPropertyChanged,  IDisposable, IEquatable<TradesByCurrencyPair>
+    {
+        private readonly IDisposable _cleanUp;
+        private readonly string _currencyPair;
+        private TradesPosition _position;
+
+        public TradesByCurrencyPair(IGroup<Trade, long, string> tradesByCurrencyPair)
+        {
+            _currencyPair = tradesByCurrencyPair.Key;
+            _cleanUp = tradesByCurrencyPair.Cache.Connect()
+                .QueryWhenChanged(query =>
+                {
+                    var buy = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Buy).Sum(trade=>trade.Amount);
+                    var sell = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Sell).Sum(trade => trade.Amount);
+                    var count = query.Count;
+                    return new TradesPosition(buy,sell,count);
+                })
+                .Subscribe(position => Position = position);
+        }
+
+        public TradesPosition Position
+        {
+            get { return _position; }
+            set { SetAndRaise(ref  _position,value); }
+        }
+
+        public string CurrencyPair
+        {
+            get { return _currencyPair; }
+        }
+
+        #region Equality Members
+
+        public bool Equals(TradesByCurrencyPair other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return string.Equals(_currencyPair, other._currencyPair);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TradesByCurrencyPair) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_currencyPair != null ? _currencyPair.GetHashCode() : 0);
+        }
+
+        public static bool operator ==(TradesByCurrencyPair left, TradesByCurrencyPair right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TradesByCurrencyPair left, TradesByCurrencyPair right)
+        {
+            return !Equals(left, right);
+        }
+
+        #endregion
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
+    }
+}
