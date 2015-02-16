@@ -46,13 +46,13 @@ namespace Trader.Domain.Model
     }
 
 
-    public class TradesByCurrencyPair: AbstractNotifyPropertyChanged,  IDisposable, IEquatable<TradesByCurrencyPair>
+    public class CurrencyPairPosition: AbstractNotifyPropertyChanged,  IDisposable, IEquatable<CurrencyPairPosition>
     {
         private readonly IDisposable _cleanUp;
         private readonly string _currencyPair;
         private TradesPosition _position;
 
-        public TradesByCurrencyPair(IGroup<Trade, long, string> tradesByCurrencyPair)
+        public CurrencyPairPosition(IGroup<Trade, long, string> tradesByCurrencyPair)
         {
             _currencyPair = tradesByCurrencyPair.Key;
             _cleanUp = tradesByCurrencyPair.Cache.Connect()
@@ -79,7 +79,7 @@ namespace Trader.Domain.Model
 
         #region Equality Members
 
-        public bool Equals(TradesByCurrencyPair other)
+        public bool Equals(CurrencyPairPosition other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -91,7 +91,7 @@ namespace Trader.Domain.Model
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((TradesByCurrencyPair) obj);
+            return Equals((CurrencyPairPosition) obj);
         }
 
         public override int GetHashCode()
@@ -99,12 +99,12 @@ namespace Trader.Domain.Model
             return (_currencyPair != null ? _currencyPair.GetHashCode() : 0);
         }
 
-        public static bool operator ==(TradesByCurrencyPair left, TradesByCurrencyPair right)
+        public static bool operator ==(CurrencyPairPosition left, CurrencyPairPosition right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(TradesByCurrencyPair left, TradesByCurrencyPair right)
+        public static bool operator !=(CurrencyPairPosition left, CurrencyPairPosition right)
         {
             return !Equals(left, right);
         }

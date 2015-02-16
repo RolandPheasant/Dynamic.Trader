@@ -10,22 +10,22 @@ namespace Trader.Client.Views
 {
     public class PositionsViewer: IDisposable
     {
-        private readonly IObservableCollection<TradesByCurrencyPair> _data = new ObservableCollectionExtended<TradesByCurrencyPair>();
+        private readonly IObservableCollection<CurrencyPairPosition> _data = new ObservableCollectionExtended<CurrencyPairPosition>();
         private readonly IDisposable _cleanUp;
 
         public PositionsViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
             _cleanUp = tradeService.Live.Connect()
                 .Group(trade => trade.CurrencyPair)
-                .Transform(group => new TradesByCurrencyPair(group))
-                .Sort(SortExpressionComparer<TradesByCurrencyPair>.Ascending(t => t.CurrencyPair))
+                .Transform(group => new CurrencyPairPosition(group))
+                .Sort(SortExpressionComparer<CurrencyPairPosition>.Ascending(t => t.CurrencyPair))
                 .ObserveOn(schedulerProvider.MainThread)
                 .Bind(_data)
                 .DisposeMany()
                 .Subscribe();
         }
 
-        public IObservableCollection<TradesByCurrencyPair> Data
+        public IObservableCollection<CurrencyPairPosition> Data
         {
             get { return _data; }
         }

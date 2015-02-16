@@ -20,7 +20,7 @@
             
             <ItemsControl.ItemTemplate>
 
-                <DataTemplate DataType="{x:Type model:TradesByCurrencyPair}">
+                <DataTemplate DataType="{x:Type model:CurrencyPairPosition}">
                     
                     <Border Margin="4" 
                            

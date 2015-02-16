@@ -71,7 +71,7 @@
     <Compile Include="Model\CurrencyPair.cs" />
     <Compile Include="Model\MarketData.cs" />
     <Compile Include="Model\TimePeriod.cs" />
-    <Compile Include="Model\TradesByCurrencyPair.cs" />
+    <Compile Include="Model\CurrencyPairPosition.cs" />
     <Compile Include="Model\TradesByPercentDiff.cs" />
     <Compile Include="Model\TradesByTime.cs" />
     <Compile Include="Services\IMarketDataService.cs" />

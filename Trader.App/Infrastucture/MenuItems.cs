@@ -91,7 +91,7 @@ namespace Trader.Client.Infrastucture
                         () => Open<PositionsViewer>("Positions"),new []
                     {
                         new Link("View Model", "PositionsViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/PositionsViewer.cs"), 
-                        new Link("Grouping Model", "TradesByCurrencyPair.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByCurrencyPair.cs"), 
+                        new Link("Grouping Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
             };
