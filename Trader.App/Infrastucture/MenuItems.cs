@@ -88,8 +88,11 @@ namespace Trader.Client.Infrastucture
                     
                 new MenuItem("Positions",   
                        "Calculate overall position for each currency pair and aggregate totals",
-                        () => Open<PositionsViewer>("Positions")),
-                
+                        () => Open<PositionsViewer>("Positions"),new []
+                    {
+                        new Link("View Model", "PositionsViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/PositionsViewer.cs"), 
+                        new Link("Grouping Model", "TradesByCurrencyPair.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByCurrencyPair.cs"), 
+                    }),
 
             };
 
