@@ -94,6 +94,14 @@ namespace Trader.Client.Infrastucture
                         new Link("Grouping Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
+               new MenuItem("Log Entry",   
+                       "Visualiser for log entry",
+                        () => Open<LogEntryViewer>("Log Entry"),new []
+                    {
+                        new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/LogEntryViewer.cs"), 
+                    }),
+
+
             };
 
             _cleanUp = Disposable.Create(() => _viewCreatedSubject.OnCompleted());

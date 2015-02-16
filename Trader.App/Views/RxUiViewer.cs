@@ -27,6 +27,7 @@ namespace Trader.Client.Views
         {
             //Change the filter when the user entered search text changes
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
+
                 .Throttle(TimeSpan.FromMilliseconds(250))    
                 .Subscribe(_ => ApplyFilter());
 

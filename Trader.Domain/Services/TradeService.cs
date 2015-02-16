@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using DynamicData;
@@ -14,7 +15,6 @@ namespace Trader.Domain.Services
         private readonly TradeGenerator _tradeGenerator;
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly ISourceCache<Trade, long> _tradesSource;
-
         private readonly IObservableCache<Trade, long> _all;
         private readonly IObservableCache<Trade, long> _live;
         private readonly IDisposable _cleanup;
@@ -37,7 +37,23 @@ namespace Trader.Domain.Services
             //code to emulate an external trade provider
             var tradeLoader = GenerateTradesAndMaintainCache();
 
-            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader);
+
+            //todo: Move this to a log writing service
+            const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
+            var loggerWriter = _all.Connect().SkipInitial()
+                                    .Transform(trade =>
+                                    {
+                                        return string.Format(messageTemplate,
+                                            trade.BuyOrSell,
+                                            trade.Amount,
+                                            trade.CurrencyPair,
+                                            trade.Status,
+                                            trade.Customer);
+                                    })
+                                    .Subscribe(changes => changes.ForEach(change => _logger.Info(change.Current)));
+
+
+            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader, loggerWriter);
         }
         
         private IDisposable GenerateTradesAndMaintainCache()
@@ -58,7 +74,6 @@ namespace Trader.Domain.Services
                             .ScheduleRecurringAction(randomInterval, () =>
                             {
                                 var number = random.Next(1,7);
-                                _logger.Info("Adding {0} trades", number);
                                 var trades = _tradeGenerator.Generate(number);
                                 _tradesSource.AddOrUpdate(trades);
                             });
@@ -68,7 +83,6 @@ namespace Trader.Domain.Services
                 .ScheduleRecurringAction(randomInterval, () =>
                 {
                     var number = random.Next(1, 8);
-                    _logger.Info("Closing {0} trades", number);
                     _tradesSource.BatchUpdate(updater =>
                                               {
                                                   var trades = updater.Items

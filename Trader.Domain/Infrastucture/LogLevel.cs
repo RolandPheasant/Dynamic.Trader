@@ -1,4 +1,4 @@
-﻿namespace DynamicData.Common.Logging
+﻿namespace Trader.Domain.Infrastucture
 {
     public enum LogLevel
     {

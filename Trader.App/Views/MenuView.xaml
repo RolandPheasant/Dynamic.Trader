@@ -16,32 +16,24 @@
       <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
           <RowDefinition Height="*"/>
-          
-
       </Grid.RowDefinitions>
 
 
-        <CheckBox Margin="4" 
-          x:Name="showLinks"
-          Content="Show hyperlinks"
+        <CheckBox    x:Name="showLinks" Margin="4" 
+          Content="Show hyperlinks"    
           IsChecked="{Binding ShowLinks}"/>
       
-        
-      
         <ScrollViewer Grid.Row="1">
-
-
             <ItemsControl  ItemsSource="{Binding Menu}">
-
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <infrastucture:AnimatedWrapPanel/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
 
                 <ItemsControl.ItemTemplate>
-                <DataTemplate>
+                    <DataTemplate>
                     
                     <Grid
                       Margin="0 4 4 0"

@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using DynamicData;
 
-namespace DynamicData.Common.Logging
+namespace Trader.Domain.Infrastucture
 {
     public interface ILogEntryService
     {
-        IObservableCache<LogEntry, long> Cache { get; }
+        IObservableCache<LogEntry, long> Items { get; }
 
+
+        void Add(LogEntry items);
         void Remove(IEnumerable<LogEntry> items);
         void Remove(IEnumerable<long> keys);
 

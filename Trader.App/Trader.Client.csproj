@@ -132,15 +132,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastucture\AnimatedWrapPanel.cs" />
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\Link.cs" />
+    <Compile Include="Infrastucture\LogWriter.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
+    <Compile Include="Infrastucture\ReactiveLogAppender.cs" />
     <Compile Include="ScrollViewe.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LiveTradesViewer.cs" />
+    <Compile Include="Views\LogEntryView.xaml.cs">
+      <DependentUpon>LogEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogEntryViewer.cs" />
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
@@ -189,6 +196,10 @@
       <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\LiveTradesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LogEntryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

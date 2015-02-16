@@ -1,60 +1,42 @@
-﻿#region Usings
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using DynamicData.Kernel;
+using DynamicData;
 
-#endregion
-
-namespace DynamicData.Common.Logging
+namespace Trader.Domain.Infrastucture
 {
-    sealed class LogEntryService:   IDisposable, ILogEntryService
+    public class LogEntryService:   IDisposable, ILogEntryService
     {
         private readonly ISourceCache<LogEntry,long> _source = new SourceCache<LogEntry, long>(l=>l.Key); 
         private readonly ILogger _logger;
         private readonly IDisposable _disposer;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LogEntryService"/> class.
-        /// </summary>
-        /// <param name="logger">The logger.</param>
-        
+
         public LogEntryService(ILogger logger)
         {
             _logger = logger;
 
             var scheduler = new EventLoopScheduler();
 
-            //expire old items
-            var timeExpirer = _source.AutoRemove(le =>
-                                        {
-                                            return TimeSpan.FromSeconds(le.Level == LogLevel.Debug ? 5 : 60);
-                                        },TimeSpan.FromSeconds(5),  TaskPoolScheduler.Default)
-                                        .Subscribe(removed =>
-                                        {
-                                            logger.Debug("{0} log items have been automatically removed",removed.Count());
-                                        });
+            ////expire old items
+            //var timeExpirer = _source.ExpireAfter(le => TimeSpan.FromSeconds(le.Level == LogLevel.Debug ? 5 : 60),TimeSpan.FromSeconds(5),  TaskPoolScheduler.Default)
+            //                            .Subscribe(removed =>
+            //                            {
+            //                                logger.Debug("{0} log items have been automatically removed",removed.Count());
+            //                            });
 
           //  var expirer = _source.ExpireFromSource(50).Subscribe();
 
-            //populate the source cache from the logger observable
-           var loader = RxAppender.LogEntryObservable
-               .ObserveOn(scheduler)
-                .Subscribe(item => _source.AddOrUpdate(item));
+
 
 
             _disposer = Disposable.Create(() =>
                                               {
-                                                  timeExpirer.Dispose();
+                                               ///  timeExpirer.Dispose();
                                                    // expirer.Dispose();
                                                     scheduler.Dispose();
-                                                    loader.Dispose();
+                                                    //loader.Dispose();
                                                     _source.Dispose();
                                               });
 
@@ -62,9 +44,14 @@ namespace DynamicData.Common.Logging
         }
 
 
-        public IObservableCache<LogEntry, long> Cache
+        public IObservableCache<LogEntry, long> Items
         {
             get { return _source.AsObservableCache(); }
+        }
+
+        public void Add(LogEntry item)
+        {
+            _source.AddOrUpdate(item);
         }
 
         public void Remove(IEnumerable<LogEntry> items)

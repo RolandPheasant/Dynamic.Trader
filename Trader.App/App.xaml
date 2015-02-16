@@ -54,6 +54,10 @@
             </DataTemplate>
 
 
+            <DataTemplate DataType="{x:Type views:LogEntryViewer}">
+                <views:LogEntryView/>
+            </DataTemplate>
+            
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
                 <Style.Setters>

@@ -23,7 +23,5 @@ namespace Trader.Domain.Infrastucture
             // ReSharper disable once ExplicitCallerInfoArgument
             OnPropertyChanged(propertyName);
         }
-
-
     }
 }

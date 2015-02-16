@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using StructureMap.Configuration.DSL;
+using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Services;
+using ILogger = Trader.Domain.Infrastucture.ILogger;
 
 namespace Trader.Client.Infrastucture
 {
@@ -24,11 +26,13 @@ namespace Trader.Client.Infrastucture
             For<IStaticData>().Singleton().Use<StaticData>();
             For<IMarketDataService>().Singleton().Use<MarketDataService>();
             For<INearToMarketService>().Singleton().Use<NearToMarketService>();
+           
+            For<ILogEntryService>().Singleton().Use<LogEntryService>();
             
-
-        //    ForConcreteType<ViewsCollection>().Configure.Singleton();
             For<UnhandledExceptionEventHandler>().Singleton();
             For<TradePriceUpdateJob>().Singleton();
+            For<LogWriter>().Singleton();
+
 
             Scan(scanner => scanner.LookForRegistries());
         }

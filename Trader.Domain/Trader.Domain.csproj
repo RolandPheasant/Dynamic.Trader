@@ -65,7 +65,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastucture\ObservableCollectionEx.cs" />
+    <Compile Include="Infrastucture\ILogEntryService.cs" />
+    <Compile Include="Infrastucture\LogEntry.cs" />
+    <Compile Include="Infrastucture\LogEntryService.cs" />
+    <Compile Include="Infrastucture\LogLevel.cs" />
     <Compile Include="Infrastucture\SchedulerProvider.cs" />
     <Compile Include="Model\BuyOrSell.cs" />
     <Compile Include="Model\CurrencyPair.cs" />

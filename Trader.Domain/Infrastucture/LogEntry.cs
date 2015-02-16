@@ -1,6 +1,7 @@
 ﻿using System;
+using DynamicData;
 
-namespace DynamicData.Common.Logging
+namespace Trader.Domain.Infrastucture
 {
     public class LogEntry: IKey<long>
     {
