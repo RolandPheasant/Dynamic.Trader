@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
@@ -210,13 +212,15 @@ namespace Trader.Client.Views
     {
         private readonly ILogEntryService _logEntryService;
         private readonly FilterController<LogEntry> _filter = new FilterController<LogEntry>(l => true);
-
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
-        private readonly SelectorBinding _multiSelectorBinding = new SelectorBinding();
+        private readonly SelectorBinding _selection = new SelectorBinding();
+        private readonly ICommand _deleteCommand;
         private bool _paused;
 
         private readonly IDisposable _cleanUp;
         private string _searchText=string.Empty;
+        private string _removeText
+            ;
 
 
         public LogEntryViewer(ILogEntryService logEntryService)
@@ -228,6 +232,10 @@ namespace Trader.Client.Views
                 .Select(BuildFilter)
                 .Subscribe(_filter.Change);
 
+
+
+                            
+            //manage streaming of log entries
             var loader = logEntryService.Items.Connect(_filter)
                // .BatchIf(this.WhenAnyObservable(x => x.Paused))
                 .Transform(le => new LogEntryProxy(le))
@@ -236,11 +244,27 @@ namespace Trader.Client.Views
                 .Bind(_data)
                 .Subscribe();
 
+            //manage user selectom
+            var selectedItems = _selection.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
+            var selectedCache = selectedItems.AsObservableCache();
+            
+            var selectedMessage = selectedItems
+                                        .QueryWhenChanged(query => string.Format("Delete {0} items", query.Count))
+                                         .Subscribe(text=>RemoveText=text);
+
+            var connected = selectedItems.Connect();
+
+            _deleteCommand = new Command(() => _logEntryService.Remove(selectedCache.Items.Select(proxy=>proxy.Key)));
+
+
             _cleanUp= Disposable.Create(() =>
             {
                 loader.Dispose();
                 filterApplier.Dispose();
                 _filter.Dispose();
+                connected.Dispose();
+                selectedMessage.Dispose();
+                connected.Dispose();
             });
         }
 
@@ -264,9 +288,20 @@ namespace Trader.Client.Views
             set { this.RaiseAndSetIfChanged(ref _searchText, value); } 
         }
 
+        public string RemoveText
+        {
+            get { return _removeText; }
+            set { this.RaiseAndSetIfChanged(ref _removeText , value); }
+        }
+
+        public ICommand RemoveCommand
+        {
+            get { return _deleteCommand; }
+        }
+
         public SelectorBinding MultiSelector
         {
-            get { return _multiSelectorBinding; }
+            get { return _selection; }
         }
 
         public ReactiveList<LogEntryProxy> Data

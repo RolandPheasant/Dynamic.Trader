@@ -58,6 +58,9 @@
                         Content="Pause Updates"
                         IsChecked="{Binding Paused,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
+                <Button Content="{Binding RemoveText}" Command="{Binding RemoveCommand}">
+                    
+                </Button>
 
 
             </StackPanel>
@@ -76,17 +79,7 @@
             infrastucture:SelectorHelper.Binding="{Binding  MultiSelector}"
             Style="{StaticResource VirtualisedMetroListView}"
             ItemsSource="{Binding Data}">
-            <!--<ListView.InputBindings>
-                <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>
-                <KeyBinding Command="{Binding SelectAllCommand}" Key="A" Modifiers="Control"/>
-            </ListView.InputBindings>-->
 
-            <ListView.Resources>
-                <Style TargetType="{x:Type ListViewItem}" 
-                       BasedOn="{StaticResource MetroListViewItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }" />
-                </Style>
-            </ListView.Resources>
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

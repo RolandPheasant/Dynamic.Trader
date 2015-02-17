@@ -8,13 +8,13 @@ using System.Windows.Controls.Primitives;
 
 namespace Trader.Client.Infrastucture
 {
-    public class SelectorBinding : IDisposable
+    public class SelectorBinding : IDisposable// IAttachedReceiver
     {
         private readonly ObservableCollection<object> _selected = new ObservableCollection<object>();
         private readonly SerialDisposable _serialDisposable = new SerialDisposable();
         private bool _isSelecting;
 
-        public void Receive(Selector selector)
+        internal void Receive(Selector selector)
         {
             _serialDisposable.Disposable = Observable
                 .FromEventPattern<SelectionChangedEventHandler, SelectionChangedEventArgs>(
@@ -42,8 +42,13 @@ namespace Trader.Client.Infrastucture
 
                 _isSelecting = false;
             }
-
         }
+
+        public ObservableCollection<object> Selected
+        {
+            get { return _selected; }
+        }
+
         public void Dispose()
         {
             _serialDisposable.Dispose();
