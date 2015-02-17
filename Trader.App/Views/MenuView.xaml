@@ -46,13 +46,17 @@
                         </Grid.ColumnDefinitions>
 
                         <controls:Tile Grid.Column="0" x:Name="tile"  
-                                       Margin="4"
                                         Title="{Binding Title}"
                                         Command="{Binding Command}" 
                                         ToolTip="{Binding Description}"
+                                        HorizontalContentAlignment="Center"
+                                        Margin="5"
                                         Width="85"
-                                        Height="85">
-                                <ContentControl Content="{Binding Content}"/>
+                                        Height="85"
+                                        Padding="8">
+                                <ContentControl
+                                    
+                                    Content="{Binding Content}"/>
 
                                 <controls:Tile.Style>
                                     <Style TargetType="{x:Type controls:Tile}">

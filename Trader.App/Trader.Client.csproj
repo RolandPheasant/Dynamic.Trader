@@ -138,6 +138,7 @@
     <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\LogWriter.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
+    <Compile Include="Infrastucture\Multiselector.cs" />
     <Compile Include="Infrastucture\ReactiveLogAppender.cs" />
     <Compile Include="ScrollViewe.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">

@@ -29,7 +29,7 @@
                     <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow }">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="Background" Value="LightGoldenrodYellow"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

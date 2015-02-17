@@ -99,7 +99,7 @@ namespace Trader.Client.Infrastucture
                         () => Open<LogEntryViewer>("Log Entry"),new []
                     {
                         new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/LogEntryViewer.cs"), 
-                    },objectProvider.Get<LogEntryTile>()),
+                    }),
 
 
             };

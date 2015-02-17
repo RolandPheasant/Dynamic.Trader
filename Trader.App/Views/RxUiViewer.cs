@@ -27,10 +27,10 @@ namespace Trader.Client.Views
         {
             //Change the filter when the user entered search text changes
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
-
-                .Throttle(TimeSpan.FromMilliseconds(250))    
-                .Subscribe(_ => ApplyFilter());
-
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .Select(BuildFilter)
+                .Subscribe(_filter.Change);
+            
             var loader = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(_filter)    // apply user filter
@@ -45,17 +45,14 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, _filter, filterApplier);
         }
 
-        private void ApplyFilter()
+
+        private Func<Trade, bool> BuildFilter(string searchText)
         {
             if (string.IsNullOrEmpty(SearchText))
-            {
-                _filter.ChangeToIncludeAll();
-            }
-            else
-            {
-                _filter.Change(t => t.CurrencyPair.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                                    t.Customer.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-            }
+                return le => true;
+
+            return t => t.CurrencyPair.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                        t.Customer.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
         }
 
         public string SearchText
