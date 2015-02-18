@@ -12,8 +12,6 @@ A big thanks to these guys for their awesome oss projects
 - Mahaps https://github.com/MahApps/MahApps.Metro
 - Dragablz https://github.com/ButchersBoy/Dragablz
 
-There are also some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
-
 The demo illustrates how the following code:
 
 ```csharp
@@ -31,7 +29,8 @@ var loader = tradeService.All
  
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
 
-Plus many more examples.
+Plus many more dynamic data examples. Also there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
+
 
 ## Run the demo
 
