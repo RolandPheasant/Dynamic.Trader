@@ -35,14 +35,15 @@
                         controls:TextBoxHelper.ClearTextButton="True"
                         Margin="4 0 0 0"
                             VerticalAlignment="Center"
-                            Width="125"
+                            Width="150"
                             Height="18"
                         Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
 
             <Button VerticalAlignment="Center"
                      Margin="4 0 4 0"
-                    Style="{StaticResource MetroButton}"
+                    Style="{StaticResource SquareMetroButton}"
+                    BorderThickness="1"
                     Content="Delete Selected"
                     Command="{Binding RemoveCommand}"/>
 
@@ -84,13 +85,15 @@
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                                <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
                             </DataTrigger>
                         </Style.Triggers>
 
                     </Style>
                 </ListView.ItemContainerStyle>
-       </ListView>
+
+        </ListView>
 
         <StackPanel  Grid.Row="2" Margin="0 0 4 0"
 

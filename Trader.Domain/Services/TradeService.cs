@@ -25,7 +25,7 @@ namespace Trader.Domain.Services
             _tradeGenerator = tradeGenerator;
             _schedulerProvider = schedulerProvider;
 
-            //construct a cache specifying that the unique key is Trade.Id
+            //construct a cache specifying that the primary key is Trade.Id
             _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
 
             //call AsObservableCache() to hide the update methods as we are exposing the cache
@@ -93,15 +93,12 @@ namespace Trader.Domain.Services
             //todo: Move this to a log writing service
             const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
             return _all.Connect().SkipInitial()
-                                    .Transform(trade =>
-                                    {
-                                        return string.Format(messageTemplate,
-                                            trade.BuyOrSell,
-                                            trade.Amount,
-                                            trade.CurrencyPair,
-                                            trade.Status,
-                                            trade.Customer);
-                                    })
+                                    .Transform(trade => string.Format(messageTemplate,
+                                        trade.BuyOrSell,
+                                        trade.Amount,
+                                        trade.CurrencyPair,
+                                        trade.Status,
+                                        trade.Customer))
                                     .Subscribe(changes => changes.ForEach(change => _logger.Info(change.Current)));
 
         }

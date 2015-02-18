@@ -24,22 +24,23 @@
                 EnableColumnVirtualization="True"
                               EnableRowVirtualization="True"
                               ItemsSource="{Binding}">
-            
-                <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow }">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                                <Setter Property="Background" Value="LightGoldenrodYellow"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow }">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
+                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             
 
             <DataGrid.Columns>
                 <DataGridTextColumn
                                             Header="Customer"  
                                             Binding="{Binding Customer,Mode=OneWay}"/>
+                
 
                 <DataGridTextColumn 
                                             Header="Currency Pair" 
