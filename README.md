@@ -12,7 +12,7 @@ A big thanks to these guys for their awesome oss projects
 
 There are also some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
 
-The demo illustrates these a few lines of code:
+The demo illustrates how the following code:
 
 ```csharp
 var loader = tradeService.All
