@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
@@ -167,62 +165,60 @@ namespace Trader.Client.Views
         #endregion
     }
 
-    public class LogEntryTile : AbstractNotifyPropertyChanged, IDisposable
-    {
-        private readonly ILogger _logger;
-        private readonly IDisposable _cleanUp;
-        private LogEntrySummary _summary = LogEntrySummary.Empty;
+    //public class LogEntryTile : AbstractNotifyPropertyChanged, IDisposable
+    //{
+    //    private readonly ILogger _logger;
+    //    private readonly IDisposable _cleanUp;
+    //    private LogEntrySummary _summary = LogEntrySummary.Empty;
 
-        public LogEntryTile(ILogEntryService service, ILogger logger)
-        {
-            _logger = logger;
+    //    public LogEntryTile(ILogEntryService service, ILogger logger)
+    //    {
+    //        _logger = logger;
 
-            var scanner = service.Items.Connect()
-                                    .Batch(TimeSpan.FromMilliseconds(250))
-                                    .QueryWhenChanged(query =>
-                                    {
-                                        var items = query.Items.ToList();
-                                        var debug = items.Count(le => le.Level == LogLevel.Debug);
-                                        var info = items.Count(le => le.Level == LogLevel.Info);
-                                        var warn = items.Count(le => le.Level == LogLevel.Warning);
-                                        var error = items.Count(le => le.Level == LogLevel.Error);
-                                        return new LogEntrySummary(debug, info, warn, error);
-                                    })
-                                    .Subscribe(s => Summary = s);
+    //        var scanner = service.Items.Connect()
+    //                                .Batch(TimeSpan.FromMilliseconds(250))
+    //                                .QueryWhenChanged(query =>
+    //                                {
+    //                                    var items = query.Items.ToList();
+    //                                    var debug = items.Count(le => le.Level == LogLevel.Debug);
+    //                                    var info = items.Count(le => le.Level == LogLevel.Info);
+    //                                    var warn = items.Count(le => le.Level == LogLevel.Warning);
+    //                                    var error = items.Count(le => le.Level == LogLevel.Error);
+    //                                    return new LogEntrySummary(debug, info, warn, error);
+    //                                })
+    //                                .Subscribe(s => Summary = s);
 
-            _cleanUp = scanner;
-        }
-
-
-        public LogEntrySummary Summary
-        {
-            get { return _summary; }
-            set { SetAndRaise(ref _summary, value);}
-        }
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
+    //        _cleanUp = scanner;
+    //    }
 
 
-    }
+    //    public LogEntrySummary Summary
+    //    {
+    //        get { return _summary; }
+    //        set { SetAndRaise(ref _summary, value);}
+    //    }
+
+    //    public void Dispose()
+    //    {
+    //        _cleanUp.Dispose();
+    //    }
+
+
+    //}
 
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
+        private readonly IDisposable _cleanUp;
         private readonly ILogEntryService _logEntryService;
         private readonly FilterController<LogEntry> _filter = new FilterController<LogEntry>(l => true);
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
         private readonly SelectorBinding _selection = new SelectorBinding();
-        private readonly ICommand _deleteCommand;
-        private bool _paused;
+        private readonly ReactiveCommand<object> _deleteCommand;
 
-        private readonly IDisposable _cleanUp;
+        private LogEntrySummary _summary = LogEntrySummary.Empty;
         private string _searchText=string.Empty;
-        private string _removeText
-            ;
-
-
+        private string _removeText;
+        
         public LogEntryViewer(ILogEntryService logEntryService)
         {
             _logEntryService = logEntryService;
@@ -232,30 +228,44 @@ namespace Trader.Client.Views
                 .Select(BuildFilter)
                 .Subscribe(_filter.Change);
 
-
-
-                            
             //manage streaming of log entries
             var loader = logEntryService.Items.Connect(_filter)
-               // .BatchIf(this.WhenAnyObservable(x => x.Paused))
                 .Transform(le => new LogEntryProxy(le))
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
                 .Subscribe();
 
-            //manage user selectom
+            var summariser = logEntryService.Items.Connect()
+                       // .Batch(TimeSpan.FromMilliseconds(250))
+                        .QueryWhenChanged(query =>
+                        {
+                            var items = query.Items.ToList();
+                            var debug = items.Count(le => le.Level == LogLevel.Debug);
+                            var info = items.Count(le => le.Level == LogLevel.Info);
+                            var warn = items.Count(le => le.Level == LogLevel.Warning);
+                            var error = items.Count(le => le.Level == LogLevel.Error);
+                            return new LogEntrySummary(debug, info, warn, error);
+                        })
+                        .Subscribe(s => Summary = s);
+
+            //manage user selection, delete items command
             var selectedItems = _selection.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
             var selectedCache = selectedItems.AsObservableCache();
             
             var selectedMessage = selectedItems
-                                        .QueryWhenChanged(query => string.Format("Delete {0} items", query.Count))
-                                         .Subscribe(text=>RemoveText=text);
+                                        .QueryWhenChanged(query => string.Format("{0} items selected",query.Count))
+                                        .StartWith("0 items selected")
+                                        .Subscribe(text=>RemoveText=text);
+
+            _deleteCommand = selectedItems
+                                    .QueryWhenChanged(query => query.Count > 0)
+                                    .ToCommand();
+
+           var commandInvoker =  this.WhenAnyObservable(x => x.RemoveCommand)
+                    .Subscribe(x => _logEntryService.Remove(selectedCache.Items.Select(proxy => proxy.Key)));
 
             var connected = selectedItems.Connect();
-
-            _deleteCommand = new Command(() => _logEntryService.Remove(selectedCache.Items.Select(proxy=>proxy.Key)));
-
 
             _cleanUp= Disposable.Create(() =>
             {
@@ -264,7 +274,10 @@ namespace Trader.Client.Views
                 _filter.Dispose();
                 connected.Dispose();
                 selectedMessage.Dispose();
-                connected.Dispose();
+                selectedCache.Dispose();
+                _selection.Dispose();
+                commandInvoker.Dispose();
+                summariser.Dispose();
             });
         }
 
@@ -274,12 +287,6 @@ namespace Trader.Client.Views
                 return le => true;
 
             return le => le.Message.ToLowerInvariant().Contains(SearchText.ToLowerInvariant());
-        }
-
-        public bool Paused
-        {
-            get { return _paused; }
-            set { this.RaiseAndSetIfChanged(ref _paused, value); } 
         }
 
         public string SearchText
@@ -294,20 +301,27 @@ namespace Trader.Client.Views
             set { this.RaiseAndSetIfChanged(ref _removeText , value); }
         }
 
-        public ICommand RemoveCommand
+        public LogEntrySummary Summary
         {
-            get { return _deleteCommand; }
+            get { return _summary; }
+            set { this.RaiseAndSetIfChanged(ref _summary, value); }
         }
-
-        public SelectorBinding MultiSelector
-        {
-            get { return _selection; }
-        }
-
+        
         public ReactiveList<LogEntryProxy> Data
         {
             get { return _data; }
         }
+        
+        public ReactiveCommand<object> RemoveCommand
+        {
+            get { return _deleteCommand; }
+        }
+
+        public SelectorBinding Selector
+        {
+            get { return _selection; }
+        }
+
 
         public void Dispose()
         {

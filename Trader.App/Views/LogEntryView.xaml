@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textblock.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textbox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
@@ -24,25 +25,12 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
+
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <Style  TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
-                    <Setter Property="Margin" Value="5 5 5 5"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-                <Style  TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MetroTextBlock}">
-                    <Setter Property="Margin" Value="5 5 5 5"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </Grid.Resources>
 
             <StackPanel Orientation="Horizontal"  >
                 <TextBox controls:TextBoxHelper.Watermark="Enter search text..."
@@ -53,51 +41,70 @@
                              Height="18"
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-                <CheckBox Margin="4 0 0 0"
-                        VerticalAlignment="Center"
-                        Content="Pause Updates"
-                        IsChecked="{Binding Paused,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Button Content="{Binding RemoveText}" Command="{Binding RemoveCommand}">
-                    
-                </Button>
+                <Button VerticalAlignment="Center"
+                        Style="{StaticResource MetroButton}"
+                        Content="Delete Selected"
+                        Command="{Binding RemoveCommand}"/>
 
-
-            </StackPanel>
-
-            <TextBlock
-                Grid.Column="1" Margin="4 0 4 0"
+                <TextBlock Margin="4 0 4 0"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='The are \{0} log entries matching filter'}"/>
-        </Grid>
+                            Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
+            </StackPanel>
+            <ListView
+                Grid.Row="1"
+                SelectionMode="Extended"
+                infrastucture:SelectorHelper.Binding="{Binding  Selector}"
+                Style="{StaticResource VirtualisedMetroListView}"
+                ItemsSource="{Binding Data}">
+          
+                <ListView.InputBindings>
+                    <KeyBinding Command="{Binding RemoveCommand}" Key="Delete"/>
+                </ListView.InputBindings>
 
+               <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
 
-        <ListView
-            Grid.Row="1"
-            SelectionMode="Extended"
-            infrastucture:SelectorHelper.Binding="{Binding  MultiSelector}"
-            Style="{StaticResource VirtualisedMetroListView}"
-            ItemsSource="{Binding Data}">
-
-
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-
-            <ListView.View >
-                <GridView>
-                    <GridViewColumn Width="30"  Header="#" DisplayMemberBinding="{Binding Counter}" TextBlock.TextAlignment="Left" />
-                    <GridViewColumn  Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
-                    <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
-                    <GridViewColumn  Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
-                    <GridViewColumn  Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
-                    <GridViewColumn Width="300"  Header="Logger" DisplayMemberBinding="{Binding LoggerName}" TextBlock.TextAlignment="Left" />
-                </GridView>
-            </ListView.View>
+                <ListView.View >
+                    <GridView>
+                        <GridViewColumn Width="30"  Header="#" DisplayMemberBinding="{Binding Counter}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn  Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
+                        <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn  Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn  Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn Width="300"  Header="Logger" DisplayMemberBinding="{Binding LoggerName}" TextBlock.TextAlignment="Left" />
+                    </GridView>
+                </ListView.View>
 
         </ListView>
+
+        <StackPanel  Grid.Row="2" Margin="0 0 4 0"
+
+                     Orientation="Horizontal" 
+                     HorizontalAlignment="Right">
+
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Opacity" Value="0.6"/>
+                    <Setter Property="Margin" Value="5 4 0 4"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <TextBlock Text="{Binding RemoveText}"/>
+
+            <TextBlock Text="Debug:" />
+            <TextBlock Text="{Binding Summary.Debug}" />
+            <TextBlock Text="Info:" />
+            <TextBlock Text="{Binding Summary.Info}" />
+            <TextBlock Text="Warning:" />
+            <TextBlock Text="{Binding Summary.Warning}"/>
+            <TextBlock Text="Error:" />
+            <TextBlock Text="{Binding Summary.Error}" />
+        </StackPanel>
     </Grid>
 </UserControl>

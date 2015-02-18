@@ -58,9 +58,9 @@
                 <views:LogEntryView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type views:LogEntryTile}">
+            <!--<DataTemplate DataType="{x:Type views:LogEntryTile}">
                 <views:LogEntryTileView/>
-            </DataTemplate>
+            </DataTemplate>-->
 
             <Style TargetType="{x:Type dragablz:DragablzItem}" 
                        BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}" x:Key="CustomDragablzItemStyle">
