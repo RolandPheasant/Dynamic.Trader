@@ -12,8 +12,21 @@ A big thanks to these guys for their awesome oss projects
 
 There are also some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
 
-The demo illustrates how a few lines of code can produce this:
+The demo illustrates these a few lines of code:
 
+```csharp
+var loader = tradeService.All
+    .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
+    .Filter(_filter) // apply user filter
+    .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
+    .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
+    .ObserveOnDispatcher()
+    .Bind(_data)   // update observable collection bindings
+    .DisposeMany() //since TradeProxy is disposable dispose when no longer required
+    .Subscribe();
+``` 
+ produces this
+ 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
 
 Plus many more examples.
