@@ -5,15 +5,18 @@ This is a c# sample wpf project to help get started with Dynamic Data.
 Source code for dynamic data at https://github.com/RolandPheasant/DynamicData 
 and blog at http://dynamic-data.org/
 
-The UI looks good and behaves well thanks to 
+A big thanks to these guys for their awesome oss projects
 
 - Mahaps https://github.com/MahApps/MahApps.Metro
 - Dragablz https://github.com/ButchersBoy/Dragablz
-- ReactiveUI https://github.com/reactiveui/ReactiveUI (at the moment only for 1 example but soon to be more)
 
-The demo illustrates how a few lines of code can produce this
+There are also some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/GithubReadmeImage.gif "Sample Screen Shot")
+The demo illustrates how a few lines of code can produce this:
+
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
+
+Plus much more.
 
 ## Run the demo
 
@@ -24,7 +27,7 @@ The demo illustrates how a few lines of code can produce this
 
 The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/MenuImage.PNG "Menu with links")
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
 
 The examples will be regularly maintained so download again to see more examples.
 
