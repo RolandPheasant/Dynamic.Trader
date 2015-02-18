@@ -43,10 +43,8 @@ The examples will be regularly maintained so download again to see more examples
 ## Feedback
 
 [![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/TradingDemo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Blog at  http://dynamic-data.org/
-
-You can contact me on twitter  [@RolandPheasant](https://twitter.com/RolandPheasant) or email at [roland@dynamic-data.org]
+ - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
+ - Email at [roland@dynamic-data.org]
 
 
 
