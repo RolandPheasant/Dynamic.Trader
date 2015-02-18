@@ -1,5 +1,7 @@
 ## Dynamic Data Demo
 
+[![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/TradingDemo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is a c# sample wpf project to help get started with Dynamic Data.
 
 Source code for dynamic data at https://github.com/RolandPheasant/DynamicData 
