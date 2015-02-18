@@ -14,6 +14,7 @@ namespace Trader.Domain.Model
         public CurrencyPairPosition(IGroup<Trade, long, string> tradesByCurrencyPair)
         {
             _currencyPair = tradesByCurrencyPair.Key;
+
             _cleanUp = tradesByCurrencyPair.Cache.Connect()
                 .QueryWhenChanged(query =>
                 {

@@ -96,11 +96,11 @@ namespace Trader.Client.Infrastucture
                         () => Open<PositionsViewer>("Positions"),new []
                     {
                         new Link("View Model", "PositionsViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/PositionsViewer.cs"), 
-                        new Link("Grouping Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
+                        new Link("Group Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
                new MenuItem("Log Entry",   
-                       "Visualiser for log files",
+                       "Visualiser for log files. Also accumulates log entries and handles user interaction",
                         () => Open<LogEntryViewer>("Log Entry"),
                          MenuCategory.ReactiveUi
                         ,new []

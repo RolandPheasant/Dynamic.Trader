@@ -35,7 +35,7 @@
             </Grid.ColumnDefinitions>
 
             <CheckBox   Grid.Column="1"  x:Name="showLinks"
-                  Content="Show hyperlinks"   
+                  Content="Show details"   
                    HorizontalAlignment="Right"
                    ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
                   IsChecked="{Binding ShowLinks}"/>
@@ -68,16 +68,16 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                    <Grid Margin="0 4 4 0"
+                        <Grid Margin="0 4 4 0"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left">
-                        
-                        <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-    
-                        <controls:Tile Grid.Column="0" x:Name="tile"  
+
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:Tile Grid.Column="0" x:Name="tile"  
                                         Title="{Binding Title}"
                                         Command="{Binding Command}" 
                                         ToolTip="{Binding Description}"
@@ -90,15 +90,15 @@
 
                                 <controls:Tile.Style>
                                     <Style TargetType="{x:Type controls:Tile}">
-                                       <Style.Triggers>
+                                        <Style.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Opacity" Value="0.9" />
-                                                </Trigger>
+                                            </Trigger>
                                         </Style.Triggers>
-                                        
+
                                     </Style>
                                 </controls:Tile.Style>
-                        </controls:Tile>
+                            </controls:Tile>
 
                             <Grid Margin="5 4 5 0"
                          
@@ -110,18 +110,18 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <TextBlock Grid.Row="0" 
                                             HorizontalAlignment="Left"
                                             TextWrapping="WrapWithOverflow"
                                             Text="{Binding Description}"/>
 
-                                 <ItemsControl Grid.Row="1" 
+                                <ItemsControl Grid.Row="1" 
                                       Margin="0 3 0 0"
                                       HorizontalAlignment="Left"
                                       ItemsSource="{Binding Link}">
 
-                                     
+
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
@@ -140,15 +140,10 @@
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
-
                                 </ItemsControl>
-
                             </Grid>
-
                         </Grid>
-                    
-
-                </DataTemplate>
+                    </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 

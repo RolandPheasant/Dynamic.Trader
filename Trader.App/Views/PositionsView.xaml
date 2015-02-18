@@ -19,52 +19,34 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type model:CurrencyPairPosition}">
+                <Grid Width="235" DataContext="{Binding}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <!--<Border Margin="4" 
-                           
-                            BorderBrush="{DynamicResource AccentColorBrush}" 
-                            BorderThickness="1">-->
+                    <Border Background="{DynamicResource PrimaryHueLightBrush}" TextBlock.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                        <TextBlock  Margin="4 0 4 0" Text="{Binding CurrencyPair}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    </Border>
 
+                    <Grid Margin="4" HorizontalAlignment="Center" Grid.Column="1">
 
-                    <Grid Width="235" DataContext="{Binding}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Background="{DynamicResource PrimaryHueLightBrush}" TextBlock.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
-                            <TextBlock  Margin="4 0 4 0" Text="{Binding CurrencyPair}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                        </Border>
-
-                    <Grid Margin="4" HorizontalAlignment="Center" Grid.Column="1">  
-
-                        <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="Buy" Grid.Row="0" />
-
-                            <TextBlock Grid.Row="0" Grid.Column="1"
-                                     HorizontalAlignment="Right"
-                                   Text="{Binding Position.Buy,StringFormat='N'}" />
-
-                            <TextBlock Text="Sell" Grid.Row="1" Grid.Column="0"/>
-
-                            <TextBlock Grid.Row="1" Grid.Column="1"
-                                   Text="{Binding Position.Sell,StringFormat='N'}"
-                                       Margin="0 0 0 5"
-                                   HorizontalAlignment="Right"/>
-
-                        <TextBlock Grid.Row="2" Grid.Column="1"
-                                     HorizontalAlignment="Right" FontSize="14"
-                                   Text="{Binding Position.Position,StringFormat='N'}">
+                        <TextBlock Text="Buy" Grid.Row="0" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Position.Buy,StringFormat='N'}" />
+                        <TextBlock Text="Sell" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Position.Sell,StringFormat='N'}" Margin="0 0 0 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" Text="{Binding Position.Position,StringFormat='N'}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
@@ -75,17 +57,15 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                    
-                        </Grid>
+
                     </Grid>
-
-                <!--</Border>-->
-
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ListBox Style="{StaticResource MaterialDesignCardsListBox}" ItemsSource="{Binding Data}">
+        <ListBox Style="{StaticResource MaterialDesignCardsListBox}" 
+                 ItemsSource="{Binding Data}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <infrastucture:AnimatedWrapPanel/>
