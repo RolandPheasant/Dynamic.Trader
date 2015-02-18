@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using DynamicData.Kernel;
 using Trader.Client.Views;
 using Trader.Domain.Infrastucture;
 
@@ -14,20 +16,25 @@ namespace Trader.Client.Infrastucture
         DynamicData
     }
 
+
     public class MenuItems:AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IObjectProvider _objectProvider;
         private readonly IEnumerable<MenuItem> _menu;
         private readonly ISubject<ViewContainer> _viewCreatedSubject = new Subject<ViewContainer>();
+
         private readonly IDisposable _cleanUp;
         private bool _showLinks=false;
-
+        private MenuCategory _category= MenuCategory.DynamicData;
+        private IEnumerable<MenuItem> _items;
 
         public MenuItems(ILogger logger, IObjectProvider objectProvider)
         {
             _logger = logger;
             _objectProvider = objectProvider;
+
+
 
             _menu = new List<MenuItem>
             {
@@ -96,13 +103,22 @@ namespace Trader.Client.Infrastucture
 
                new MenuItem("Log Entry",   
                        "Visualiser for log entry",
-                        () => Open<LogEntryViewer>("Log Entry"),new []
+                        () => Open<LogEntryViewer>("Log Entry"),
+                         MenuCategory.ReactiveUi
+                        ,new []
                     {
                         new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/LogEntryViewer.cs"), 
                     }),
 
 
             };
+
+            this.ObserveChanges().Where(prop => prop == "Category")
+                .StartWith(string.Empty)
+                .Subscribe(_ =>
+                {
+                    Items = _menu.Where(menu => menu.Category == Category).ToArray();
+                });
 
             _cleanUp = Disposable.Create(() => _viewCreatedSubject.OnCompleted());
         }
@@ -116,14 +132,24 @@ namespace Trader.Client.Infrastucture
             _logger.Debug("--Opened '{0}'", title);
         }
 
+        public MenuCategory Category
+        {
+            get { return _category; }
+            set { SetAndRaise(ref _category, value); }
+        }
+
+        public IEnumerable<MenuItem> Items
+        {
+            get { return _items; }
+            set { SetAndRaise(ref _items, value); }
+        }
 
         public bool ShowLinks
         {
             get { return _showLinks; }
-            set { SetAndRaise(ref _showLinks,value);}
+            set { SetAndRaise(ref _showLinks, value); }
         }
-
-
+        
         public IObservable<ViewContainer> ItemCreated
         {
             get { return _viewCreatedSubject.AsObservable(); }

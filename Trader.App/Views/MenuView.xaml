@@ -7,8 +7,15 @@
              xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" >
+<UserControl.Resources>
+    
+    <ResourceDictionary>
 
+            <infrastucture:RadioButtonCheckedConverter x:Key="ButtonCheckedConverter"/>
+        
+    </ResourceDictionary>
+</UserControl.Resources>
 
 
     <Grid  Margin="4"  >
@@ -19,12 +26,42 @@
       </Grid.RowDefinitions>
 
 
-        <CheckBox    x:Name="showLinks" Margin="4" 
-          Content="Show hyperlinks"    
-          IsChecked="{Binding ShowLinks}"/>
+        <Grid Margin="4" >
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                
+            </Grid.ColumnDefinitions>
+
+            <CheckBox   Grid.Column="1"  x:Name="showLinks"
+                  Content="Show hyperlinks"   
+                   HorizontalAlignment="Right"
+                   ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
+                  IsChecked="{Binding ShowLinks}"/>
+            
+            <StackPanel Grid.Column="0" 
+                        Orientation="Horizontal" >
+
+                <TextBlock Text="Filter menu: "/>
+                
+                <RadioButton GroupName="Type" 
+                             Margin="4 0 4 0"
+                         Content="Dynamic Data Only"
+                         IsChecked="{Binding Category, Converter={StaticResource ButtonCheckedConverter},ConverterParameter={x:Static infrastucture:MenuCategory.DynamicData}}"
+                         ToolTip="Filter menu on items which illustrate Dynamic Data only"/>
+
+                <RadioButton GroupName="Type" 
+                         Content="With Reactive UI"
+                         IsChecked="{Binding Category, Converter={StaticResource ButtonCheckedConverter},ConverterParameter={x:Static infrastucture:MenuCategory.ReactiveUi}}"
+                         ToolTip="Filter menu on items which illustrate Dynamic Data and Reactive UI"/>
+            </StackPanel>
+        </Grid>
+        
+
       
         <ScrollViewer Grid.Row="1">
-            <ItemsControl  ItemsSource="{Binding Menu}">
+            <ItemsControl  ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <infrastucture:AnimatedWrapPanel/>
@@ -45,6 +82,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
+    
                         <controls:Tile Grid.Column="0" x:Name="tile"  
                                         Title="{Binding Title}"
                                         Command="{Binding Command}" 
@@ -70,7 +108,9 @@
                                 </controls:Tile.Style>
                         </controls:Tile>
 
-                        <Grid Margin="5 4 5 0"
+
+
+                            <Grid Margin="5 4 5 0"
                          
                               Visibility="{Binding ElementName=showLinks,Path=IsChecked, Converter={StaticResource  BooleanToVisibilityConverter}}"
                               VerticalAlignment="Top"
@@ -95,7 +135,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                     
-                                            <Grid  >
+                                            <Grid>
                                         
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="75"/>
@@ -104,7 +144,7 @@
 
 
                                                     <TextBlock  Text="{Binding Text}"/>
-                                                <TextBlock  Grid.Column="1" 
+                                                    <TextBlock  Grid.Column="1" 
                                                            Margin="4 0 0 0"
                                                            ToolTip="{Binding Url}"
                                                            >

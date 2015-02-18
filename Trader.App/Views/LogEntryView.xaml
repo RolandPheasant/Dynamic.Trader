@@ -30,30 +30,42 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal"  >
-            <TextBox controls:TextBoxHelper.Watermark="Enter search text..."
-                        controls:TextBoxHelper.ClearTextButton="True"
-                        Margin="4 0 0 0"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+
+                <TextBox  controls:TextBoxHelper.Watermark="Enter search text..."
+                            controls:TextBoxHelper.ClearTextButton="True"
+                            Margin="4 0 0 0"
                             VerticalAlignment="Center"
                             Width="150"
                             Height="18"
-                        Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button VerticalAlignment="Center"
+                         Margin="4 0 4 0"
+                        Style="{StaticResource SquareMetroButton}"
+                        BorderThickness="1"
+                        Content="Delete Selected"
+                        Command="{Binding RemoveCommand}"/>
 
 
-            <Button VerticalAlignment="Center"
-                     Margin="4 0 4 0"
-                    Style="{StaticResource SquareMetroButton}"
-                    BorderThickness="1"
-                    Content="Delete Selected"
-                    Command="{Binding RemoveCommand}"/>
+            </StackPanel>
 
-            <TextBlock Margin="4 0 0 0"
+            <TextBlock  HorizontalAlignment="Right" 
+                        Grid.Column="1"  Margin="4 0 4 0"
                         VerticalAlignment="Center"
-                        HorizontalAlignment="Right"
-                       Opacity="0.8"
+                        Opacity="0.8"
                         Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
-        </StackPanel>
-           
+
+        </Grid>
+
         <ListView
                 Grid.Row="1"
                 SelectionMode="Extended"

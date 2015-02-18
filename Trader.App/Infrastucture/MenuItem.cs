@@ -69,5 +69,10 @@ namespace Trader.Client.Infrastucture
         {
             get { return _content; }
         }
+
+        public MenuCategory Category
+        {
+            get { return _category; }
+        }
     }
 }

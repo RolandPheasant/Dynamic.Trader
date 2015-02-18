@@ -62,7 +62,7 @@
 
                 <Button 
                     Command ="{Binding ShowMenu}"
-                    ToolTip="Dynamic Data on GitHub">
+                    ToolTip="Show menu page">
                     <Rectangle Width="18"
                            Height="18"
                            Fill="White">
@@ -81,12 +81,12 @@
 
     <dockablz:Layout>
         <dragablz:TabablzControl x:Name="InitialTabablzControl"
-
             Style="{StaticResource MaterialDesignTabablzControlStyle}"
             SelectedItem="{Binding Selected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             ItemsSource="{Binding  Views}" >
             <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" 
+                                             Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.CustomHeaderItemTemplate>
                 <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
@@ -95,7 +95,7 @@
             </dragablz:TabablzControl.CustomHeaderItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
-                    <ContentControl Content="{Binding Content}" />
+                    <ContentControl Margin="4" Content="{Binding Content}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </dragablz:TabablzControl>
