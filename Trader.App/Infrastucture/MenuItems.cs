@@ -109,11 +109,11 @@ namespace Trader.Client.Infrastucture
 
         private void Open<T>(string title)
         {
-            _logger.Info("Opening '{0}'", title);
+            _logger.Debug("Opening '{0}'", title);
             var content = _objectProvider.Get<T>();
             _viewCreatedSubject.OnNext(new ViewContainer(title, content));
 
-            _logger.Info("--Opened '{0}'", title);
+            _logger.Debug("--Opened '{0}'", title);
         }
 
 

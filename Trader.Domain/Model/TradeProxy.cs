@@ -11,6 +11,8 @@ namespace Trader.Domain.Model
         private readonly IDisposable _cleanUp;
         private bool _recent;
         private readonly long _id;
+        private decimal _marketPrice;
+        private decimal _pcFromMarketPrice;
 
         public TradeProxy(Trade trade)
         {
@@ -27,14 +29,13 @@ namespace Trader.Domain.Model
                     .Subscribe(_ => Recent = false);
             }
 
-
             //market price changed is an observable on the trade object
             var priceRefresher = trade.MarketPriceChanged
                 .Subscribe(_ =>
-                           {
-                               OnPropertyChanged("MarketPrice");
-                               OnPropertyChanged("PercentFromMarket");
-                           });
+                {
+                    MarketPrice = trade.MarketPrice;
+                    PercentFromMarket = trade.PercentFromMarket;
+                });
         
             _cleanUp = Disposable.Create(() =>
                                          {
@@ -44,21 +45,25 @@ namespace Trader.Domain.Model
 
         }
 
-        public decimal MarketPrice
-        {
-            get { return _trade.MarketPrice; }
-        }
-
         public bool Recent
         {
             get { return _recent; }
-            set
-            {
-                if (_recent==value) return;
-                _recent = value;
-                OnPropertyChanged();
-            }
+            set { SetAndRaise(ref _recent, value); }
         }
+
+        public decimal MarketPrice
+        {
+            get { return _marketPrice; }
+            set { SetAndRaise(ref _marketPrice, value); }
+        }
+
+        public decimal PercentFromMarket
+        {
+            get { return _pcFromMarketPrice; }
+            set { SetAndRaise(ref _pcFromMarketPrice, value); }
+        }
+
+
 
         #region Delegating Members
         
@@ -98,10 +103,6 @@ namespace Trader.Domain.Model
         }
 
 
-        public decimal PercentFromMarket
-        {
-            get { return _trade.PercentFromMarket; }
-        }
 
         #endregion
 

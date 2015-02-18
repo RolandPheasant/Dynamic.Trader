@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Trader.Client.BootStrap</StartupObject>
+    <StartupObject>Trader.Client.Infrastucture.BootStrap</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Themes\dynamic.data.BLUE.ico</ApplicationIcon>
@@ -133,6 +133,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastucture\AnimatedWrapPanel.cs" />
+    <Compile Include="Infrastucture\AppConventions.cs" />
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\Link.cs" />
@@ -140,7 +141,7 @@
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Infrastucture\Multiselector.cs" />
     <Compile Include="Infrastucture\ReactiveLogAppender.cs" />
-    <Compile Include="ScrollViewe.cs" />
+    <Compile Include="Infrastucture\SelectorBinding.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
@@ -155,11 +156,11 @@
     <Compile Include="Views\NearToMarketView.xaml.cs">
       <DependentUpon>NearToMarketView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TraderWindowFactory.cs" />
-    <Compile Include="TraderWindowModel.cs" />
+    <Compile Include="Infrastucture\TraderWindowFactory.cs" />
+    <Compile Include="Infrastucture\TraderWindowModel.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
     <Compile Include="Infrastucture\ObjectProvider.cs" />
-    <Compile Include="BootStrap.cs" />
+    <Compile Include="Infrastucture\BootStrap.cs" />
     <Compile Include="Infrastucture\AppRegistry.cs" />
     <Compile Include="TraderWindow.xaml.cs">
       <DependentUpon>TraderWindow.xaml</DependentUpon>
@@ -171,7 +172,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IntertabClient.cs" />
+    <Compile Include="Infrastucture\IntertabClient.cs" />
     <Compile Include="Views\NearToMarketViewer.cs" />
     <Compile Include="Views\PositionsView.xaml.cs">
       <DependentUpon>PositionsView.xaml</DependentUpon>
@@ -272,7 +273,6 @@
     <None Include="Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

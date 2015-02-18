@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 using StructureMap;
-using Trader.Client.Infrastucture;
 using Trader.Domain.Services;
 
-namespace Trader.Client
+namespace Trader.Client.Infrastucture
 {
     public class BootStrap
     {

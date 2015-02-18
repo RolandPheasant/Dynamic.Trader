@@ -6,6 +6,7 @@
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
                d:DataContext="{d:DesignInstance views:LogEntryViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -40,13 +41,15 @@
 
 
             <Button VerticalAlignment="Center"
+                     Margin="4 0 4 0"
                     Style="{StaticResource MetroButton}"
                     Content="Delete Selected"
                     Command="{Binding RemoveCommand}"/>
 
-            <TextBlock Margin="4 0 4 0"
+            <TextBlock Margin="4 0 0 0"
                         VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Right"
+                       Opacity="0.8"
                         Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
         </StackPanel>
            
@@ -77,7 +80,17 @@
                     </GridView>
                 </ListView.View>
 
-        </ListView>
+                <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
+                                <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+
+                    </Style>
+                </ListView.ItemContainerStyle>
+       </ListView>
 
         <StackPanel  Grid.Row="2" Margin="0 0 4 0"
 

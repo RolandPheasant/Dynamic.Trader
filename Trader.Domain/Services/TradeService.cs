@@ -37,20 +37,8 @@ namespace Trader.Domain.Services
             //code to emulate an external trade provider
             var tradeLoader = GenerateTradesAndMaintainCache();
 
-
-            //todo: Move this to a log writing service
-            const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
-            var loggerWriter = _all.Connect().SkipInitial()
-                                    .Transform(trade =>
-                                    {
-                                        return string.Format(messageTemplate,
-                                            trade.BuyOrSell,
-                                            trade.Amount,
-                                            trade.CurrencyPair,
-                                            trade.Status,
-                                            trade.Customer);
-                                    })
-                                    .Subscribe(changes => changes.ForEach(change => _logger.Info(change.Current)));
+            //log changes
+            var loggerWriter = LogChanges();
 
 
             _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader, loggerWriter);
@@ -99,7 +87,25 @@ namespace Trader.Domain.Services
             return new CompositeDisposable(tradeGenerator, tradeCloser);
 
         }
-        
+
+        private IDisposable LogChanges()
+        {
+            //todo: Move this to a log writing service
+            const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
+            return _all.Connect().SkipInitial()
+                                    .Transform(trade =>
+                                    {
+                                        return string.Format(messageTemplate,
+                                            trade.BuyOrSell,
+                                            trade.Amount,
+                                            trade.CurrencyPair,
+                                            trade.Status,
+                                            trade.Customer);
+                                    })
+                                    .Subscribe(changes => changes.ForEach(change => _logger.Info(change.Current)));
+
+        }
+
         public IObservableCache<Trade, long> All
         {
             get { return _all; }

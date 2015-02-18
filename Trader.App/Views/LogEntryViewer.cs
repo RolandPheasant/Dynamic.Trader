@@ -13,28 +13,29 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Views
 {
-    public class LogEntryProxy : ReactiveObject, IIndexAware, ISelectedAware
+    public class LogEntryProxy : ReactiveObject, IDisposable
     {
         private readonly LogEntry _original;
         private bool _isSelected;
         private int _index;
+        private bool _recent;
+        private readonly IDisposable _cleanUp = Disposable.Empty;
 
         public LogEntryProxy(LogEntry original)
         {
             _original = original;
+
+            var isRecent = DateTime.Now.Subtract(original.TimeStamp).TotalSeconds < 2;
+            if (!isRecent) return;
+
+            Recent = true;
+            _cleanUp = Observable.Timer(TimeSpan.FromSeconds(2))
+                .Subscribe(_ => Recent = false);
         }
-
-        public bool IsSelected
+        public bool Recent
         {
-            get { return _isSelected; }
-            set { this.RaiseAndSetIfChanged(ref _isSelected, value);}
-        }
-
-
-        public int Index
-        {
-            get { return _index; }
-            set { this.RaiseAndSetIfChanged(ref _index, value); }
+            get { return _recent; }
+            set { this.RaiseAndSetIfChanged(ref _recent, value); }
         }
 
         #region Delegated Members
@@ -80,6 +81,11 @@ namespace Trader.Client.Views
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
     }
 
     public class LogEntrySummary : IEquatable<LogEntrySummary>
@@ -165,47 +171,7 @@ namespace Trader.Client.Views
         #endregion
     }
 
-    //public class LogEntryTile : AbstractNotifyPropertyChanged, IDisposable
-    //{
-    //    private readonly ILogger _logger;
-    //    private readonly IDisposable _cleanUp;
-    //    private LogEntrySummary _summary = LogEntrySummary.Empty;
-
-    //    public LogEntryTile(ILogEntryService service, ILogger logger)
-    //    {
-    //        _logger = logger;
-
-    //        var scanner = service.Items.Connect()
-    //                                .Batch(TimeSpan.FromMilliseconds(250))
-    //                                .QueryWhenChanged(query =>
-    //                                {
-    //                                    var items = query.Items.ToList();
-    //                                    var debug = items.Count(le => le.Level == LogLevel.Debug);
-    //                                    var info = items.Count(le => le.Level == LogLevel.Info);
-    //                                    var warn = items.Count(le => le.Level == LogLevel.Warning);
-    //                                    var error = items.Count(le => le.Level == LogLevel.Error);
-    //                                    return new LogEntrySummary(debug, info, warn, error);
-    //                                })
-    //                                .Subscribe(s => Summary = s);
-
-    //        _cleanUp = scanner;
-    //    }
-
-
-    //    public LogEntrySummary Summary
-    //    {
-    //        get { return _summary; }
-    //        set { SetAndRaise(ref _summary, value);}
-    //    }
-
-    //    public void Dispose()
-    //    {
-    //        _cleanUp.Dispose();
-    //    }
-
-
-    //}
-
+    
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
         private readonly IDisposable _cleanUp;
@@ -223,21 +189,23 @@ namespace Trader.Client.Views
         {
             _logEntryService = logEntryService;
 
+            //apply filter when search text has changed
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
                 .Select(BuildFilter)
                 .Subscribe(_filter.Change);
 
-            //manage streaming of log entries
+            //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect(_filter)
                 .Transform(le => new LogEntryProxy(le))
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
+                .DisposeMany()
                 .Subscribe();
 
+            //aggregate total items
             var summariser = logEntryService.Items.Connect()
-                       // .Batch(TimeSpan.FromMilliseconds(250))
                         .QueryWhenChanged(query =>
                         {
                             var items = query.Items.ToList();
@@ -251,17 +219,22 @@ namespace Trader.Client.Views
 
             //manage user selection, delete items command
             var selectedItems = _selection.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
-            var selectedCache = selectedItems.AsObservableCache();
             
+            //Build a message from selected items
             var selectedMessage = selectedItems
-                                        .QueryWhenChanged(query => string.Format("{0} items selected",query.Count))
+                                        .QueryWhenChanged(query => string.Format("{0} items selected.",query.Count))
                                         .StartWith("0 items selected")
                                         .Subscribe(text=>RemoveText=text);
 
+            //covert stream into a cache so we can get a handle on items in thread safe manner
+            var selectedCache = selectedItems.AsObservableCache();
+
+            //make a command out of selected items - enabling command when there is a selection 
             _deleteCommand = selectedItems
                                     .QueryWhenChanged(query => query.Count > 0)
                                     .ToCommand();
 
+            //Assign action when the command is invoked
            var commandInvoker =  this.WhenAnyObservable(x => x.RemoveCommand)
                     .Subscribe(x => _logEntryService.Remove(selectedCache.Items.Select(proxy => proxy.Key)));
 

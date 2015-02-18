@@ -5,7 +5,7 @@ namespace Trader.Client.Infrastucture
 {
     public sealed class LogWriter: IDisposable
     {
-        private IDisposable _job;
+        private readonly IDisposable _job;
 
         public LogWriter(ILogEntryService logEntryService)
         {

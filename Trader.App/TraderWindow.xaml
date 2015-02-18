@@ -17,7 +17,7 @@
         WindowTransitionsEnabled="False"
          GlowBrush="{DynamicResource AccentColorBrush3}"
         Title="Dynamic Trader" Height="500" Width="700"
-      d:DataContext="{d:DesignInstance client:TraderWindowModel, IsDesignTimeCreatable=False}">
+      d:DataContext="{d:DesignInstance infrastucture:TraderWindowModel, IsDesignTimeCreatable=False}">
 
 
     <Window.Resources>

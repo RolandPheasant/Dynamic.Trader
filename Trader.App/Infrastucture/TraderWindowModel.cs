@@ -6,10 +6,9 @@ using System.Windows.Input;
 using Dragablz;
 using DynamicData;
 using DynamicData.Binding;
-using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client
+namespace Trader.Client.Infrastucture
 {
     public class TraderWindowModel: AbstractNotifyPropertyChanged, IDisposable
     {
