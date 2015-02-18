@@ -16,7 +16,7 @@ The demo illustrates how a few lines of code can produce this:
 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
 
-Plus much more.
+Plus many more examples.
 
 ## Run the demo
 
