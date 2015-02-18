@@ -12,7 +12,7 @@
     
     <ResourceDictionary>
 
-            <infrastucture:RadioButtonCheckedConverter x:Key="ButtonCheckedConverter"/>
+            <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter"/>
         
     </ResourceDictionary>
 </UserControl.Resources>
@@ -48,18 +48,16 @@
                 <RadioButton GroupName="Type" 
                              Margin="4 0 4 0"
                          Content="Dynamic Data Only"
-                         IsChecked="{Binding Category, Converter={StaticResource ButtonCheckedConverter},ConverterParameter={x:Static infrastucture:MenuCategory.DynamicData}}"
+                         IsChecked="{Binding Category, Converter={StaticResource EqualityToBooleanConverter},ConverterParameter={x:Static infrastucture:MenuCategory.DynamicData}}"
                          ToolTip="Filter menu on items which illustrate Dynamic Data only"/>
 
                 <RadioButton GroupName="Type" 
                          Content="With Reactive UI"
-                         IsChecked="{Binding Category, Converter={StaticResource ButtonCheckedConverter},ConverterParameter={x:Static infrastucture:MenuCategory.ReactiveUi}}"
-                         ToolTip="Filter menu on items which illustrate Dynamic Data and Reactive UI"/>
+                         IsChecked="{Binding Category, Converter={StaticResource EqualityToBooleanConverter},ConverterParameter={x:Static infrastucture:MenuCategory.ReactiveUi}}"
+                         ToolTip="Filter menu on items which illustrate integration between Dynamic Data and Reactive UI"/>
             </StackPanel>
         </Grid>
         
-
-      
         <ScrollViewer Grid.Row="1">
             <ItemsControl  ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
@@ -68,12 +66,9 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
-
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                    
-                    <Grid
-                      Margin="0 4 4 0"
+                    <Grid Margin="0 4 4 0"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left">
                         
@@ -81,7 +76,6 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
     
                         <controls:Tile Grid.Column="0" x:Name="tile"  
                                         Title="{Binding Title}"
@@ -92,9 +86,7 @@
                                         Width="85"
                                         Height="85"
                                         Padding="8">
-                                <ContentControl
-                                    
-                                    Content="{Binding Content}"/>
+                                <ContentControl Content="{Binding Content}"/>
 
                                 <controls:Tile.Style>
                                     <Style TargetType="{x:Type controls:Tile}">
@@ -107,8 +99,6 @@
                                     </Style>
                                 </controls:Tile.Style>
                         </controls:Tile>
-
-
 
                             <Grid Margin="5 4 5 0"
                          
@@ -134,28 +124,21 @@
                                      
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                    
                                             <Grid>
-                                        
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="75"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
 
-
-                                                    <TextBlock  Text="{Binding Text}"/>
-                                                    <TextBlock  Grid.Column="1" 
-                                                           Margin="4 0 0 0"
-                                                           ToolTip="{Binding Url}"
-                                                           >
-                                                        <Hyperlink  NavigateUri="{Binding Url}"
-                                                                   infrastucture:HyperlinkExtensions.IsExternal="true">
-                                                            <TextBlock Text="{Binding Display}"></TextBlock>
-                                                        </Hyperlink>
+                                                <TextBlock  Text="{Binding Text}"/>
+                                                <TextBlock  Grid.Column="1" Margin="4 0 0 0"
+                                                        ToolTip="{Binding Url}">
+                                                    <Hyperlink  NavigateUri="{Binding Url}" infrastucture:HyperlinkExtensions.IsExternal="true">
+                                                        <TextBlock Text="{Binding Display}"></TextBlock>
+                                                    </Hyperlink>
                                                 </TextBlock>
                                             </Grid>
                                         </DataTemplate>
-                                
                                     </ItemsControl.ItemTemplate>
 
                                 </ItemsControl>

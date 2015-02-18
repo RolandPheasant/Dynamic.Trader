@@ -5,13 +5,6 @@ using System.Windows.Input;
 
 namespace Trader.Client.Infrastucture
 {
-
-    public enum LinkCategory
-    {
-        Code,
-        Blog
-    }
-
     public class MenuItem
     {
         private readonly string _title;

@@ -17,7 +17,7 @@ namespace Trader.Client.Infrastucture
         }
     }
 
-    public class RadioButtonCheckedConverter : IValueConverter
+    public class EqualityToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,CultureInfo culture)
         {

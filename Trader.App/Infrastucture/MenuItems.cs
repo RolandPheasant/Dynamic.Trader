@@ -21,7 +21,7 @@ namespace Trader.Client.Infrastucture
     {
         private readonly ILogger _logger;
         private readonly IObjectProvider _objectProvider;
-        private readonly IEnumerable<MenuItem> _menu;
+        private readonly IEnumerable<MenuItem> _menuItems;
         private readonly ISubject<ViewContainer> _viewCreatedSubject = new Subject<ViewContainer>();
 
         private readonly IDisposable _cleanUp;
@@ -33,10 +33,8 @@ namespace Trader.Client.Infrastucture
         {
             _logger = logger;
             _objectProvider = objectProvider;
-
-
-
-            _menu = new List<MenuItem>
+            
+            _menuItems = new List<MenuItem>
             {
                 new MenuItem("Live Trades",
                     "A basic example, illustrating how to connect to a stream, inject a user filter and bind.",
@@ -102,7 +100,7 @@ namespace Trader.Client.Infrastucture
                     }),
 
                new MenuItem("Log Entry",   
-                       "Visualiser for log entry",
+                       "Visualiser for log files",
                         () => Open<LogEntryViewer>("Log Entry"),
                          MenuCategory.ReactiveUi
                         ,new []
@@ -113,14 +111,18 @@ namespace Trader.Client.Infrastucture
 
             };
 
-            this.ObserveChanges().Where(prop => prop == "Category")
+            var filterApplier = this.ObserveChanges().Where(prop => prop == "Category")
                 .StartWith(string.Empty)
                 .Subscribe(_ =>
                 {
-                    Items = _menu.Where(menu => menu.Category == Category).ToArray();
+                    Items = _menuItems.Where(menu => menu.Category == Category).ToArray();
                 });
 
-            _cleanUp = Disposable.Create(() => _viewCreatedSubject.OnCompleted());
+            _cleanUp = Disposable.Create(() =>
+            {
+                _viewCreatedSubject.OnCompleted();
+                filterApplier.Dispose();
+            });
         }
 
         private void Open<T>(string title)
@@ -153,11 +155,6 @@ namespace Trader.Client.Infrastucture
         public IObservable<ViewContainer> ItemCreated
         {
             get { return _viewCreatedSubject.AsObservable(); }
-        }
-
-        public IEnumerable<MenuItem> Menu
-        {
-            get { return _menu; }
         }
 
         public void Dispose()
