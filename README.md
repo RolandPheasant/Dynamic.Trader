@@ -1,6 +1,8 @@
 ## Dynamic Data Demo
 
 [![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/TradingDemo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Blog at  http://dynamic-data.org/
+You can contact me on twitter  [@RolandPheasant](https://twitter.com/RolandPheasant) or email at [roland@dynamic-data.org]
 
 This is a c# sample wpf project to help get started with Dynamic Data.
 
@@ -31,6 +33,11 @@ var loader = tradeService.All
 
 Plus many more dynamic data examples. Also there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
 
+The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
+
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
+
+The examples will be regularly maintained so download again to see more examples.
 
 ## Run the demo
 
@@ -38,14 +45,6 @@ Plus many more dynamic data examples. Also there are some examples which show ho
 - Ensure Nuget Restore is enabled
 - Set 'Trader.Client' as the startup project
 - Press F5
-
-The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
-
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
-
-The examples will be regularly maintained so download again to see more examples.
-
-Feel free to feedback to me on twitter: [@RolandPheasant](https://twitter.com/RolandPheasant)
 
 
 
