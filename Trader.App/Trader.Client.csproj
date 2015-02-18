@@ -145,9 +145,6 @@
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LiveTradesViewer.cs" />
-    <Compile Include="Views\LogEntryTileView.xaml.cs">
-      <DependentUpon>LogEntryTileView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\LogEntryView.xaml.cs">
       <DependentUpon>LogEntryView.xaml</DependentUpon>
     </Compile>
@@ -200,10 +197,6 @@
       <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\LiveTradesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LogEntryTileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

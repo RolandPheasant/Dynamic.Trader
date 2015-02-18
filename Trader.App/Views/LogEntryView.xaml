@@ -25,34 +25,32 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
-
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-
-            <StackPanel Orientation="Horizontal"  >
-                <TextBox controls:TextBoxHelper.Watermark="Enter search text..."
-                           controls:TextBoxHelper.ClearTextButton="True"
-                            Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Width="125"
-                             Height="18"
-                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
-
-                <Button VerticalAlignment="Center"
-                        Style="{StaticResource MetroButton}"
-                        Content="Delete Selected"
-                        Command="{Binding RemoveCommand}"/>
-
-                <TextBlock Margin="4 0 4 0"
+        <StackPanel Orientation="Horizontal"  >
+            <TextBox controls:TextBoxHelper.Watermark="Enter search text..."
+                        controls:TextBoxHelper.ClearTextButton="True"
+                        Margin="4 0 0 0"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
-            </StackPanel>
-            <ListView
+                            Width="125"
+                            Height="18"
+                        Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+
+            <Button VerticalAlignment="Center"
+                    Style="{StaticResource MetroButton}"
+                    Content="Delete Selected"
+                    Command="{Binding RemoveCommand}"/>
+
+            <TextBlock Margin="4 0 4 0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
+        </StackPanel>
+           
+        <ListView
                 Grid.Row="1"
                 SelectionMode="Extended"
                 infrastucture:SelectorHelper.Binding="{Binding  Selector}"
@@ -71,11 +69,10 @@
 
                 <ListView.View >
                     <GridView>
-                        <GridViewColumn Width="30"  Header="#" DisplayMemberBinding="{Binding Counter}" TextBlock.TextAlignment="Left" />
-                        <GridViewColumn  Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
-                        <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
-                        <GridViewColumn  Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
                         <GridViewColumn  Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn  Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
+                        <GridViewColumn  Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
                         <GridViewColumn Width="300"  Header="Logger" DisplayMemberBinding="{Binding LoggerName}" TextBlock.TextAlignment="Left" />
                     </GridView>
                 </ListView.View>
