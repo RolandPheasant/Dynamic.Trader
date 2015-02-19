@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Windows.Input;
 using Dragablz;
+using Dragablz.Dockablz;
 using DynamicData;
 using DynamicData.Binding;
+using MahApps.Metro.Actions;
 using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
@@ -27,7 +30,7 @@ namespace Trader.Client.Infrastucture
             _objectProvider = objectProvider;
             _interTabClient = new InterTabClient(traderWindowFactory);
             _showMenu =  new Command(OnShowMenu);
-            _showInGitHubCommand = new Command(()=>   System.Diagnostics.Process.Start("https://github.com/RolandPheasant"));
+            _showInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
 
             var menuController = _data.ToObservableChangeSet(vc => vc.Id)
                                         .Filter(vc => vc.Content is MenuItems)
@@ -39,6 +42,8 @@ namespace Trader.Client.Infrastucture
                                             Selected = item;
                                         });
 
+
+
             _cleanUp = Disposable.Create(() =>
                                          {
                                              menuController.Dispose();
@@ -48,6 +53,22 @@ namespace Trader.Client.Infrastucture
                                              _newMenuItemSubscriber.Dispose();
                                          });
         }
+
+
+        public ClosingTabItemCallback ClosingTabItemHandler
+        {
+            get { return ClosingTabItemHandlerImpl; }
+        }
+
+        private static void ClosingTabItemHandlerImpl(ClosingItemCallbackArgs<TabablzControl> args)
+        {
+            var container = (ViewContainer)args.DragablzItem.DataContext;
+           var disposable = container.Content as IDisposable;
+            if (disposable!=null) disposable.Dispose();
+            //here's how you can cancel stuff:
+            //args.Cancel(); 
+        }
+
 
         public void OnShowMenu()
         {

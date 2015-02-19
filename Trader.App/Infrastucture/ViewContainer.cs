@@ -12,6 +12,9 @@ namespace Trader.Client.Infrastucture
         {
             _title = title;
             _content = content;
+
+
+
         }
 
         public Guid Id

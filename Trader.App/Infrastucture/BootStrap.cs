@@ -22,15 +22,10 @@ namespace Trader.Client.Infrastucture
            container.Configure(x => x.For<Dispatcher>().Add(window.Dispatcher));
 
             //run start up jobs
-             container.GetInstance<TradePriceUpdateJob>();
-             container.GetInstance<LogWriter>();
+           container.GetInstance<TradePriceUpdateJob>();
+           container.GetInstance<LogWriter>();
 
             window.Show();
-
-            app.Resources.Add(SystemParameters.ClientAreaAnimationKey, null);
-            app.Resources.Add(SystemParameters.MinimizeAnimationKey, null);
-            app.Resources.Add(SystemParameters.UIEffectsKey, null);
-
             app.Run();
         }
     }

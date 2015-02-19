@@ -2,10 +2,10 @@
 
 This is a c# sample wpf project to help get started with Dynamic Data.  Source code for dynamic data is at https://github.com/RolandPheasant/DynamicData and the blog at http://dynamic-data.org/
 
-A big thanks to these guys for their awesome oss projects
+A big thanks to these guys for their awesome oss projects [Mahapps](https://github.com/MahApps/MahApps.Metro)
 
-- Mahaps https://github.com/MahApps/MahApps.Metro
-- Dragablz https://github.com/ButchersBoy/Dragablz
+- 
+- [Dragablz](https://github.com/ButchersBoy/Dragablz)
 
 The demo illustrates how the following code:
 
