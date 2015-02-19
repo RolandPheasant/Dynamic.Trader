@@ -40,7 +40,7 @@ The examples are being regularly maintained so download again to see more exampl
  - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
  - Email at [roland@dynamic-data.org]
   
-Also a big thanks to these guys behing [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for their awesome oss projects. These have enabled me to easily make this demo look good. 
+Also a big thanks to the guys behind [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for their awesome oss projects. These have enabled me to easily make this demo look good. 
 
 
 
