@@ -16,8 +16,6 @@ namespace Trader.Client.Views
     public class LogEntryProxy : ReactiveObject, IDisposable
     {
         private readonly LogEntry _original;
-        private bool _isSelected;
-        private int _index;
         private bool _recent;
         private readonly IDisposable _cleanUp = Disposable.Empty;
 
@@ -170,7 +168,6 @@ namespace Trader.Client.Views
 
         #endregion
     }
-
     
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
@@ -226,7 +223,7 @@ namespace Trader.Client.Views
                                         .StartWith("0 items selected")
                                         .Subscribe(text=>RemoveText=text);
 
-            //covert stream into a cache so we can get a handle on items in thread safe manner
+            //covert stream into a cache so we can get a handle on items in thread safe manner.
             var selectedCache = selectedItems.AsObservableCache();
 
             //make a command out of selected items - enabling command when there is a selection 

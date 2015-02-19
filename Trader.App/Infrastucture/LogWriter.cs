@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reactive.Concurrency;
 using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
@@ -18,4 +20,5 @@ namespace Trader.Client.Infrastucture
             _job.Dispose();
         }
     }
+
 }

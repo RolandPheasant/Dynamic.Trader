@@ -79,8 +79,8 @@
 
     <dockablz:Layout>
         <dragablz:TabablzControl x:Name="InitialTabablzControl"
-             ShowDefaultCloseButton="True"
-        ClosingItemCallback="{Binding ClosingTabItemHandler}"
+             ShowDefaultCloseButton="False"
+            ClosingItemCallback="{Binding ClosingTabItemHandler}"
             SelectedItem="{Binding Selected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             ItemsSource="{Binding  Views}" >
             <dragablz:TabablzControl.InterTabController>
