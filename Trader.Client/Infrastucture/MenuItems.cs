@@ -41,8 +41,8 @@ namespace Trader.Client.Infrastucture
                     () => Open<LiveTradesViewer>("Live Trades"),new []
                         {
                             new Link("Service","TradeService.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/TradeService.cs"), 
-                            new Link("View Model","LiveTradesViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/LiveTradesViewer.cs "), 
-                            new Link("Blog","Ui Integration", "https://dynamicdataproject.wordpress.com/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
+                            new Link("View Model","LiveTradesViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LiveTradesViewer.cs "), 
+                            new Link("Blog","Ui Integration", "https://dynamic-data.org/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
                         }),
 
                  new MenuItem("Live Trades (RxUI)",
@@ -51,8 +51,8 @@ namespace Trader.Client.Infrastucture
                     MenuCategory.ReactiveUi,
                     new []
                         {
-                             new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RxUiViewer.cs "), 
-                            new Link("Blog","Integration with reactive ui", "https://dynamicdataproject.wordpress.com/2015/01/18/integration-with-reactiveui/"), 
+                             new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/RxUiViewer.cs "), 
+                            new Link("Blog","Integration with reactive ui", "https://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
                         }),
 
                 new MenuItem("Near to Market",
@@ -61,9 +61,9 @@ namespace Trader.Client.Infrastucture
                         {
                             new Link("Service","NearToMarketService.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/NearToMarketService.cs"),
                             new Link("Rates Updater","TradePriceUpdateJob.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/TradePriceUpdateJob.cs"), 
-                            new Link("View Model", "NearToMarketViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/NearToMarketViewer.cs"), 
-                            new Link("Blog i","Manage Market Data", "https://dynamicdataproject.wordpress.com/2014/11/22/trading-example-part-2-manage-market-data/"),
-                            new Link("Blog ii","Filter on calculated values", "https://dynamicdataproject.wordpress.com/2014/12/21/trading-example-part-4-filter-on-calculated-values/"),
+                            new Link("View Model", "NearToMarketViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/NearToMarketViewer.cs"), 
+                            new Link("Blog i","Manage Market Data", "https://dynamic-data.org/2014/11/22/trading-example-part-2-manage-market-data/"),
+                            new Link("Blog ii","Filter on calculated values", "https://dynamic-data.org/2014/12/21/trading-example-part-4-filter-on-calculated-values/"),
                             
                         }),
 
@@ -71,7 +71,7 @@ namespace Trader.Client.Infrastucture
                        "Group trades by a constantly changing calculated value. With automatic regrouping.",
                         () => Open<TradesByPercentViewer>("Trades By % Diff"),new []
                             {
-                                new Link("View Model", "TradesByPercentViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/TradesByPercentViewer.cs"), 
+                                new Link("View Model", "TradesByPercentViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/TradesByPercentViewer.cs"), 
                                 new Link("Group Model","TradesByPercentDiff.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByPercentDiff.cs"),
                             }),
 
@@ -79,7 +79,7 @@ namespace Trader.Client.Infrastucture
                        "Group items by time with automatic regrouping as time passes",
                         () => Open<TradesByTimeViewer>("Trades By hh:mm"),new []
                         {
-                            new Link("View Model","TradesByTimeViewer.cs" ,"https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/TradesByTimeViewer.cs"), 
+                            new Link("View Model","TradesByTimeViewer.cs" ,"https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/TradesByTimeViewer.cs"), 
                             new Link("Group Model","TradesByTime.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/TradesByTime.cs"),
                         }),
                 
@@ -87,7 +87,7 @@ namespace Trader.Client.Infrastucture
                     "Operator which only includes trades which have changed in the last minute.",
                     () => Open<RecentTradesViewer>("Recent Trades"),new []
                     {
-                        new Link("View Model", "RecentTradesViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/RecentTradesViewer.cs"), 
+                        new Link("View Model", "RecentTradesViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/RecentTradesViewer.cs"), 
                     }),
 
                     
@@ -95,7 +95,7 @@ namespace Trader.Client.Infrastucture
                        "Calculate overall position for each currency pair and aggregate totals",
                         () => Open<PositionsViewer>("Positions"),new []
                     {
-                        new Link("View Model", "PositionsViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/PositionsViewer.cs"), 
+                        new Link("View Model", "PositionsViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/PositionsViewer.cs"), 
                         new Link("Group Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
@@ -105,7 +105,7 @@ namespace Trader.Client.Infrastucture
                          MenuCategory.ReactiveUi
                         ,new []
                     {
-                        new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.App/Views/LogEntryViewer.cs"), 
+                        new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LogEntryViewer.cs"), 
                     }),
 
 
