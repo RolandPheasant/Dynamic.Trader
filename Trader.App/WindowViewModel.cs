@@ -22,7 +22,7 @@ namespace Trader.Client
         private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
         private ViewContainer _selected;
 
-        public WindowViewModel(IObjectProvider objectProvider,WindowFactory windowFactory )
+        public WindowViewModel(IObjectProvider objectProvider, IWindowFactory windowFactory)
         {
             _objectProvider = objectProvider;
             _interTabClient = new InterTabClient(windowFactory);

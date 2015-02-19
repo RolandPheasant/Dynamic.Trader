@@ -4,7 +4,7 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Client
 {
-    public class WindowFactory
+    public class WindowFactory : IWindowFactory
     {
         private readonly IObjectProvider _objectProvider;
 

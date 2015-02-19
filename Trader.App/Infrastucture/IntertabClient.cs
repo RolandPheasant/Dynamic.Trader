@@ -5,9 +5,9 @@ namespace Trader.Client.Infrastucture
 {
     public class InterTabClient : IInterTabClient
     {
-        private readonly WindowFactory _factory;
+        private readonly IWindowFactory _factory;
 
-        public InterTabClient( WindowFactory tradeWindowFactory)
+        public InterTabClient(IWindowFactory tradeWindowFactory)
         {
             _factory = tradeWindowFactory;
         }
