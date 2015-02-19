@@ -31,7 +31,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                
             </Grid.ColumnDefinitions>
 
             <CheckBox   Grid.Column="1"  x:Name="showLinks"

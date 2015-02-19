@@ -17,7 +17,7 @@ namespace Trader.Client.Infrastucture
         {
             var window = new TraderWindow();
             var model = _objectProvider.Get<TraderWindowModel>();
-            if (showMenu) model.OnShowMenu();
+            if (showMenu) model.ShowMenu();
 
             window.DataContext = model;
 

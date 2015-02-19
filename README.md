@@ -1,11 +1,8 @@
 ## Dynamic Data Demo
 
-This is a c# sample wpf project to help get started with Dynamic Data.  Source code for dynamic data is at https://github.com/RolandPheasant/DynamicData and the blog at http://dynamic-data.org/
+This is a c# sample wpf project to help get started with Dynamic Data.  I have tried to make the code behind each screen as simple as posible so it is easy to follow.
 
-A big thanks to these guys for their awesome oss projects [Mahapps](https://github.com/MahApps/MahApps.Metro)
-
-- 
-- [Dragablz](https://github.com/ButchersBoy/Dragablz)
+Source code for dynamic data is at [Dynamic Data on GitHub](https://github.com/RolandPheasant/DynamicData) and the blog at http://dynamic-data.org/
 
 The demo illustrates how the following code:
 
@@ -30,7 +27,6 @@ The menu looks like this and as you can see there are links to the code behind w
 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
 
-
 The examples will be regularly maintained so download again to see more examples.
 
 ## Run the demo
@@ -45,6 +41,9 @@ The examples will be regularly maintained so download again to see more examples
 [![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/TradingDemo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
  - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
  - Email at [roland@dynamic-data.org]
+  
+Also a big thanks to these guys for their awesome oss projects [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for easily making this demo look good. 
+
 
 
 

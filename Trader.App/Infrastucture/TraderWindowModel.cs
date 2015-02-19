@@ -5,10 +5,8 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Windows.Input;
 using Dragablz;
-using Dragablz.Dockablz;
 using DynamicData;
 using DynamicData.Binding;
-using MahApps.Metro.Actions;
 using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Infrastucture
@@ -18,18 +16,16 @@ namespace Trader.Client.Infrastucture
         private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
         private readonly Command _showInGitHubCommand;
-        private readonly ICommand _showMenu;
+        private readonly ICommand _showMenuCommand;
         private readonly IDisposable _cleanUp;
-        private readonly SerialDisposable _newMenuItemSubscriber = new SerialDisposable();
         private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
-
         private ViewContainer _selected;
 
         public TraderWindowModel(IObjectProvider objectProvider,TraderWindowFactory traderWindowFactory )
         {
             _objectProvider = objectProvider;
             _interTabClient = new InterTabClient(traderWindowFactory);
-            _showMenu =  new Command(OnShowMenu);
+            _showMenuCommand =  new Command(ShowMenu);
             _showInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
 
             var menuController = _data.ToObservableChangeSet(vc => vc.Id)
@@ -41,36 +37,19 @@ namespace Trader.Client.Infrastucture
                                             _data.Add(item);
                                             Selected = item;
                                         });
-
-
-
+            
             _cleanUp = Disposable.Create(() =>
                                          {
                                              menuController.Dispose();
                                              foreach (var disposable in  _data.Select(vc=>vc.Content).OfType<IDisposable>())
                                                  disposable.Dispose();
-                                             
-                                             _newMenuItemSubscriber.Dispose();
                                          });
         }
 
 
-        public ClosingTabItemCallback ClosingTabItemHandler
-        {
-            get { return ClosingTabItemHandlerImpl; }
-        }
-
-        private static void ClosingTabItemHandlerImpl(ClosingItemCallbackArgs<TabablzControl> args)
-        {
-            var container = (ViewContainer)args.DragablzItem.DataContext;
-           var disposable = container.Content as IDisposable;
-            if (disposable!=null) disposable.Dispose();
-            //here's how you can cancel stuff:
-            //args.Cancel(); 
-        }
 
 
-        public void OnShowMenu()
+        public void ShowMenu()
         {
             var existing = _data.FirstOrDefault(vc => vc.Content is MenuItems);
             if (existing == null)
@@ -86,6 +65,25 @@ namespace Trader.Client.Infrastucture
             }
         }
 
+
+        public ClosingTabItemCallback ClosingTabItemHandler
+        {
+            get { return ClosingTabItemHandlerImpl; }
+        }
+
+        private  void ClosingTabItemHandlerImpl(ClosingItemCallbackArgs<TabablzControl> args)
+        {
+            var container = (ViewContainer)args.DragablzItem.DataContext;
+
+            if (container.Equals(Selected)) Selected = _data.FirstOrDefault(vc => vc != container);
+
+
+            var disposable = container.Content as IDisposable;
+            if (disposable != null) disposable.Dispose();
+
+  
+        }
+
         public ObservableCollection<ViewContainer> Views
         {
             get { return _data; }
@@ -94,11 +92,7 @@ namespace Trader.Client.Infrastucture
         public ViewContainer Selected
         {
             get { return _selected; }
-            set
-            {
-                _selected = value;
-                OnPropertyChanged();
-            }
+            set { SetAndRaise(ref _selected, value); }
         }
 
         public IInterTabClient InterTabClient
@@ -106,9 +100,9 @@ namespace Trader.Client.Infrastucture
             get { return _interTabClient; }
         }
 
-        public ICommand ShowMenu
+        public ICommand ShowMenuCommand
         {
-            get { return _showMenu; }
+            get { return _showMenuCommand; }
         }
 
         public Command ShowInGitHubCommand

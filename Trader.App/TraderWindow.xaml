@@ -59,7 +59,7 @@
 
 
                 <Button 
-                    Command ="{Binding ShowMenu}"
+                    Command ="{Binding ShowMenuCommand}"
                     ToolTip="Show menu page">
                     <Rectangle Width="18"
                            Height="18"
@@ -87,7 +87,7 @@
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.CustomHeaderItemTemplate>
                 <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
-                    <TextBlock Margin="4" Text="{Binding Title}" />
+                    <TextBlock Margin="14 0 0 0" Text="{Binding Title}" />
                 </DataTemplate>
             </dragablz:TabablzControl.CustomHeaderItemTemplate>
             <TabControl.ContentTemplate>
