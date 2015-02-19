@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow x:Class="Trader.Client.TraderWindow"
+﻿<controls:MetroWindow x:Class="Trader.Client.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -7,6 +7,7 @@
         xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+        xmlns:client="clr-namespace:Trader.Client"
         mc:Ignorable="d"
         Icon="Resources/dynamic.data.BLUE.ico"
         FontFamily="pack://application:,,,/Trader.Client;component/Resources/Roboto/#Roboto"
@@ -15,7 +16,7 @@
         WindowTransitionsEnabled="False"
          GlowBrush="{DynamicResource AccentColorBrush3}"
         Title="Dynamic Trader" Height="500" Width="700"
-      d:DataContext="{d:DesignInstance infrastucture:TraderWindowModel, IsDesignTimeCreatable=False}">
+      d:DataContext="{d:DesignInstance client:WindowViewModel, IsDesignTimeCreatable=False}">
 
 
     <Window.Resources>
@@ -87,7 +88,7 @@
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.CustomHeaderItemTemplate>
                 <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
-                    <TextBlock Margin="14 0 0 0" Text="{Binding Title}" />
+                    <TextBlock Margin="8 0 0 0" Text="{Binding Title}" />
                 </DataTemplate>
             </dragablz:TabablzControl.CustomHeaderItemTemplate>
             <TabControl.ContentTemplate>

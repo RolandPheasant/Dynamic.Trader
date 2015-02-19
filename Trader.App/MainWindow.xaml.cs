@@ -16,11 +16,11 @@ using MahApps.Metro.Controls;
 namespace Trader.Client
 {
     /// <summary>
-    /// Interaction logic for TraderWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class TraderWindow : MetroWindow
+    public partial class MainWindow : MetroWindow
     {
-        public TraderWindow()
+        public MainWindow()
         {
             InitializeComponent();
         }

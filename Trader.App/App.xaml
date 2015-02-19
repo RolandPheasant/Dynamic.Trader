@@ -68,11 +68,8 @@
 
             </ResourceDictionary.MergedDictionaries>
 
-            <!--<Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MetroToolTip}"></Style>-->
-
             <!-- tell Dragablz tab control to use the Material Design theme -->
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
-
 
             <DataTemplate DataType="{x:Type infrastucture:MenuItems}">
                  <views:MenuView/>
@@ -82,14 +79,12 @@
                 <views:LiveTradesView/>
             </DataTemplate>
 
-
             <DataTemplate DataType="{x:Type views:RecentTradesViewer}">
                 <views:RecentTrades/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type views:NearToMarketViewer}">
                 <views:NearToMarketView/>
-
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type views:TradesByPercentViewer}">
@@ -107,7 +102,6 @@
             <DataTemplate DataType="{x:Type views:PositionsViewer}">
                 <views:PositionsView/>
             </DataTemplate>
-
 
             <DataTemplate DataType="{x:Type views:LogEntryViewer}">
                 <views:LogEntryView/>

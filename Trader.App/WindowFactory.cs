@@ -2,21 +2,21 @@
 using Dragablz;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client
 {
-    public class TraderWindowFactory
+    public class WindowFactory
     {
         private readonly IObjectProvider _objectProvider;
 
-        public TraderWindowFactory(IObjectProvider objectProvider)
+        public WindowFactory(IObjectProvider objectProvider)
         {
             _objectProvider = objectProvider;
         }
 
-        public TraderWindow Create(bool showMenu=false)
+        public MainWindow Create(bool showMenu=false)
         {
-            var window = new TraderWindow();
-            var model = _objectProvider.Get<TraderWindowModel>();
+            var window = new MainWindow();
+            var model = _objectProvider.Get<WindowViewModel>();
             if (showMenu) model.ShowMenu();
 
             window.DataContext = model;
@@ -25,7 +25,7 @@ namespace Trader.Client.Infrastucture
                               {
                                   if (TabablzControl.GetIsClosingAsPartOfDragOperation(window)) return;
 
-                                  var todispose = ((TraderWindow) sender).DataContext as IDisposable;
+                                  var todispose = ((MainWindow) sender).DataContext as IDisposable;
                                   if (todispose != null) todispose.Dispose();
                               };
 

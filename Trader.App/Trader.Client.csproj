@@ -163,14 +163,14 @@
     <Compile Include="Views\NearToMarketView.xaml.cs">
       <DependentUpon>NearToMarketView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastucture\TraderWindowFactory.cs" />
-    <Compile Include="Infrastucture\TraderWindowModel.cs" />
+    <Compile Include="WindowFactory.cs" />
+    <Compile Include="WindowViewModel.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
     <Compile Include="Infrastucture\ObjectProvider.cs" />
     <Compile Include="Infrastucture\BootStrap.cs" />
     <Compile Include="Infrastucture\AppRegistry.cs" />
-    <Compile Include="TraderWindow.xaml.cs">
-      <DependentUpon>TraderWindow.xaml</DependentUpon>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastucture\Command.cs" />
     <Compile Include="Infrastucture\ViewContainer.cs" />
@@ -220,7 +220,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TraderWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

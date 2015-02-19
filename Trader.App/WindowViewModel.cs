@@ -7,11 +7,12 @@ using System.Windows.Input;
 using Dragablz;
 using DynamicData;
 using DynamicData.Binding;
+using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client
 {
-    public class TraderWindowModel: AbstractNotifyPropertyChanged, IDisposable
+    public class WindowViewModel: AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
@@ -21,10 +22,10 @@ namespace Trader.Client.Infrastucture
         private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
         private ViewContainer _selected;
 
-        public TraderWindowModel(IObjectProvider objectProvider,TraderWindowFactory traderWindowFactory )
+        public WindowViewModel(IObjectProvider objectProvider,WindowFactory windowFactory )
         {
             _objectProvider = objectProvider;
-            _interTabClient = new InterTabClient(traderWindowFactory);
+            _interTabClient = new InterTabClient(windowFactory);
             _showMenuCommand =  new Command(ShowMenu);
             _showInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
 
@@ -45,10 +46,7 @@ namespace Trader.Client.Infrastucture
                                                  disposable.Dispose();
                                          });
         }
-
-
-
-
+        
         public void ShowMenu()
         {
             var existing = _data.FirstOrDefault(vc => vc.Content is MenuItems);
@@ -74,14 +72,9 @@ namespace Trader.Client.Infrastucture
         private  void ClosingTabItemHandlerImpl(ClosingItemCallbackArgs<TabablzControl> args)
         {
             var container = (ViewContainer)args.DragablzItem.DataContext;
-
             if (container.Equals(Selected)) Selected = _data.FirstOrDefault(vc => vc != container);
-
-
             var disposable = container.Content as IDisposable;
             if (disposable != null) disposable.Dispose();
-
-  
         }
 
         public ObservableCollection<ViewContainer> Views

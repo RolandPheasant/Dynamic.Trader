@@ -17,7 +17,7 @@ namespace Trader.Client.Infrastucture
            var container =  new Container(x=> x.AddRegistry<AppRegistry>());
 
 
-           var factory = container.GetInstance<TraderWindowFactory>();
+           var factory = container.GetInstance<WindowFactory>();
            var window = factory.Create(true);
            container.Configure(x => x.For<Dispatcher>().Add(window.Dispatcher));
 
