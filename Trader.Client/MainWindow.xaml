@@ -11,6 +11,7 @@
         mc:Ignorable="d"
         Icon="Resources/dynamic.data.BLUE.ico"
         FontFamily="pack://application:,,,/Trader.Client;component/Resources/Roboto/#Roboto"
+                     
         WindowStartupLocation="CenterScreen"  
         EnableDWMDropShadow="True"
         WindowTransitionsEnabled="False"
@@ -18,7 +19,7 @@
         Title="Dynamic Trader" Height="500" Width="700"
       d:DataContext="{d:DesignInstance client:WindowViewModel, IsDesignTimeCreatable=False}">
 
-
+    <!--FontFamily="Comic Sans MS"-->
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
