@@ -21,13 +21,11 @@ var loader = tradeService.All
  
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
 
-Plus many more dynamic data examples. Also there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI)
-
-The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
+Plus many more dynamic data examples. Also there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI). The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
 
-The examples will be regularly maintained so download again to see more examples.
+The examples are being regularly maintained so download again to see more examples.
 
 ## Run the demo
 
@@ -42,7 +40,7 @@ The examples will be regularly maintained so download again to see more examples
  - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
  - Email at [roland@dynamic-data.org]
   
-Also a big thanks to these guys for their awesome oss projects [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for easily making this demo look good. 
+Also a big thanks to these guys behing [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for their awesome oss projects. These have enabled me to easily make this demo look good. 
 
 
 
