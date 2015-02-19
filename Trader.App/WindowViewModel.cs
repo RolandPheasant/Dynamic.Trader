@@ -72,7 +72,10 @@ namespace Trader.Client
         private  void ClosingTabItemHandlerImpl(ClosingItemCallbackArgs<TabablzControl> args)
         {
             var container = (ViewContainer)args.DragablzItem.DataContext;
-            if (container.Equals(Selected)) Selected = _data.FirstOrDefault(vc => vc != container);
+            if (container.Equals(Selected))
+            {
+                Selected = _data.FirstOrDefault(vc => vc != container);
+            }
             var disposable = container.Content as IDisposable;
             if (disposable != null) disposable.Dispose();
         }
