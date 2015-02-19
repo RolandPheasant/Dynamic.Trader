@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Threading;
 using StructureMap;
 using Trader.Domain.Services;
@@ -14,9 +17,8 @@ namespace Trader.Client.Infrastucture
             var app = new App { ShutdownMode = ShutdownMode.OnLastWindowClose };
             app.InitializeComponent();
 
+
            var container =  new Container(x=> x.AddRegistry<AppRegistry>());
-
-
            var factory = container.GetInstance<WindowFactory>();
            var window = factory.Create(true);
            container.Configure(x => x.For<Dispatcher>().Add(window.Dispatcher));
@@ -24,6 +26,8 @@ namespace Trader.Client.Infrastucture
             //run start up jobs
            container.GetInstance<TradePriceUpdateJob>();
            container.GetInstance<LogWriter>();
+
+
 
             window.Show();
             app.Run();
