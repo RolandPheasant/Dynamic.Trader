@@ -47,7 +47,7 @@ or how the following extract
 ```
 Does this
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/PositionsViewer.gif "Positions View")
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Positions.gif "Positions View")
 
 This is so easy! 
 
