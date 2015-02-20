@@ -21,7 +21,37 @@ var loader = tradeService.All
  
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
 
-Plus many more dynamic data examples. Also there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI). The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
+or how the following extract
+
+ ```csharp  
+ _cleanUp = tradeService.Live.Connect()
+            .Group(trade => trade.CurrencyPair)
+            .Transform(group => new CurrencyPairPosition(group))
+            .Sort(SortExpressionComparer<CurrencyPairPosition>.Ascending(t => t.CurrencyPair))
+            .ObserveOn(schedulerProvider.MainThread)
+            .Bind(_data)
+            .DisposeMany()
+            .Subscribe();
+
+	//when CurrencyPairPosition class does this
+	tradesByCurrencyPair.Cache.Connect()
+			.QueryWhenChanged(query =>
+			{
+				var buy = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Buy).Sum(trade=>trade.Amount);
+				var sell = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Sell).Sum(trade => trade.Amount);
+				var count = query.Count;
+				return new TradesPosition(buy,sell,count);
+			})
+			.Subscribe(position => Position = position);
+        }
+```
+Does this
+
+![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/PositionsViewer.gif "Positions View")
+
+This is so easy! 
+
+Plus many more dynamic data examples. Additionally there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI). The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
 
