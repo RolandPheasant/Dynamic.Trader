@@ -15,46 +15,32 @@ namespace Trader.Client.Infrastucture
 
         public void Debug(string message, params object[] values)
         {
-            if (_log.IsDebugEnabled)
-            {
-                _log.DebugFormat(message, values);
-            }
-
+            if (!_log.IsDebugEnabled) return;
+            _log.DebugFormat(message, values);
         }
 
         public void Info(string message, params object[] values)
         {
-            if (_log.IsInfoEnabled)
-            {
-                _log.InfoFormat(message, values);
-            }
+            if (!_log.IsInfoEnabled) return;
+            _log.InfoFormat(message, values);
         }
 
         public void Warn(string message, params object[] values)
         {
-            if (_log.IsWarnEnabled)
-            {
-                _log.WarnFormat(message, values);
-            }
+            if (!_log.IsWarnEnabled) return;
+            _log.WarnFormat(message, values);
         }
 
         public void Error(Exception ex, string message, params object[] values)
         {
-            if (_log.IsErrorEnabled)
-            {
-                _log.Error(string.Format(message, values), ex);
-            }
+            if (!_log.IsErrorEnabled) return;
+            _log.Error(string.Format(message, values), ex);
         }
 
         public void Fatal(string message, params object[] values)
         {
-            if (_log.IsFatalEnabled)
-            {
-                _log.FatalFormat(message, values);
-            }
+            if (!_log.IsFatalEnabled) return;
+            _log.FatalFormat(message, values);
         }
-
-        // other logging methods here...
-
     }
 }

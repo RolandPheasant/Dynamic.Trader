@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Threading;
 using StructureMap;
 using Trader.Domain.Services;
@@ -26,9 +23,7 @@ namespace Trader.Client.Infrastucture
             //run start up jobs
            container.GetInstance<TradePriceUpdateJob>();
            container.GetInstance<LogWriter>();
-
-
-
+            
             window.Show();
             app.Run();
         }
