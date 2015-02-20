@@ -45,11 +45,11 @@ or how the following extract
 			.Subscribe(position => Position = position);
         }
 ```
-Does this
+Produces this.
 
 ![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Positions.gif "Positions View")
 
-This is so easy! 
+This is so easy, a few lines of code which after a short learning curve becomes very easy.
 
 Plus many more dynamic data examples. Additionally there are some examples which show how to integrate with [ReactiveUI](https://github.com/reactiveui/ReactiveUI). The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
