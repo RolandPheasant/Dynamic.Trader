@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Dragablz;
 using DynamicData;
 using DynamicData.Binding;
+using DynamicData.Kernel;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
@@ -17,7 +19,7 @@ namespace Trader.Client
         private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
         private readonly Command _showInGitHubCommand;
-        private readonly ICommand _showMenuCommand;
+        private readonly Command _showMenuCommand;
         private readonly IDisposable _cleanUp;
         private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
         private ViewContainer _selected;
@@ -26,7 +28,7 @@ namespace Trader.Client
         {
             _objectProvider = objectProvider;
             _interTabClient = new InterTabClient(windowFactory);
-            _showMenuCommand =  new Command(ShowMenu);
+            _showMenuCommand =  new Command(ShowMenu,()=> Selected!=null && !(Selected.Content is MenuItems));
             _showInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
 
             var menuController = _data.ToObservableChangeSet(vc => vc.Id)
@@ -39,6 +41,7 @@ namespace Trader.Client
                                             Selected = item;
                                         });
             
+
             _cleanUp = Disposable.Create(() =>
                                          {
                                              menuController.Dispose();

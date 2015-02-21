@@ -91,9 +91,9 @@ namespace Trader.Client.Infrastucture
                     }),
 
                     
-                new MenuItem("Positions",   
+                new MenuItem("Trading Positions",   
                        "Calculate overall position for each currency pair and aggregate totals",
-                        () => Open<PositionsViewer>("Positions"),new []
+                        () => Open<PositionsViewer>("Trading Positions"),new []
                     {
                         new Link("View Model", "PositionsViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/PositionsViewer.cs"), 
                         new Link("Group Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 

@@ -28,7 +28,6 @@ namespace Trader.Domain.Services
                                     {
                                         _latestPrices[md.Instrument] = md;
                                     });
-
         }
 
         public IEnumerable<Trade> Generate(int numberToGenerate, bool initialLoad = false)
@@ -66,7 +65,6 @@ namespace Trader.Domain.Services
 
             var price = _latestPrices.Lookup(currencyPair.Code)
                                 .ConvertOr(md => md.Bid, () => currencyPair.InitialPrice);
-
 
             //generate percent price 1-100 pips away from the inital market
             var pipsFromMarket = _random.Next(1, 100);

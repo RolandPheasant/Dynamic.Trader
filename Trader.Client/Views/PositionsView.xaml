@@ -25,8 +25,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Background="{DynamicResource PrimaryHueLightBrush}" TextBlock.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
-                        <TextBlock  Margin="4 0 4 0" Text="{Binding CurrencyPair}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <Border Background="{DynamicResource PrimaryHueLightBrush}" 
+                            TextBlock.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                            >
+                        
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  Margin="4 0 4 4" Text="{Binding CurrencyPair}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBlock  Margin="4 0 4 0" Text="{Binding  Position.Count, StringFormat='({0} trades)'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                        </StackPanel>
+                        
+               
                     </Border>
 
                     <Grid Margin="4" HorizontalAlignment="Center" Grid.Column="1">
@@ -43,10 +51,10 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="Buy" Grid.Row="0" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Position.Buy,StringFormat='N'}" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Position.Buy,StringFormat='#,##00'}" />
                         <TextBlock Text="Sell" Grid.Row="1" Grid.Column="0"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Position.Sell,StringFormat='N'}" Margin="0 0 0 5"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" Text="{Binding Position.Position,StringFormat='N'}">
+                        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Position.Sell,StringFormat='#,##00'}" Margin="0 0 0 5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" Text="{Binding Position.Position,StringFormat='#,##00'}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
