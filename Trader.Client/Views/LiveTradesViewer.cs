@@ -18,13 +18,12 @@ namespace Trader.Client.Views
         private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
         private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
-        private readonly FilterController<Trade> _filter = new FilterController<Trade>();
+        private readonly FilterController<Trade> _filter = new FilterController<Trade>(trade=>true);
         private string _searchText;
 
         public LiveTradesViewer(ILogger logger,ITradeService tradeService)
         {
             _logger = logger;
-            ApplyFilter();
 
             var filterApplier = this.ObserveChanges()
                                 .Throttle(TimeSpan.FromMilliseconds(250))
