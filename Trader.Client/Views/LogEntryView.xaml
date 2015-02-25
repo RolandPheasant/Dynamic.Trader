@@ -15,10 +15,12 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textblock.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textblock.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textbox.xaml" />
+ 
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
@@ -40,19 +42,20 @@
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
 
-                <TextBox  controls:TextBoxHelper.Watermark="Enter search text..."
+                <TextBox  controls:TextBoxHelper.Watermark="Search..."
                             controls:TextBoxHelper.ClearTextButton="True"
                             Margin="4 0 0 0"
                             VerticalAlignment="Center"
-                            Width="150"
+                            Width="100"
                             Height="18"
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button VerticalAlignment="Center"
                          Margin="4 0 4 0"
-                        Style="{StaticResource SquareMetroButton}"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource MaterialDesignFlatButton}"
                         BorderThickness="1"
-                        Content="Delete Selected"
+                        Content="{Binding RemoveText}"
                         Command="{Binding RemoveCommand}"/>
 
 
@@ -120,7 +123,6 @@
                 </Style>
             </StackPanel.Resources>
 
-            <TextBlock Text="{Binding RemoveText}"/>
 
             <TextBlock Text="Debug:" />
             <TextBlock Text="{Binding Summary.Debug}" />

@@ -11,6 +11,9 @@
 <UserControl.Resources>
     
     <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
             <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter"/>
         
@@ -76,28 +79,32 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <controls:Tile Grid.Column="0" x:Name="tile"  
-                                        Title="{Binding Title}"
+
+                            <Button Grid.Column="0" x:Name="tile"  
                                         Command="{Binding Command}" 
                                         ToolTip="{Binding Description}"
                                         HorizontalContentAlignment="Center"
+                            
                                         Margin="5"
                                         Width="85"
                                         Height="85"
                                         Padding="8">
-                                <ContentControl Content="{Binding Content}"/>
+                                
+                                <TextBlock FontSize="14" 
+                                           FontWeight="Normal"
+                                           Text="{Binding Title}"
+                                           TextWrapping="WrapWithOverflow"/>
 
-                                <controls:Tile.Style>
-                                    <Style TargetType="{x:Type controls:Tile}">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                                         <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Opacity" Value="0.9" />
-                                            </Trigger>
-                                        </Style.Triggers>
-
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Opacity" Value="0.9" />
+                                        </Trigger>
+                                    </Style.Triggers>
                                     </Style>
-                                </controls:Tile.Style>
-                            </controls:Tile>
+                                </Button.Style>
+                            </Button>
 
                             <Grid Margin="5 4 5 0"
                          

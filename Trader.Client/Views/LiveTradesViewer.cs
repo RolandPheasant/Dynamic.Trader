@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
-using DynamicData.Kernel;
 using DynamicData.Operators;
 using DynamicData.PLinq;
 using Trader.Domain.Infrastucture;
@@ -24,11 +23,11 @@ namespace Trader.Client.Views
         public LiveTradesViewer(ILogger logger,ITradeService tradeService)
         {
             _logger = logger;
-
-            var filterApplier = this.ObserveChanges()
-                                .Throttle(TimeSpan.FromMilliseconds(250))
-                                .Subscribe(_ => ApplyFilter());
- 
+            
+            var filterApplier = this.ObservePropertyValue(t => t.SearchText)
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .Select(propargs=>BuildFilter(propargs.Value))
+                .Subscribe(_filter.Change);
 
             var loader = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
@@ -43,19 +42,13 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, _filter, filterApplier);
         }
 
-        private void ApplyFilter()
+        private Func<Trade, bool> BuildFilter(string searchText)
         {
-            _logger.Info("Applying filter");
-            if (string.IsNullOrEmpty(SearchText))
-            {
-                _filter.ChangeToIncludeAll();
-            }
-            else
-            {
-                _filter.Change(t => t.CurrencyPair.Contains(SearchText,StringComparison.OrdinalIgnoreCase) ||
-                                    t.Customer.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-            }
-            _logger.Info("Applied filter");
+            if (string.IsNullOrEmpty(searchText))
+                return trade => true;
+
+            return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                                            t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
         }
 
         public string SearchText

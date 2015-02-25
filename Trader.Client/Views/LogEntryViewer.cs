@@ -219,8 +219,13 @@ namespace Trader.Client.Views
             
             //Build a message from selected items
             var selectedMessage = selectedItems
-                                        .QueryWhenChanged(query => string.Format("{0} items selected.",query.Count))
-                                        .StartWith("0 items selected")
+                                        .QueryWhenChanged(query =>
+                                        {
+                                            if (query.Count == 0) return "Select log entries to delete";
+                                            if (query.Count == 1) return "Delete selected log entry";
+                                            return string.Format("Delete {0} log entries", query.Count);
+                                        })
+                                        .StartWith("Select log entries to delete")
                                         .Subscribe(text=>RemoveText=text);
 
             //covert stream into a cache so we can get a handle on items in thread safe manner.

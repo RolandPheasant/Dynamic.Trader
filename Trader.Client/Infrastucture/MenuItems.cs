@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using DynamicData.Kernel;
 using Trader.Client.Views;
 using Trader.Domain.Infrastucture;
 
@@ -111,11 +110,10 @@ namespace Trader.Client.Infrastucture
 
             };
 
-            var filterApplier = this.ObserveChanges().Where(prop => prop == "Category")
-                .StartWith(string.Empty)
-                .Subscribe(_ =>
+            var filterApplier = this.ObservePropertyValue(t => t.Category)
+                .Subscribe(value =>
                 {
-                    Items = _menuItems.Where(menu => menu.Category == Category).ToArray();
+                    Items = _menuItems.Where(menu => menu.Category == value.Value).ToArray();
                 });
 
             _cleanUp = Disposable.Create(() =>
