@@ -2,7 +2,7 @@
 
 This is a c# sample wpf project to help get started with Dynamic Data.  I have tried to make the code behind each screen as simple as posible so it is easy to follow.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/axcp2ktriyix9blt?svg=true)](https://ci.appveyor.com/project/RolandPheasant/tradingdemo)
+[![Build status](https://ci.appveyor.com/api/projects/status/axcp2ktriyix9blt/branch/master?svg=true)](https://ci.appveyor.com/project/RolandPheasant/tradingdemo/branch/master)
 
 Source code for dynamic data is at [Dynamic Data on GitHub](https://github.com/RolandPheasant/DynamicData) and the blog at http://dynamic-data.org/
 
