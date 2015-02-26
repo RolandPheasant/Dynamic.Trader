@@ -3,50 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" >
-<UserControl.Resources>
-    
-    <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.togglebutton.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter"/>
-        
-    </ResourceDictionary>
-</UserControl.Resources>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
 
 
     <Grid  Margin="4"  >
-      
-      <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
 
         <Grid Margin="4" >
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <CheckBox   Grid.Column="1"  x:Name="showLinks"
-                  Content="Show details"   
-                   HorizontalAlignment="Right"
+
+
+            <StackPanel  Grid.Column="1" Orientation="Horizontal" 
+                          VerticalAlignment="Center"
+                         HorizontalAlignment="Right">
+
+                <TextBlock >Show Details</TextBlock>
+
+                <ToggleButton x:Name="showLinks"
+                        Margin="4 0 0 0"
+                        Style="{StaticResource MaterialDesignSwitchToggleButton}"          
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
                    ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
                   IsChecked="{Binding ShowLinks}"/>
-            
+
+            </StackPanel>
+
             <StackPanel Grid.Column="0" 
                         Orientation="Horizontal" >
 
-                <TextBlock Text="Filter menu: "/>
-                
+
+
                 <RadioButton GroupName="Type" 
                              Margin="4 0 4 0"
                          Content="Dynamic Data Only"
@@ -59,7 +71,7 @@
                          ToolTip="Filter menu on items which illustrate integration between Dynamic Data and Reactive UI"/>
             </StackPanel>
         </Grid>
-        
+
         <ScrollViewer Grid.Row="1">
             <ItemsControl  ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
@@ -89,7 +101,7 @@
                                         Width="85"
                                         Height="85"
                                         Padding="8">
-                                
+
                                 <TextBlock FontSize="14" 
                                            FontWeight="Normal"
                                            Text="{Binding Title}"
@@ -98,10 +110,10 @@
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                                         <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Opacity" Value="0.9" />
-                                        </Trigger>
-                                    </Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.9" />
+                                            </Trigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </Button.Style>
                             </Button>
@@ -150,8 +162,8 @@
                             </Grid>
                         </Grid>
                     </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
         </ScrollViewer>
     </Grid>
