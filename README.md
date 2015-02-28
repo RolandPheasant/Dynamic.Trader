@@ -70,7 +70,7 @@ The examples are being regularly maintained so download again to see more exampl
 
 ## Feedback
 
-[![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/TradingDemo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/Dynamic.Trader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
  - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
  - Email at [roland@dynamic-data.org]
   
