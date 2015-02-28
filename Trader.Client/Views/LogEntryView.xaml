@@ -6,7 +6,6 @@
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
                d:DataContext="{d:DesignInstance views:LogEntryViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">

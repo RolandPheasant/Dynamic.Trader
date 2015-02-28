@@ -9,7 +9,7 @@
         xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
         xmlns:client="clr-namespace:Trader.Client"
         mc:Ignorable="d"
-        Icon="Resources/dynamic.data.BLUE.ico"
+        Icon="dynamic.data.BLUE.ico"
               FontFamily="pack://application:,,,/Trader.Client;component/Resources/Roboto/#Roboto"       
         WindowStartupLocation="CenterScreen"  
         EnableDWMDropShadow="True"
