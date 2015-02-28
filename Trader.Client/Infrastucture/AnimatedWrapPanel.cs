@@ -58,6 +58,8 @@ namespace Trader.Client.Infrastucture
             foreach (UIElement child in Children)
             {
                 var trans = child.RenderTransform as TranslateTransform;
+
+
                 if (trans == null)
                 {
                     child.RenderTransformOrigin = new Point(0, 0);
@@ -75,8 +77,11 @@ namespace Trader.Client.Infrastucture
                 child.Arrange(new Rect(0, 0, child.DesiredSize.Width, 
                     child.DesiredSize.Height));
 
+
                 trans.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(curX, _animationLength), HandoffBehavior.Compose);
                 trans.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(curY, _animationLength), HandoffBehavior.Compose);
+
+
 
                 curX += child.DesiredSize.Width;
                 if (child.DesiredSize.Height > curLineHeight)

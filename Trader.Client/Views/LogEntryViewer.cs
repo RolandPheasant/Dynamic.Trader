@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -13,11 +14,12 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Views
 {
-    public class LogEntryProxy : ReactiveObject, IDisposable
+    public class LogEntryProxy : ReactiveObject, IDisposable, IEquatable<LogEntryProxy>
     {
         private readonly LogEntry _original;
-        private bool _recent;
         private readonly IDisposable _cleanUp = Disposable.Empty;
+        private bool _recent;
+        private bool _removing;
 
         public LogEntryProxy(LogEntry original)
         {
@@ -29,11 +31,29 @@ namespace Trader.Client.Views
             Recent = true;
             _cleanUp = Observable.Timer(TimeSpan.FromSeconds(2))
                 .Subscribe(_ => Recent = false);
+
+          //  Removing = true;
         }
+
         public bool Recent
         {
             get { return _recent; }
             set { this.RaiseAndSetIfChanged(ref _recent, value); }
+        }
+
+        public bool Removing
+        {
+            get { return _removing; }
+            set
+            {
+                if (_removing && !value) Console.WriteLine();
+                this.RaiseAndSetIfChanged(ref _removing, value);
+            }
+        }
+
+        public void FlagForRemove()
+        {
+            Removing = true;
         }
 
         #region Delegated Members
@@ -76,6 +96,40 @@ namespace Trader.Client.Views
         public Exception Exception
         {
             get { return _original.Exception; }
+        }
+
+        #endregion
+
+        #region Equality
+
+        public bool Equals(LogEntryProxy other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _original.Equals(other._original);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((LogEntryProxy) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _original.GetHashCode();
+        }
+
+        public static bool operator ==(LogEntryProxy left, LogEntryProxy right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(LogEntryProxy left, LogEntryProxy right)
+        {
+            return !Equals(left, right);
         }
 
         #endregion
@@ -168,12 +222,62 @@ namespace Trader.Client.Views
 
         #endregion
     }
-    
+
+    public static class DynamicDataEx
+    {
+        public static IObservable<IChangeSet<TObject, TKey>> DelayRemove2<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
+    Action<TObject> onDefer)
+        {
+            return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
+            {
+                var items = source.AsObservableCache();
+
+                var notRemoved = items.Connect().WhereReasonsAreNot(ChangeReason.Remove);
+               
+                var removes = source.WhereReasonsAre(ChangeReason.Remove)
+                    .Do(changes =>
+                    {
+                        //look up original object c
+                        changes//.Select(change => change.Current)
+                                .ForEach(t =>
+                                {
+                                    var original = items.Lookup(t.Key).Value;
+                                    onDefer(original);
+                                });
+                    })
+                    .Delay(TimeSpan.FromSeconds(2));
+
+                return notRemoved.Merge(removes).SubscribeSafe(observer);
+            });
+
+        }
+
+        public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
+            Action<TObject> onDefer)
+        {
+
+            return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
+            {
+                var shared = source.Publish();
+
+                var notRemoved = shared.WhereReasonsAreNot(ChangeReason.Remove);
+                var removes = shared.WhereReasonsAre(ChangeReason.Remove)
+                    .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
+                    .Delay(TimeSpan.FromSeconds(2));
+
+                var subscriber = notRemoved.Merge(removes).SubscribeSafe(observer);
+                var connected = shared.Connect();
+                return new CompositeDisposable(subscriber, connected);
+
+            });
+        }
+    }
+
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
         private readonly IDisposable _cleanUp;
         private readonly ILogEntryService _logEntryService;
-        private readonly FilterController<LogEntry> _filter = new FilterController<LogEntry>(l => true);
+        private readonly FilterController<LogEntryProxy> _filter = new FilterController<LogEntryProxy>(l => true);
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
         private readonly SelectorBinding _selection = new SelectorBinding();
         private readonly ReactiveCommand<object> _deleteCommand;
@@ -193,8 +297,14 @@ namespace Trader.Client.Views
                 .Subscribe(_filter.Change);
 
             //filter, sort and populate reactive list.
-            var loader = logEntryService.Items.Connect(_filter)
+            var loader = logEntryService.Items.Connect()
                 .Transform(le => new LogEntryProxy(le))
+                .DelayRemove(proxy =>
+                {
+                    proxy.FlagForRemove();
+                    _selection.DeSelect(proxy);
+                })
+                .Filter(_filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
@@ -238,7 +348,7 @@ namespace Trader.Client.Views
 
             //Assign action when the command is invoked
            var commandInvoker =  this.WhenAnyObservable(x => x.RemoveCommand)
-                    .Subscribe(x => _logEntryService.Remove(selectedCache.Items.Select(proxy => proxy.Key)));
+                    .Subscribe(_=> _logEntryService.Remove(selectedCache.Items.Select(proxy => proxy.Key)));
 
             var connected = selectedItems.Connect();
 
@@ -256,7 +366,7 @@ namespace Trader.Client.Views
             });
         }
 
-        private Func<LogEntry, bool> BuildFilter(string searchText)
+        private Func<LogEntryProxy, bool> BuildFilter(string searchText)
         {
             if (string.IsNullOrEmpty(SearchText))
                 return le => true;
@@ -281,7 +391,7 @@ namespace Trader.Client.Views
             get { return _summary; }
             set { this.RaiseAndSetIfChanged(ref _summary, value); }
         }
-        
+
         public ReactiveList<LogEntryProxy> Data
         {
             get { return _data; }

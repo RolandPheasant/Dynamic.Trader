@@ -12,9 +12,12 @@ namespace Trader.Client.Infrastucture
         private readonly ObservableCollection<object> _selected = new ObservableCollection<object>();
         private readonly SerialDisposable _serialDisposable = new SerialDisposable();
         private bool _isSelecting;
+        private Selector _selector;
 
         internal void Receive(Selector selector)
         {
+            _selector = selector;
+
             _serialDisposable.Disposable = Observable
                 .FromEventPattern<SelectionChangedEventHandler, SelectionChangedEventArgs>(
                     h => selector.SelectionChanged += h,
@@ -41,6 +44,19 @@ namespace Trader.Client.Infrastucture
 
                 _isSelecting = false;
             }
+        }
+
+        public void Select(object item)
+        {
+            if (_selector == null) return;
+            _selector.SelectedItem = item;
+            ((ListBox)_selector).SelectedItems.Add(item);
+        }
+
+        public void DeSelect(object item)
+        {
+            if (_selector == null) return;
+            ((ListBox)_selector).SelectedItems.Remove(item);
         }
 
         public ObservableCollection<object> Selected

@@ -70,6 +70,7 @@
     <Compile Include="Infrastucture\LogEntryService.cs" />
     <Compile Include="Infrastucture\LogLevel.cs" />
     <Compile Include="Infrastucture\NotifyPropertyChangedEx.cs" />
+    <Compile Include="Infrastucture\PropertyValue.cs" />
     <Compile Include="Infrastucture\SchedulerProvider.cs" />
     <Compile Include="Model\BuyOrSell.cs" />
     <Compile Include="Model\CurrencyPair.cs" />

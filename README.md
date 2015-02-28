@@ -26,7 +26,7 @@ var loader = tradeService.All
 or how the following extract
 
  ```csharp  
- _cleanUp = tradeService.Live.Connect()
+ var loader = tradeService.Live.Connect()
             .Group(trade => trade.CurrencyPair)
             .Transform(group => new CurrencyPairPosition(group))
             .Sort(SortExpressionComparer<CurrencyPairPosition>.Ascending(t => t.CurrencyPair))

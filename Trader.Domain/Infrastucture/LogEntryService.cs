@@ -13,10 +13,10 @@ namespace Trader.Domain.Infrastucture
 
         public LogEntryService(ILogger logger)
         {
-            //limit size of cache to prevent 
+            //limit size of cache to prevent too many items being created
             var sizeLimiter = _source.LimitSizeTo(10000).Subscribe();
             
-            // alternatively could expire by tiome
+            // alternatively could expire by time
             //var timeExpirer = _source.ExpireAfter(le => TimeSpan.FromSeconds(le.Level == LogLevel.Debug ? 5 : 60), TimeSpan.FromSeconds(5), TaskPoolScheduler.Default)
             //                            .Subscribe(removed => logger.Debug("{0} log items have been automatically removed", removed.Count()));
 

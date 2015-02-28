@@ -15,10 +15,6 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textblock.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.textbox.xaml" />
- 
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -88,10 +84,10 @@
 
                 <ListView.View >
                     <GridView>
-                        <GridViewColumn  Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
                         <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
-                        <GridViewColumn  Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
-                        <GridViewColumn  Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
+                        <GridViewColumn Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
+                        <GridViewColumn Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
                         <GridViewColumn Width="300"  Header="Logger" DisplayMemberBinding="{Binding LoggerName}" TextBlock.TextAlignment="Left" />
                     </GridView>
                 </ListView.View>
@@ -99,11 +95,24 @@
                 <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
-                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
+                        <DataTrigger Binding="{Binding Recent}" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                                <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
+                          
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding Removing}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                From="1.0" To="0.0" Duration="0:0:2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                    </Style.Triggers>
 
                     </Style>
                 </ListView.ItemContainerStyle>

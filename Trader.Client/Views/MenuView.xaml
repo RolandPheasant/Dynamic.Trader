@@ -13,6 +13,7 @@
     <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.togglebutton.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter"/>
@@ -36,16 +37,35 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <CheckBox   Grid.Column="1"  x:Name="showLinks"
+
+
+            <StackPanel  Grid.Column="1" Orientation="Horizontal" 
+                          VerticalAlignment="Center"
+                         HorizontalAlignment="Right">
+
+                <TextBlock VerticalAlignment="Center">Show Details</TextBlock>
+
+                <ToggleButton x:Name="showLinks"
+                        Margin="4 0 0 0"
+                        Style="{StaticResource MaterialDesignSwitchToggleButton}"          
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                   ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
+                  IsChecked="{Binding ShowLinks}"/>
+
+            </StackPanel>
+            
+            <!--<CheckBox   Grid.Column="1"  x:Name="showLinks"
                   Content="Show details"   
                    HorizontalAlignment="Right"
                    ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
-                  IsChecked="{Binding ShowLinks}"/>
+                  IsChecked="{Binding ShowLinks}"/>-->
             
             <StackPanel Grid.Column="0" 
-                        Orientation="Horizontal" >
+                        Orientation="Horizontal" 
+                        Margin="0 0 8 0">
 
-                <TextBlock Text="Filter menu: "/>
+
                 
                 <RadioButton GroupName="Type" 
                              Margin="4 0 4 0"
