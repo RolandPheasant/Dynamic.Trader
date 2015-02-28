@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
+using DynamicData.Kernel;
 using DynamicData.Operators;
 using DynamicData.ReactiveUI;
 using ReactiveUI;
@@ -225,8 +226,38 @@ namespace Trader.Client.Views
 
     public static class DynamicDataEx
     {
-
         public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
+            Action<TObject> onDefer)
+        {
+
+            return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
+            {
+
+                var localCache = new IntermediateCache<TObject, TKey>();
+
+                
+                var locker = new object();
+                var shared = source.Publish();
+
+                var notRemoved = shared
+                    .WhereReasonsAreNot(ChangeReason.Remove)
+                    .PopulateInto(localCache);
+                        //.Synchronize(locker);
+
+                var removes = shared.WhereReasonsAre(ChangeReason.Remove)
+                    .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
+                    .Delay(TimeSpan.FromSeconds(2))
+                    .PopulateInto(localCache);
+                   // .Synchronize(locker);
+
+                var subscriber = localCache.Connect().SubscribeSafe(observer); // notRemoved.Merge(removes).SubscribeSafe(observer);
+                var connected = shared.Connect();
+                return new CompositeDisposable(subscriber, connected, notRemoved, removes, localCache);
+
+            });
+        }
+
+        public static IObservable<IChangeSet<TObject, TKey>> DelayRemove2<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
             Action<TObject> onDefer)
         {
 
@@ -276,16 +307,19 @@ namespace Trader.Client.Views
 
             //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect()
+                 .Do(changes => changes.ForEach(c => Console.WriteLine("Before: {0} {1}", c.Reason, c.Key)))
                 .Transform(le => new LogEntryProxy(le))
                 .DelayRemove(proxy =>
                 {
                     proxy.FlagForRemove();
                     _selection.DeSelect(proxy);
                 })
-               // .Filter(_filter)
-                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key), SortOptimisations.ComparesImmutableValuesOnly)
+               .Do(changes => changes.ForEach(c => Console.WriteLine("After: {0} {1}", c.Reason, c.Key)))
+                .Filter(_filter)
+                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
+
                 .DisposeMany()
                 .Subscribe();
 
@@ -326,7 +360,12 @@ namespace Trader.Client.Views
 
             //Assign action when the command is invoked
            var commandInvoker =  this.WhenAnyObservable(x => x.RemoveCommand)
-                    .Subscribe(_=> _logEntryService.Remove(selectedCache.Items.Select(proxy => proxy.Key)));
+                    .Subscribe(_ =>
+                    {
+                        var toRemove = selectedCache.Items.Select(proxy => proxy.Key).ToArray();
+                        toRemove.ForEach(r => Console.WriteLine("{0} {1}", "Defer", r));
+                        _logEntryService.Remove(toRemove);
+                    });
 
             var connected = selectedItems.Connect();
 
