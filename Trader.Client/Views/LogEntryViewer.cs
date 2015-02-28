@@ -225,32 +225,6 @@ namespace Trader.Client.Views
 
     public static class DynamicDataEx
     {
-        public static IObservable<IChangeSet<TObject, TKey>> DelayRemove2<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
-    Action<TObject> onDefer)
-        {
-            return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
-            {
-                var items = source.AsObservableCache();
-
-                var notRemoved = items.Connect().WhereReasonsAreNot(ChangeReason.Remove);
-               
-                var removes = source.WhereReasonsAre(ChangeReason.Remove)
-                    .Do(changes =>
-                    {
-                        //look up original object c
-                        changes//.Select(change => change.Current)
-                                .ForEach(t =>
-                                {
-                                    var original = items.Lookup(t.Key).Value;
-                                    onDefer(original);
-                                });
-                    })
-                    .Delay(TimeSpan.FromSeconds(2));
-
-                return notRemoved.Merge(removes).SubscribeSafe(observer);
-            });
-
-        }
 
         public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
             Action<TObject> onDefer)
@@ -258,12 +232,16 @@ namespace Trader.Client.Views
 
             return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
             {
-                var shared = source.Publish();
 
-                var notRemoved = shared.WhereReasonsAreNot(ChangeReason.Remove);
+                var locker = new object();
+                var shared = source.Publish();
+                var notRemoved = shared.WhereReasonsAreNot(ChangeReason.Remove)
+                        .Synchronize(locker);
+
                 var removes = shared.WhereReasonsAre(ChangeReason.Remove)
                     .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
-                    .Delay(TimeSpan.FromSeconds(2));
+                    .Delay(TimeSpan.FromSeconds(2))
+                    .Synchronize(locker);
 
                 var subscriber = notRemoved.Merge(removes).SubscribeSafe(observer);
                 var connected = shared.Connect();
@@ -304,7 +282,7 @@ namespace Trader.Client.Views
                     proxy.FlagForRemove();
                     _selection.DeSelect(proxy);
                 })
-                .Filter(_filter)
+               // .Filter(_filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)

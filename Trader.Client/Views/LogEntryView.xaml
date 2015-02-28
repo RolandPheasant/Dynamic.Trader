@@ -76,15 +76,10 @@
                     <KeyBinding Command="{Binding RemoveCommand}" Key="Delete"/>
                 </ListView.InputBindings>
 
-               <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-
                 <ListView.View >
                     <GridView>
-                        <GridViewColumn Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
+                    <GridViewColumn  Header="#" DisplayMemberBinding="{Binding  Key}" TextBlock.TextAlignment="Left" />
+                    <GridViewColumn Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
                         <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
                         <GridViewColumn Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
                         <GridViewColumn Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
@@ -107,9 +102,10 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                                 Storyboard.TargetProperty="(TextBlock.Opacity)"
-                                                From="1.0" To="0.0" Duration="0:0:2"/>
+                                                From="1.0" To="0.1" Duration="0:0:2"/>
                                     </Storyboard>
                                 </BeginStoryboard>
+                                
                             </DataTrigger.EnterActions>
                         </DataTrigger>
                     </Style.Triggers>

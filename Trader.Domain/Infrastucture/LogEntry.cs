@@ -3,7 +3,7 @@ using DynamicData;
 
 namespace Trader.Domain.Infrastucture
 {
-    public class LogEntry: IKey<long>
+    public class LogEntry: IKey<long>, IEquatable<LogEntry>
     {
         private readonly long _counter;
         private readonly string _message;
@@ -73,18 +73,13 @@ namespace Trader.Domain.Infrastucture
 
         #region Equality members
 
-        protected bool Equals(LogEntry other)
+        public bool Equals(LogEntry other)
         {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
             return _counter == other._counter;
         }
 
-        /// <summary>
-        /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
-        /// </returns>
-        /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. </param>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -93,15 +88,19 @@ namespace Trader.Domain.Infrastucture
             return Equals((LogEntry) obj);
         }
 
-        /// <summary>
-        /// Serves as a hash function for a particular type. 
-        /// </summary>
-        /// <returns>
-        /// A hash code for the current <see cref="T:System.Object"/>.
-        /// </returns>
         public override int GetHashCode()
         {
             return _counter.GetHashCode();
+        }
+
+        public static bool operator ==(LogEntry left, LogEntry right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(LogEntry left, LogEntry right)
+        {
+            return !Equals(left, right);
         }
 
         #endregion
