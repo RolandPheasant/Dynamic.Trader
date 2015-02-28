@@ -63,17 +63,23 @@
                         Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
 
         </Grid>
-
+        <!--Style="{StaticResource VirtualisedMetroListView}"-->
         <ListView
                 Grid.Row="1"
                 SelectionMode="Extended"
                 infrastucture:SelectorHelper.Binding="{Binding  Selector}"
-                Style="{StaticResource VirtualisedMetroListView}"
+            
                 ItemsSource="{Binding Data}">
           
                 <ListView.InputBindings>
                     <KeyBinding Command="{Binding RemoveCommand}" Key="Delete"/>
                 </ListView.InputBindings>
+            
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                   <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
 
                 <ListView.View >
                     <GridView>
@@ -101,7 +107,7 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                                 Storyboard.TargetProperty="(TextBlock.Opacity)"
-                                                From="1.0" To="0.1" Duration="0:0:2"/>
+                                                From="1.0" To="0.1" Duration="0:0:1"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                                 

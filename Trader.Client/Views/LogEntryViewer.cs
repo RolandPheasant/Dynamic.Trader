@@ -226,40 +226,12 @@ namespace Trader.Client.Views
 
     public static class DynamicDataEx
     {
+
         public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
             Action<TObject> onDefer)
         {
-
-            return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
-            {
-
-                var localCache = new IntermediateCache<TObject, TKey>();
-
-                
-                var locker = new object();
-                var shared = source.Publish();
-
-                var notRemoved = shared
-                    .WhereReasonsAreNot(ChangeReason.Remove)
-                    .PopulateInto(localCache);
-                        //.Synchronize(locker);
-
-                var removes = shared.WhereReasonsAre(ChangeReason.Remove)
-                    .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
-                    .Delay(TimeSpan.FromSeconds(2))
-                    .PopulateInto(localCache);
-                   // .Synchronize(locker);
-
-                var subscriber = localCache.Connect().SubscribeSafe(observer); // notRemoved.Merge(removes).SubscribeSafe(observer);
-                var connected = shared.Connect();
-                return new CompositeDisposable(subscriber, connected, notRemoved, removes, localCache);
-
-            });
-        }
-
-        public static IObservable<IChangeSet<TObject, TKey>> DelayRemove2<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
-            Action<TObject> onDefer)
-        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (onDefer == null) throw new ArgumentNullException("onDefer");
 
             return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
             {
@@ -271,7 +243,7 @@ namespace Trader.Client.Views
 
                 var removes = shared.WhereReasonsAre(ChangeReason.Remove)
                     .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
-                    .Delay(TimeSpan.FromSeconds(2))
+                    .Delay(TimeSpan.FromSeconds(1))
                     .Synchronize(locker);
 
                 var subscriber = notRemoved.Merge(removes).SubscribeSafe(observer);
@@ -307,14 +279,12 @@ namespace Trader.Client.Views
 
             //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect()
-                 .Do(changes => changes.ForEach(c => Console.WriteLine("Before: {0} {1}", c.Reason, c.Key)))
                 .Transform(le => new LogEntryProxy(le))
                 .DelayRemove(proxy =>
                 {
                     proxy.FlagForRemove();
                     _selection.DeSelect(proxy);
                 })
-               .Do(changes => changes.ForEach(c => Console.WriteLine("After: {0} {1}", c.Reason, c.Key)))
                 .Filter(_filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key))
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -350,7 +320,8 @@ namespace Trader.Client.Views
                                         .StartWith("Select log entries to delete")
                                         .Subscribe(text=>RemoveText=text);
 
-            //covert stream into a cache so we can get a handle on items in thread safe manner.
+            //covert stream into a cache so we can get a handle on items in thread safe manner. we could use the _data
+            //but that is only thread safe if all the code is called from MainThread
             var selectedCache = selectedItems.AsObservableCache();
 
             //make a command out of selected items - enabling command when there is a selection 
@@ -363,7 +334,6 @@ namespace Trader.Client.Views
                     .Subscribe(_ =>
                     {
                         var toRemove = selectedCache.Items.Select(proxy => proxy.Key).ToArray();
-                        toRemove.ForEach(r => Console.WriteLine("{0} {1}", "Defer", r));
                         _logEntryService.Remove(toRemove);
                     });
 
