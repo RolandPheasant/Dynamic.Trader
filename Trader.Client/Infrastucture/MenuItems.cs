@@ -45,15 +45,7 @@ namespace Trader.Client.Infrastucture
                             new Link("Blog","Ui Integration", "https://dynamic-data.org/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
                         }),
 
-                 new MenuItem("Live Trades (RxUI)",
-                    "A basic example, illustrating where reactive-ui and dynamic data can work together",
-                    () => Open<RxUiViewer>("Reactive UI Example"),
-                    MenuCategory.ReactiveUi,
-                    new []
-                        {
-                             new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/RxUiViewer.cs "), 
-                            new Link("Blog","Integration with reactive ui", "https://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
-                        }),
+
 
 
                 new MenuItem("Near to Market",
@@ -100,17 +92,18 @@ namespace Trader.Client.Infrastucture
                         new Link("Group Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
-               //new MenuItem("Log Entry",   
-               //        "Visualiser for log files. Also accumulates log entries and handles user interaction",
-               //         () => Open<LogEntryViewer>("Log Entry"),
-               //          MenuCategory.ReactiveUi
-               //         ,new []
-               //     {
-               //         new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LogEntryViewer.cs"), 
-               //     }),
+                    new MenuItem("Live Trades (RxUI)",
+                    "A basic example, illustrating where reactive-ui and dynamic data can work together",
+                    () => Open<RxUiViewer>("Live Trades (RxUI)"),
+                    MenuCategory.ReactiveUi,
+                    new []
+                        {
+                             new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/RxUiViewer.cs "), 
+                            new Link("Blog","Integration with reactive ui", "https://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
+                        }),
 
-               new MenuItem("Log Entry",   
-                       "Visualiser for log files. Also accumulates log entries and handles user interaction",
+                    new MenuItem("Log Entry",   
+                       "Visualiser for log files. Also accumulates log entries and handles user interaction.",
                         () => OpenRxUI<LogEntryViewer>("Log Entry"),
                          MenuCategory.ReactiveUi
                         ,new []

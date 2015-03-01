@@ -111,11 +111,6 @@
                 <views:PositionsView/>
             </DataTemplate>
 
-            
-            <!--<DataTemplate DataType="{x:Type views:LogEntryViewer}">
-                <views:LogEntryView/>
-            </DataTemplate>-->
-
             <DataTemplate DataType="{x:Type views:RxUiHostViewModel}">
                 <views:RxUiHostView/>
             </DataTemplate>
