@@ -26,13 +26,8 @@ namespace Trader.Client.Views
             InitializeComponent();
             
             this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext);
-
         }
 
-        private void CCC(object xx)
-        {
-            
-        }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
             "ViewModel", typeof (LogEntryViewer), typeof (LogEntryView), new PropertyMetadata(default(LogEntryViewer)));

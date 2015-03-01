@@ -146,6 +146,7 @@
     <Compile Include="Infrastucture\AnimatedWrapPanel.cs" />
     <Compile Include="Infrastucture\AppConventions.cs" />
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Infrastucture\DynamicDataEx.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\LogWriter.cs" />

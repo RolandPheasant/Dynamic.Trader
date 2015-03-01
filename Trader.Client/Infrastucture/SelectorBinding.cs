@@ -7,7 +7,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Trader.Client.Infrastucture
 {
-    public class SelectorBinding : IDisposable// IAttachedReceiver
+    public class SelectorBinding : IDisposable
     {
         private readonly ObservableCollection<object> _selected = new ObservableCollection<object>();
         private readonly SerialDisposable _serialDisposable = new SerialDisposable();
@@ -41,7 +41,6 @@ namespace Trader.Client.Infrastucture
             }
             finally
             {
-
                 _isSelecting = false;
             }
         }
