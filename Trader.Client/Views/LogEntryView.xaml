@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
-    <Grid VerticalAlignment="Stretch">
+    <Grid  >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -33,10 +33,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-
-
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-
                 <TextBox  controls:TextBoxHelper.Watermark="Search..."
                             controls:TextBoxHelper.ClearTextButton="True"
                             Margin="4 0 0 0"
@@ -63,10 +60,12 @@
                         Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
 
         </Grid>
-        <!--Style="{StaticResource VirtualisedMetroListView}"-->
+
+
         <ListView
                 Grid.Row="1"
                 SelectionMode="Extended"
+                ScrollViewer.CanContentScroll="True"
                 infrastucture:SelectorHelper.Binding="{Binding  Selector}"
             
                 ItemsSource="{Binding Data}">

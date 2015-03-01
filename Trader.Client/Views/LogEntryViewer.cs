@@ -351,7 +351,8 @@ namespace Trader.Client.Views
             if (string.IsNullOrEmpty(SearchText))
                 return le => true;
 
-            return le => le.Message.ToLowerInvariant().Contains(SearchText.ToLowerInvariant());
+            return le => le.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                            || le.Level.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase);
         }
 
         public string SearchText

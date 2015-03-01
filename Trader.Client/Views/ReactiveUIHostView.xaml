@@ -6,12 +6,36 @@
              xmlns:reactiveUi="clr-namespace:ReactiveUI;assembly=ReactiveUI"
              xmlns:views="clr-namespace:Trader.Client.Views"
              mc:Ignorable="d" 
+             x:Name="ContentHolder"
               d:DataContext="{d:DesignInstance views:ReactiveUIHostViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
 
-    <Grid >
-        <reactiveUi:ViewModelViewHost ViewModel="{Binding Content}"/>
-    </Grid>
+            <Style TargetType="{x:Type reactiveUi:ViewModelViewHost}">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type reactiveUi:ViewModelViewHost}">
+                                <Border BorderThickness="3" BorderBrush="BlueViolet">
+                                    <ContentControl Content="{TemplateBinding ViewModel }"></ContentControl>
+                                </Border>
+                            </ControlTemplate>
 
+                        </Setter.Value>
+
+
+                    </Setter>
+                </Style.Setters>
+
+
+            </Style>
+
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
+    <reactiveUi:ViewModelViewHost ViewModel="{Binding Content}"/>
+    
 
 </UserControl>
