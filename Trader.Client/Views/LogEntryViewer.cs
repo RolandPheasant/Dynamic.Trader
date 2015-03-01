@@ -237,7 +237,7 @@ namespace Trader.Client.Views
 
                 var removes = shared.WhereReasonsAre(ChangeReason.Remove)
                     .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
-                    .Delay(TimeSpan.FromSeconds(1))
+                    .Delay(TimeSpan.FromSeconds(0.75))
                     .Synchronize(locker);
 
                 var subscriber = notRemoved.Merge(removes).SubscribeSafe(observer);
