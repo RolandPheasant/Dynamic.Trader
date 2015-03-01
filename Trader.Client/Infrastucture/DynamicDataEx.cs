@@ -12,7 +12,7 @@ namespace DynamicData
     {
 
         public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
-            Action<TObject> onDefer)
+            TimeSpan delayPeriod, Action<TObject> onDefer)
         {
             if (source == null) throw new ArgumentNullException("source");
             if (onDefer == null) throw new ArgumentNullException("onDefer");
@@ -27,7 +27,7 @@ namespace DynamicData
 
                 var removes = shared.WhereReasonsAre(ChangeReason.Remove)
                     .Do(changes => changes.Select(change => change.Current).ForEach(onDefer))
-                    .Delay(TimeSpan.FromSeconds(0.75))
+                    .Delay(delayPeriod)
                     .Synchronize(locker);
 
                 var subscriber = notRemoved.Merge(removes).SubscribeSafe(observer);

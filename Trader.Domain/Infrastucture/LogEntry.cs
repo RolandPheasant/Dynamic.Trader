@@ -62,14 +62,12 @@ namespace Trader.Domain.Infrastucture
             get { return _counter; }
         }
 
-        #region Implementation of IKey<out long>
 
         public long Key
         {
             get { return _counter; }
         }
 
-        #endregion
 
         #region Equality members
 

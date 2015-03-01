@@ -33,31 +33,31 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBox  controls:TextBoxHelper.Watermark="Search..."
-                            controls:TextBoxHelper.ClearTextButton="True"
+            <TextBox  controls:TextBoxHelper.Watermark="Search..."
                             Margin="4 0 0 0"
                             VerticalAlignment="Center"
+                            Grid.Column="0"
                             Width="100"
                             Height="18"
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Button VerticalAlignment="Center"
-                         Margin="4 0 4 0"
-                        HorizontalAlignment="Left"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        BorderThickness="1"
-                        Content="{Binding RemoveText}"
-                        Command="{Binding DeleteCommand}"/>
-
-
+            <StackPanel Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+                <TextBlock
+                        Margin="4 0 4 0"
+                        VerticalAlignment="Center"
+                        Text="{Binding RemoveText}"/>
+                
+                <Button Width="20" Height="20"
+                    Margin="4 0 4 0"
+                        Command="{Binding DeleteCommand}"
+                    Style="{StaticResource MaterialDesignFloatingActionButton}">
+                    X
+                </Button>
             </StackPanel>
 
-            <TextBlock  HorizontalAlignment="Right" 
-                        Grid.Column="1"  Margin="4 0 4 0"
-                        VerticalAlignment="Center"
-                        Opacity="0.8"
-                        Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
+
 
         </Grid>
 
@@ -118,28 +118,51 @@
 
         </ListView>
 
-        <StackPanel  Grid.Row="2" Margin="0 0 4 0"
+        <Grid 
+            Height="26"
+            Background="{StaticResource PrimaryHueMidBrush}"
+            Grid.Row="2"
+            Margin = "-4 0 -4 -4"> <!--Hack as the margin in the tab control means the botton panel has a margin (cannot be bother retemplating the tab control) -->
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Opacity" Value="0.8"/>
+                    <Setter Property="Margin" Value="5 4 0 4"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidForegroundBrush}"/>
+                </Style>
+            </Grid.Resources>
+
+            <TextBlock  
+                
+                HorizontalAlignment="Left" 
+                        Margin="4 0 4 0"
+                        VerticalAlignment="Center"
+                        Opacity="0.8"
+                        Text="{Binding Data.Count, StringFormat='Showing \{0} log entries'}"/>
+
+            <StackPanel   Margin="0 0 6 0"
+                    Grid.Column="1" 
                      Orientation="Horizontal" 
                      HorizontalAlignment="Right">
 
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Opacity" Value="0.6"/>
-                    <Setter Property="Margin" Value="5 4 0 4"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </StackPanel.Resources>
+                <TextBlock Text="Debug:" />
+                <TextBlock Text="{Binding Summary.Debug}" />
+                <TextBlock Text="Info:" />
+                <TextBlock Text="{Binding Summary.Info}" />
+                <TextBlock Text="Warning:" />
+                <TextBlock Text="{Binding Summary.Warning}"/>
+                <TextBlock Text="Error:" />
+                <TextBlock Text="{Binding Summary.Error}" />
+            </StackPanel>
+            
 
+        </Grid>
 
-            <TextBlock Text="Debug:" />
-            <TextBlock Text="{Binding Summary.Debug}" />
-            <TextBlock Text="Info:" />
-            <TextBlock Text="{Binding Summary.Info}" />
-            <TextBlock Text="Warning:" />
-            <TextBlock Text="{Binding Summary.Warning}"/>
-            <TextBlock Text="Error:" />
-            <TextBlock Text="{Binding Summary.Error}" />
-        </StackPanel>
     </Grid>
 </UserControl>

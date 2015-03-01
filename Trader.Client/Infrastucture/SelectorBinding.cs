@@ -48,14 +48,39 @@ namespace Trader.Client.Infrastucture
         public void Select(object item)
         {
             if (_selector == null) return;
-            _selector.SelectedItem = item;
-            ((ListBox)_selector).SelectedItems.Add(item);
+
+
+            if (item is ListView)
+            {
+                ((ListView)_selector).SelectedItems.Add(item);
+            }
+            else if (item is MultiSelector)
+            {
+                ((MultiSelector)_selector).SelectedItems.Add(item);
+            }
+            else
+            {
+                _selector.SelectedItem = item;
+            }
+
         }
 
         public void DeSelect(object item)
         {
             if (_selector == null) return;
-            ((ListBox)_selector).SelectedItems.Remove(item);
+
+            if (item is ListView)
+            {
+                ((ListView)_selector).SelectedItems.Remove(item);
+            }
+            else if (item is MultiSelector)
+            {
+                ((MultiSelector)_selector).SelectedItems.Remove(item);
+            }
+            else
+            {
+                _selector.SelectedItem = null;
+            }
         }
 
         public ObservableCollection<object> Selected

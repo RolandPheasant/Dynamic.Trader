@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using ReactiveUI;
 
 namespace Trader.Client.Views
 {
-    public class ReactiveUIHostViewModel
+    public class RxUiHostViewModel
     {
         private readonly ReactiveObject _content;
 
-        public ReactiveUIHostViewModel(ReactiveObject content)
+        public RxUiHostViewModel(ReactiveObject content)
         {
             _content = content;
         }

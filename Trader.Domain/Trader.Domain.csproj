@@ -68,6 +68,7 @@
     <Compile Include="Infrastucture\ILogEntryService.cs" />
     <Compile Include="Infrastucture\LogEntry.cs" />
     <Compile Include="Infrastucture\LogEntryService.cs" />
+    <Compile Include="Infrastucture\LogEntrySummary.cs" />
     <Compile Include="Infrastucture\LogLevel.cs" />
     <Compile Include="Infrastucture\NotifyPropertyChangedEx.cs" />
     <Compile Include="Infrastucture\PropertyValue.cs" />

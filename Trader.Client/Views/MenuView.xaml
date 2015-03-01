@@ -15,7 +15,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.togglebutton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
             <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter"/>
         
     </ResourceDictionary>
@@ -37,8 +36,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-
-
             <StackPanel  Grid.Column="1" Orientation="Horizontal" 
                           VerticalAlignment="Center"
                          HorizontalAlignment="Right">
@@ -55,18 +52,11 @@
 
             </StackPanel>
             
-            <!--<CheckBox   Grid.Column="1"  x:Name="showLinks"
-                  Content="Show details"   
-                   HorizontalAlignment="Right"
-                   ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
-                  IsChecked="{Binding ShowLinks}"/>-->
-            
+           
             <StackPanel Grid.Column="0" 
                         Orientation="Horizontal" 
                         Margin="0 0 8 0">
 
-
-                
                 <RadioButton GroupName="Type" 
                              Margin="4 0 4 0"
                          Content="Dynamic Data Only"

@@ -149,7 +149,7 @@ namespace Trader.Client.Infrastucture
             _logger.Debug("Opening '{0}'", title);
 
             var content = _objectProvider.Get<T>();
-            var rxuiContent = new ReactiveUIHostViewModel(content);
+            var rxuiContent = new RxUiHostViewModel(content);
 
             _viewCreatedSubject.OnNext(new ViewContainer(title, rxuiContent));
             _logger.Debug("--Opened '{0}'", title);

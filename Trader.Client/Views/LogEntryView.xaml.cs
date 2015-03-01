@@ -24,13 +24,14 @@ namespace Trader.Client.Views
         public LogEntryView()
         {
             InitializeComponent();
-            
             this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext);
+
         }
 
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
             "ViewModel", typeof (LogEntryViewer), typeof (LogEntryView), new PropertyMetadata(default(LogEntryViewer)));
+
 
         public LogEntryViewer ViewModel
         {

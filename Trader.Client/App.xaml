@@ -116,8 +116,8 @@
                 <views:LogEntryView/>
             </DataTemplate>-->
 
-            <DataTemplate DataType="{x:Type views:ReactiveUIHostViewModel}">
-                <views:ReactiveUIHostView/>
+            <DataTemplate DataType="{x:Type views:RxUiHostViewModel}">
+                <views:RxUiHostView/>
             </DataTemplate>
         </ResourceDictionary>
 

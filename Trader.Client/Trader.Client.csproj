@@ -59,7 +59,7 @@
   <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dragablz.0.0.0.100\lib\net45\Dragablz.dll</HintPath>
+      <HintPath>..\packages\Dragablz.0.0.0.101\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="DynamicData, Version=3.2.2.1015, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -149,6 +149,7 @@
     <Compile Include="Infrastucture\DynamicDataEx.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\Link.cs" />
+    <Compile Include="Infrastucture\LogEntryProxy.cs" />
     <Compile Include="Infrastucture\LogWriter.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Infrastucture\Multiselector.cs" />
@@ -170,10 +171,10 @@
     <Compile Include="Views\NearToMarketView.xaml.cs">
       <DependentUpon>NearToMarketView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReactiveUIHostView.xaml.cs">
-      <DependentUpon>ReactiveUIHostView.xaml</DependentUpon>
+    <Compile Include="Views\RxUiHostView.xaml.cs">
+      <DependentUpon>RxUiHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReactiveUIHostViewModel.cs" />
+    <Compile Include="Views\RxUIHostViewModel.cs" />
     <Compile Include="WindowFactory.cs" />
     <Compile Include="WindowViewModel.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
@@ -239,7 +240,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ReactiveUIHostView.xaml">
+    <Page Include="Views\RxUiHostView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
