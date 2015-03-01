@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using ReactiveUI;
 using Trader.Client.Views;
 using Trader.Domain.Infrastucture;
 
@@ -54,6 +55,7 @@ namespace Trader.Client.Infrastucture
                             new Link("Blog","Integration with reactive ui", "https://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
                         }),
 
+
                 new MenuItem("Near to Market",
                      "Dynamic filtering of calculated values.",
                      () => Open<NearToMarketViewer>("Near to Market"),new []
@@ -98,16 +100,23 @@ namespace Trader.Client.Infrastucture
                         new Link("Group Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
+               //new MenuItem("Log Entry",   
+               //        "Visualiser for log files. Also accumulates log entries and handles user interaction",
+               //         () => Open<LogEntryViewer>("Log Entry"),
+               //          MenuCategory.ReactiveUi
+               //         ,new []
+               //     {
+               //         new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LogEntryViewer.cs"), 
+               //     }),
+
                new MenuItem("Log Entry",   
                        "Visualiser for log files. Also accumulates log entries and handles user interaction",
-                        () => Open<LogEntryViewer>("Log Entry"),
+                        () => OpenRxUI<LogEntryViewer>("Log Entry"),
                          MenuCategory.ReactiveUi
                         ,new []
                     {
                         new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LogEntryViewer.cs"), 
                     }),
-
-
             };
 
             var filterApplier = this.ObservePropertyValue(t => t.Category)
@@ -130,6 +139,19 @@ namespace Trader.Client.Infrastucture
            
             var content = _objectProvider.Get<T>();
             _viewCreatedSubject.OnNext(new ViewContainer(title, content));
+            _logger.Debug("--Opened '{0}'", title);
+        }
+
+        private void OpenRxUI<T>(string title)
+            where T : ReactiveObject
+        {
+
+            _logger.Debug("Opening '{0}'", title);
+
+            var content = _objectProvider.Get<T>();
+            var rxuiContent = new ReactiveUIHostViewModel(content);
+
+            _viewCreatedSubject.OnNext(new ViewContainer(title, rxuiContent));
             _logger.Debug("--Opened '{0}'", title);
         }
 

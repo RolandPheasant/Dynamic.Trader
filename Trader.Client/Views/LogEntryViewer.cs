@@ -6,8 +6,6 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Controllers;
-using DynamicData.Kernel;
-using DynamicData.Operators;
 using DynamicData.ReactiveUI;
 using ReactiveUI;
 using Trader.Client.Infrastucture;
@@ -45,11 +43,7 @@ namespace Trader.Client.Views
         public bool Removing
         {
             get { return _removing; }
-            set
-            {
-                if (_removing && !value) Console.WriteLine();
-                this.RaiseAndSetIfChanged(ref _removing, value);
-            }
+            set { this.RaiseAndSetIfChanged(ref _removing, value); }
         }
 
         public void FlagForRemove()
@@ -262,14 +256,14 @@ namespace Trader.Client.Views
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
         private readonly SelectorBinding _selection = new SelectorBinding();
         private readonly ReactiveCommand<object> _deleteCommand;
-
         private LogEntrySummary _summary = LogEntrySummary.Empty;
         private string _searchText=string.Empty;
         private string _removeText;
-        
+       
         public LogEntryViewer(ILogEntryService logEntryService)
         {
             _logEntryService = logEntryService;
+
 
             //apply filter when search text has changed
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
@@ -289,7 +283,6 @@ namespace Trader.Client.Views
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
-
                 .DisposeMany()
                 .Subscribe();
 
@@ -330,7 +323,7 @@ namespace Trader.Client.Views
                                     .ToCommand();
 
             //Assign action when the command is invoked
-           var commandInvoker =  this.WhenAnyObservable(x => x.RemoveCommand)
+           var commandInvoker =  this.WhenAnyObservable(x => x.DeleteCommand)
                     .Subscribe(_ =>
                     {
                         var toRemove = selectedCache.Items.Select(proxy => proxy.Key).ToArray();
@@ -384,7 +377,7 @@ namespace Trader.Client.Views
             get { return _data; }
         }
         
-        public ReactiveCommand<object> RemoveCommand
+        public ReactiveCommand<object> DeleteCommand
         {
             get { return _deleteCommand; }
         }

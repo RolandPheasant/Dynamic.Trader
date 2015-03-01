@@ -152,6 +152,7 @@
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Infrastucture\Multiselector.cs" />
     <Compile Include="Infrastucture\ReactiveLogAppender.cs" />
+    <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
     <Compile Include="Infrastucture\SelectorBinding.cs" />
     <Compile Include="IWindowFactory.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
@@ -168,6 +169,10 @@
     <Compile Include="Views\NearToMarketView.xaml.cs">
       <DependentUpon>NearToMarketView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReactiveUIHostView.xaml.cs">
+      <DependentUpon>ReactiveUIHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReactiveUIHostViewModel.cs" />
     <Compile Include="WindowFactory.cs" />
     <Compile Include="WindowViewModel.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
@@ -230,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PositionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReactiveUIHostView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

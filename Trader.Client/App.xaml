@@ -111,8 +111,13 @@
                 <views:PositionsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type views:LogEntryViewer}">
+            
+            <!--<DataTemplate DataType="{x:Type views:LogEntryViewer}">
                 <views:LogEntryView/>
+            </DataTemplate>-->
+
+            <DataTemplate DataType="{x:Type views:ReactiveUIHostViewModel}">
+                <views:ReactiveUIHostView/>
             </DataTemplate>
         </ResourceDictionary>
 

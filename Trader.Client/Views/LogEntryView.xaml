@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
-    <Grid>
+    <Grid VerticalAlignment="Stretch">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -51,7 +51,7 @@
                         Style="{StaticResource MaterialDesignFlatButton}"
                         BorderThickness="1"
                         Content="{Binding RemoveText}"
-                        Command="{Binding RemoveCommand}"/>
+                        Command="{Binding DeleteCommand}"/>
 
 
             </StackPanel>
@@ -72,7 +72,7 @@
                 ItemsSource="{Binding Data}">
           
                 <ListView.InputBindings>
-                    <KeyBinding Command="{Binding RemoveCommand}" Key="Delete"/>
+                    <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>
                 </ListView.InputBindings>
             
             <ListView.ItemsPanel>
