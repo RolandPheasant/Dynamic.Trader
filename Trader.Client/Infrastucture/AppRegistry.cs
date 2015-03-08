@@ -20,8 +20,6 @@ namespace Trader.Client.Infrastucture
 
             //
             For<TradePriceUpdateJob>().Singleton();
-            For<LogWriter>().Singleton();
-
 
             Scan(scanner =>
             {

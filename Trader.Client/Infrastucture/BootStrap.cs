@@ -30,8 +30,7 @@ namespace Trader.Client.Infrastucture
 
             //run start up jobs
            container.GetInstance<TradePriceUpdateJob>();
-           container.GetInstance<LogWriter>();
-            
+
             window.Show();
             app.Run();
         }
