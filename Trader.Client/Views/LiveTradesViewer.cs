@@ -44,8 +44,7 @@ namespace Trader.Client.Views
 
         private Func<Trade, bool> BuildFilter(string searchText)
         {
-            if (string.IsNullOrEmpty(searchText))
-                return trade => true;
+            if (string.IsNullOrEmpty(searchText)) return trade => true;
 
             return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
                                             t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);

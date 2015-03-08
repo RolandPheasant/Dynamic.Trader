@@ -150,10 +150,8 @@
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\LogEntryProxy.cs" />
-    <Compile Include="Infrastucture\LogWriter.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Infrastucture\Multiselector.cs" />
-    <Compile Include="Infrastucture\ReactiveLogAppender.cs" />
     <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
     <Compile Include="Infrastucture\SelectorBinding.cs" />
     <Compile Include="IWindowFactory.cs" />

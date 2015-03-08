@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DynamicData.3.2.2.1015\lib\net45\DynamicData.Plinq.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core">
@@ -67,11 +70,12 @@
   <ItemGroup>
     <Compile Include="Infrastucture\ILogEntryService.cs" />
     <Compile Include="Infrastucture\LogEntry.cs" />
-    <Compile Include="Infrastucture\LogEntryService.cs" />
+    <Compile Include="Services\LogEntryService.cs" />
     <Compile Include="Infrastucture\LogEntrySummary.cs" />
     <Compile Include="Infrastucture\LogLevel.cs" />
     <Compile Include="Infrastucture\NotifyPropertyChangedEx.cs" />
     <Compile Include="Infrastucture\PropertyValue.cs" />
+    <Compile Include="Infrastucture\ReactiveLogAppender.cs" />
     <Compile Include="Infrastucture\SchedulerProvider.cs" />
     <Compile Include="Model\BuyOrSell.cs" />
     <Compile Include="Model\CurrencyPair.cs" />
