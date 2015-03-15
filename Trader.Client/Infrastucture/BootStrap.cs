@@ -5,6 +5,7 @@ using ReactiveUI;
 using Splat;
 using StructureMap;
 using Trader.Client.Views;
+using Trader.Domain.Infrastucture;
 using Trader.Domain.Services;
 
 namespace Trader.Client.Infrastucture
@@ -30,7 +31,7 @@ namespace Trader.Client.Infrastucture
 
             //run start up jobs
            container.GetInstance<TradePriceUpdateJob>();
-
+           container.GetInstance<ILogEntryService>();
             window.Show();
             app.Run();
         }

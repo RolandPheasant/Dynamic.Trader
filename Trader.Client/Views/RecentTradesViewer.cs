@@ -17,20 +17,12 @@ namespace Trader.Client.Views
         private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
         private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
-        private readonly FilterController<Trade> _filter = new FilterController<Trade>();
-        private string _searchText;
 
         public RecentTradesViewer(ILogger logger, ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
             _logger = logger;
-
-            var filterApplier = this.ObserveChanges()
-                .Sample(TimeSpan.FromMilliseconds(250))
-                .Subscribe(_ => ApplyFilter());
-
-            ApplyFilter();
-
-            var loader = tradeService.All.Connect()
+            
+            _cleanUp = tradeService.All.Connect()
                 .SkipInitial()
                 .ExpireAfter((trade) => TimeSpan.FromSeconds(30)) 
                 .Transform(trade => new TradeProxy(trade))
@@ -40,28 +32,6 @@ namespace Trader.Client.Views
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
-            _cleanUp = new CompositeDisposable(loader, _filter, filterApplier);
-        }
-
-        private void ApplyFilter()
-        {
-            _logger.Info("Applying filter");
-            if (string.IsNullOrEmpty(SearchText))
-            {
-                _filter.ChangeToIncludeAll();
-            }
-            else
-            {
-                _filter.Change(t => t.CurrencyPair.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                                    t.Customer.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-            }
-            _logger.Info("Applied filter");
-        }
-
-        public string SearchText
-        {
-            get { return _searchText; }
-            set { SetAndRaise(ref _searchText, value); }
         }
 
         public IObservableCollection<TradeProxy> Data

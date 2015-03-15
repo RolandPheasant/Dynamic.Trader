@@ -35,6 +35,7 @@ namespace Trader.Client.Views
                 .Select(BuildFilter)
                 .Subscribe(_filter.Change);
 
+
             //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect()
                 .Transform(le => new LogEntryProxy(le))
@@ -77,9 +78,9 @@ namespace Trader.Client.Views
                                         .StartWith("Select log entries to delete")
                                         .Subscribe(text=>RemoveText=text);
 
-            //covert stream into a cache so we can get a handle on items in thread safe manner. we could use the _data
+            //covert stream into an observable list so we can get a handle on items in thread safe manner. we could use the _data
             //but that is only thread safe if all the code is called from MainThread
-            var selectedCache = selectedItems.AsObservableCache();
+            var selectedCache = selectedItems.AsObservableList();
 
             //make a command out of selected items - enabling command when there is a selection 
             _deleteCommand = selectedItems

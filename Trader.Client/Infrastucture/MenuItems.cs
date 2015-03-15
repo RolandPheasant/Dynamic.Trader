@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using DynamicData.Binding;
 using ReactiveUI;
 using Trader.Client.Views;
 using Trader.Domain.Infrastucture;
@@ -112,7 +113,7 @@ namespace Trader.Client.Infrastucture
                     }),
             };
 
-            var filterApplier = this.ObservePropertyValue(t => t.Category)
+            var filterApplier = NotifyPropertyChangedEx.ObservePropertyValue(this, t => t.Category)
                 .Subscribe(value =>
                 {
                     Items = _menuItems.Where(menu => menu.Category == value.Value).ToArray();

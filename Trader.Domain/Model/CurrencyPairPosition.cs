@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using DynamicData;
-using Trader.Domain.Infrastucture;
+using DynamicData.Binding;
 
 namespace Trader.Domain.Model
 {

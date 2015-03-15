@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using DynamicData.Binding;
 using Trader.Domain.Infrastucture;
 
 namespace Trader.Domain.Model

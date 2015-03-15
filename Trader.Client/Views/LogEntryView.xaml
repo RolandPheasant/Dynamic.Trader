@@ -6,6 +6,7 @@
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              mc:Ignorable="d" 
                d:DataContext="{d:DesignInstance views:LogEntryViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -16,13 +17,26 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+            <!--<Style TargetType="{x:Type Viewbox}">
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Margin" Value="0 0 8 0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>-->
         </ResourceDictionary>
     </Control.Resources>
     <Grid  >
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -33,12 +47,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox  controls:TextBoxHelper.Watermark="Search..."
-                            Margin="4 0 0 0"
+            <TextBox wpf:TextField.Hint="Search..."
+     
                             VerticalAlignment="Center"
                             Grid.Column="0"
                             Width="100"
-                            Height="18"
+                 
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
             <StackPanel Grid.Column="1" 
@@ -49,11 +63,16 @@
                         VerticalAlignment="Center"
                         Text="{Binding RemoveText}"/>
                 
-                <Button Width="20" Height="20"
-                    Margin="4 0 4 0"
+                <Button
+                    Margin="2 0 0 0"
                         Command="{Binding DeleteCommand}"
-                    Style="{StaticResource MaterialDesignFloatingActionButton}">
-                    X
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                    <Viewbox Width="24" Height="24" Margin="2 0 0 0">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+                                  Fill="{StaticResource PrimaryHueMidBrush}"/>
+                        </Canvas>
+                    </Viewbox>
                 </Button>
             </StackPanel>
 

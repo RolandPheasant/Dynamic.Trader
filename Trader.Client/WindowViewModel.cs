@@ -3,12 +3,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using Dragablz;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Kernel;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
@@ -67,14 +65,14 @@ namespace Trader.Client
         }
 
 
-        public ClosingTabItemCallback ClosingTabItemHandler
+        public ItemActionCallback ClosingTabItemHandler
         {
             get { return ClosingTabItemHandlerImpl; }
         }
 
-        private  void ClosingTabItemHandlerImpl(ClosingItemCallbackArgs<TabablzControl> args)
+        private void ClosingTabItemHandlerImpl(ItemActionCallbackArgs<TabablzControl> args)
         {
-            var container = (ViewContainer)args.DragablzItem.DataContext;
+            var container = (ViewContainer)args.DragablzItem.DataContext;//.DataContext;
             if (container.Equals(Selected))
             {
                 Selected = _data.FirstOrDefault(vc => vc != container);

@@ -11,9 +11,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.checkbox.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
 
@@ -38,7 +35,7 @@
                                   Grid.Column="0"
                                  x:Name="ShowData"
       
-                                Style="{StaticResource MetroCheckBox}">
+                                >
                                     <TextBlock VerticalAlignment="Center" FontWeight="DemiBold"
                                          >
 

@@ -10,9 +10,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.checkbox.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
             <DataTemplate DataType="{x:Type model:TradesByPercentDiff}">
@@ -32,11 +29,8 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox    Grid.Row="0" 
-                                  Grid.Column="0"
-                                 x:Name="ShowData"
-                                Style="{StaticResource MetroCheckBox}">
-                                    <TextBlock  Grid.Row="0" Grid.Column="1"  
+                            <CheckBox    Grid.Row="0" Grid.Column="0" x:Name="ShowData" IsChecked="False">
+                                    <TextBlock 
 
                                                 VerticalAlignment="Center" FontWeight="DemiBold"
                                                 Margin="5 0 0 0">
