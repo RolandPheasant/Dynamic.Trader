@@ -30,8 +30,9 @@ namespace Trader.Client.Infrastucture
             Locator.Current = resolver;
 
             //run start up jobs
-           container.GetInstance<TradePriceUpdateJob>();
-           container.GetInstance<ILogEntryService>();
+            container.GetInstance<TradePriceUpdateJob>();
+            container.GetInstance<ILogEntryService>();
+
             window.Show();
             app.Run();
         }

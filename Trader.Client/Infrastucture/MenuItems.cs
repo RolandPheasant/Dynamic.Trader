@@ -43,7 +43,7 @@ namespace Trader.Client.Infrastucture
                         {
                             new Link("Service","TradeService.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/TradeService.cs"), 
                             new Link("View Model","LiveTradesViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LiveTradesViewer.cs "), 
-                            new Link("Blog","Ui Integration", "https://dynamic-data.org/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
+                            new Link("Blog","Ui Integration", "http://dynamic-data.org/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
                         }),
 
 
@@ -56,8 +56,8 @@ namespace Trader.Client.Infrastucture
                             new Link("Service","NearToMarketService.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/NearToMarketService.cs"),
                             new Link("Rates Updater","TradePriceUpdateJob.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Services/TradePriceUpdateJob.cs"), 
                             new Link("View Model", "NearToMarketViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/NearToMarketViewer.cs"), 
-                            new Link("Blog i","Manage Market Data", "https://dynamic-data.org/2014/11/22/trading-example-part-2-manage-market-data/"),
-                            new Link("Blog ii","Filter on calculated values", "https://dynamic-data.org/2014/12/21/trading-example-part-4-filter-on-calculated-values/"),
+                            new Link("Blog i","Manage Market Data", "http://dynamic-data.org/2014/11/22/trading-example-part-2-manage-market-data/"),
+                            new Link("Blog ii","Filter on calculated values", "http://dynamic-data.org/2014/12/21/trading-example-part-4-filter-on-calculated-values/"),
                             
                         }),
 
@@ -100,7 +100,7 @@ namespace Trader.Client.Infrastucture
                     new []
                         {
                              new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/RxUiViewer.cs "), 
-                            new Link("Blog","Integration with reactive ui", "https://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
+                            new Link("Blog","Integration with reactive ui", "http://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
                         }),
 
                     new MenuItem("Log Entry",   
