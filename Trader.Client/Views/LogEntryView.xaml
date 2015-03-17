@@ -46,13 +46,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox   wpf:TextField.Hint="Enter search text..."
+            <!--Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
+            <TextBox  x:Name="SearchTextBox" wpf:TextField.Hint="Enter search text..."
                             Margin="4 0 0 0"
                             VerticalAlignment="Center"
                             Grid.Column="0"
-                             MinWidth="125"
-                 
-                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            MinWidth="125"
+                            
+                           />
 
             <StackPanel Grid.Column="1" 
                         Orientation="Horizontal" 
@@ -61,10 +62,10 @@
                         Margin="4 0 4 0"
                         VerticalAlignment="Center"
                         Text="{Binding RemoveText}"/>
-                
-                <Button
+                <!--Command="{Binding DeleteCommand}"-->
+                <Button x:Name="DeleteButton"
                     Margin="2 0 0 0"
-                        Command="{Binding DeleteCommand}"
+                
                     Style="{StaticResource MaterialDesignFlatButton}">
                     <Viewbox Width="24" Height="24" Margin="2 0 0 0">
                         <Canvas Width="24" Height="24">

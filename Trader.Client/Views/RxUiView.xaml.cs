@@ -12,17 +12,35 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReactiveUI;
 
 namespace Trader.Client.Views
 {
     /// <summary>
     /// Interaction logic for RxUiView.xaml
     /// </summary>
-    public partial class RxUiView : UserControl
+    public partial class RxUiView : UserControl,IViewFor<RxUiViewer>
     {
         public RxUiView()
         {
             InitializeComponent();
+            this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext);
+
+        }
+
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
+            "ViewModel", typeof (RxUiViewer), typeof (RxUiView), new PropertyMetadata(default(RxUiViewer)));
+
+        public RxUiViewer ViewModel
+        {
+            get { return (RxUiViewer) GetValue(ViewModelProperty); }
+            set { SetValue(ViewModelProperty, value); }
+        }
+
+        object IViewFor.ViewModel
+        {
+            get { return ViewModel; }
+            set { ViewModel = (RxUiViewer)value; }
         }
     }
 }

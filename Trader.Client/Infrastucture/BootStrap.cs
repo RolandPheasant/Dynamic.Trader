@@ -27,6 +27,7 @@ namespace Trader.Client.Infrastucture
             //configure dependency resolver for RxUI / Splat
             var resolver =  new ReactiveUIDependencyResolver(container);
             resolver.Register(() => new LogEntryView(), typeof(IViewFor<LogEntryViewer>));
+            resolver.Register(() => new RxUiView(), typeof(IViewFor<RxUiViewer>));
             Locator.Current = resolver;
 
             //run start up jobs

@@ -95,7 +95,7 @@ namespace Trader.Client.Infrastucture
 
                     new MenuItem("Live Trades (RxUI)",
                     "A basic example, illustrating where reactive-ui and dynamic data can work together",
-                    () => Open<RxUiViewer>("Live Trades (RxUI)"),
+                    () => OpenRxUI<RxUiViewer>("Live Trades (RxUI)"),
                     MenuCategory.ReactiveUi,
                     new []
                         {

@@ -9,26 +9,31 @@ namespace Trader.Client.Infrastucture
     public class LogEntryProxy : ReactiveObject, IDisposable, IEquatable<LogEntryProxy>
     {
         private readonly LogEntry _original;
-        private readonly IDisposable _cleanUp = Disposable.Empty;
-        private bool _recent;
+        private readonly IDisposable _cleanUp;
         private bool _removing;
+
+        private readonly ObservableAsPropertyHelper<bool> _recent;
 
         public LogEntryProxy(LogEntry original)
         {
             _original = original;
 
-            var isRecent = DateTime.Now.Subtract(original.TimeStamp).TotalSeconds < 2;
-            if (!isRecent) return;
+            //create a lazy observable property 
+             _recent = Observable.Create<bool>(observer =>
+                                {
+                                    var isRecent = DateTime.Now.Subtract(original.TimeStamp).TotalSeconds < 2;
+                                    if (!isRecent)   return Disposable.Empty;
+                                    observer.OnNext(true);
+                                    return Observable.Timer(TimeSpan.FromSeconds(2)).Select(_=>false).SubscribeSafe(observer);
+                                }).ToProperty(this,lep=>lep.Recent);
 
-            Recent = true;
-            _cleanUp = Observable.Timer(TimeSpan.FromSeconds(2))
-                .Subscribe(_ => Recent = false);
+            //dispose after use
+            _cleanUp = _recent;
         }
 
         public bool Recent
         {
-            get { return _recent; }
-            set { this.RaiseAndSetIfChanged(ref _recent, value); }
+            get { return _recent.Value; }
         }
 
         public bool Removing
