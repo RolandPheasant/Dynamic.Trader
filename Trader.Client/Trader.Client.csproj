@@ -61,14 +61,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dragablz.0.0.1.104\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData">
-      <HintPath>..\packages\DynamicData.4.0.0.1041-beta\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=4.0.0.1045, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamicData.4.0.0.1045-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData.Plinq">
-      <HintPath>..\packages\DynamicData.4.0.0.1041-beta\lib\net45\DynamicData.Plinq.dll</HintPath>
+    <Reference Include="DynamicData.Plinq, Version=4.0.0.1045, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamicData.4.0.0.1045-beta\lib\net45\DynamicData.Plinq.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData.ReactiveUI">
-      <HintPath>..\packages\DynamicData.ReactiveUI.1.0.0.30\lib\portable-net45+win+wpa81+wp80\DynamicData.ReactiveUI.dll</HintPath>
+    <Reference Include="DynamicData.ReactiveUI, Version=2.0.0.1037, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamicData.ReactiveUI.2.0.0.1037-beta\lib\portable-net45+win+wpa81+wp80\DynamicData.ReactiveUI.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>

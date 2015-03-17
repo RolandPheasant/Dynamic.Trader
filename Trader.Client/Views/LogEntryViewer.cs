@@ -46,7 +46,7 @@ namespace Trader.Client.Views
                                                 })
                 .Filter(_filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key))
-                .ObserveOn(RxApp.MainThreadScheduler)
+                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
                 .DisposeMany()
                 .Subscribe();
@@ -99,7 +99,7 @@ namespace Trader.Client.Views
 
             _cleanUp= Disposable.Create(() =>
             {
-                loader.Dispose();
+              //  loader.Dispose();
                 filterApplier.Dispose();
                 _filter.Dispose();
                 connected.Dispose();

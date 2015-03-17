@@ -6,9 +6,25 @@
 
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              d:DataContext="{d:DesignInstance views:RxUiViewer, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" >
+
+    <Control.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0 8 0 8" />
+            </Style>
+        </ResourceDictionary>
+    </Control.Resources>
+
     <Grid >
 
         <Grid.RowDefinitions>
@@ -16,28 +32,29 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0"
-                                Orientation="Horizontal">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+       
+        <TextBox 
+                wpf:TextField.Hint="Enter search text..."
+                controls:TextBoxHelper.ClearTextButton="True"
+                Margin="4 0 0 0"
+                MinWidth="125"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBox 
-                            controls:TextBoxHelper.Watermark="Enter search text..."
-                             controls:TextBoxHelper.ClearTextButton="True"
-                            Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Width="125"
-                             Height="18"
-        
-                            Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock
+            Grid.Row="0" Grid.Column="1" Margin="0 0 4 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}">
 
-            <TextBlock  
-                             Margin="4 0 0 0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}"/>
-        </StackPanel>
+        </TextBlock>
 
-        <views:TradesGrid Grid.Row="1"  DataContext="{Binding Data}"/>
-
+        <views:TradesGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding Data}"/>
 
     </Grid>
 </UserControl>

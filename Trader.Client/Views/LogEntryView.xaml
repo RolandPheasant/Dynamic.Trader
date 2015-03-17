@@ -18,7 +18,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
@@ -47,11 +46,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox wpf:TextField.Hint="Search..."
-     
+            <TextBox   wpf:TextField.Hint="Enter search text..."
+                            Margin="4 0 0 0"
                             VerticalAlignment="Center"
                             Grid.Column="0"
-                            Width="100"
+                             MinWidth="125"
                  
                             Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
