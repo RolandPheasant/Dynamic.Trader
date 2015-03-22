@@ -22,11 +22,11 @@ namespace Trader.Client.Views
         {
             InitializeComponent();
             this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext);
-           
-            this.OneWayBind(ViewModel, model => model.DeleteCommand, view => view.DeleteButton.Command);
+
             this.Bind(ViewModel, model => model.SearchText, view => view.SearchTextBox.Text);
 
 
+            this.OneWayBind(ViewModel, model => model.DeleteCommand, view => view.DeleteButton.Command);
           //  this.BindCommand(ViewModel, model => model.DeleteCommand, view => view.DeleteButton);
         }
         

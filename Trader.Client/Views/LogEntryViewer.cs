@@ -23,7 +23,8 @@ namespace Trader.Client.Views
         private LogEntrySummary _summary = LogEntrySummary.Empty;
         private string _searchText=string.Empty;
         private string _removeText;
-        
+        private readonly ObservableAsPropertyHelper<string> _deleteItemsText;
+
 
         public LogEntryViewer(ILogEntryService logEntryService)
         {
@@ -68,21 +69,21 @@ namespace Trader.Client.Views
             var selectedItems = _selectionController.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
             
             //Build a message from selected items
-            var selectedMessage = selectedItems
-                                        .QueryWhenChanged(query =>
-                                        {
-                                            if (query.Count == 0) return "Select log entries to delete";
-                                            if (query.Count == 1) return "Delete selected log entry?";
-                                            return string.Format("Delete {0} log entries?", query.Count);
-                                        })
-                                        .StartWith("Select log entries to delete")
-                                        .Subscribe(text=>RemoveText=text);
+            _deleteItemsText = selectedItems
+                .QueryWhenChanged(query =>
+                {
+                    if (query.Count == 0) return "Select log entries to delete";
+                    if (query.Count == 1) return "Delete selected log entry?";
+                    return string.Format("Delete {0} log entries?", query.Count);
+                })
+                .StartWith("Select log entries to delete")
+                .ToProperty(this, viewmodel => viewmodel.DeleteItemsText);
 
             //covert stream into an observable list so we can get a handle on items in thread safe manner. we could use the _data
             //but that is only thread safe if all the code is called from MainThread
             var selectedCache = selectedItems.AsObservableList();
 
-            //make a command out of selected items - enabling command when there is a selection 
+            //make a command out of selected items - enabling the command when there is a selection 
             _deleteCommand = selectedItems
                                     .QueryWhenChanged(query => query.Count > 0)
                                     .ToCommand();
@@ -103,7 +104,7 @@ namespace Trader.Client.Views
                 filterApplier.Dispose();
                 _filter.Dispose();
                 connected.Dispose();
-                selectedMessage.Dispose();
+                _deleteItemsText.Dispose();
                 selectedCache.Dispose();
                 _selectionController.Dispose();
                 commandInvoker.Dispose();
@@ -126,11 +127,12 @@ namespace Trader.Client.Views
             set { this.RaiseAndSetIfChanged(ref _searchText, value); } 
         }
 
-        public string RemoveText
+        public string DeleteItemsText
         {
-            get { return _removeText; }
-            set { this.RaiseAndSetIfChanged(ref _removeText , value); }
+            get { return _deleteItemsText.Value; }
         }
+
+
 
         public LogEntrySummary Summary
         {
