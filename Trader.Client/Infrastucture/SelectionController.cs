@@ -7,7 +7,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Trader.Client.Infrastucture
 {
-    public class SelectorBinding : IDisposable
+    public class SelectionController : IDisposable
     {
         private readonly ObservableCollection<object> _selected = new ObservableCollection<object>();
         private readonly SerialDisposable _serialDisposable = new SerialDisposable();
@@ -69,11 +69,11 @@ namespace Trader.Client.Infrastucture
         {
             if (_selector == null) return;
 
-            if (item is ListView)
+            if (_selector is ListView)
             {
                 ((ListView)_selector).SelectedItems.Remove(item);
             }
-            else if (item is MultiSelector)
+            else if (_selector is MultiSelector)
             {
                 ((MultiSelector)_selector).SelectedItems.Remove(item);
             }

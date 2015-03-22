@@ -18,7 +18,7 @@ namespace Trader.Client.Views
         private readonly ILogEntryService _logEntryService;
         private readonly FilterController<LogEntryProxy> _filter = new FilterController<LogEntryProxy>(l => true);
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
-        private readonly SelectorBinding _selection = new SelectorBinding();
+        private readonly SelectionController _selectionController = new SelectionController();
         private readonly ReactiveCommand<object> _deleteCommand;
         private LogEntrySummary _summary = LogEntrySummary.Empty;
         private string _searchText=string.Empty;
@@ -28,7 +28,7 @@ namespace Trader.Client.Views
         public LogEntryViewer(ILogEntryService logEntryService)
         {
             _logEntryService = logEntryService;
-            
+ 
             //apply filter when search text has changed
             var filterApplier = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
@@ -42,10 +42,10 @@ namespace Trader.Client.Views
                 .DelayRemove(TimeSpan.FromSeconds(0.75),proxy =>
                                                 {
                                                     proxy.FlagForRemove();
-                                                    _selection.DeSelect(proxy);
+                                                    _selectionController.DeSelect(proxy);
                                                 })
                 .Filter(_filter)
-                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(l => l.Key))
+                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
                 .DisposeMany()
@@ -65,7 +65,7 @@ namespace Trader.Client.Views
                         .Subscribe(s => Summary = s);
 
             //manage user selection, delete items command
-            var selectedItems = _selection.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
+            var selectedItems = _selectionController.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
             
             //Build a message from selected items
             var selectedMessage = selectedItems
@@ -105,7 +105,7 @@ namespace Trader.Client.Views
                 connected.Dispose();
                 selectedMessage.Dispose();
                 selectedCache.Dispose();
-                _selection.Dispose();
+                _selectionController.Dispose();
                 commandInvoker.Dispose();
                 summariser.Dispose();
             });
@@ -114,10 +114,10 @@ namespace Trader.Client.Views
         private Func<LogEntryProxy, bool> BuildFilter(string searchText)
         {
             if (string.IsNullOrEmpty(SearchText))
-                return le => true;
+                return logentry => true;
 
-            return le => le.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                            || le.Level.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+            return logentry => logentry.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                            || logentry.Level.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase);
         }
 
         public string SearchText
@@ -148,9 +148,9 @@ namespace Trader.Client.Views
             get { return _deleteCommand; }
         }
 
-        public SelectorBinding Selector
+        public SelectionController Selector
         {
-            get { return _selection; }
+            get { return _selectionController; }
         }
 
 

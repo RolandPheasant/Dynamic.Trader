@@ -17,7 +17,7 @@ namespace Trader.Client.Infrastucture
         public LogEntryProxy(LogEntry original)
         {
             _original = original;
-
+            
             //create a lazy observable property 
              _recent = Observable.Create<bool>(observer =>
                                 {

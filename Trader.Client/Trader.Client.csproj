@@ -146,7 +146,7 @@
     <Compile Include="Infrastucture\MenuItems.cs" />
     <Compile Include="Infrastucture\Multiselector.cs" />
     <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
-    <Compile Include="Infrastucture\SelectorBinding.cs" />
+    <Compile Include="Infrastucture\SelectionController.cs" />
     <Compile Include="IWindowFactory.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>

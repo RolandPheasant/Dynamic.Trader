@@ -114,8 +114,7 @@
                         <Style.Triggers>
                         <DataTrigger Binding="{Binding Recent}" Value="True">
                                 <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
-                                <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
-                          
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>   
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding Removing}" Value="True">
