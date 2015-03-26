@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Usings
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using ReactiveUI;
+
+#endregion
 
 namespace Trader.Client.Views
 {
     /// <summary>
-    /// Interaction logic for LogEntryView.xaml
+    ///     Interaction logic for LogEntryView.xaml
     /// </summary>
     public partial class LogEntryView : UserControl, IViewFor<LogEntryViewer>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogEntryView"/> class.
+        ///     Initializes a new instance of the <see cref="LogEntryView" /> class.
         /// </summary>
         public LogEntryView()
         {
@@ -25,11 +23,10 @@ namespace Trader.Client.Views
 
             this.Bind(ViewModel, model => model.SearchText, view => view.SearchTextBox.Text);
 
-
             this.OneWayBind(ViewModel, model => model.DeleteCommand, view => view.DeleteButton.Command);
-          //  this.BindCommand(ViewModel, model => model.DeleteCommand, view => view.DeleteButton);
+            //  this.BindCommand(ViewModel, model => model.DeleteCommand, view => view.DeleteButton);
         }
-        
+
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
             "ViewModel", typeof (LogEntryViewer), typeof (LogEntryView), new PropertyMetadata(default(LogEntryViewer)));
 
@@ -43,7 +40,7 @@ namespace Trader.Client.Views
         object IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (LogEntryViewer)value; }
+            set { ViewModel = (LogEntryViewer) value; }
         }
     }
 }

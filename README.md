@@ -1,10 +1,10 @@
 ## Dynamic Data Demo
 
-This is a c# sample wpf project to help get started with Dynamic Data.  I have tried to make the code behind each screen as simple as posible so it is easy to follow.
+Dynamic data is a portable class library which brings the power of reactive (rx) to collections.  It is open source and the code base lives here [Dynamic Data on GitHub](https://github.com/RolandPheasant/DynamicData). 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/axcp2ktriyix9blt/branch/master?svg=true)](https://ci.appveyor.com/project/RolandPheasant/tradingdemo/branch/master)
+To help illustrate how powerful  and easy Dynamic Data is, and to help you get up and running I have created this WPF demo app.  I have make the code behind each screen as simple as possible so it is easy to follow.  
 
-Source code for dynamic data is at [Dynamic Data on GitHub](https://github.com/RolandPheasant/DynamicData) and the blog at http://dynamic-data.org/
+Most of the sample screens have been written about on the blog at [dynamic-data.org](http://dynamic-data.org/)
 
 The demo illustrates how the following code:
 
@@ -21,7 +21,7 @@ var loader = tradeService.All
 ``` 
  produces this
  
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Sample Screen Shot")
+![Live Trades View](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/LiveTrades.gif "Live Trades View")
 
 or how the following extract
 
@@ -49,7 +49,7 @@ or how the following extract
 ```
 Produces this.
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Positions.gif "Positions View")
+![Aggregated Positions View](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Positions.gif "Aggregated Positions View")
 
 This is so easy, a few lines of code which after a short learning curve becomes very easy.
 
@@ -57,29 +57,24 @@ Plus many more dynamic data examples. Additionally there are some examples which
 
 The menu looks like this and as you can see there are links to the code behind which hopefully will get you up to speed in no time at all
 
-![Alt text](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
+![Menu](https://github.com/RolandPheasant/TradingDemo/blob/master/Images/Menu.gif "Menu with links")
 
 The examples are being regularly maintained so download again to see more examples.
 
 ## Run the demo
 
-- Press 'Download Zip', unpack and open
+- [![Build status](https://ci.appveyor.com/api/projects/status/axcp2ktriyix9blt/branch/master?svg=true)](https://ci.appveyor.com/project/RolandPheasant/tradingdemo/branch/master) 
+- Press 'Download Zip', unpack and open Dynamic.Trader.sln
 - Ensure Nuget Restore is enabled
 - Set 'Trader.Client' as the startup project
 - Press F5
 
 ## Feedback
 
-[![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/Dynamic.Trader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Please feel free to me a on any of the following channels
+
+ - [![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/Dynamic.Trader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
  - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
- - Email at [roland@dynamic-data.org]
+ - Email at [roland@dynamic-data.org](roland@dynamic-data.org)
   
 Also a big thanks to the guys behind [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for their awesome oss projects. These have enabled me to easily make this demo look good. 
-
-
-
-
-
-
-
-
