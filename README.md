@@ -2,9 +2,9 @@
 
 Dynamic data is a portable class library which brings the power of reactive (rx) to collections.  It is open source and the code base lives here [Dynamic Data on GitHub](https://github.com/RolandPheasant/DynamicData). 
 
-To help illustrate how powerful  and easy Dynamic Data is, and to help you get up and running I have created this WPF demo app.  I have make the code behind each screen as simple as possible so it is easy to follow.  
+To help illustrate how powerful  and easy Dynamic Data is, and to help you get up and running I have created this WPF demo app.  I have made the code behind each screen as simple as possible so it is easy to follow.  
 
-Most of the sample screens have been written about on the blog at [dynamic-data.org](http://dynamic-data.org/)
+Most of the eaxmple screens have been written about on the blog at [dynamic-data.org](http://dynamic-data.org/)
 
 The demo illustrates how the following code:
 
