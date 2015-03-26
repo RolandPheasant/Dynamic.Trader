@@ -2,7 +2,7 @@
 using Dragablz;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client
+namespace Trader.Client.Infrastucture
 {
     public class WindowFactory : IWindowFactory
     {

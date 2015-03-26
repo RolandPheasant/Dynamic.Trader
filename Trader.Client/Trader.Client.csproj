@@ -147,7 +147,7 @@
     <Compile Include="Infrastucture\Multiselector.cs" />
     <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
     <Compile Include="Infrastucture\SelectionController.cs" />
-    <Compile Include="IWindowFactory.cs" />
+    <Compile Include="Infrastucture\IWindowFactory.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
@@ -166,8 +166,8 @@
       <DependentUpon>RxUiHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RxUIHostViewModel.cs" />
-    <Compile Include="WindowFactory.cs" />
-    <Compile Include="WindowViewModel.cs" />
+    <Compile Include="Infrastucture\WindowFactory.cs" />
+    <Compile Include="Infrastucture\WindowViewModel.cs" />
     <Compile Include="Infrastucture\Log4NetLogger.cs" />
     <Compile Include="Infrastucture\ObjectProvider.cs" />
     <Compile Include="Infrastucture\BootStrap.cs" />
@@ -207,6 +207,14 @@
     <Compile Include="Views\TradesGrid.xaml.cs">
       <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MaterialDesign.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LiveTradesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -335,6 +343,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

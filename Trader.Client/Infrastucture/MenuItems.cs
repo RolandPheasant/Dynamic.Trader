@@ -110,10 +110,17 @@ namespace Trader.Client.Infrastucture
                         ,new []
                     {
                         new Link("View Model", "LogEntryViewer.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LogEntryViewer.cs"), 
+                        new Link("Log Entry Proxy", "LogEntryProxy.cs","https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Client/Infrastucture/LogEntryProxy.cs"), 
+                        new Link("Service", "LogEntryService.cs","https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Domain/Services/LogEntryService.cs"), 
+                        new Link("Log Appender", "ReactiveLogAppender.cs","https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Domain/Infrastucture/ReactiveLogAppender.cs"), 
+                        new Link("View", "LogEntryView.xaml","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Client/Views/LogEntryView.xaml"),
+             
+         
                     }),
             };
 
-            var filterApplier = NotifyPropertyChangedEx.ObservePropertyValue(this, t => t.Category)
+
+            var filterApplier = this.ObservePropertyValue(t => t.Category)
                 .Subscribe(value =>
                 {
                     Items = _menuItems.Where(menu => menu.Category == value.Value).ToArray();

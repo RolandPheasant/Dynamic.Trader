@@ -1,4 +1,4 @@
-namespace Trader.Client
+namespace Trader.Client.Infrastucture
 {
     public interface IWindowFactory
     {
