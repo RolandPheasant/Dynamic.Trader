@@ -3,9 +3,10 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
+using DynamicData.ReactiveUI;
 using DynamicData.Binding;
 using DynamicData.Controllers;
-using DynamicData.ReactiveUI;
+using DynamicData.Operators;
 using ReactiveUI;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
@@ -18,13 +19,12 @@ namespace Trader.Client.Views
         private readonly ILogEntryService _logEntryService;
         private readonly FilterController<LogEntryProxy> _filter = new FilterController<LogEntryProxy>(l => true);
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
-        private readonly SelectionController _selectionController = new SelectionController();
+        private readonly SelectionController<LogEntryProxy> _selectionController = new SelectionController<LogEntryProxy>();
         private readonly ReactiveCommand<object> _deleteCommand;
-        private LogEntrySummary _summary = LogEntrySummary.Empty;
-        private string _searchText=string.Empty;
-        private string _removeText;
         private readonly ObservableAsPropertyHelper<string> _deleteItemsText;
 
+        private LogEntrySummary _summary = LogEntrySummary.Empty;
+        private string _searchText = string.Empty;
 
         public LogEntryViewer(ILogEntryService logEntryService)
         {
@@ -46,7 +46,7 @@ namespace Trader.Client.Views
                                                     _selectionController.DeSelect(proxy);
                                                 })
                 .Filter(_filter)
-                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key))
+                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data)
                 .DisposeMany()
@@ -66,11 +66,10 @@ namespace Trader.Client.Views
                         .Subscribe(s => Summary = s);
 
             //manage user selection, delete items command
-            var selectedItems = _selectionController.Selected.ToObservableChangeSet().Transform(obj => (LogEntryProxy)obj).Publish();
+            var selectedItems = _selectionController.SelectedItems.Connect().Publish();
             
             //Build a message from selected items
-            _deleteItemsText = selectedItems
-                .QueryWhenChanged(query =>
+            _deleteItemsText = selectedItems.QueryWhenChanged(query =>
                 {
                     if (query.Count == 0) return "Select log entries to delete";
                     if (query.Count == 1) return "Delete selected log entry?";
@@ -79,9 +78,6 @@ namespace Trader.Client.Views
                 .StartWith("Select log entries to delete")
                 .ToProperty(this, viewmodel => viewmodel.DeleteItemsText);
 
-            //covert stream into an observable list so we can get a handle on items in thread safe manner. we could use the _data
-            //but that is only thread safe if all the code is called from MainThread
-            var selectedCache = selectedItems.AsObservableList();
 
             //make a command out of selected items - enabling the command when there is a selection 
             _deleteCommand = selectedItems
@@ -92,7 +88,7 @@ namespace Trader.Client.Views
            var commandInvoker =  this.WhenAnyObservable(x => x.DeleteCommand)
                     .Subscribe(_ =>
                     {
-                        var toRemove = selectedCache.Items.Select(proxy => proxy.Key).ToArray();
+                        var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Key).ToArray();
                         _logEntryService.Remove(toRemove);
                     });
 
@@ -105,9 +101,9 @@ namespace Trader.Client.Views
                 _filter.Dispose();
                 connected.Dispose();
                 _deleteItemsText.Dispose();
-                selectedCache.Dispose();
-                _selectionController.Dispose();
+                _deleteCommand.Dispose();
                 commandInvoker.Dispose();
+                _selectionController.Dispose();
                 summariser.Dispose();
             });
         }
@@ -131,9 +127,7 @@ namespace Trader.Client.Views
         {
             get { return _deleteItemsText.Value; }
         }
-
-
-
+        
         public LogEntrySummary Summary
         {
             get { return _summary; }
@@ -150,7 +144,7 @@ namespace Trader.Client.Views
             get { return _deleteCommand; }
         }
 
-        public SelectionController Selector
+        public IAttachedSelector Selector
         {
             get { return _selectionController; }
         }

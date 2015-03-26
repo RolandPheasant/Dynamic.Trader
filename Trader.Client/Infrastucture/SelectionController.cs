@@ -1,20 +1,32 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using DynamicData;
 
 namespace Trader.Client.Infrastucture
 {
-    public class SelectionController : IDisposable
+    public class SelectionController<T> : IDisposable, IAttachedSelector
     {
-        private readonly ObservableCollection<object> _selected = new ObservableCollection<object>();
+        private readonly ISourceList<T> _sourceList = new SourceList<T>();
+        private readonly IObservableList<T> _observableList;
+       
+        private readonly IDisposable _cleanUp;
         private readonly SerialDisposable _serialDisposable = new SerialDisposable();
+
         private bool _isSelecting;
         private Selector _selector;
+    
 
-        internal void Receive(Selector selector)
+        public SelectionController()
+        {
+            _observableList = _sourceList.AsObservableList();
+
+            _cleanUp = new CompositeDisposable(_sourceList, _observableList, _serialDisposable);
+        }
+
+        void IAttachedSelector.Receive(Selector selector)
         {
             _selector = selector;
 
@@ -26,6 +38,11 @@ namespace Trader.Client.Infrastucture
                 .Subscribe(HandleSelectionChanged);
         }
 
+        public IObservableList<T> SelectedItems
+        {
+            get { return _observableList; }
+        }
+
         private void HandleSelectionChanged(SelectionChangedEventArgs args)
         {
             if (_isSelecting) return;
@@ -34,10 +51,10 @@ namespace Trader.Client.Infrastucture
                 _isSelecting = true;
 
                 foreach (var item in args.AddedItems)
-                    _selected.Add(item);
+                    _sourceList.Add((T)item);
 
                 foreach (var item in args.RemovedItems)
-                    _selected.Remove(item);
+                    _sourceList.Remove((T)item);
             }
             finally
             {
@@ -45,12 +62,18 @@ namespace Trader.Client.Infrastucture
             }
         }
 
-        public void Select(object item)
+        public void Select(T item)
         {
             if (_selector == null) return;
 
+            if (!_selector.Dispatcher.CheckAccess())
+            {
+                _selector.Dispatcher.BeginInvoke(new Action(() => Select(item)));
+                return;
+            }
 
-            if (item is ListView)
+
+            if (_selector is ListView)
             {
                 ((ListView)_selector).SelectedItems.Add(item);
             }
@@ -65,9 +88,14 @@ namespace Trader.Client.Infrastucture
 
         }
 
-        public void DeSelect(object item)
+        public void DeSelect(T item)
         {
             if (_selector == null) return;
+            if (!_selector.Dispatcher.CheckAccess())
+            {
+                _selector.Dispatcher.BeginInvoke(new Action(() => DeSelect(item)));
+                return;
+            }
 
             if (_selector is ListView)
             {
@@ -83,14 +111,13 @@ namespace Trader.Client.Infrastucture
             }
         }
 
-        public ObservableCollection<object> Selected
-        {
-            get { return _selected; }
-        }
+
+
+
 
         public void Dispose()
         {
-            _serialDisposable.Dispose();
+            _cleanUp.Dispose();
         }
     }
 }

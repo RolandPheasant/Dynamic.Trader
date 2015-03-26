@@ -5,7 +5,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
 // ReSharper disable once CheckNamespace 
-// Extension should alwats appear when 
 namespace DynamicData
 {
     public static class DynamicDataEx
@@ -31,8 +30,7 @@ namespace DynamicData
                     .Synchronize(locker);
 
                 var subscriber = notRemoved.Merge(removes).SubscribeSafe(observer);
-                var connected = shared.Connect();
-                return new CompositeDisposable(subscriber, connected);
+                return new CompositeDisposable(subscriber, shared.Connect());
 
             });
         }

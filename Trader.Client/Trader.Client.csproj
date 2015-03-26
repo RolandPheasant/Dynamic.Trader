@@ -61,17 +61,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dragablz.0.0.1.104\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData, Version=4.0.0.1045, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData, Version=4.0.0.1049, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.4.0.0.1045-beta\lib\net45\DynamicData.dll</HintPath>
+      <HintPath>..\packages\DynamicData.4.0.0.1049-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData.Plinq, Version=4.0.0.1045, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData.Plinq, Version=4.0.0.1049, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.4.0.0.1045-beta\lib\net45\DynamicData.Plinq.dll</HintPath>
+      <HintPath>..\packages\DynamicData.4.0.0.1049-beta\lib\net45\DynamicData.Plinq.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData.ReactiveUI, Version=2.0.0.1037, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData.ReactiveUI, Version=2.0.0.1038, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.ReactiveUI.2.0.0.1037-beta\lib\portable-net45+win+wpa81+wp80\DynamicData.ReactiveUI.dll</HintPath>
+      <HintPath>..\packages\DynamicData.ReactiveUI.2.0.0.1038-beta\lib\portable-net45+win+wpa81+wp80\DynamicData.ReactiveUI.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -85,13 +85,13 @@
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MaterialDesignThemes.0.0.0.24\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <HintPath>..\packages\MaterialDesignThemes.0.0.0.39\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\packages\reactiveui-core.6.4.0.1\lib\Net45\ReactiveUI.dll</HintPath>
     </Reference>
     <Reference Include="Splat">
-      <HintPath>..\packages\Splat.1.6.0\lib\Net45\Splat.dll</HintPath>
+      <HintPath>..\packages\Splat.1.6.2\lib\Net45\Splat.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
@@ -141,10 +141,11 @@
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
     <Compile Include="Infrastucture\DynamicDataEx.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
+    <Compile Include="Infrastucture\IAttachedSelector.cs" />
     <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\LogEntryProxy.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
-    <Compile Include="Infrastucture\Multiselector.cs" />
+    <Compile Include="Infrastucture\SelectorHelper.cs" />
     <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
     <Compile Include="Infrastucture\SelectionController.cs" />
     <Compile Include="Infrastucture\IWindowFactory.cs" />
