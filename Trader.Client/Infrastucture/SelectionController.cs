@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Controls;
@@ -10,8 +12,6 @@ namespace Trader.Client.Infrastucture
     public class SelectionController<T> : IDisposable, IAttachedSelector
     {
         private readonly ISourceList<T> _sourceList = new SourceList<T>();
-        private readonly IObservableList<T> _observableList;
-       
         private readonly IDisposable _cleanUp;
         private readonly SerialDisposable _serialDisposable = new SerialDisposable();
 
@@ -21,9 +21,7 @@ namespace Trader.Client.Infrastucture
 
         public SelectionController()
         {
-            _observableList = _sourceList.AsObservableList();
-
-            _cleanUp = new CompositeDisposable(_sourceList, _observableList, _serialDisposable);
+            _cleanUp = new CompositeDisposable(_sourceList, _serialDisposable);
         }
 
         void IAttachedSelector.Receive(Selector selector)
@@ -40,7 +38,7 @@ namespace Trader.Client.Infrastucture
 
         public IObservableList<T> SelectedItems
         {
-            get { return _observableList; }
+            get { return _sourceList; }
         }
 
         private void HandleSelectionChanged(SelectionChangedEventArgs args)
@@ -50,11 +48,16 @@ namespace Trader.Client.Infrastucture
             {
                 _isSelecting = true;
 
-                foreach (var item in args.AddedItems)
-                    _sourceList.Add((T)item);
+                _sourceList.Edit(list =>
+                {
+                    var added = args.AddedItems.OfType<T>().ToList();
+                    list.AddRange(added);
 
-                foreach (var item in args.RemovedItems)
-                    _sourceList.Remove((T)item);
+                    //cannot remove batch as we do not know whether they are in order
+                    args.RemovedItems.OfType<T>()
+                        .ForEach(t=>list.Remove(t));
+
+                });
             }
             finally
             {
@@ -104,6 +107,29 @@ namespace Trader.Client.Infrastucture
             else if (_selector is MultiSelector)
             {
                 ((MultiSelector)_selector).SelectedItems.Remove(item);
+            }
+            else
+            {
+                _selector.SelectedItem = null;
+            }
+        }
+
+        public void Clear()
+        {
+            if (_selector == null) return;
+            if (!_selector.Dispatcher.CheckAccess())
+            {
+                _selector.Dispatcher.BeginInvoke(new Action(Clear));
+                return;
+            }
+
+            if (_selector is ListView)
+            {
+                ((ListView)_selector).SelectedItems.Clear();
+            }
+            else if (_selector is MultiSelector)
+            {
+                ((MultiSelector)_selector).SelectedItems.Clear();
             }
             else
             {

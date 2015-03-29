@@ -83,7 +83,7 @@ namespace Trader.Client.Views
             _deleteCommand = selectedItems
                                     .QueryWhenChanged(query => query.Count > 0)
                                     .ToCommand();
-
+ 
             //Assign action when the command is invoked
            var commandInvoker =  this.WhenAnyObservable(x => x.DeleteCommand)
                     .Subscribe(_ =>

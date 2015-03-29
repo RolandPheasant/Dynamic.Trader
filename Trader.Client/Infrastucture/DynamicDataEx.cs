@@ -9,7 +9,6 @@ namespace DynamicData
 {
     public static class DynamicDataEx
     {
-
         public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
             TimeSpan delayPeriod, Action<TObject> onDefer)
         {
