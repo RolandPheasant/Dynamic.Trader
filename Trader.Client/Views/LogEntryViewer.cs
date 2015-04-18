@@ -75,8 +75,7 @@ namespace Trader.Client.Views
                     if (query.Count == 1) return "Delete selected log entry?";
                     return string.Format("Delete {0} log entries?", query.Count);
                 })
-                .StartWith("Select log entries to delete")
-                .ToProperty(this, viewmodel => viewmodel.DeleteItemsText);
+                .ToProperty(this, viewmodel => viewmodel.DeleteItemsText, "Select log entries to delete");
 
 
             //make a command out of selected items - enabling the command when there is a selection 

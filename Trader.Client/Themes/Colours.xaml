@@ -10,7 +10,7 @@
 
 
         <!-- light or dark theme -->
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.light.xaml" />
 
         <!-- now we want to mix in our Material Design palette: -->
         <!-- primary color -->
@@ -54,7 +54,7 @@
         <ResourceDictionary>
             <!-- include your secondary pallette -->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/materialdesigncolor.amber.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/materialdesigncolor.orange.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- include a single secondary accent color (and the associated forecolour) -->

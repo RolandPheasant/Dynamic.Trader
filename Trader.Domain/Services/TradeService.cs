@@ -60,7 +60,7 @@ namespace Trader.Domain.Services
             var tradeGenerator = _schedulerProvider.TaskPool
                             .ScheduleRecurringAction(randomInterval, () =>
                             {
-                                var number = random.Next(1,7);
+                                var number = random.Next(1,10);
                                 var trades = _tradeGenerator.Generate(number);
                                 _tradesSource.AddOrUpdate(trades);
                             });
@@ -84,7 +84,6 @@ namespace Trader.Domain.Services
                 });
 
             return new CompositeDisposable(tradeGenerator, tradeCloser);
-
         }
 
         private IDisposable LogChanges()
