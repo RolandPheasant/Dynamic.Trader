@@ -48,7 +48,7 @@ namespace Trader.Client.Views
                 .Filter(_filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(_data)
+                .Bind(_data) 
                 .DisposeMany()
                 .Subscribe();
 
