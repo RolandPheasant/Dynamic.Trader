@@ -7,9 +7,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Trader.Client;component/Themes/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Trader.Client;component/Themes/MaterialDesign.xaml" />
-
+                <ResourceDictionary Source="pack://application:,,,/Trader.Client;component/Themes/Colours.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
 
@@ -45,7 +44,11 @@
             <DataTemplate DataType="{x:Type views:PositionsViewer}">
                 <views:PositionsView/>
             </DataTemplate>
-
+            
+            <DataTemplate DataType="{x:Type views:PagedDataViewer}">
+                <views:PagedDataView/>
+            </DataTemplate>
+            
             <DataTemplate DataType="{x:Type views:RxUiHostViewModel}">
                 <views:RxUiHostView/>
             </DataTemplate>

@@ -59,7 +59,7 @@
   <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Dragablz.0.0.1.108\lib\net45\Dragablz.dll</HintPath>
+      <HintPath>..\packages\Dragablz.0.0.1.109\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="DynamicData, Version=4.0.0.1064, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -85,7 +85,7 @@
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MaterialDesignThemes.0.0.0.54\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <HintPath>..\packages\MaterialDesignThemes.0.0.0.55\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI, Version=6.4.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,6 +172,10 @@
     <Compile Include="Views\NearToMarketView.xaml.cs">
       <DependentUpon>NearToMarketView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PagedDataView.xaml.cs">
+      <DependentUpon>PagedDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PagedDataViewer.cs" />
     <Compile Include="Views\RxUiHostView.xaml.cs">
       <DependentUpon>RxUiHostView.xaml</DependentUpon>
     </Compile>
@@ -242,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PagedDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

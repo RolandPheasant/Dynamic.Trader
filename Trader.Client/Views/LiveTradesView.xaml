@@ -10,18 +10,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <Control.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="Margin" Value="0 8 0 8" />
-            </Style>
-        </ResourceDictionary>
-    </Control.Resources>
     
     <Grid >
 
@@ -37,8 +25,7 @@
 
         <TextBox 
                 wpf:TextField.Hint="Enter search text..."
-                controls:TextBoxHelper.ClearTextButton="True"
-                Margin="4 0 0 0"
+                Margin="8 0 0 0"
                 MinWidth="125"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"

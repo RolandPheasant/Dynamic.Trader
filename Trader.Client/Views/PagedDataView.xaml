@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="Trader.Client.Views.PagedDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:Trader.Client.Views"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance views:PagedDataViewer, IsDesignTimeCreatable=False}"
+           >
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal"  Margin="4 0 0 0">
+
+            <Viewbox Width="24" Height="24">
+                <Canvas Width="24" Height="24">
+                    <Path Data="M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V4H6V17Z" 
+                          Fill="{Binding ElementName=SortCombo, Path=BorderBrush}" 
+                         />
+                </Canvas>
+            </Viewbox>
+
+            <ComboBox x:Name="SortCombo" DataContext="{Binding SortParameters}" HorizontalAlignment="Left"
+                      Height="25"
+                      Width="150"
+                      Margin="4 0 0 0"
+                        ItemsSource="{Binding SortItems}"
+                      SelectedItem="{Binding SelectedItem}"
+                      DisplayMemberPath="Description"
+                      />
+
+            <Viewbox Width="24" Height="24" Margin="4 0 0 0">
+                <Canvas Width="24" Height="24">
+                    <Path Data="M3,2H21V2H21V4H20.92L15,9.92V22.91L9,16.91V9.91L3.09,4H3V2M11,16.08L13,18.08V9H13.09L18.09,4H5.92L10.92,9H11V16.08Z" 
+                          Fill="{Binding ElementName=SearchBox, Path=BorderBrush}" />
+                </Canvas>
+            </Viewbox>
+
+            <TextBox x:Name="SearchBox"
+                wpf:TextField.Hint="Enter search text..."
+              
+                MinWidth="125"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <TextBlock  Grid.Row="0" Grid.Column="1" Margin="0 0 4 0"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Center"
+                      Text="{Binding Data.Count, StringFormat='The are \{0} trades matching filter'}"/>
+
+        <ListView
+            BorderThickness="0"
+             Margin="4 4 0 0"
+            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Data}">
+
+
+            <ListView.View >
+                <GridView>
+                    <GridViewColumn  Header="Customer" DisplayMemberBinding="{Binding  Customer}" TextBlock.TextAlignment="Left" />
+                    <GridViewColumn  Header="Currency Pair" DisplayMemberBinding="{Binding CurrencyPair}" TextBlock.TextAlignment="Left" />
+                    <GridViewColumn   Header="Amount" DisplayMemberBinding="{Binding Amount}" TextBlock.TextAlignment="Center" />
+                    <GridViewColumn   Header="Rate" DisplayMemberBinding="{Binding TradePrice}" TextBlock.TextAlignment="Center" />
+                    <GridViewColumn   Header="Status" DisplayMemberBinding="{Binding Status}" TextBlock.TextAlignment="Center" />
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" 
+                      Margin="4 0 0 0"
+                    Orientation="Horizontal"
+                    DataContext="{Binding PageParameters}">
+            
+            <RepeatButton Height="26" Padding="0"
+                          ToolTip="Move to previous page"
+                          Command="{Binding PreviousPageCommand}">
+                <Viewbox Width="24" Height="24">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" 
+                              Fill="{StaticResource PrimaryHueMidBrush}" />
+                    </Canvas>
+                </Viewbox>
+            </RepeatButton>
+
+            <TextBlock   Margin="4 0 0 0" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Page {0} of {1}">
+                        <Binding Path="CurrentPage"/>
+                        <Binding Path="PageCount"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <RepeatButton 
+                    Height="26" 
+                    Padding="0"
+                    Margin="4 0 0 0"
+                    ToolTip="Move to next page"
+                    Command="{Binding NextPageCommand}">
+                <Viewbox Width="24" Height="24">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" 
+                              Fill="{StaticResource PrimaryHueMidBrush}" />
+                    </Canvas>
+                </Viewbox>
+            </RepeatButton>
+
+
+            <TextBlock  Margin="0 0 4 0"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Center"
+                      Text="{Binding  PageSize, StringFormat='(\{0} items per page)'}"/>
+
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

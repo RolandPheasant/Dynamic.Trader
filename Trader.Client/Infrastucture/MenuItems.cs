@@ -93,6 +93,15 @@ namespace Trader.Client.Infrastucture
                         new Link("Group Model", "CurrencyPairPosition.cs","https://github.com/RolandPheasant/TradingDemo/blob/master/Trader.Domain/Model/CurrencyPairPosition.cs"), 
                     }),
 
+
+                  new MenuItem("Paged Data",
+                    "An advanced example of how to page data",
+                    () => Open<PagedDataViewer>("Paged Data"),new []
+                        {
+                            new Link("View Model","PagedDataViewer.cs", "https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Client/Views/PagedDataViewer.cs "), 
+                        }),
+
+
                     new MenuItem("Live Trades (RxUI)",
                     "A basic example, illustrating where reactive-ui and dynamic data can work together",
                     () => OpenRxUI<RxUiViewer>("Live Trades (RxUI)"),
