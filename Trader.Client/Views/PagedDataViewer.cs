@@ -180,9 +180,9 @@ namespace Trader.Client.Views
                            .ThenByAscending(p => p.CurrencyPair)
                            .ThenByAscending(p => p.Id)),
 
-                       new SortContainer("Currency Pair, Customer", SortExpressionComparer<TradeProxy>
+                       new SortContainer("Currency Pair, Amount", SortExpressionComparer<TradeProxy>
                            .Ascending(l => l.CurrencyPair)
-                           .ThenByAscending(p => p.Customer)
+                           .ThenByDescending(p => p.Amount)
                            .ThenByAscending(p => p.Id)),
 
                            

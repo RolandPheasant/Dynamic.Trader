@@ -80,8 +80,8 @@
         </ListView>
 
         <StackPanel Grid.Row="2" Grid.Column="0" 
-                      Margin="4 0 0 0"
-                    Orientation="Horizontal"
+                      Margin="8 0 4 0"
+                    Orientation="Horizontal" VerticalAlignment="Center"
                     DataContext="{Binding PageParameters}">
             
             <RepeatButton Height="26" Padding="0"
@@ -89,7 +89,7 @@
                           Command="{Binding PreviousPageCommand}">
                 <Viewbox Width="24" Height="24">
                     <Canvas Width="24" Height="24">
-                        <Path Data="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" 
+                        <Path Data="M6,18.14V6.14H8V18.14H6M9.5,12.14L18,6.14V18.14L9.5,12.14Z" 
                               Fill="{StaticResource PrimaryHueMidBrush}" />
                     </Canvas>
                 </Viewbox>
@@ -112,7 +112,7 @@
                     Command="{Binding NextPageCommand}">
                 <Viewbox Width="24" Height="24">
                     <Canvas Width="24" Height="24">
-                        <Path Data="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" 
+                        <Path Data="M16,18.14H18V6.14H16M6,18.14L14.5,12.14L6,6.14V18.14Z" 
                               Fill="{StaticResource PrimaryHueMidBrush}" />
                     </Canvas>
                 </Viewbox>
