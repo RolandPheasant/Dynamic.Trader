@@ -59,7 +59,7 @@
         <TextBlock  Grid.Row="0" Grid.Column="1" Margin="0 0 4 0"
                      HorizontalAlignment="Right"
                      VerticalAlignment="Center"
-                      Text="{Binding Data.Count, StringFormat='The are \{0} trades matching filter'}"/>
+                      Text="{Binding PageParameters.TotalCount, StringFormat='The are \{0} trades matching filter'}"/>
 
         <ListView
             BorderThickness="0"

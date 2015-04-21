@@ -53,8 +53,7 @@ namespace Trader.Client.Views
                                 .Subscribe(pageController.Change);
 
 
-            var loader = tradeService.All
-                .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
+            var loader = tradeService.All .Connect() 
                 .Filter(filterController) // apply user filter
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
                 .Sort(sortContoller, SortOptimisations.ComparesImmutableValuesOnly)
