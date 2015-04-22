@@ -5,9 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:PagedDataViewer, IsDesignTimeCreatable=False}"
            >
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.listview.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid >
 
         <Grid.RowDefinitions>
@@ -63,9 +72,19 @@
 
         <ListView
             BorderThickness="0"
-             Margin="4 4 0 0"
+             Margin="4 8 0 0"
             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Data}">
 
+            <ListView.Resources>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
+                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
 
             <ListView.View >
                 <GridView>
@@ -74,13 +93,14 @@
                     <GridViewColumn   Header="Amount" DisplayMemberBinding="{Binding Amount}" TextBlock.TextAlignment="Center" />
                     <GridViewColumn   Header="Rate" DisplayMemberBinding="{Binding TradePrice}" TextBlock.TextAlignment="Center" />
                     <GridViewColumn   Header="Status" DisplayMemberBinding="{Binding Status}" TextBlock.TextAlignment="Center" />
+                    <GridViewColumn   Header="Modified" DisplayMemberBinding="{Binding Timestamp}" TextBlock.TextAlignment="Center" />
                 </GridView>
             </ListView.View>
 
         </ListView>
 
         <StackPanel Grid.Row="2" Grid.Column="0" 
-                      Margin="8 0 4 0"
+                      Margin="8 8 4 0"
                     Orientation="Horizontal" VerticalAlignment="Center"
                     DataContext="{Binding PageParameters}">
             

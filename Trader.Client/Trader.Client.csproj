@@ -154,6 +154,7 @@
     <Compile Include="Infrastucture\Link.cs" />
     <Compile Include="Infrastucture\LogEntryProxy.cs" />
     <Compile Include="Infrastucture\MenuItems.cs" />
+    <Compile Include="Infrastucture\PageParameterData.cs" />
     <Compile Include="Infrastucture\SelectorHelper.cs" />
     <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
     <Compile Include="Infrastucture\SelectionController.cs" />

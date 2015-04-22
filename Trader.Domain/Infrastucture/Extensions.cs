@@ -4,6 +4,8 @@ using System.Collections.Generic;
 // ReSharper disable once CheckNamespace
 namespace System
 {
+
+
     public static class Extensions
     {
         public static bool Contains(this string source, string toCheck, StringComparison comp)

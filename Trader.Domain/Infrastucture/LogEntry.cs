@@ -3,6 +3,8 @@ using DynamicData;
 
 namespace Trader.Domain.Infrastucture
 {
+
+
     public class LogEntry: IKey<long>, IEquatable<LogEntry>
     {
         private readonly long _counter;
