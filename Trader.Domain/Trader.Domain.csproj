@@ -87,6 +87,8 @@
   <ItemGroup>
     <Compile Include="Infrastucture\ILogEntryService.cs" />
     <Compile Include="Infrastucture\LogEntry.cs" />
+    <Compile Include="Model\SortContainer.cs" />
+    <Compile Include="Model\SortParameterData.cs" />
     <Compile Include="Services\LogEntryService.cs" />
     <Compile Include="Infrastucture\LogEntrySummary.cs" />
     <Compile Include="Infrastucture\LogLevel.cs" />
