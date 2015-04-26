@@ -211,6 +211,7 @@
       <DependentUpon>RxUiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RxUiViewer.cs" />
+    <Compile Include="Views\SearchHints.cs" />
     <Compile Include="Views\TradesByPercentDiff.xaml.cs">
       <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
     </Compile>
@@ -312,24 +313,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <Resource Include="Resources\Roboto\Roboto-Black.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-BlackItalic.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-Bold.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-BoldItalic.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-Italic.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-Light.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-LightItalic.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-Medium.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-MediumItalic.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-Regular.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-Thin.ttf" />
-    <Resource Include="Resources\Roboto\Roboto-ThinItalic.ttf" />
-    <Resource Include="Resources\Roboto\RobotoCondensed-Bold.ttf" />
-    <Resource Include="Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
-    <Resource Include="Resources\Roboto\RobotoCondensed-Italic.ttf" />
-    <Resource Include="Resources\Roboto\RobotoCondensed-Light.ttf" />
-    <Resource Include="Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
-    <Resource Include="Resources\Roboto\RobotoCondensed-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

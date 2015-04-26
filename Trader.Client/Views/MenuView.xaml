@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
              mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
@@ -94,7 +93,7 @@
                                         Command="{Binding Command}" 
                                         ToolTip="{Binding Description}"
                                         HorizontalContentAlignment="Center"
-                            
+                                         Style="{StaticResource MaterialDesignRaisedButton}"
                                         Margin="5"
                                         Width="85"
                                         Height="85"
@@ -103,17 +102,10 @@
                                 <TextBlock FontSize="14" 
                                            FontWeight="Normal"
                                            Text="{Binding Title}"
+                                           
                                            TextWrapping="WrapWithOverflow"/>
 
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                                        <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Opacity" Value="0.9" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
+     
                             </Button>
 
                             <Grid Margin="5 4 5 0"

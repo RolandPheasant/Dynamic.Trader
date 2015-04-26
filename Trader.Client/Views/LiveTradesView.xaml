@@ -4,15 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              d:DataContext="{d:DesignInstance views:LiveTradesViewer, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-
-    
     <Grid >
-
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
@@ -23,14 +18,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox 
-                wpf:TextField.Hint="Enter search text..."
-                Margin="8 0 0 0"
-                MinWidth="125"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
+        <!--Search hints template defined in App.xaml-->
+        <ContentControl Content="{Binding SearchHints}"/>
+        
         <TextBlock
             Grid.Row="0" Grid.Column="1" Margin="0 0 4 0"
                 VerticalAlignment="Center"
@@ -39,7 +29,7 @@
 
         </TextBlock>
 
-        <views:TradesGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding Data}"/>
+        <views:TradesGrid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding Data}"/>
 
     </Grid>
 </UserControl>
