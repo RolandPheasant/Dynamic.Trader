@@ -48,11 +48,10 @@ namespace Trader.Client.Views
         {
             if (string.IsNullOrEmpty(searchText)) return trade => true;
 
-            return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                                            t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+            return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) 
+                            || t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
         }
-
-
+        
         public IObservableCollection<TradeProxy> Data
         {
             get { return _data; }

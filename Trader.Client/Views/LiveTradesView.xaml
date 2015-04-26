@@ -29,7 +29,7 @@
 
         </TextBlock>
 
-        <views:TradesGrid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding Data}"/>
+        <views:TradesGrid Visibility="Hidden"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding Data}"/>
 
     </Grid>
 </UserControl>

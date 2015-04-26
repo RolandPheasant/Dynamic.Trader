@@ -64,10 +64,10 @@
                             wpf:TextField.Hint="Enter search text..."   
                             Height="25"
                             Width="150"
+                           MaxDropDownHeight="250"
                             Margin="4 0 0 0"
                             ItemsSource="{Binding  Hints}"
                             Text="{Binding  SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-
                 </StackPanel>
             </DataTemplate>
 
