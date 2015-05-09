@@ -44,8 +44,7 @@ namespace Trader.Client.Views
             var pageController = new PageController();
             var currentPageChanged = PageParameters.ObservePropertyValue(p => p.CurrentPage).Select(prop => prop.Value);
             var pageSizeChanged = PageParameters.ObservePropertyValue(p => p.PageSize).Select(prop => prop.Value);
-            var pageChanger = currentPageChanged.CombineLatest(pageSizeChanged,
-                                (page, size) => new PageRequest(page, size))
+            var pageChanger = currentPageChanged.CombineLatest(pageSizeChanged,(page, size) => new PageRequest(page, size))
                                 .DistinctUntilChanged()
                                 .Sample(TimeSpan.FromMilliseconds(100))
                                 .Subscribe(pageController.Change);
