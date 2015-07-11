@@ -62,7 +62,6 @@
                         Margin="4 0 4 0"
                         VerticalAlignment="Center"
                         Text="{Binding DeleteItemsText}"/>
-                <!--Command="{Binding DeleteCommand}"-->
                 <Button x:Name="DeleteButton"
                     Margin="2 0 0 0"
                 
@@ -70,10 +69,11 @@
                     <Viewbox Width="24" Height="24" Margin="2 0 0 0">
                         <Canvas Width="24" Height="24">
                             <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
-                                  Fill="{StaticResource PrimaryHueMidBrush}"/>
+                				Fill="{StaticResource PrimaryHueMidBrush}"/>
                         </Canvas>
                     </Viewbox>
                 </Button>
+                <!--Command="{Binding DeleteCommand}"-->
             </StackPanel>
 
 
@@ -87,34 +87,34 @@
                 ScrollViewer.CanContentScroll="True"
                 infrastucture:SelectorHelper.Binding="{Binding  Selector}"
                 ItemsSource="{Binding Data}">
-          
-                <ListView.InputBindings>
-                    <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>
-                </ListView.InputBindings>
-            
+
+            <ListView.InputBindings>
+                <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>
+            </ListView.InputBindings>
+
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                   <VirtualizingStackPanel/>
+                    <VirtualizingStackPanel/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
 
-                <ListView.View >
-                    <GridView>
+            <ListView.View >
+                <GridView>
                     <GridViewColumn  Header="#" DisplayMemberBinding="{Binding  Key}" TextBlock.TextAlignment="Left" />
                     <GridViewColumn Width="300" Header="Message" DisplayMemberBinding="{Binding Message}" TextBlock.TextAlignment="Left" />
-                        <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
-                        <GridViewColumn Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
-                        <GridViewColumn Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
-                        <GridViewColumn Width="300"  Header="Logger" DisplayMemberBinding="{Binding LoggerName}" TextBlock.TextAlignment="Left" />
-                    </GridView>
-                </ListView.View>
+                    <GridViewColumn Width="50"  Header="Level" DisplayMemberBinding="{Binding Level}" TextBlock.TextAlignment="Left" />
+                    <GridViewColumn Width="40" Header="Thread" DisplayMemberBinding="{Binding  ThreadName}" TextBlock.TextAlignment="Center" />
+                    <GridViewColumn Width="85" Header="Time" DisplayMemberBinding="{Binding TimeStamp,StringFormat= h:mm:ss.ffff}" TextBlock.TextAlignment="Left" />
+                    <GridViewColumn Width="300"  Header="Logger" DisplayMemberBinding="{Binding LoggerName}" TextBlock.TextAlignment="Left" />
+                </GridView>
+            </ListView.View>
 
-                <ListView.ItemContainerStyle>
+            <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
-                        <Style.Triggers>
+                    <Style.Triggers>
                         <DataTrigger Binding="{Binding Recent}" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
-                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>   
+                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding Removing}" Value="True">
@@ -126,13 +126,13 @@
                                                 From="1.0" To="0.1" Duration="0:0:0.75"/>
                                     </Storyboard>
                                 </BeginStoryboard>
-                                
+
                             </DataTrigger.EnterActions>
                         </DataTrigger>
                     </Style.Triggers>
 
-                    </Style>
-                </ListView.ItemContainerStyle>
+                </Style>
+            </ListView.ItemContainerStyle>
 
         </ListView>
 
@@ -140,8 +140,9 @@
             Height="26"
             Background="{StaticResource PrimaryHueMidBrush}"
             Grid.Row="2"
-            Margin = "-4 0 -4 -4"> <!--Hack as the margin in the tab control means the botton panel has a margin (cannot be bother retemplating the tab control) -->
-            
+            Margin = "-4 0 -4 -4">
+            <!--Hack as the margin in the tab control means the botton panel has a margin (cannot be bother retemplating the tab control) -->
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -178,7 +179,7 @@
                 <TextBlock Text="Error:" />
                 <TextBlock Text="{Binding Summary.Error}" />
             </StackPanel>
-            
+
 
         </Grid>
 

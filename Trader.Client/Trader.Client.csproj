@@ -148,6 +148,7 @@
     <Compile Include="Infrastucture\AnimatedWrapPanel.cs" />
     <Compile Include="Infrastucture\AppConventions.cs" />
     <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Infrastucture\DependencyObjectHook.cs" />
     <Compile Include="Infrastucture\DynamicDataEx.cs" />
     <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
     <Compile Include="Infrastucture\IAttachedSelector.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
     <Compile Include="Infrastucture\SelectionController.cs" />
     <Compile Include="Infrastucture\IWindowFactory.cs" />
+    <Compile Include="Infrastucture\VisibleRowsAccessor.cs" />
     <Compile Include="Views\LiveTradesView.xaml.cs">
       <DependentUpon>LiveTradesView.xaml</DependentUpon>
     </Compile>
@@ -223,6 +225,10 @@
     <Compile Include="Views\TradesGrid.xaml.cs">
       <DependentUpon>TradesGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VisibleRowsView.xaml.cs">
+      <DependentUpon>VisibleRowsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisibleRowsViewer.cs" />
     <Page Include="Themes\Colours.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -280,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TradesGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VisibleRowsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

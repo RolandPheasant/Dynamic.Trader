@@ -50,6 +50,11 @@
                 <views:PagedDataView/>
             </DataTemplate>
 
+
+            <DataTemplate DataType="{x:Type views:VisibleRowsViewer}">
+                <views:VisibleRowsView/>
+            </DataTemplate>
+            
             <DataTemplate DataType="{x:Type views:SearchHints}">
                 <StackPanel Orientation="Horizontal">
                     <Viewbox Width="24" Height="24" Margin="4 0 0 0">

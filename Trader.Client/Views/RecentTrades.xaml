@@ -13,13 +13,14 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock
-                             Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Height="18"
-                        
-                             Text="{Binding Data.Count, StringFormat='\{0} trades open in closed in last 60 seconds'}"/>
 
+        <TextBlock
+            Grid.Row="0"  Margin="0 0 4 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Text="{Binding Data.Count, StringFormat='The are \{0} trades matching in the grid'}">
+
+        </TextBlock>
         <views:TradesGrid Grid.Row="1" DataContext="{Binding Data}"/>
 
     </Grid>

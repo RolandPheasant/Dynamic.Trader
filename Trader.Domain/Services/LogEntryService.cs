@@ -17,6 +17,7 @@ namespace Trader.Domain.Services
             var loader = ReactiveLogAppender.LogEntryObservable
                             .Subscribe(_source.AddOrUpdate);
 
+
             //limit size of cache to prevent too many items being created
             var sizeLimiter = _source.LimitSizeTo(10000).Subscribe();
 

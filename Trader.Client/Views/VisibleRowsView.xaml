@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="Trader.Client.Views.VisibleRowsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:Trader.Client.Views"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+             mc:Ignorable="d" 
+                          d:DataContext="{d:DesignInstance views:VisibleRowsViewer, IsDesignTimeCreatable=False}"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"  Margin="0 0 4 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}">
+
+        </TextBlock>
+        <DataGrid
+            Grid.Row="1" AutoGenerateColumns="False"
+                IsReadOnly="True"    
+                infrastucture:DependencyObjectHook.Receiver="{Binding  VisibleRowsAccessor}"
+                EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ItemsSource="{Binding Data}">
+    
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}" >
+                   
+                    <!--<Setter Property="Con">
+                        <Setter.Value>
+                            <ItemsPanelTemplate>
+                                <ItemsPresenter/>
+                            </ItemsPanelTemplate>
+                        </Setter.Value>
+                    </Setter>-->
+                    
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
+                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
+                        </DataTrigger>
+                        
+                        
+                        
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                                            Header="Customer"  
+                                            Binding="{Binding Customer,Mode=OneWay}"/>
+
+
+                <DataGridTextColumn 
+                                            Header="Currency Pair" 
+                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+
+                <DataGridTextColumn         Header="Amount" 
+
+                                            Binding="{Binding Amount,Mode=OneWay, StringFormat='N'}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn 
+                                            Header="Trade Price" 
+                                            TextBlock.TextAlignment="Right"
+                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
+                <DataGridTextColumn 
+                                            Header="Market Price" 
+                                            TextBlock.TextAlignment="Right"
+                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
+                <DataGridTextColumn 
+                                            Header="%" 
+                                            TextBlock.TextAlignment="Right"
+                                            Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
+
+                <DataGridTextColumn 
+                                            Header="Status" 
+                                            Binding="{Binding  Status,Mode=OneWay}"/>
+
+                <DataGridTextColumn 
+                                            Header="Created At" 
+                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -33,7 +33,7 @@ namespace Trader.Client.Views
             var loader = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(filter) // apply user filter
-                //if using dotnet 4.5 can parallelise 'case it's quicler
+                //if using dotnet 4.5 can parallelise 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOnDispatcher()
