@@ -25,9 +25,9 @@ namespace Trader.Client.Views
             _searchHints = searchHints;
 
             var filter =  new FilterController<Trade>(trade=>true);
-            var filterApplier = SearchHints.ObservePropertyValue(t => t.SearchText)
+            var filterApplier = SearchHints.WhenValueChanged(t => t.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
-                .Select(propargs=>BuildFilter(propargs.Value))
+                .Select(BuildFilter)
                 .Subscribe(filter.Change);
 
             var loader = tradeService.All

@@ -136,10 +136,10 @@ namespace Trader.Client.Infrastucture
             };
 
 
-            var filterApplier = this.ObservePropertyValue(t => t.Category)
+            var filterApplier = this.WhenValueChanged(t => t.Category)
                 .Subscribe(value =>
                 {
-                    Items = _menuItems.Where(menu => menu.Category == value.Value).ToArray();
+                    Items = _menuItems.Where(menu => menu.Category == value).ToArray();
                 });
 
             _cleanUp = Disposable.Create(() =>

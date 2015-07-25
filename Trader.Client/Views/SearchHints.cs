@@ -21,9 +21,9 @@ namespace Trader.Client.Views
             var filter = new FilterController<string>();
 
             //build a predicate when SeatchText changes
-            var filterApplier = this.ObservePropertyValue(t => t.SearchText)
+            var filterApplier = this.WhenValueChanged(t => t.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
-                .Select(propargs => BuildFilter(propargs.Value))
+                .Select(BuildFilter)
                 .Subscribe(filter.Change);
 
             //share the connection

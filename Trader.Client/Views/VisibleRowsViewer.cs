@@ -30,10 +30,13 @@ namespace Trader.Client.Views
                 .Subscribe();
 
 
+            //NEED TO DO SOMETHING FUNKY
+
             var visibilityController = _visibleRowsAccessor.VisibleRows.Connect()
                                                 .SubscribeMany(proxy =>
                                                 {
-                                                    return proxy.ObservePropertyValue(p => p.Amount).Subscribe();
+                                                    //
+                                                    return proxy.WhenChanged(p => p.Amount).Subscribe();
                                                 }).Subscribe();
 
             _cleanUp = new CompositeDisposable(loader, _visibleRowsAccessor, visibilityController);

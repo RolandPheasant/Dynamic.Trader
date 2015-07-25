@@ -15,35 +15,32 @@ namespace Trader.Client.Views
 {
     public class PagedDataViewer : AbstractNotifyPropertyChanged, IDisposable
     {
-        private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
         private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
         private readonly PageParameterData _pageParameters = new PageParameterData(1,25);
         private readonly SortParameterData _sortParameters = new SortParameterData();
-        
         private string _searchText;
 
-        public PagedDataViewer(ILogger logger, ITradeService tradeService, ISchedulerProvider schedulerProvider)
+        public PagedDataViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
-            _logger = logger;
 
             //watch for filter changes and change filter 
             var filterController = new FilterController<Trade>(trade => true);
-            var filterApplier = this.ObservePropertyValue(t => t.SearchText)
+            var filterApplier = this.WhenValueChanged(t => t.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
-                .Select(propargs => BuildFilter(propargs.Value))
+                .Select(BuildFilter)
                 .Subscribe(filterController.Change);
 
             //watch for changes to sort and apply when necessary
             var sortContoller = new SortController<TradeProxy>(SortExpressionComparer<TradeProxy>.Ascending(proxy=>proxy.Id));
-            var sortChange = SortParameters.ObservePropertyValue(t => t.SelectedItem).Select(prop=>prop.Value.Comparer)
+            var sortChange = SortParameters.WhenValueChanged(t => t.SelectedItem).Select(prop=>prop.Comparer)
                     .ObserveOn(schedulerProvider.TaskPool)
                     .Subscribe(sortContoller.Change);
             
             //watch for page changes and change filter 
             var pageController = new PageController();
-            var currentPageChanged = PageParameters.ObservePropertyValue(p => p.CurrentPage).Select(prop => prop.Value);
-            var pageSizeChanged = PageParameters.ObservePropertyValue(p => p.PageSize).Select(prop => prop.Value);
+            var currentPageChanged = PageParameters.WhenValueChanged(p => p.CurrentPage);
+            var pageSizeChanged = PageParameters.WhenValueChanged(p => p.PageSize);
             var pageChanger = currentPageChanged.CombineLatest(pageSizeChanged,(page, size) => new PageRequest(page, size))
                                 .DistinctUntilChanged()
                                 .Sample(TimeSpan.FromMilliseconds(100))
