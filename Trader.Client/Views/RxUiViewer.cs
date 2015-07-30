@@ -18,6 +18,7 @@ namespace Trader.Client.Views
     {
         //this is the target list which we will populate from the dynamic data stream
         private readonly ReactiveList<TradeProxy> _data = new ReactiveList<TradeProxy>();
+
         //the filter controller is used to inject filtering into a observable
         private readonly FilterController<Trade> _filter = new FilterController<Trade>();
         private readonly IDisposable _cleanUp;

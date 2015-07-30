@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.datagrid.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.datagrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
     </UserControl.Resources>
@@ -24,7 +24,7 @@
                               EnableRowVirtualization="True"
                               ItemsSource="{Binding}">
             <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow }">
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MaterialDesignDataGridRow }">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
                             <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
