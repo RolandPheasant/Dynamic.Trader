@@ -1,4 +1,4 @@
-## Dynamic Data Demo
+## Dynamic Trader
 
 Dynamic data is a portable class library which brings the power of reactive (rx) to collections.  It is open source and the code base lives here [Dynamic Data on GitHub](https://github.com/RolandPheasant/DynamicData). 
 
@@ -72,9 +72,9 @@ The examples are being regularly maintained so download again to see more exampl
 ## Feedback
 
 Please feel free to me a on any of the following channels
-
- - [![Join the chat at https://gitter.im/RolandPheasant/TradingDemo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/Dynamic.Trader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
- - Follow me at [@RolandPheasant](https://twitter.com/RolandPheasant) 
+- [![Join the chat at https://gitter.im/RolandPheasant/DynamicData](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/RolandPheasant/DynamicData?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+ - Follow me on twitter [@RolandPheasant](https://twitter.com/RolandPheasant) 
  - Email at [roland@dynamic-data.org](roland@dynamic-data.org)
   
 Also a big thanks to the guys behind [Mahapps](https://github.com/MahApps/MahApps.Metro) and [Dragablz](https://github.com/ButchersBoy/Dragablz) for their awesome oss projects. These have enabled me to easily make this demo look good. 
+
