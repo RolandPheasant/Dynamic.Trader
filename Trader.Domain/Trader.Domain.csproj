@@ -40,9 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DynamicData.4.1.0.1037\lib\net45\DynamicData.Plinq.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData.ReactiveUI, Version=2.0.0.1042, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DynamicData.ReactiveUI, Version=2.1.0.2004, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.ReactiveUI.2.0.0.1042-beta\lib\portable-net45+win+wpa81+wp80\DynamicData.ReactiveUI.dll</HintPath>
+      <HintPath>..\packages\DynamicData.ReactiveUI.2.1.0.2004\lib\portable-net45+win+wpa81+wp80\DynamicData.ReactiveUI.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
