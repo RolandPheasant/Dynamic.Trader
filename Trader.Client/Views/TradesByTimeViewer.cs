@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -14,7 +15,7 @@ namespace Trader.Client.Views
     {
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<TradesByTime> _data = new ObservableCollectionExtended<TradesByTime>();
+        private readonly ReadOnlyObservableCollection<TradesByTime> _data;
 
         public TradesByTimeViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
@@ -35,14 +36,14 @@ namespace Trader.Client.Views
                 .Transform(group => new TradesByTime(group, _schedulerProvider))
                 .Sort(SortExpressionComparer<TradesByTime>.Ascending(t => t.Period))
                 .ObserveOn(_schedulerProvider.MainThread)
-                .Bind(_data)
+                .Bind(out _data)
                 .DisposeMany()
                 .Subscribe();
             
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
-        
-        public IObservableCollection<TradesByTime> Data
+
+        public ReadOnlyObservableCollection<TradesByTime> Data
         {
             get { return _data; }
         }

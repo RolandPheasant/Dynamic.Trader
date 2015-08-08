@@ -1,10 +1,8 @@
 using System;
-using System.Reactive.Disposables;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Controllers;
-using DynamicData.Kernel;
 using DynamicData.Operators;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
@@ -16,7 +14,7 @@ namespace Trader.Client.Views
     {
         private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
         public RecentTradesViewer(ILogger logger, ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
@@ -28,13 +26,13 @@ namespace Trader.Client.Views
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(schedulerProvider.MainThread)
-                .Bind(_data)   // update observable collection bindings
+                .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
         }
 
-        public IObservableCollection<TradeProxy> Data
+        public ReadOnlyObservableCollection<TradeProxy> Data
         {
             get { return _data; }
         }

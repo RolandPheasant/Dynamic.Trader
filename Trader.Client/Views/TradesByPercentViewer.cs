@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -14,7 +15,7 @@ namespace Trader.Client.Views
     {
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<Domain.Model.TradesByPercentDiff> _data = new ObservableCollectionExtended<Domain.Model.TradesByPercentDiff>();
+        private readonly ReadOnlyObservableCollection<Domain.Model.TradesByPercentDiff> _data;
 
         public TradesByPercentViewer(INearToMarketService nearToMarketService, ISchedulerProvider schedulerProvider)
         {
@@ -30,14 +31,14 @@ namespace Trader.Client.Views
                 .Transform(group => new Domain.Model.TradesByPercentDiff(group, _schedulerProvider))
                 .Sort(SortExpressionComparer<Domain.Model.TradesByPercentDiff>.Ascending(t => t.PercentBand),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(_schedulerProvider.MainThread)
-                .Bind(_data)
+                .Bind(out _data)
                 .DisposeMany()
                 .Subscribe();
             ;
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
 
-        public IObservableCollection<Domain.Model.TradesByPercentDiff> Data
+        public ReadOnlyObservableCollection<Domain.Model.TradesByPercentDiff> Data
         {
             get { return _data; }
         }

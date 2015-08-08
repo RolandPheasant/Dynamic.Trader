@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
@@ -11,7 +12,7 @@ namespace Trader.Client.Views
     public class NearToMarketViewer : AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private decimal _nearToMarketPercent=0.01M;
 
         public NearToMarketViewer(INearToMarketService nearToMarketService, ISchedulerProvider schedulerProvider)
@@ -20,7 +21,7 @@ namespace Trader.Client.Views
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp))
                 .ObserveOn(schedulerProvider.MainThread)
-                .Bind(_data)  
+                .Bind(out _data)  
                 .DisposeMany() 
                 .Subscribe();
         }
@@ -31,7 +32,7 @@ namespace Trader.Client.Views
             set { SetAndRaise(ref _nearToMarketPercent, value); }
         }
 
-        public IObservableCollection<TradeProxy> Data
+        public ReadOnlyObservableCollection<TradeProxy> Data
         {
             get { return _data; }
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -16,7 +17,7 @@ namespace Trader.Client.Views
     public class PagedDataViewer : AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private readonly PageParameterData _pageParameters = new PageParameterData(1,25);
         private readonly SortParameterData _sortParameters = new SortParameterData();
         private string _searchText;
@@ -54,7 +55,7 @@ namespace Trader.Client.Views
                 .Page(pageController)
                 .ObserveOn(schedulerProvider.MainThread)
                 .Do(changes => _pageParameters.Update(changes.Response))
-                .Bind(_data)     // update observable collection bindings
+                .Bind(out _data)     // update observable collection bindings
                 .DisposeMany()   //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
@@ -75,7 +76,7 @@ namespace Trader.Client.Views
             set { SetAndRaise(ref _searchText, value); }
         }
 
-        public IObservableCollection<TradeProxy> Data
+        public ReadOnlyObservableCollection<TradeProxy> Data
         {
             get { return _data; }
         }

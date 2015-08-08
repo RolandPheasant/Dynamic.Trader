@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -11,7 +12,7 @@ namespace Trader.Client.Views
 {
     public class SearchHints : AbstractNotifyPropertyChanged, IDisposable
     {
-        private readonly IObservableCollection<string> _hints = new ObservableCollectionExtended<string>();
+        private readonly ReadOnlyObservableCollection<string> _hints;
         private readonly IDisposable _cleanUp;
         private string _searchText;
 
@@ -38,7 +39,7 @@ namespace Trader.Client.Views
                 .Filter(filter)     //filter strings
                 .Sort(SortExpressionComparer<string>.Ascending(str=>str))
                 .ObserveOn(schedulerProvider.MainThread)
-                .Bind(_hints)       //bind to hints list
+                .Bind(out _hints)       //bind to hints list
                 .Subscribe();
 
             _cleanUp = new CompositeDisposable(loader, filter, shared.Connect(), filterApplier);
@@ -58,7 +59,7 @@ namespace Trader.Client.Views
             set { SetAndRaise(ref _searchText, value); }
         }
 
-        public IObservableCollection<string> Hints
+        public ReadOnlyObservableCollection<string> Hints
         {
             get { return _hints; }
         }

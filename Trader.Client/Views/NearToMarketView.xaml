@@ -18,11 +18,11 @@
                                 Orientation="Horizontal">
 
             <Slider Width="100" 
-                                 Margin="4 0 0 0"
-                                 VerticalAlignment="Center"
+                                Margin="4 0 0 0"
+                                VerticalAlignment="Center"
                                 Minimum="0.01"
                                 Maximum="0.1"
-                               ToolTip="Move slider to filter by % from the market"
+                                ToolTip="Move slider to filter by % from the market"
                                 TickFrequency=".01"
                                 Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             </Slider>

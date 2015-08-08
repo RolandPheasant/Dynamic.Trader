@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
@@ -10,7 +11,7 @@ namespace Trader.Client.Views
 {
     public class PositionsViewer: IDisposable
     {
-        private readonly IObservableCollection<CurrencyPairPosition> _data = new ObservableCollectionExtended<CurrencyPairPosition>();
+        private readonly ReadOnlyObservableCollection<CurrencyPairPosition> _data;
         private readonly IDisposable _cleanUp;
 
         public PositionsViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
@@ -20,12 +21,12 @@ namespace Trader.Client.Views
                 .Transform(group => new CurrencyPairPosition(group))
                 .Sort(SortExpressionComparer<CurrencyPairPosition>.Ascending(t => t.CurrencyPair))
                 .ObserveOn(schedulerProvider.MainThread)
-                .Bind(_data)
+                .Bind(out _data)
                 .DisposeMany()
                 .Subscribe();
         }
 
-        public IObservableCollection<CurrencyPairPosition> Data
+        public ReadOnlyObservableCollection<CurrencyPairPosition> Data
         {
             get { return _data; }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -16,7 +17,7 @@ namespace Trader.Client.Views
         private readonly ILogger _logger;
         private readonly SearchHints _searchHints;
         private readonly IDisposable _cleanUp;
-        private readonly IObservableCollection<TradeProxy> _data = new ObservableCollectionExtended<TradeProxy>();
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
         public LiveTradesViewer(ILogger logger,ITradeService tradeService,SearchHints searchHints)
         {
@@ -33,7 +34,7 @@ namespace Trader.Client.Views
                 .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOnDispatcher()
-                .Bind(_data)   // update observable collection bindings
+                .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
@@ -47,8 +48,8 @@ namespace Trader.Client.Views
             return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) 
                             || t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
         }
-        
-        public IObservableCollection<TradeProxy> Data
+
+        public ReadOnlyObservableCollection<TradeProxy> Data
         {
             get { return _data; }
         }
