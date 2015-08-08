@@ -29,7 +29,7 @@ namespace Trader.Client
             _showMenuCommand =  new Command(ShowMenu,()=> Selected!=null && !(Selected.Content is MenuItems));
             _showInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
 
-            var menuController = _data.ToObservableChangeSet(vc => vc.Id)
+            var menuController = _data.ToObservableChangeSet()
                                         .Filter(vc => vc.Content is MenuItems)
                                         .Transform(vc => (MenuItems) vc.Content)
                                         .MergeMany(menuItem => menuItem.ItemCreated)

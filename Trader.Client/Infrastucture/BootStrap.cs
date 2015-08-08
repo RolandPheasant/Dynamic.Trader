@@ -29,7 +29,7 @@ namespace Trader.Client.Infrastucture
             resolver.Register(() => new LogEntryView(), typeof(IViewFor<LogEntryViewer>));
             resolver.Register(() => new RxUiView(), typeof(IViewFor<RxUiViewer>));
             Locator.Current = resolver;
-
+            RxApp.SupportsRangeNotifications = false;
             //run start up jobs
             container.GetInstance<TradePriceUpdateJob>();
             container.GetInstance<ILogEntryService>();
