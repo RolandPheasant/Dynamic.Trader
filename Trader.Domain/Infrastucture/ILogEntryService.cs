@@ -5,12 +5,7 @@ namespace Trader.Domain.Infrastucture
 {
     public interface ILogEntryService
     {
-        IObservableCache<LogEntry, long> Items { get; }
-
-
-        void Add(LogEntry items);
+        IObservableList<LogEntry> Items { get; }
         void Remove(IEnumerable<LogEntry> items);
-        void Remove(IEnumerable<long> keys);
-
     }
 }

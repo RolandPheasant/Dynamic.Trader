@@ -50,13 +50,8 @@ namespace Trader.Client.Infrastucture
 
                 _sourceList.Edit(list =>
                 {
-                    var added = args.AddedItems.OfType<T>().ToList();
-                    list.AddRange(added);
-
-                    //cannot remove batch as we do not know whether they are in order
-                    args.RemovedItems.OfType<T>()
-                        .ForEach(t=>list.Remove(t));
-
+                        list.AddRange(args.AddedItems.OfType<T>().ToList());
+                        list.RemoveMany(args.RemovedItems.OfType<T>().ToList());
                 });
             }
             finally

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using DynamicData;
 using Trader.Domain.Infrastucture;
 
@@ -8,16 +10,22 @@ namespace Trader.Domain.Services
 {
     public class LogEntryService : IDisposable, ILogEntryService
     {
-        private readonly ISourceCache<LogEntry, long> _source = new SourceCache<LogEntry, long>(l => l.Key);
+        private readonly ILogger _logger;
+        private readonly ISourceList<LogEntry> _source = new SourceList<LogEntry>();
+        private readonly IObservableList<LogEntry> _readonly; 
         private readonly IDisposable _disposer;
+        private readonly object _locker = new object();
         
         public LogEntryService(ILogger logger)
         {
+            _logger = logger;
+            _readonly = _source.AsObservableList();
 
             var loader = ReactiveLogAppender.LogEntryObservable
-                            .Subscribe(_source.AddOrUpdate);
-
-
+                            .Buffer(TimeSpan.FromMilliseconds(250))
+                            .Synchronize(_locker)
+                            .Subscribe(_source.AddRange);
+            
             //limit size of cache to prevent too many items being created
             var sizeLimiter = _source.LimitSizeTo(10000).Subscribe();
 
@@ -30,24 +38,21 @@ namespace Trader.Domain.Services
         }
 
 
-        public IObservableCache<LogEntry, long> Items
+        public IObservableList<LogEntry> Items
         {
-            get { return _source.AsObservableCache(); }
-        }
-
-        public void Add(LogEntry item)
-        {
-            _source.AddOrUpdate(item);
+            get { return _readonly; }
         }
 
         public void Remove(IEnumerable<LogEntry> items)
         {
-            _source.Remove(items);
-        }
+            lock (_locker)
+            {
+                var itemsToRemove = items as LogEntry[] ?? items.ToArray();
+                _logger.Info("Removing {0} log entry items",itemsToRemove.Count());
+                _source.RemoveMany(itemsToRemove);
+                _logger.Info("Removed {0} log entry items", itemsToRemove.Count());
+            }
 
-        public void Remove(IEnumerable<long> keys)
-        {
-            _source.Remove(keys);
         }
 
         public void Dispose()

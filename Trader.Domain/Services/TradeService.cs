@@ -51,7 +51,7 @@ namespace Trader.Domain.Services
             //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(5000, true));
 
-            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(5000,15000));
+            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(500,1500));
                                              
 
             // create a random number of trades at a random interval
@@ -74,8 +74,7 @@ namespace Trader.Domain.Services
                                                     .Where(trade => trade.Status == TradeStatus.Live)
                                                     .OrderBy(t => Guid.NewGuid()).Take(number).ToArray();
 
-                                                  var toClose = trades
-                                                      .Select(trade => new Trade(trade, TradeStatus.Closed));
+                                                  var toClose = trades.Select(trade => new Trade(trade, TradeStatus.Closed));
 
                                                   _tradesSource.AddOrUpdate(toClose);
                                               });

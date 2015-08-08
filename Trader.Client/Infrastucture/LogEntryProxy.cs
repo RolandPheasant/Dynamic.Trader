@@ -89,6 +89,11 @@ namespace Trader.Client.Infrastucture
             get { return _original.Exception; }
         }
 
+        public LogEntry Original
+        {
+            get { return _original; }
+        }
+
         #endregion
 
         #region Equality

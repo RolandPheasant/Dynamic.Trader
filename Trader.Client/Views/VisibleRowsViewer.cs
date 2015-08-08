@@ -36,7 +36,7 @@ namespace Trader.Client.Views
                                                 .SubscribeMany(proxy =>
                                                 {
                                                     //
-                                                    return proxy.WhenChanged(p => p.Amount).Subscribe();
+                                                    return proxy.WhenValueChanged(p => p.Amount).Subscribe();
                                                 }).Subscribe();
 
             _cleanUp = new CompositeDisposable(loader, _visibleRowsAccessor, visibilityController);

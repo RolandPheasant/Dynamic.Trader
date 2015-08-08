@@ -3,7 +3,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Controllers;
 using DynamicData.Operators;
 using DynamicData.PLinq;
 using Trader.Domain.Infrastucture;
@@ -24,16 +23,13 @@ namespace Trader.Client.Views
             _logger = logger;
             _searchHints = searchHints;
 
-            var filter =  new FilterController<Trade>(trade=>true);
-            var filterApplier = SearchHints.WhenValueChanged(t => t.SearchText)
-                .Throttle(TimeSpan.FromMilliseconds(250))
-                .Select(BuildFilter)
-                .Subscribe(filter.Change);
+            var filter = SearchHints.WhenValueChanged(t => t.SearchText)
+                        .Select(BuildFilter);
 
             var loader = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
                 .Filter(filter) // apply user filter
-                //if using dotnet 4.5 can parallelise 'cause it's quicker
+                //if targeting dotnet 4.5 can parallelise 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOnDispatcher()
@@ -41,7 +37,7 @@ namespace Trader.Client.Views
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
 
-            _cleanUp = new CompositeDisposable(loader, filter, filterApplier, searchHints);
+            _cleanUp = new CompositeDisposable(loader, searchHints);
         }
 
         private Func<Trade, bool> BuildFilter(string searchText)

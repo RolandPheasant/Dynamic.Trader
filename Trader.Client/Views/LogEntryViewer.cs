@@ -3,21 +3,19 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
-using DynamicData.ReactiveUI;
 using DynamicData.Binding;
-using DynamicData.Controllers;
-using DynamicData.Operators;
+using DynamicData.ReactiveUI;
 using ReactiveUI;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Views
 {
+
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
         private readonly IDisposable _cleanUp;
         private readonly ILogEntryService _logEntryService;
-        private readonly FilterController<LogEntryProxy> _filter = new FilterController<LogEntryProxy>(l => true);
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
         private readonly SelectionController<LogEntryProxy> _selectionController = new SelectionController<LogEntryProxy>();
         private readonly ReactiveCommand<object> _deleteCommand;
@@ -29,34 +27,29 @@ namespace Trader.Client.Views
         public LogEntryViewer(ILogEntryService logEntryService)
         {
             _logEntryService = logEntryService;
- 
-            //apply filter when search text has changed
-            var filterApplier = this.WhenAnyValue(x => x.SearchText)
+            
+            //build an observable filter
+            var filter = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
-                .Select(BuildFilter)
-                .Subscribe(_filter.Change);
+                .Select(BuildFilter);
 
 
             //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect()
                 .Transform(le => new LogEntryProxy(le))
-                .DelayRemove(TimeSpan.FromSeconds(0.75),proxy =>
-                                                {
-                                                    proxy.FlagForRemove();
-                                                    _selectionController.DeSelect(proxy);
-                                                })
-                .Filter(_filter)
-                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key),SortOptimisations.ComparesImmutableValuesOnly)
+                .DelayRemove(TimeSpan.FromSeconds(0.75), proxy =>proxy.FlagForRemove())
+                .Filter(filter)
+                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key),SortOptions.UseBinarySearch)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data) 
+                .Do(x=>{},ex=>Console.WriteLine(ex))
                 .DisposeMany()
                 .Subscribe();
 
             //aggregate total items
             var summariser = logEntryService.Items.Connect()
-                        .QueryWhenChanged(query =>
+                        .QueryWhenChanged(items =>
                         {
-                            var items = query.Items.ToList();
                             var debug = items.Count(le => le.Level == LogLevel.Debug);
                             var info = items.Count(le => le.Level == LogLevel.Info);
                             var warn = items.Count(le => le.Level == LogLevel.Warning);
@@ -87,7 +80,8 @@ namespace Trader.Client.Views
            var commandInvoker =  this.WhenAnyObservable(x => x.DeleteCommand)
                     .Subscribe(_ =>
                     {
-                        var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Key).ToArray();
+                        var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Original).ToArray();
+                       _selectionController.Clear();
                         _logEntryService.Remove(toRemove);
                     });
 
@@ -96,8 +90,6 @@ namespace Trader.Client.Views
             _cleanUp= Disposable.Create(() =>
             {
                 loader.Dispose();
-                filterApplier.Dispose();
-                _filter.Dispose();
                 connected.Dispose();
                 _deleteItemsText.Dispose();
                 _deleteCommand.Dispose();
