@@ -14,21 +14,18 @@ namespace Trader.Client.Views
 {
     public class LiveTradesViewer :AbstractNotifyPropertyChanged, IDisposable
     {
-        private readonly ILogger _logger;
         private readonly SearchHints _searchHints;
         private readonly IDisposable _cleanUp;
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
-        public LiveTradesViewer(ILogger logger,ITradeService tradeService,SearchHints searchHints)
+        public LiveTradesViewer(ITradeService tradeService,SearchHints searchHints)
         {
-            _logger = logger;
             _searchHints = searchHints;
 
             var filter = SearchHints.WhenValueChanged(t => t.SearchText)
                         .Select(BuildFilter);
 
-            var loader = tradeService.All
-                .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
+            var loader = tradeService.Live.Connect()
                 .Filter(filter) // apply user filter
                 //if targeting dotnet 4.5 can parallelise 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))

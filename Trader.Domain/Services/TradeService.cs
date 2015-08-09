@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Kernel;
 using Trader.Domain.Infrastucture;
@@ -37,10 +37,15 @@ namespace Trader.Domain.Services
             //code to emulate an external trade provider
             var tradeLoader = GenerateTradesAndMaintainCache();
 
+            //expire closed items from the cache ro avoid unbounded data
+           var expirer = _tradesSource
+               .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?)null,TimeSpan.FromMinutes(1),schedulerProvider.TaskPool)
+               .Subscribe(x=>_logger.Info("{0} filled trades have been removed from memory",x.Count()));
+
             //log changes
             var loggerWriter = LogChanges();
-            
-            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader, loggerWriter);
+
+            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader, loggerWriter, expirer);
         }
         
         private IDisposable GenerateTradesAndMaintainCache()
@@ -49,9 +54,9 @@ namespace Trader.Domain.Services
             var random = new Random();
 
             //initally load some trades 
-            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(5000, true));
+            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
 
-            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(500,1500));
+            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(5000,15000));
                                              
 
             // create a random number of trades at a random interval
@@ -85,16 +90,17 @@ namespace Trader.Domain.Services
 
         private IDisposable LogChanges()
         {
-            //todo: Move this to a log writing service
             const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
-            return _all.Connect().SkipInitial()
-                                    .Transform(trade => string.Format(messageTemplate,
-                                        trade.BuyOrSell,
-                                        trade.Amount,
-                                        trade.CurrencyPair,
-                                        trade.Status,
-                                        trade.Customer))
-                                    .Subscribe(changes => changes.ForEach(change => _logger.Info(change.Current)));
+            return _all.Connect().Skip(1)
+                            .WhereReasonsAre(ChangeReason.Add,ChangeReason.Update)
+                            .Convert(trade => string.Format(messageTemplate,
+                                                    trade.BuyOrSell,
+                                                    trade.Amount,
+                                                    trade.CurrencyPair,
+                                                    trade.Status,
+                                                    trade.Customer))
+                            .ForEachChange(change=>_logger.Info(change.Current))
+                            .Subscribe();
 
         }
 

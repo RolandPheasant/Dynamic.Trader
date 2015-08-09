@@ -32,8 +32,7 @@ namespace Trader.Client.Views
             var filter = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
                 .Select(BuildFilter);
-
-
+            
             //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect()
                 .Transform(le => new LogEntryProxy(le))
@@ -42,7 +41,6 @@ namespace Trader.Client.Views
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key),SortOptions.UseBinarySearch)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data) 
-                .Do(x=>{},ex=>Console.WriteLine(ex))
                 .DisposeMany()
                 .Subscribe();
 
