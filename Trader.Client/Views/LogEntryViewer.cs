@@ -76,6 +76,7 @@ namespace Trader.Client.Views
  
             //Assign action when the command is invoked
            var commandInvoker =  this.WhenAnyObservable(x => x.DeleteCommand)
+                    .ObserveOn(RxApp.TaskpoolScheduler)
                     .Subscribe(_ =>
                     {
                         var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Original).ToArray();

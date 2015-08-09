@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using DynamicData;
 using Trader.Domain.Infrastucture;
 
@@ -45,14 +46,20 @@ namespace Trader.Domain.Services
 
         public void Remove(IEnumerable<LogEntry> items)
         {
-            lock (_locker)
+            try
             {
-                var itemsToRemove = items as LogEntry[] ?? items.ToArray();
-                _logger.Info("Removing {0} log entry items",itemsToRemove.Count());
-                _source.RemoveMany(itemsToRemove);
-                _logger.Info("Removed {0} log entry items", itemsToRemove.Count());
+                lock (_locker)
+                {
+                    var itemsToRemove = items as LogEntry[] ?? items.ToArray();
+                    _logger.Info("Removing {0} log entry items", itemsToRemove.Count());
+                    _source.RemoveMany(itemsToRemove);
+                    _logger.Info("Removed {0} log entry items", itemsToRemove.Count());
+                }
             }
-
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Problem removing log entries: {0}", ex.Message);
+            }
         }
 
         public void Dispose()
