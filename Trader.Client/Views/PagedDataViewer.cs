@@ -41,7 +41,7 @@ namespace Trader.Client.Views
                 .Sample(TimeSpan.FromMilliseconds(100));
 
 
-            // filter, sort, page and bind to loaded data
+            // filter, sort, page and bind to observable collection
             _cleanUp = tradeService.All.Connect()
                 .Filter(filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))

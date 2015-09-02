@@ -4,7 +4,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Controllers;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Services;
 
@@ -18,23 +17,19 @@ namespace Trader.Client.Views
 
         public SearchHints(ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
-            //instaniate a filter controller so we can change the filter any time
-            var filter = new FilterController<string>();
-
-            //build a predicate when SeatchText changes
-            var filterApplier = this.WhenValueChanged(t => t.SearchText)
+            //build a predicate when SearchText changes
+            var filter = this.WhenValueChanged(t => t.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
-                .Select(BuildFilter)
-                .Subscribe(filter.Change);
+                .Select(BuildFilter);
 
             //share the connection
             var shared = tradeService.All.Connect().Publish();
-            //distinct list of customers
+            //distinct observable of customers
             var customers = shared.DistinctValues(trade => trade.Customer);
-            //distinct list of currency pairs
+            //distinct observable of currency pairs
             var currencypairs = shared.DistinctValues(trade => trade.CurrencyPair);
 
-            //create single list of all customers all items in currency ypairs
+            //observe customers and currency pairs using OR operator, and bind to the observable collection
             var loader = customers.Or(currencypairs)
                 .Filter(filter)     //filter strings
                 .Sort(SortExpressionComparer<string>.Ascending(str=>str))
@@ -42,7 +37,7 @@ namespace Trader.Client.Views
                 .Bind(out _hints)       //bind to hints list
                 .Subscribe();
 
-            _cleanUp = new CompositeDisposable(loader, filter, shared.Connect(), filterApplier);
+            _cleanUp = new CompositeDisposable(loader, shared.Connect());
         }
 
         private Func<string, bool> BuildFilter(string searchText)
