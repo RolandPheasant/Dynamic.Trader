@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using DynamicData;
 using Trader.Domain.Infrastucture;
 
@@ -51,9 +50,9 @@ namespace Trader.Domain.Services
                 lock (_locker)
                 {
                     var itemsToRemove = items as LogEntry[] ?? items.ToArray();
-                    _logger.Info("Removing {0} log entry items", itemsToRemove.Count());
+                    _logger.Info("Removing {0} log entry items", itemsToRemove.Length);
                     _source.RemoveMany(itemsToRemove);
-                    _logger.Info("Removed {0} log entry items", itemsToRemove.Count());
+                    _logger.Info("Removed {0} log entry items", itemsToRemove.Length);
                 }
             }
             catch (Exception ex)
