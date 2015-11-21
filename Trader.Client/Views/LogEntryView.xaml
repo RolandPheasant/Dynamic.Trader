@@ -82,11 +82,10 @@
 
 
         <ListView
-                Grid.Row="1"
                 SelectionMode="Extended"
                 ScrollViewer.CanContentScroll="True"
                 infrastucture:SelectorHelper.Binding="{Binding  Selector}"
-                ItemsSource="{Binding Data}">
+                ItemsSource="{Binding Data}" Margin="0,27,0,5" Grid.RowSpan="2">
 
             <ListView.InputBindings>
                 <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>

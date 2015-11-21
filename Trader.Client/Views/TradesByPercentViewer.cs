@@ -34,7 +34,7 @@ namespace Trader.Client.Views
                 .Bind(out _data)
                 .DisposeMany()
                 .Subscribe();
-            ;
+
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
 

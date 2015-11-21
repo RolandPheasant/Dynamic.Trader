@@ -39,8 +39,7 @@ namespace Trader.Client.Views
                 .StartWith(new PageRequest(1, 25))
                 .DistinctUntilChanged()
                 .Sample(TimeSpan.FromMilliseconds(100));
-
-
+            
             // filter, sort, page and bind to observable collection
             _cleanUp = tradeService.All.Connect()
                 .Filter(filter) // apply user filter
@@ -54,7 +53,7 @@ namespace Trader.Client.Views
                 .Subscribe();
         }
 
-        private Func<Trade, bool> BuildFilter(string searchText)
+        private static Func<Trade, bool> BuildFilter(string searchText)
         {
             if (string.IsNullOrEmpty(searchText)) return trade => true;
 
