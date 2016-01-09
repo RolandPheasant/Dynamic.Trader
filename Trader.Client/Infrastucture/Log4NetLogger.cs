@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using log4net;
 using Trader.Domain.Infrastucture;
 
@@ -10,7 +12,21 @@ namespace Trader.Client.Infrastucture
 
         public Log4NetLogger(Type type)
         {
-            _log = LogManager.GetLogger(type);
+            var name = type.Name;
+            var genericArgs = type.GenericTypeArguments;
+
+            if (!genericArgs.Any())
+            {
+                _log = LogManager.GetLogger(name);
+            }
+            else
+            {
+
+                var startOfGeneric = name.IndexOf("`");
+                name = name.Substring(0,startOfGeneric);
+                var generics = genericArgs.Select(t=>t.Name).ToDelimited();
+                _log = LogManager.GetLogger(string.Format("{0}<{1}>", name, generics));
+            }
         }
 
         public void Debug(string message, params object[] values)

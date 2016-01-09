@@ -1,5 +1,7 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
+using DynamicData.Kernel;
 
 // ReSharper disable once CheckNamespace
 namespace System
@@ -32,6 +34,26 @@ namespace System.Collections.Generic
 
     public static class Extensions
     {
+        
+        public static string ToDelimited<T>(this IEnumerable<T> source, string delimiter=",")
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            return string.Join(delimiter, source.WithDelimiter(delimiter));
+
+        }
+
+        public static IEnumerable<string>  WithDelimiter<T>(this IEnumerable<T> source, string delimiter)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            var array = source.AsArray();
+            if (!array.Any()) yield return string.Empty;
+
+            yield return array.Select(t => t.ToString()).First();
+
+            foreach (var item in array.Skip(1))
+                yield return string.Format("{0}{1}",delimiter,item);
+
+        }
 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {

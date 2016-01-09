@@ -16,7 +16,18 @@ namespace Trader.Domain.Services
             new CurrencyPair("USD/JPY",118.81M,2,0.1M),
         };
 
-        private readonly string[] _customers = new[] { "Bank of America", "Bank of Europe", "Bank of England", "BNP Paribas", "Deutsche Bank", "Societe Generale" };
+        private readonly string[] _customers = new[]
+        {
+            "Bank of Andorra",
+            "Bank of Europe",
+            "Bank of England",
+            "BCCI",
+            "Abbey National",
+            "Fx Shop",
+            "Midland Bank",
+            "National Bank of Alaska",
+            "Northern Rock"
+        };
 
 
         public string[] Customers

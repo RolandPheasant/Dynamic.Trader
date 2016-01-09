@@ -31,7 +31,7 @@ namespace Trader.Domain.Services
             //call AsObservableCache() to hide the update methods as we are exposing the cache
             _all = _tradesSource.AsObservableCache();
 
-            //create a derived cache 
+            //create a derived cache  
             _live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
 
             //code to emulate an external trade provider
@@ -56,7 +56,7 @@ namespace Trader.Domain.Services
             //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
 
-            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(5000,15000));
+            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(1500,10000));
                                              
 
             // create a random number of trades at a random interval
