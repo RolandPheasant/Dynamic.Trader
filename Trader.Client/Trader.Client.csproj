@@ -61,13 +61,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Dragablz.0.0.2.116\lib\net45\Dragablz.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData, Version=4.3.1.1090, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.4.3.1.1090\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=4.4.0.1110, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.4.4.0.1110-beta\lib\net45\DynamicData.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DynamicData.Plinq, Version=4.3.1.1090, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicData.4.3.1.1090\lib\net45\DynamicData.Plinq.dll</HintPath>
+    <Reference Include="DynamicData.Plinq, Version=4.4.0.1110, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.Plinq.4.4.0.1110-beta\lib\net45\DynamicData.Plinq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DynamicData.ReactiveUI, Version=2.2.0.2007, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

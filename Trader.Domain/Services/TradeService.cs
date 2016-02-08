@@ -73,7 +73,7 @@ namespace Trader.Domain.Services
                 .ScheduleRecurringAction(randomInterval, () =>
                 {
                     var number = random.Next(1, 8);
-                    _tradesSource.BatchUpdate(updater =>
+                    _tradesSource.Edit(updater =>
                                               {
                                                   var trades = updater.Items
                                                     .Where(trade => trade.Status == TradeStatus.Live)
