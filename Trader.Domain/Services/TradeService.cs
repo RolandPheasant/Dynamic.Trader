@@ -56,7 +56,7 @@ namespace Trader.Domain.Services
             //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
 
-            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(1500,10000));
+            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(1500,4500));
                                              
 
             // create a random number of trades at a random interval
