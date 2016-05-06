@@ -44,7 +44,7 @@ namespace Trader.Client.Views
             _cleanUp = tradeService.All.Connect()
                 .Filter(filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
-                .Sort(sort, SortOptimisations.ComparesImmutableValuesOnly)
+                .Sort(sort, SortOptimisations.ComparesImmutableValuesOnly,resetThreshold:25)
                 .Page(pager)
                 .ObserveOn(schedulerProvider.MainThread)
                 .Do(changes => _pageParameters.Update(changes.Response))

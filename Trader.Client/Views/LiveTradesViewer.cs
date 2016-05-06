@@ -6,7 +6,6 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.Operators;
 using DynamicData.PLinq;
-using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
 
@@ -29,7 +28,7 @@ namespace Trader.Client.Views
                 .Filter(filter) // apply user filter
                 //if targeting dotnet 4.5 can parallelise 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
-                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly)
+                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
                 .ObserveOnDispatcher()
                 .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required

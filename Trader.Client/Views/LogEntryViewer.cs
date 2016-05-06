@@ -11,7 +11,6 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Client.Views
 {
-
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
         private readonly IDisposable _cleanUp;
@@ -38,7 +37,7 @@ namespace Trader.Client.Views
                 .Transform(le => new LogEntryProxy(le))
                 .DelayRemove(TimeSpan.FromSeconds(0.75), proxy =>proxy.FlagForRemove())
                 .Filter(filter)
-                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key),SortOptions.UseBinarySearch)
+                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key), SortOptions.UseBinarySearch)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(_data) 
                 .DisposeMany()
