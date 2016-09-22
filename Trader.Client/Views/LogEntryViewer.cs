@@ -99,11 +99,11 @@ namespace Trader.Client.Views
 
         private Func<LogEntryProxy, bool> BuildFilter(string searchText)
         {
-            if (string.IsNullOrEmpty(SearchText))
+            if (string.IsNullOrEmpty(searchText))
                 return logentry => true;
 
-            return logentry => logentry.Message.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-                            || logentry.Level.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+            return logentry => logentry.Message.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                            || logentry.Level.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase);
         }
 
         public string SearchText
