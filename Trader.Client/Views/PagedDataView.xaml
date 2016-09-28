@@ -57,7 +57,7 @@
             </Viewbox>
 
             <TextBox x:Name="SearchBox"
-                wpf:TextField.Hint="Enter search text..."
+                wpf:HintAssist.Hint="Enter search text..."
               
                 MinWidth="125"
                 HorizontalAlignment="Left"

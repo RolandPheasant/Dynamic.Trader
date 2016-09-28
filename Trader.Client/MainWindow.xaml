@@ -84,18 +84,18 @@
 
     <dockablz:Layout>
         <dragablz:TabablzControl x:Name="InitialTabablzControl"
-             ShowDefaultCloseButton="False"
+            ShowDefaultCloseButton="True"
             ClosingItemCallback="{Binding ClosingTabItemHandler}"
             SelectedItem="{Binding Selected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             ItemsSource="{Binding  Views}" >
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"  />
             </dragablz:TabablzControl.InterTabController>
-            <dragablz:TabablzControl.CustomHeaderItemTemplate>
+            <dragablz:TabablzControl.HeaderItemTemplate>
                 <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
                     <TextBlock Margin="8 0 0 0" Text="{Binding Title}" />
                 </DataTemplate>
-            </dragablz:TabablzControl.CustomHeaderItemTemplate>
+            </dragablz:TabablzControl.HeaderItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate DataType="{x:Type infrastucture:ViewContainer}">
                     <ContentControl Margin="4" Content="{Binding Content}" />
