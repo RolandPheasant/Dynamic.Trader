@@ -19,34 +19,16 @@ namespace Trader.Domain.Model
         }
 
 
-        public decimal Position
-        {
-            get { return _position; }
-        }
+        public decimal Position => _position;
 
-        public decimal Buy
-        {
-            get { return _buy; }
-        }
+        public decimal Buy => _buy;
 
-        public decimal Sell
-        {
-            get { return _sell; }
-        }
+        public decimal Sell => _sell;
 
-        public string CountText
-        {
-            get { return "Order".Pluralise(_count); }
-        }
+        public string CountText => "Order".Pluralise(_count);
 
-        public bool Negative
-        {
-            get { return _position < 0; }
-        }
+        public bool Negative => _position < 0;
 
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
     }
 }

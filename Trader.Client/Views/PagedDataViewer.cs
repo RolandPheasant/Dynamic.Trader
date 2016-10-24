@@ -67,20 +67,11 @@ namespace Trader.Client.Views
             set { SetAndRaise(ref _searchText, value); }
         }
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
-        public PageParameterData PageParameters
-        {
-            get { return _pageParameters; }
-        }
+        public PageParameterData PageParameters => _pageParameters;
 
-        public SortParameterData SortParameters
-        {
-            get { return _sortParameters; }
-        }
+        public SortParameterData SortParameters => _sortParameters;
 
         public void Dispose()
         {

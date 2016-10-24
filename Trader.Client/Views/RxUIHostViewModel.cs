@@ -5,16 +5,11 @@ namespace Trader.Client.Views
 {
     public class RxUiHostViewModel
     {
-        private readonly ReactiveObject _content;
-
         public RxUiHostViewModel(ReactiveObject content)
         {
-            _content = content;
+            Content = content;
         }
 
-        public ReactiveObject Content
-        {
-            get { return _content; }
-        }
+        public ReactiveObject Content { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Trader.Client.Views
         private readonly IVisibleRowsAccessor<TradeProxy> _visibleRowsAccessor = new VisibleRowsAccessor<TradeProxy>();
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
-        public VisibleRowsViewer(ITradeService tradeService, ILogger logger)
+        public VisibleRowsViewer(ITradeService tradeService)
         {
             var loader = tradeService.All.Connect()
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
@@ -29,8 +29,7 @@ namespace Trader.Client.Views
                 .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
-
-
+            
             //NEED TO DO SOMETHING FUNKY
 
             var visibilityController = _visibleRowsAccessor.VisibleRows.Connect()
@@ -43,10 +42,7 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, _visibleRowsAccessor, visibilityController);
         }
 
-        public IVisibleRowsAccessor<TradeProxy> VisibleRowsAccessor
-        {
-            get { return _visibleRowsAccessor; }
-        }
+        public IVisibleRowsAccessor<TradeProxy> VisibleRowsAccessor => _visibleRowsAccessor;
 
         public ReadOnlyObservableCollection<TradeProxy> Data
         {

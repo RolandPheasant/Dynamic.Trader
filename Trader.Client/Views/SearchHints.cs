@@ -53,11 +53,7 @@ namespace Trader.Client.Views
             get { return _searchText; }
             set { SetAndRaise(ref _searchText, value); }
         }
-
-        public ReadOnlyObservableCollection<string> Hints
-        {
-            get { return _hints; }
-        }
+        public ReadOnlyObservableCollection<string> Hints => _hints;
 
         public void Dispose()
         {

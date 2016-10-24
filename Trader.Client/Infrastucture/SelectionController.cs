@@ -17,7 +17,7 @@ namespace Trader.Client.Infrastucture
 
         private bool _isSelecting;
         private Selector _selector;
-    
+        public IObservableList<T> SelectedItems => _sourceList;
 
         public SelectionController()
         {
@@ -36,10 +36,6 @@ namespace Trader.Client.Infrastucture
                 .Subscribe(HandleSelectionChanged);
         }
 
-        public IObservableList<T> SelectedItems
-        {
-            get { return _sourceList; }
-        }
 
         private void HandleSelectionChanged(SelectionChangedEventArgs args)
         {
@@ -131,11 +127,7 @@ namespace Trader.Client.Infrastucture
                 _selector.SelectedItem = null;
             }
         }
-
-
-
-
-
+        
         public void Dispose()
         {
             _cleanUp.Dispose();

@@ -21,7 +21,7 @@ namespace Trader.Domain.Model
                     var buy = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Buy).Sum(trade=>trade.Amount);
                     var sell = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Sell).Sum(trade => trade.Amount);
                     var count = query.Count;
-                    return new TradesPosition(buy,sell,count);
+                    return new TradesPosition(buy, sell, count);
                 })
                 .Subscribe(position => Position = position);
         }
@@ -32,10 +32,7 @@ namespace Trader.Domain.Model
             set { SetAndRaise(ref  _position,value); }
         }
 
-        public string CurrencyPair
-        {
-            get { return _currencyPair; }
-        }
+        public string CurrencyPair => _currencyPair;
 
         #region Equality Members
 
@@ -56,7 +53,7 @@ namespace Trader.Domain.Model
 
         public override int GetHashCode()
         {
-            return (_currencyPair != null ? _currencyPair.GetHashCode() : 0);
+            return _currencyPair?.GetHashCode() ?? 0;
         }
 
         public static bool operator ==(CurrencyPairPosition left, CurrencyPairPosition right)

@@ -5,27 +5,17 @@ namespace Trader.Domain.Model
 {
     public sealed class SortContainer : IEquatable<SortContainer>
     {
-        private readonly IComparer<TradeProxy> _comparer;
         private readonly string _description;
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
-        /// </summary>
         public SortContainer(string description, IComparer<TradeProxy> comparer)
         {
             _description = description;
-            _comparer = comparer;
+            Comparer = comparer;
         }
 
-        public IComparer<TradeProxy> Comparer
-        {
-            get { return _comparer; }
-        }
+        public IComparer<TradeProxy> Comparer { get; }
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        public string Description => _description;
 
         #region Equality members
 

@@ -23,8 +23,8 @@ namespace System
 
         public static string Pluralise(this string source, int count)
         {
-            if (count == 1) return string.Format("{0} {1}", count, source);
-            return string.Format("{0} {1}s", count, source); ;
+            if (count == 1) return $"{count} {source}";
+            return $"{count} {source}s"; ;
         }
     }
 }

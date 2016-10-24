@@ -12,14 +12,11 @@ namespace Trader.Client.Views
 {
     public class RecentTradesViewer : AbstractNotifyPropertyChanged, IDisposable
     {
-        private readonly ILogger _logger;
         private readonly IDisposable _cleanUp;
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
-        public RecentTradesViewer(ILogger logger, ITradeService tradeService, ISchedulerProvider schedulerProvider)
+        public RecentTradesViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
         {
-            _logger = logger;
-            
             _cleanUp = tradeService.All.Connect()
                 .SkipInitial()
                 .ExpireAfter((trade) => TimeSpan.FromSeconds(30)) 
@@ -29,13 +26,8 @@ namespace Trader.Client.Views
                 .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
-
         }
-
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
         public void Dispose()
         {

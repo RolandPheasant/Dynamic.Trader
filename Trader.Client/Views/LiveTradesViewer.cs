@@ -13,13 +13,12 @@ namespace Trader.Client.Views
 {
     public class LiveTradesViewer :AbstractNotifyPropertyChanged, IDisposable
     {
-        private readonly SearchHints _searchHints;
         private readonly IDisposable _cleanUp;
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
         public LiveTradesViewer(ITradeService tradeService,SearchHints searchHints)
         {
-            _searchHints = searchHints;
+            SearchHints = searchHints;
 
             var filter = SearchHints.WhenValueChanged(t => t.SearchText)
                         .Select(BuildFilter);
@@ -45,15 +44,9 @@ namespace Trader.Client.Views
                             || t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
         }
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
-        public SearchHints SearchHints
-        {
-            get { return _searchHints; }
-        }
+        public SearchHints SearchHints { get; }
 
         public void Dispose()
         {

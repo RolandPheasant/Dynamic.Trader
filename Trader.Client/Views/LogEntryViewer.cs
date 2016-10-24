@@ -112,31 +112,19 @@ namespace Trader.Client.Views
             set { this.RaiseAndSetIfChanged(ref _searchText, value); } 
         }
 
-        public string DeleteItemsText
-        {
-            get { return _deleteItemsText.Value; }
-        }
-        
+        public string DeleteItemsText => _deleteItemsText.Value;
+
         public LogEntrySummary Summary
         {
             get { return _summary; }
             set { this.RaiseAndSetIfChanged(ref _summary, value); }
         }
 
-        public ReactiveList<LogEntryProxy> Data
-        {
-            get { return _data; }
-        }
-        
-        public ReactiveCommand<object> DeleteCommand
-        {
-            get { return _deleteCommand; }
-        }
+        public ReactiveList<LogEntryProxy> Data => _data;
 
-        public IAttachedSelector Selector
-        {
-            get { return _selectionController; }
-        }
+        public ReactiveCommand<object> DeleteCommand => _deleteCommand;
+
+        public IAttachedSelector Selector => _selectionController;
 
 
         public void Dispose()

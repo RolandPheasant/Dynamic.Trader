@@ -30,8 +30,7 @@ namespace Trader.Client.Views
                        {
                            var diff = DateTime.Now.Subtract(trade.Timestamp);
                            if (diff.TotalSeconds <= 60) return TimePeriod.LastMinute;
-                           if (diff.TotalMinutes <= 60) return TimePeriod.LastHour;
-                           return TimePeriod.Older;
+                           return diff.TotalMinutes <= 60 ? TimePeriod.LastHour : TimePeriod.Older;
                        }, groupController)
                 .Transform(group => new TradesByTime(group, _schedulerProvider))
                 .Sort(SortExpressionComparer<TradesByTime>.Ascending(t => t.Period))
@@ -43,10 +42,7 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
 
-        public ReadOnlyObservableCollection<TradesByTime> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradesByTime> Data => _data;
 
         public void Dispose()
         {

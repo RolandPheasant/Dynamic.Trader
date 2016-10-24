@@ -8,14 +8,14 @@ namespace Trader.Domain.Model
     {
         private readonly ISubject<decimal> _marketPriceChangedSubject = new ReplaySubject<decimal>(1); 
         
-        public long Id { get; private set; }
-        public string CurrencyPair { get; private set; }
-        public string Customer { get; private set; }
-        public decimal TradePrice { get; private set; }
+        public long Id { get; }
+        public string CurrencyPair { get; }
+        public string Customer { get; }
+        public decimal TradePrice { get; }
         public decimal MarketPrice { get; private set; }
         public decimal PercentFromMarket { get; private set; }
-        public decimal Amount { get; private set; }
-        public BuyOrSell BuyOrSell { get; private set; }
+        public decimal Amount { get; }
+        public BuyOrSell BuyOrSell { get; }
         public TradeStatus Status { get; private set; }
         public DateTime Timestamp { get; private set; }
 
@@ -42,15 +42,13 @@ namespace Trader.Domain.Model
             TradePrice = tradePrice;
             Amount = amount;
             BuyOrSell = buyOrSell;
-            Timestamp =timeStamp.HasValue ? timeStamp.Value : DateTime.Now;
+            Timestamp =timeStamp ?? DateTime.Now;
         }
 
         public void SetMarketPrice(decimal marketPrice)
         {
             MarketPrice = marketPrice;
-   
             PercentFromMarket = Math.Round(((TradePrice - MarketPrice) / MarketPrice) * 100, 4);
-            ;
             _marketPriceChangedSubject.OnNext(marketPrice);
         }
 

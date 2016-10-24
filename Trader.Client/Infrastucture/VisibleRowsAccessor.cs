@@ -24,10 +24,7 @@ namespace Trader.Client.Infrastucture
             _visibleRows = _visibleRowsSource.AsObservableList();
         }
 
-        public IObservableList<T> VisibleRows
-        {
-            get { return _visibleRows; }
-        }
+        public IObservableList<T> VisibleRows => _visibleRows;
 
         void IDependencyObjectReceiver.Receive(DependencyObject value)
         {

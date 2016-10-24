@@ -38,10 +38,7 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, grouperRefresher);
         }
 
-        public ReadOnlyObservableCollection<Domain.Model.TradesByPercentDiff> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<Domain.Model.TradesByPercentDiff> Data => _data;
 
         public void Dispose()
         {

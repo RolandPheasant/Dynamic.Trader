@@ -15,8 +15,6 @@ namespace Trader.Domain.Services
         private readonly TradeGenerator _tradeGenerator;
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly ISourceCache<Trade, long> _tradesSource;
-        private readonly IObservableCache<Trade, long> _all;
-        private readonly IObservableCache<Trade, long> _live;
         private readonly IDisposable _cleanup;
 
         public TradeService(ILogger logger,TradeGenerator tradeGenerator, ISchedulerProvider schedulerProvider)
@@ -29,10 +27,10 @@ namespace Trader.Domain.Services
             _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
 
             //call AsObservableCache() to hide the update methods as we are exposing the cache
-            _all = _tradesSource.AsObservableCache();
+            All = _tradesSource.AsObservableCache();
 
             //create a derived cache  
-            _live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
+            Live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
 
             //code to emulate an external trade provider
             var tradeLoader = GenerateTradesAndMaintainCache();
@@ -45,7 +43,7 @@ namespace Trader.Domain.Services
             //log changes
             var loggerWriter = LogChanges();
 
-            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader, loggerWriter, expirer);
+            _cleanup = new CompositeDisposable(All, _tradesSource, tradeLoader, loggerWriter, expirer);
         }
         
         private IDisposable GenerateTradesAndMaintainCache()
@@ -56,7 +54,7 @@ namespace Trader.Domain.Services
             //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
 
-            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(5000,15000));
+            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds(random.Next(2500, 15000));
                                              
 
             // create a random number of trades at a random interval
@@ -73,15 +71,16 @@ namespace Trader.Domain.Services
                 .ScheduleRecurringAction(randomInterval, () =>
                 {
                     var number = random.Next(1, 2);
-                    _tradesSource.Edit(updater =>
+                    _tradesSource.Edit(innerCache =>
                                               {
-                                                  var trades = updater.Items
+                                                  var toClose = innerCache.Items
                                                     .Where(trade => trade.Status == TradeStatus.Live)
-                                                    .OrderBy(t => Guid.NewGuid()).Take(number).ToArray();
+                                                    .OrderBy(t => Guid.NewGuid())
+                                                    .Take(number)
+                                                    .Select(trade => new Trade(trade, TradeStatus.Closed))
+                                                    .ToArray();
 
-                                                  var toClose = trades.Select(trade => new Trade(trade, TradeStatus.Closed));
-
-                                                  _tradesSource.AddOrUpdate(toClose);
+                                                  innerCache.AddOrUpdate(toClose);
                                               });
                 });
 
@@ -91,7 +90,7 @@ namespace Trader.Domain.Services
         private IDisposable LogChanges()
         {
             const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
-            return _all.Connect().Skip(1)
+            return All.Connect().Skip(1)
                             .WhereReasonsAre(ChangeReason.Add,ChangeReason.Update)
                             .Convert(trade => string.Format(messageTemplate,
                                                     trade.BuyOrSell,
@@ -104,15 +103,9 @@ namespace Trader.Domain.Services
 
         }
 
-        public IObservableCache<Trade, long> All
-        {
-            get { return _all; }
-        }
+        public IObservableCache<Trade, long> All { get; }
 
-        public IObservableCache<Trade, long> Live
-        {
-            get { return _live; }
-        }
+        public IObservableCache<Trade, long> Live { get; }
 
         public void Dispose()
         {
