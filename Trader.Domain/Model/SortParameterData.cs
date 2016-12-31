@@ -37,9 +37,6 @@ namespace Trader.Domain.Model
             private set { SetAndRaise(ref _selectedItem, value); }
         }
 
-        public IEnumerable<SortContainer> SortItems
-        {
-            get { return _sortItems; }
-        }
+        public IEnumerable<SortContainer> SortItems => _sortItems;
     }
 }

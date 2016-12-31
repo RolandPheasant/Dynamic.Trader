@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
@@ -11,47 +12,33 @@ namespace Trader.Domain.Model
     public class TradesByPercentDiff: IDisposable, IEquatable<TradesByPercentDiff>
     {
         private readonly IGroup<Trade, long, int> _group;
-        private readonly IObservableCollection<TradeProxy> _data= new ObservableCollectionExtended<TradeProxy>();
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private readonly IDisposable _cleanUp;
         private readonly int _percentBand;
 
-        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group,
-            [NotNull] ISchedulerProvider schedulerProvider)
+        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> group,[NotNull] ISchedulerProvider schedulerProvider)
         {
-            if (@group == null) throw new ArgumentNullException("group");
-            if (schedulerProvider == null) throw new ArgumentNullException("schedulerProvider");
+            if (group == null) throw new ArgumentNullException(nameof(@group));
+            if (schedulerProvider == null) throw new ArgumentNullException(nameof(schedulerProvider));
 
-            _group = @group;
-            _percentBand = @group.Key;
+            _group = group;
+            _percentBand = group.Key;
            
-            _cleanUp = @group.Cache.Connect()
+            _cleanUp = group.Cache.Connect()
                         .Transform(trade => new TradeProxy(trade))
                         .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp),SortOptimisations.ComparesImmutableValuesOnly,500)
                         .ObserveOn(schedulerProvider.MainThread)
-                        .Bind(_data)
+                        .Bind(out _data)
                         .DisposeMany()
                         .Subscribe();
         }
 
-        public int PercentBand
-        {
-            get { return _percentBand; }
-        }
+        public int PercentBand => _percentBand;
 
-        public int PercentBandUpperBound
-        {
-            get { return _group.Key + 1; }
-        }
+        public int PercentBandUpperBound => _group.Key + 1;
 
-        public IObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
 
         #region Equality
 
@@ -86,6 +73,12 @@ namespace Trader.Domain.Model
         }
 
         #endregion
+
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
 
     }
 }

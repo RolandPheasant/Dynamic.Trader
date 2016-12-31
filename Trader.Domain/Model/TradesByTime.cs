@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using TradeExample.Annotations;
 using Trader.Domain.Infrastucture;
 

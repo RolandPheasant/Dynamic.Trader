@@ -2,7 +2,6 @@ using System;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using DynamicData.PLinq;
 using ReactiveUI;
 using Trader.Domain.Model;

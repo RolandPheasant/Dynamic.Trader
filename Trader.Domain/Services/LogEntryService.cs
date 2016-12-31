@@ -38,10 +38,7 @@ namespace Trader.Domain.Services
         }
 
 
-        public IObservableList<LogEntry> Items
-        {
-            get { return _readonly; }
-        }
+        public IObservableList<LogEntry> Items => _readonly;
 
         public void Remove(IEnumerable<LogEntry> items)
         {

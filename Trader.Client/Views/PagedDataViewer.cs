@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using DynamicData.PLinq;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
@@ -17,7 +16,6 @@ namespace Trader.Client.Views
         private readonly IDisposable _cleanUp;
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private readonly PageParameterData _pageParameters = new PageParameterData(1,25);
-        private readonly SortParameterData _sortParameters = new SortParameterData();
         private string _searchText;
 
         public PagedDataViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
@@ -71,7 +69,7 @@ namespace Trader.Client.Views
 
         public PageParameterData PageParameters => _pageParameters;
 
-        public SortParameterData SortParameters => _sortParameters;
+        public SortParameterData SortParameters { get; } = new SortParameterData();
 
         public void Dispose()
         {

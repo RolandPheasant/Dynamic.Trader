@@ -44,10 +44,7 @@ namespace Trader.Client.Views
 
         public IVisibleRowsAccessor<TradeProxy> VisibleRowsAccessor => _visibleRowsAccessor;
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
 
         public void Dispose()

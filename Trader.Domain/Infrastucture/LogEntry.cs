@@ -4,12 +4,8 @@ using DynamicData;
 namespace Trader.Domain.Infrastucture
 {
 
-
     public class LogEntry: IKey<long>, IEquatable<LogEntry>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
-        /// </summary>
         public LogEntry(long counter, string message, string loggerName, string threadName, DateTime timeStamp, LogLevel level, Exception exception)
         {
             Counter = counter;

@@ -14,7 +14,6 @@ namespace Trader.Client.Views
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
         private readonly IDisposable _cleanUp;
-        private readonly ILogEntryService _logEntryService;
         private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
         private readonly SelectionController<LogEntryProxy> _selectionController = new SelectionController<LogEntryProxy>();
         private readonly ReactiveCommand<object> _deleteCommand;
@@ -25,8 +24,6 @@ namespace Trader.Client.Views
 
         public LogEntryViewer(ILogEntryService logEntryService)
         {
-            _logEntryService = logEntryService;
-            
             //build an observable filter
             var filter = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
@@ -63,7 +60,7 @@ namespace Trader.Client.Views
                 {
                     if (query.Count == 0) return "Select log entries to delete";
                     if (query.Count == 1) return "Delete selected log entry?";
-                    return string.Format("Delete {0} log entries?", query.Count);
+                    return $"Delete {query.Count} log entries?";
                 })
                 .ToProperty(this, viewmodel => viewmodel.DeleteItemsText, "Select log entries to delete");
 
@@ -80,7 +77,7 @@ namespace Trader.Client.Views
                     {
                         var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Original).ToArray();
                        _selectionController.Clear();
-                        _logEntryService.Remove(toRemove);
+                        logEntryService.Remove(toRemove);
                     });
 
             var connected = selectedItems.Connect();

@@ -14,13 +14,13 @@ namespace Trader.Domain.Services
 
         public NearToMarketService([NotNull] ITradeService tradeService)
         {
-            if (tradeService == null) throw new ArgumentNullException("tradeService");
+            if (tradeService == null) throw new ArgumentNullException(nameof(tradeService));
             _tradeService = tradeService;
         }
 
         public IObservable<IChangeSet<Trade, long>> Query(Func<decimal> percentFromMarket)
         {
-            if (percentFromMarket == null) throw new ArgumentNullException("percentFromMarket");
+            if (percentFromMarket == null) throw new ArgumentNullException(nameof(percentFromMarket));
 
             return Observable.Create<IChangeSet<Trade, long>>
                 (observer =>
@@ -39,8 +39,7 @@ namespace Trader.Domain.Services
                          .Subscribe(_ => filter.Reevaluate());
 
                      //filter on live trades matching % specified
-                     var subscriber = _tradeService.All
-                         .Connect(trade=>trade.Status==TradeStatus.Live)
+                     var subscriber = _tradeService.Live.Connect()
                          .Synchronize(locker)
                          .Filter(filter)
                          .SubscribeSafe(observer);
