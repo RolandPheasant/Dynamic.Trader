@@ -37,8 +37,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
        
-        <TextBox 
-                wpf:TextField.Hint="Enter search text..."
+        <TextBox wpf:HintAssist.Hint="Enter search text..."
                 controls:TextBoxHelper.ClearTextButton="True"
                 Margin="4 0 0 0"
                 MinWidth="125"

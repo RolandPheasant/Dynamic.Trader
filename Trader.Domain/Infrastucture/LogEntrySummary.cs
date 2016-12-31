@@ -4,12 +4,7 @@ namespace Trader.Domain.Infrastucture
 {
     public class LogEntrySummary : IEquatable<LogEntrySummary>
     {
-        private readonly int _debug;
-        private readonly int _info;
-        private readonly int _warning;
-        private readonly int _error;
-
-        public readonly static LogEntrySummary Empty = new LogEntrySummary();
+        public static readonly LogEntrySummary Empty = new LogEntrySummary();
 
         private LogEntrySummary()
         {
@@ -17,31 +12,19 @@ namespace Trader.Domain.Infrastucture
 
         public LogEntrySummary(int debug, int info, int warning, int error)
         {
-            _debug = debug;
-            _info = info;
-            _warning = warning;
-            _error = error;
+            Debug = debug;
+            Info = info;
+            Warning = warning;
+            Error = error;
         }
 
-        public int Debug
-        {
-            get { return _debug; }
-        }
+        public int Debug { get; }
 
-        public int Info
-        {
-            get { return _info; }
-        }
+        public int Info { get; }
 
-        public int Warning
-        {
-            get { return _warning; }
-        }
+        public int Warning { get; }
 
-        public int Error
-        {
-            get { return _error; }
-        }
+        public int Error { get; }
 
         #region Equality members
 
@@ -49,7 +32,7 @@ namespace Trader.Domain.Infrastucture
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _error == other._error && _warning == other._warning && _info == other._info && _debug == other._debug;
+            return Error == other.Error && Warning == other.Warning && Info == other.Info && Debug == other.Debug;
         }
 
         public override bool Equals(object obj)
@@ -64,10 +47,10 @@ namespace Trader.Domain.Infrastucture
         {
             unchecked
             {
-                int hashCode = _error;
-                hashCode = (hashCode * 397) ^ _warning;
-                hashCode = (hashCode * 397) ^ _info;
-                hashCode = (hashCode * 397) ^ _debug;
+                int hashCode = Error;
+                hashCode = (hashCode * 397) ^ Warning;
+                hashCode = (hashCode * 397) ^ Info;
+                hashCode = (hashCode * 397) ^ Debug;
                 return hashCode;
             }
         }

@@ -52,10 +52,7 @@ namespace Trader.Domain.Model
             _marketPriceChangedSubject.OnNext(marketPrice);
         }
 
-        public IObservable<decimal> MarketPriceChanged
-        {
-            get { return _marketPriceChangedSubject.AsObservable(); }
-        }
+        public IObservable<decimal> MarketPriceChanged => _marketPriceChangedSubject.AsObservable();
 
         #region Equality Members
 

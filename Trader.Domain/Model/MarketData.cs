@@ -4,39 +4,23 @@ namespace Trader.Domain.Model
 {
     public struct MarketData : IEquatable<MarketData>
     {
-        private readonly string _instrument;
-        private readonly decimal _bid;
-        private readonly decimal _offer;
+        public string Instrument { get; }
+        public decimal Bid { get; }
+        public decimal Offer { get; }
 
         public MarketData(string instrument, decimal bid, decimal offer)
         {
-            _instrument = instrument;
-            _bid = bid;
-            _offer = offer;
+            Instrument = instrument;
+            Bid = bid;
+            Offer = offer;
         }
-
-        public string Instrument
-        {
-            get { return _instrument; }
-        }
-
-        public decimal Bid
-        {
-            get { return _bid; }
-        }
-
-        public decimal Offer
-        {
-            get { return _offer; }
-        }
-
 
 
         #region Equality
 
         public bool Equals(MarketData other)
         {
-            return string.Equals(_instrument, other._instrument) && _bid == other._bid && _offer == other._offer;
+            return string.Equals(Instrument, other.Instrument) && Bid == other.Bid && Offer == other.Offer;
         }
 
         public override bool Equals(object obj)
@@ -49,9 +33,9 @@ namespace Trader.Domain.Model
         {
             unchecked
             {
-                int hashCode = (_instrument != null ? _instrument.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ _bid.GetHashCode();
-                hashCode = (hashCode * 397) ^ _offer.GetHashCode();
+                int hashCode = (Instrument != null ? Instrument.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Bid.GetHashCode();
+                hashCode = (hashCode * 397) ^ Offer.GetHashCode();
                 return hashCode;
             }
         }
@@ -105,7 +89,7 @@ namespace Trader.Domain.Model
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}/{2}", _instrument, _bid, _offer);
+            return string.Format("{0}, {1}/{2}", Instrument, Bid, Offer);
         }
     }
 }

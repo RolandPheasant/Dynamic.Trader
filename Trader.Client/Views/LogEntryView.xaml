@@ -47,7 +47,7 @@
             </Grid.ColumnDefinitions>
 
             <!--Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
-            <TextBox  x:Name="SearchTextBox" wpf:TextField.Hint="Enter search text..."
+            <TextBox  x:Name="SearchTextBox" wpf:HintAssist.Hint="Enter search text..."
                             Margin="4 0 0 0"
                             VerticalAlignment="Center"
                             Grid.Column="0"

@@ -36,9 +36,9 @@ namespace Trader.Domain.Services
             var tradeLoader = GenerateTradesAndMaintainCache();
 
             //expire closed items from the cache ro avoid unbounded data
-           var expirer = _tradesSource
-               .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?)null,TimeSpan.FromMinutes(1),schedulerProvider.TaskPool)
-               .Subscribe(x=>_logger.Info("{0} filled trades have been removed from memory",x.Count()));
+            var expirer = _tradesSource
+                .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?) null, TimeSpan.FromMinutes(1), schedulerProvider.TaskPool)
+                .Subscribe(x => _logger.Info("{0} filled trades have been removed from memory", x.Count()));
 
             //log changes
             var loggerWriter = LogChanges();
@@ -92,7 +92,7 @@ namespace Trader.Domain.Services
             const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
             return All.Connect().Skip(1)
                             .WhereReasonsAre(ChangeReason.Add,ChangeReason.Update)
-                            .Convert(trade => string.Format(messageTemplate,
+                            .Cast(trade => string.Format(messageTemplate,
                                                     trade.BuyOrSell,
                                                     trade.Amount,
                                                     trade.CurrencyPair,
