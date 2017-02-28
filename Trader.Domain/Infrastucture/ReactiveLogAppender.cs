@@ -9,13 +9,10 @@ namespace Trader.Domain.Infrastucture
 {
     public class ReactiveLogAppender : AppenderSkeleton
     {
-        private readonly static ISubject<LogEntry> Subject = new Subject<LogEntry>();
+        private static readonly ISubject<LogEntry> Subject = new Subject<LogEntry>();
         private long _counter;
 
-        public static IObservable<LogEntry> LogEntryObservable
-        {
-            get { return Subject.AsObservable(); }
-        }
+        public static IObservable<LogEntry> LogEntryObservable => Subject.AsObservable();
 
         #region Overrides of AppenderSkeleton
 

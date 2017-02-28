@@ -5,27 +5,17 @@ namespace Trader.Domain.Model
 {
     public sealed class SortContainer : IEquatable<SortContainer>
     {
-        private readonly IComparer<TradeProxy> _comparer;
-        private readonly string _description;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public SortContainer(string description, IComparer<TradeProxy> comparer)
         {
-            _description = description;
-            _comparer = comparer;
+            Description = description;
+            Comparer = comparer;
         }
 
-        public IComparer<TradeProxy> Comparer
-        {
-            get { return _comparer; }
-        }
-
-        public string Description
-        {
-            get { return _description; }
-        }
+        public IComparer<TradeProxy> Comparer { get; }
+        public string Description { get; }
 
         #region Equality members
 
@@ -33,7 +23,7 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(_description, other._description);
+            return string.Equals(Description, other.Description);
         }
 
         public override bool Equals(object obj)
@@ -46,7 +36,7 @@ namespace Trader.Domain.Model
 
         public override int GetHashCode()
         {
-            return (_description != null ? _description.GetHashCode() : 0);
+            return (Description != null ? Description.GetHashCode() : 0);
         }
 
         public static bool operator ==(SortContainer left, SortContainer right)

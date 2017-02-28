@@ -19,7 +19,7 @@
         WindowTransitionsEnabled="False"
     
         Title="Dynamic Trader" Height="500" Width="700"
-      d:DataContext="{d:DesignInstance client:WindowViewModel, IsDesignTimeCreatable=False}">
+      d:DataContext="{d:DesignInstance infrastucture:WindowViewModel, IsDesignTimeCreatable=False}">
 
 
     <Window.Resources>

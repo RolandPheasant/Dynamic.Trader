@@ -7,35 +7,31 @@ using System.Windows.Input;
 using Dragablz;
 using DynamicData;
 using DynamicData.Binding;
-using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client
+namespace Trader.Client.Infrastucture
 {
     public class WindowViewModel: AbstractNotifyPropertyChanged, IDisposable
     {
-        private readonly IInterTabClient _interTabClient;
         private readonly IObjectProvider _objectProvider;
-        private readonly Command _showInGitHubCommand;
         private readonly Command _showMenuCommand;
         private readonly IDisposable _cleanUp;
-        private readonly ObservableCollection<ViewContainer> _data = new ObservableCollection<ViewContainer>();
         private ViewContainer _selected;
 
         public WindowViewModel(IObjectProvider objectProvider, IWindowFactory windowFactory)
         {
             _objectProvider = objectProvider;
-            _interTabClient = new InterTabClient(windowFactory);
+            InterTabClient = new InterTabClient(windowFactory);
             _showMenuCommand =  new Command(ShowMenu,()=> Selected!=null && !(Selected.Content is MenuItems));
-            _showInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
+            ShowInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
 
-            var menuController = _data.ToObservableChangeSet()
+            var menuController = Views.ToObservableChangeSet()
                                         .Filter(vc => vc.Content is MenuItems)
                                         .Transform(vc => (MenuItems) vc.Content)
                                         .MergeMany(menuItem => menuItem.ItemCreated)
                                         .Subscribe(item =>
                                         {
-                                            _data.Add(item);
+                                            Views.Add(item);
                                             Selected = item;
                                         });
             
@@ -43,19 +39,19 @@ namespace Trader.Client
             _cleanUp = Disposable.Create(() =>
                                          {
                                              menuController.Dispose();
-                                             foreach (var disposable in  _data.Select(vc=>vc.Content).OfType<IDisposable>())
+                                             foreach (var disposable in  Views.Select(vc=>vc.Content).OfType<IDisposable>())
                                                  disposable.Dispose();
                                          });
         }
         
         public void ShowMenu()
         {
-            var existing = _data.FirstOrDefault(vc => vc.Content is MenuItems);
+            var existing = Views.FirstOrDefault(vc => vc.Content is MenuItems);
             if (existing == null)
             {
                 var newmenu = _objectProvider.Get<MenuItems>();
                 var newItem = new ViewContainer("Menu", newmenu);
-                _data.Add(newItem);
+                Views.Add(newItem);
                 Selected = newItem;
             }
             else
@@ -75,16 +71,13 @@ namespace Trader.Client
             var container = (ViewContainer)args.DragablzItem.DataContext;//.DataContext;
             if (container.Equals(Selected))
             {
-                Selected = _data.FirstOrDefault(vc => vc != container);
+                Selected = Views.FirstOrDefault(vc => vc != container);
             }
             var disposable = container.Content as IDisposable;
-            if (disposable != null) disposable.Dispose();
+            disposable?.Dispose();
         }
 
-        public ObservableCollection<ViewContainer> Views
-        {
-            get { return _data; }
-        }
+        public ObservableCollection<ViewContainer> Views { get; } = new ObservableCollection<ViewContainer>();
 
         public ViewContainer Selected
         {
@@ -92,20 +85,11 @@ namespace Trader.Client
             set { SetAndRaise(ref _selected, value); }
         }
 
-        public IInterTabClient InterTabClient
-        {
-            get { return _interTabClient; }
-        }
+        public IInterTabClient InterTabClient { get; }
 
-        public ICommand ShowMenuCommand
-        {
-            get { return _showMenuCommand; }
-        }
+        public ICommand ShowMenuCommand => _showMenuCommand;
 
-        public Command ShowInGitHubCommand
-        {
-            get { return _showInGitHubCommand; }
-        }
+        public Command ShowInGitHubCommand { get; }
 
         public void Dispose()
         {

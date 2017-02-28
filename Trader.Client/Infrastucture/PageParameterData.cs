@@ -33,15 +33,9 @@ namespace Trader.Client.Infrastucture
             _previousPageCommand.Refresh();
         }
 
-        public ICommand NextPageCommand
-        {
-            get { return _nextPageCommand; }
-        }
+        public ICommand NextPageCommand => _nextPageCommand;
 
-        public ICommand PreviousPageCommand
-        {
-            get { return _previousPageCommand; }
-        }
+        public ICommand PreviousPageCommand => _previousPageCommand;
 
         public int TotalCount
         {

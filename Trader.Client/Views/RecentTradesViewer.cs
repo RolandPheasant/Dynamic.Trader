@@ -32,10 +32,7 @@ namespace Trader.Client.Views
 
         }
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
         public void Dispose()
         {

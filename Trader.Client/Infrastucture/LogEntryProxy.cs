@@ -31,10 +31,7 @@ namespace Trader.Client.Infrastucture
             _cleanUp = _recent;
         }
 
-        public bool Recent
-        {
-            get { return _recent.Value; }
-        }
+        public bool Recent => _recent.Value;
 
         public bool Removing
         {

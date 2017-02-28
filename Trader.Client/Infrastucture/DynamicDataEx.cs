@@ -12,8 +12,8 @@ namespace DynamicData
         public static IObservable<IChangeSet<TObject, TKey>> DelayRemove<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source,
             TimeSpan delayPeriod, Action<TObject> onDefer)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (onDefer == null) throw new ArgumentNullException("onDefer");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (onDefer == null) throw new ArgumentNullException(nameof(onDefer));
 
             return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
             {
@@ -38,8 +38,8 @@ namespace DynamicData
         public static IObservable<IChangeSet<TObject>> DelayRemove<TObject>(this IObservable<IChangeSet<TObject>> source,
                 TimeSpan delayPeriod, Action<TObject> onDefer)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (onDefer == null) throw new ArgumentNullException("onDefer");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (onDefer == null) throw new ArgumentNullException(nameof(onDefer));
 
             return Observable.Create<IChangeSet<TObject>>(observer =>
             {

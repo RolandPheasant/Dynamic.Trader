@@ -25,7 +25,7 @@ namespace Trader.Client.Infrastucture
                 var startOfGeneric = name.IndexOf("`");
                 name = name.Substring(0,startOfGeneric);
                 var generics = genericArgs.Select(t=>t.Name).ToDelimited();
-                _log = LogManager.GetLogger(string.Format("{0}<{1}>", name, generics));
+                _log = LogManager.GetLogger($"{name}<{generics}>");
             }
         }
 

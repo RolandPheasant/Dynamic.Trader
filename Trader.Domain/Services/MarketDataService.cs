@@ -54,7 +54,7 @@ namespace Trader.Domain.Services
 
         public IObservable<MarketData> Watch(string currencyPair)
         {
-            if (currencyPair == null) throw new ArgumentNullException("currencyPair");
+            if (currencyPair == null) throw new ArgumentNullException(nameof(currencyPair));
             return _prices.Lookup(currencyPair)
                 .ValueOrThrow(() => new Exception(currencyPair + " is an unknown currency pair"));
         }

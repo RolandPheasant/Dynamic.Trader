@@ -5,6 +5,6 @@ namespace Trader.Domain.Infrastucture
     public interface ISchedulerProvider
     {
         IScheduler MainThread { get; }
-        IScheduler TaskPool { get; }
+        IScheduler Background { get; }
     }
 }

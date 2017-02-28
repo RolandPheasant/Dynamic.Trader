@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using DynamicData.PLinq;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
@@ -16,8 +15,6 @@ namespace Trader.Client.Views
     {
         private readonly IDisposable _cleanUp;
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
-        private readonly PageParameterData _pageParameters = new PageParameterData(1,25);
-        private readonly SortParameterData _sortParameters = new SortParameterData();
         private string _searchText;
 
         public PagedDataViewer(ITradeService tradeService, ISchedulerProvider schedulerProvider)
@@ -30,7 +27,7 @@ namespace Trader.Client.Views
             //build observable sort comparer
             var sort = SortParameters.WhenValueChanged(t => t.SelectedItem)
                 .Select(prop => prop.Comparer)
-                .ObserveOn(schedulerProvider.TaskPool);
+                .ObserveOn(schedulerProvider.Background);
 
             //build observable comparer
             var currentPageChanged = PageParameters.WhenValueChanged(p => p.CurrentPage);
@@ -44,10 +41,10 @@ namespace Trader.Client.Views
             _cleanUp = tradeService.All.Connect()
                 .Filter(filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
-                .Sort(sort, SortOptimisations.ComparesImmutableValuesOnly,resetThreshold:25)
+                .Sort(sort, SortOptimisations.ComparesImmutableValuesOnly)
                 .Page(pager)
                 .ObserveOn(schedulerProvider.MainThread)
-                .Do(changes => _pageParameters.Update(changes.Response))
+                .Do(changes => PageParameters.Update(changes.Response))
                 .Bind(out _data)        // update observable collection bindings
                 .DisposeMany()          // dispose when no longer required
                 .Subscribe();
@@ -72,15 +69,9 @@ namespace Trader.Client.Views
             get { return _data; }
         }
 
-        public PageParameterData PageParameters
-        {
-            get { return _pageParameters; }
-        }
+        public PageParameterData PageParameters { get; } = new PageParameterData(1,25);
 
-        public SortParameterData SortParameters
-        {
-            get { return _sortParameters; }
-        }
+        public SortParameterData SortParameters { get; } = new SortParameterData();
 
         public void Dispose()
         {

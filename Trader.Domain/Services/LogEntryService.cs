@@ -12,14 +12,13 @@ namespace Trader.Domain.Services
     {
         private readonly ILogger _logger;
         private readonly ISourceList<LogEntry> _source = new SourceList<LogEntry>();
-        private readonly IObservableList<LogEntry> _readonly; 
         private readonly IDisposable _disposer;
         private readonly object _locker = new object();
         
         public LogEntryService(ILogger logger)
         {
             _logger = logger;
-            _readonly = _source.AsObservableList();
+            Items = _source.AsObservableList();
 
             var loader = ReactiveLogAppender.LogEntryObservable
                             .Buffer(TimeSpan.FromMilliseconds(250))
@@ -38,10 +37,7 @@ namespace Trader.Domain.Services
         }
 
 
-        public IObservableList<LogEntry> Items
-        {
-            get { return _readonly; }
-        }
+        public IObservableList<LogEntry> Items { get; }
 
         public void Remove(IEnumerable<LogEntry> items)
         {

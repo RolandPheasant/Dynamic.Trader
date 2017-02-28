@@ -7,69 +7,28 @@ namespace Trader.Domain.Infrastucture
 
     public class LogEntry: IKey<long>, IEquatable<LogEntry>
     {
-        private readonly long _counter;
-        private readonly string _message;
-        private readonly string _loggerName;
-        private readonly string _threadName;
-        private readonly DateTime _timeStamp;
-        private readonly LogLevel _level;
-        private readonly Exception _exception;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
         public LogEntry(long counter, string message, string loggerName, string threadName, DateTime timeStamp, LogLevel level, Exception exception)
         {
-            _counter = counter;
-            _message = message;
-            _loggerName = loggerName;
-            _threadName = threadName;
-            _timeStamp = timeStamp;
-            _level = level;
-            _exception = exception;
+            Counter = counter;
+            Message = message;
+            LoggerName = loggerName;
+            ThreadName = threadName;
+            TimeStamp = timeStamp;
+            Level = level;
+            Exception = exception;
         }
 
-        public string Message
-        {
-            get { return _message; }
-        }
-
-        public string LoggerName
-        {
-            get { return _loggerName; }
-        }
-
-        public string ThreadName
-        {
-            get { return _threadName; }
-        }
-
-        public DateTime TimeStamp
-        {
-            get { return _timeStamp; }
-        }
-
-        public LogLevel Level
-        {
-            get { return _level; }
-        }
-
-        public Exception Exception
-        {
-            get { return _exception; }
-        }
-
-        public long Counter
-        {
-            get { return _counter; }
-        }
-
-
-        public long Key
-        {
-            get { return _counter; }
-        }
-
+        public string Message { get; }
+        public string LoggerName { get; }
+        public string ThreadName { get; }
+        public DateTime TimeStamp { get; }
+        public LogLevel Level { get; }
+        public Exception Exception { get; }
+        public long Counter { get; }
+        public long Key => Counter;
 
         #region Equality members
 
@@ -77,7 +36,7 @@ namespace Trader.Domain.Infrastucture
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _counter == other._counter;
+            return Counter == other.Counter;
         }
 
         public override bool Equals(object obj)
@@ -90,7 +49,7 @@ namespace Trader.Domain.Infrastucture
 
         public override int GetHashCode()
         {
-            return _counter.GetHashCode();
+            return Counter.GetHashCode();
         }
 
         public static bool operator ==(LogEntry left, LogEntry right)
@@ -113,7 +72,7 @@ namespace Trader.Domain.Infrastucture
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Level: {0}, ThreadName: {1}, LoggerName: {2}, Message: {3}, TimeStamp: {4}", _level, _threadName, _loggerName, _message, _timeStamp);
+            return $"Level: {Level}, ThreadName: {ThreadName}, LoggerName: {LoggerName}, Message: {Message}, TimeStamp: {TimeStamp}";
         }
     }
 }

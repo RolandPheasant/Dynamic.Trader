@@ -26,10 +26,7 @@ namespace Trader.Client.Views
                 .Subscribe();
         }
 
-        public ReadOnlyObservableCollection<CurrencyPairPosition> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<CurrencyPairPosition> Data => _data;
 
         public void Dispose()
         {

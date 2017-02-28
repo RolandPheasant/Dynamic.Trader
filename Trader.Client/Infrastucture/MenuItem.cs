@@ -7,65 +7,40 @@ namespace Trader.Client.Infrastucture
 {
     public class MenuItem
     {
-        private readonly string _title;
-        private readonly string _description;
-        private readonly object _content;
-        private readonly IEnumerable<Link> _link;
-        private readonly ICommand _command;
-        private readonly MenuCategory _category;
-
         public MenuItem(string title, string description, Action action,  
             IEnumerable<Link> link = null,
             object content = null)
         {
-            _title = title;
-            _description = description;
-            _content = content;
-            _category = MenuCategory.DynamicData;
-            _link = link ?? Enumerable.Empty<Link>();
-            _command = new Command(action); ;
+            Title = title;
+            Description = description;
+            Content = content;
+            Category = MenuCategory.DynamicData;
+            Link = link ?? Enumerable.Empty<Link>();
+            Command = new Command(action); ;
         }
 
         public MenuItem(string title,string description ,Action action, MenuCategory category,
             IEnumerable<Link> link = null,
             object content=null)
         {
-            _title = title;
-            _description = description;
-            _category = category;
-            _link = link ?? Enumerable.Empty<Link>();
-            _command = new Command(action); ;
+            Title = title;
+            Description = description;
+            Category = category;
+            Link = link ?? Enumerable.Empty<Link>();
+            Command = new Command(action); ;
         }
         
 
-        public string Title
-        {
-            get { return _title; }
-        }
+        public string Title { get; }
 
-        public ICommand Command
-        {
-            get { return _command; }
-        }
+        public ICommand Command { get; }
 
-        public IEnumerable<Link> Link
-        {
-            get { return _link; }
-        }
+        public IEnumerable<Link> Link { get; }
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        public string Description { get; }
 
-        public object Content
-        {
-            get { return _content; }
-        }
+        public object Content { get; }
 
-        public MenuCategory Category
-        {
-            get { return _category; }
-        }
+        public MenuCategory Category { get; }
     }
 }

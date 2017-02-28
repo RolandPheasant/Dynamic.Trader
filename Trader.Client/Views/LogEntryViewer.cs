@@ -14,10 +14,7 @@ namespace Trader.Client.Views
     public class LogEntryViewer : ReactiveObject, IDisposable
     {
         private readonly IDisposable _cleanUp;
-        private readonly ILogEntryService _logEntryService;
-        private readonly ReactiveList<LogEntryProxy> _data = new ReactiveList<LogEntryProxy>();
         private readonly SelectionController<LogEntryProxy> _selectionController = new SelectionController<LogEntryProxy>();
-        private readonly ReactiveCommand<object> _deleteCommand;
         private readonly ObservableAsPropertyHelper<string> _deleteItemsText;
 
         private LogEntrySummary _summary = LogEntrySummary.Empty;
@@ -25,8 +22,6 @@ namespace Trader.Client.Views
 
         public LogEntryViewer(ILogEntryService logEntryService)
         {
-            _logEntryService = logEntryService;
-            
             //build an observable filter
             var filter = this.WhenAnyValue(x => x.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(250))
@@ -35,11 +30,11 @@ namespace Trader.Client.Views
             //filter, sort and populate reactive list.
             var loader = logEntryService.Items.Connect()
                 .Transform(le => new LogEntryProxy(le))
-                .DelayRemove(TimeSpan.FromSeconds(0.75), proxy =>proxy.FlagForRemove())
+                .DelayRemove(TimeSpan.FromSeconds(0.75), proxy => proxy.FlagForRemove())
                 .Filter(filter)
-                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le=>le.TimeStamp).ThenByDescending(l => l.Key), SortOptions.UseBinarySearch)
+                .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le => le.TimeStamp).ThenByDescending(l => l.Key), SortOptions.UseBinarySearch)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(_data) 
+                .Bind(Data)
                 .DisposeMany()
                 .Subscribe();
 
@@ -63,13 +58,13 @@ namespace Trader.Client.Views
                 {
                     if (query.Count == 0) return "Select log entries to delete";
                     if (query.Count == 1) return "Delete selected log entry?";
-                    return string.Format("Delete {0} log entries?", query.Count);
+                    return $"Delete {query.Count} log entries?";
                 })
                 .ToProperty(this, viewmodel => viewmodel.DeleteItemsText, "Select log entries to delete");
 
 
             //make a command out of selected items - enabling the command when there is a selection 
-            _deleteCommand = selectedItems
+            DeleteCommand = selectedItems
                                     .QueryWhenChanged(query => query.Count > 0)
                                     .ToCommand();
  
@@ -80,7 +75,7 @@ namespace Trader.Client.Views
                     {
                         var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Original).ToArray();
                        _selectionController.Clear();
-                        _logEntryService.Remove(toRemove);
+                        logEntryService.Remove(toRemove);
                     });
 
             var connected = selectedItems.Connect();
@@ -90,7 +85,7 @@ namespace Trader.Client.Views
                 loader.Dispose();
                 connected.Dispose();
                 _deleteItemsText.Dispose();
-                _deleteCommand.Dispose();
+                DeleteCommand.Dispose();
                 commandInvoker.Dispose();
                 _selectionController.Dispose();
                 summariser.Dispose();
@@ -112,31 +107,19 @@ namespace Trader.Client.Views
             set { this.RaiseAndSetIfChanged(ref _searchText, value); } 
         }
 
-        public string DeleteItemsText
-        {
-            get { return _deleteItemsText.Value; }
-        }
-        
+        public string DeleteItemsText => _deleteItemsText.Value;
+
         public LogEntrySummary Summary
         {
             get { return _summary; }
             set { this.RaiseAndSetIfChanged(ref _summary, value); }
         }
 
-        public ReactiveList<LogEntryProxy> Data
-        {
-            get { return _data; }
-        }
-        
-        public ReactiveCommand<object> DeleteCommand
-        {
-            get { return _deleteCommand; }
-        }
+        public ReactiveList<LogEntryProxy> Data { get; } = new ReactiveList<LogEntryProxy>();
 
-        public IAttachedSelector Selector
-        {
-            get { return _selectionController; }
-        }
+        public ReactiveCommand<object> DeleteCommand { get; }
+
+        public IAttachedSelector Selector => _selectionController;
 
 
         public void Dispose()

@@ -1,8 +1,8 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using TradeExample.Annotations;
 using Trader.Domain.Infrastucture;
 
@@ -10,33 +10,27 @@ namespace Trader.Domain.Model
 {
     public class TradesByTime : IDisposable, IEquatable<TradesByTime>
     {
-        private readonly IObservableCollection<TradeProxy> _data;
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private readonly IDisposable _cleanUp;
-        private readonly TimePeriod _period;
 
         public TradesByTime([NotNull] IGroup<Trade, long, TimePeriod> @group,
             ISchedulerProvider schedulerProvider)
         {
-            if (@group == null) throw new ArgumentNullException("group");
-            _period = @group.Key;
-
-            _data = new ObservableCollectionExtended<TradeProxy>();
+            if (@group == null) throw new ArgumentNullException(nameof(@group));
+            Period = @group.Key;
 
             _cleanUp = @group.Cache.Connect()
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(schedulerProvider.MainThread)
-                .Bind(_data)
+                .Bind(out _data)
                 .DisposeMany()
                 .Subscribe();
         }
 
 
 
-        public TimePeriod Period
-        {
-            get { return _period; }
-        }
+        public TimePeriod Period { get; }
 
         public string Description
         {
@@ -56,10 +50,7 @@ namespace Trader.Domain.Model
             }
         }
 
-        public IObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
         #region Equality
 
@@ -67,7 +58,7 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _period == other._period;
+            return Period == other.Period;
         }
 
         public override bool Equals(object obj)
@@ -80,7 +71,7 @@ namespace Trader.Domain.Model
 
         public override int GetHashCode()
         {
-            return (int)_period;
+            return (int)Period;
         }
 
         public static bool operator ==(TradesByTime left, TradesByTime right)

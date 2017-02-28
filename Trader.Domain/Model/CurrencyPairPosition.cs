@@ -8,12 +8,11 @@ namespace Trader.Domain.Model
     public class CurrencyPairPosition: AbstractNotifyPropertyChanged,  IDisposable, IEquatable<CurrencyPairPosition>
     {
         private readonly IDisposable _cleanUp;
-        private readonly string _currencyPair;
         private TradesPosition _position;
 
         public CurrencyPairPosition(IGroup<Trade, long, string> tradesByCurrencyPair)
         {
-            _currencyPair = tradesByCurrencyPair.Key;
+            CurrencyPair = tradesByCurrencyPair.Key;
 
             _cleanUp = tradesByCurrencyPair.Cache.Connect()
                 .QueryWhenChanged(query =>
@@ -32,10 +31,7 @@ namespace Trader.Domain.Model
             set { SetAndRaise(ref  _position,value); }
         }
 
-        public string CurrencyPair
-        {
-            get { return _currencyPair; }
-        }
+        public string CurrencyPair { get; }
 
         #region Equality Members
 
@@ -43,7 +39,7 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(_currencyPair, other._currencyPair);
+            return string.Equals(CurrencyPair, other.CurrencyPair);
         }
 
         public override bool Equals(object obj)
@@ -56,7 +52,7 @@ namespace Trader.Domain.Model
 
         public override int GetHashCode()
         {
-            return (_currencyPair != null ? _currencyPair.GetHashCode() : 0);
+            return (CurrencyPair != null ? CurrencyPair.GetHashCode() : 0);
         }
 
         public static bool operator ==(CurrencyPairPosition left, CurrencyPairPosition right)

@@ -32,10 +32,7 @@ namespace Trader.Client.Views
             set { SetAndRaise(ref _nearToMarketPercent, value); }
         }
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
         public void Dispose()
         {

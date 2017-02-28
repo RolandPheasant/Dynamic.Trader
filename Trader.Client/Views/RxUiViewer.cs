@@ -53,10 +53,7 @@ namespace Trader.Client.Views
             set { this.RaiseAndSetIfChanged(ref _searchText, value); }
         }
 
-        public IReadOnlyReactiveList<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public IReadOnlyReactiveList<TradeProxy> Data => _data;
 
         public void Dispose()
         {

@@ -15,8 +15,6 @@ namespace Trader.Domain.Services
         private readonly TradeGenerator _tradeGenerator;
         private readonly ISchedulerProvider _schedulerProvider;
         private readonly ISourceCache<Trade, long> _tradesSource;
-        private readonly IObservableCache<Trade, long> _all;
-        private readonly IObservableCache<Trade, long> _live;
         private readonly IDisposable _cleanup;
 
         public TradeService(ILogger logger,TradeGenerator tradeGenerator, ISchedulerProvider schedulerProvider)
@@ -29,23 +27,23 @@ namespace Trader.Domain.Services
             _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
 
             //call AsObservableCache() to hide the update methods as we are exposing the cache
-            _all = _tradesSource.AsObservableCache();
+            All = _tradesSource.AsObservableCache();
 
             //create a derived cache  
-            _live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
+            Live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
 
             //code to emulate an external trade provider
             var tradeLoader = GenerateTradesAndMaintainCache();
 
             //expire closed items from the cache ro avoid unbounded data
            var expirer = _tradesSource
-               .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?)null,TimeSpan.FromMinutes(1),schedulerProvider.TaskPool)
+               .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?)null,TimeSpan.FromMinutes(1),schedulerProvider.Background)
                .Subscribe(x=>_logger.Info("{0} filled trades have been removed from memory",x.Count()));
 
             //log changes
             var loggerWriter = LogChanges();
 
-            _cleanup = new CompositeDisposable(_all, _tradesSource, tradeLoader, loggerWriter, expirer);
+            _cleanup = new CompositeDisposable(All, _tradesSource, tradeLoader, loggerWriter, expirer);
         }
         
         private IDisposable GenerateTradesAndMaintainCache()
@@ -54,7 +52,7 @@ namespace Trader.Domain.Services
             var random = new Random();
 
             //initally load some trades 
-            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(10000, true));
+            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(5000, true));
 
             Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(1000, 2500));
 
@@ -62,7 +60,7 @@ namespace Trader.Domain.Services
 
 
             // create a random number of trades at a random interval
-            var tradeGenerator = _schedulerProvider.TaskPool
+            var tradeGenerator = _schedulerProvider.Background
                             .ScheduleRecurringAction(randomInterval, () =>
                             {
                                 var number = random.Next(1,5);
@@ -71,7 +69,7 @@ namespace Trader.Domain.Services
                             });
            
             // close a random number of trades at a random interval
-            var tradeCloser = _schedulerProvider.TaskPool
+            var tradeCloser = _schedulerProvider.Background
                 .ScheduleRecurringAction(randomInterval, () =>
                 {
                     var number = random.Next(1, 2);
@@ -93,9 +91,9 @@ namespace Trader.Domain.Services
         private IDisposable LogChanges()
         {
             const string messageTemplate = "{0} {1} {2} ({4}). Status = {3}";
-            return _all.Connect().Skip(1)
+            return All.Connect().Skip(1)
                             .WhereReasonsAre(ChangeReason.Add,ChangeReason.Update)
-                            .Convert(trade => string.Format(messageTemplate,
+                            .Cast(trade => string.Format(messageTemplate,
                                                     trade.BuyOrSell,
                                                     trade.Amount,
                                                     trade.CurrencyPair,
@@ -106,15 +104,9 @@ namespace Trader.Domain.Services
 
         }
 
-        public IObservableCache<Trade, long> All
-        {
-            get { return _all; }
-        }
+        public IObservableCache<Trade, long> All { get; }
 
-        public IObservableCache<Trade, long> Live
-        {
-            get { return _live; }
-        }
+        public IObservableCache<Trade, long> Live { get; }
 
         public void Dispose()
         {

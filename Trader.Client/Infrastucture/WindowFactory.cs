@@ -26,7 +26,7 @@ namespace Trader.Client.Infrastucture
                                   if (TabablzControl.GetIsClosingAsPartOfDragOperation(window)) return;
 
                                   var todispose = ((MainWindow) sender).DataContext as IDisposable;
-                                  if (todispose != null) todispose.Dispose();
+                                  todispose?.Dispose();
                               };
 
             return window;

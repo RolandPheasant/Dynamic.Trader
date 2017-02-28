@@ -4,7 +4,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using DynamicData.PLinq;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
@@ -43,15 +42,9 @@ namespace Trader.Client.Views
             _cleanUp = new CompositeDisposable(loader, _visibleRowsAccessor, visibilityController);
         }
 
-        public IVisibleRowsAccessor<TradeProxy> VisibleRowsAccessor
-        {
-            get { return _visibleRowsAccessor; }
-        }
+        public IVisibleRowsAccessor<TradeProxy> VisibleRowsAccessor => _visibleRowsAccessor;
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
 
         public void Dispose()

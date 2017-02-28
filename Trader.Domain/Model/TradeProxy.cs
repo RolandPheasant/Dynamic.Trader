@@ -65,8 +65,7 @@ namespace Trader.Domain.Model
             get { return _pcFromMarketPrice; }
             set { SetAndRaise(ref _pcFromMarketPrice, value); }
         }
-
-
+        
 
         #region Delegating Members
         

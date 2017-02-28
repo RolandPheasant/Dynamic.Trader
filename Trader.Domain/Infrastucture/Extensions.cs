@@ -23,8 +23,8 @@ namespace System
 
         public static string Pluralise(this string source, int count)
         {
-            if (count == 1) return string.Format("{0} {1}", count, source);
-            return string.Format("{0} {1}s", count, source); ;
+            if (count == 1) return $"{count} {source}";
+            return $"{count} {source}s"; ;
         }
     }
 }
@@ -37,28 +37,28 @@ namespace System.Collections.Generic
         
         public static string ToDelimited<T>(this IEnumerable<T> source, string delimiter=",")
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
             return string.Join(delimiter, source.WithDelimiter(delimiter));
 
         }
 
         public static IEnumerable<string>  WithDelimiter<T>(this IEnumerable<T> source, string delimiter)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
             var array = source.AsArray();
             if (!array.Any()) yield return string.Empty;
 
             yield return array.Select(t => t.ToString()).First();
 
             foreach (var item in array.Skip(1))
-                yield return string.Format("{0}{1}",delimiter,item);
+                yield return $"{delimiter}{item}";
 
         }
 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (action == null) throw new ArgumentNullException("action");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (action == null) throw new ArgumentNullException(nameof(action));
 
             foreach (var item in source)
             {

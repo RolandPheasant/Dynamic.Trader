@@ -1,8 +1,6 @@
 using System;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
-using DynamicData.Controllers;
 using TradeExample.Annotations;
 using Trader.Domain.Model;
 
@@ -14,38 +12,37 @@ namespace Trader.Domain.Services
 
         public NearToMarketService([NotNull] ITradeService tradeService)
         {
-            if (tradeService == null) throw new ArgumentNullException("tradeService");
+            if (tradeService == null) throw new ArgumentNullException(nameof(tradeService));
             _tradeService = tradeService;
         }
 
         public IObservable<IChangeSet<Trade, long>> Query(Func<decimal> percentFromMarket)
         {
-            if (percentFromMarket == null) throw new ArgumentNullException("percentFromMarket");
+            if (percentFromMarket == null) throw new ArgumentNullException(nameof(percentFromMarket));
 
             return Observable.Create<IChangeSet<Trade, long>>
                 (observer =>
                  {
                      var locker = new object();
-                     var filter = new FilterController<Trade>();
-                     filter.Change(trade =>
-                                   {
-                                       var near = percentFromMarket();
-                                       return Math.Abs(trade.PercentFromMarket) <= near;
-                                   });
+
+                     Func<Trade, bool> predicate = t =>
+                     {
+                         var near = percentFromMarket();
+                         return Math.Abs(t.PercentFromMarket) <= near;
+                     };
+
 
                      //re-evaluate filter periodically
                      var reevaluator = Observable.Interval(TimeSpan.FromMilliseconds(250))
                          .Synchronize(locker)
-                         .Subscribe(_ => filter.Reevaluate());
+                         .Select(_ => predicate);
 
                      //filter on live trades matching % specified
-                     var subscriber = _tradeService.All
+                     return _tradeService.All
                          .Connect(trade=>trade.Status==TradeStatus.Live)
                          .Synchronize(locker)
-                         .Filter(filter)
+                         .Filter(reevaluator)
                          .SubscribeSafe(observer);
-
-                     return new CompositeDisposable(subscriber, filter, reevaluator);
                  });
         }
     }

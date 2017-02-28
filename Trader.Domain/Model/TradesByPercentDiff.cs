@@ -13,16 +13,15 @@ namespace Trader.Domain.Model
         private readonly IGroup<Trade, long, int> _group;
         private readonly IObservableCollection<TradeProxy> _data= new ObservableCollectionExtended<TradeProxy>();
         private readonly IDisposable _cleanUp;
-        private readonly int _percentBand;
 
         public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group,
             [NotNull] ISchedulerProvider schedulerProvider)
         {
-            if (@group == null) throw new ArgumentNullException("group");
-            if (schedulerProvider == null) throw new ArgumentNullException("schedulerProvider");
+            if (@group == null) throw new ArgumentNullException(nameof(@group));
+            if (schedulerProvider == null) throw new ArgumentNullException(nameof(schedulerProvider));
 
             _group = @group;
-            _percentBand = @group.Key;
+            PercentBand = @group.Key;
            
             _cleanUp = @group.Cache.Connect()
                         .Transform(trade => new TradeProxy(trade))
@@ -33,20 +32,11 @@ namespace Trader.Domain.Model
                         .Subscribe();
         }
 
-        public int PercentBand
-        {
-            get { return _percentBand; }
-        }
+        public int PercentBand { get; }
 
-        public int PercentBandUpperBound
-        {
-            get { return _group.Key + 1; }
-        }
+        private int PercentBandUpperBound => _group.Key + 1;
 
-        public IObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public IObservableCollection<TradeProxy> Data => _data;
 
         public void Dispose()
         {
@@ -59,7 +49,7 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _percentBand == other._percentBand;
+            return PercentBand == other.PercentBand;
         }
 
         public override bool Equals(object obj)
@@ -72,7 +62,7 @@ namespace Trader.Domain.Model
 
         public override int GetHashCode()
         {
-            return _percentBand;
+            return PercentBand;
         }
 
         public static bool operator ==(TradesByPercentDiff left, TradesByPercentDiff right)

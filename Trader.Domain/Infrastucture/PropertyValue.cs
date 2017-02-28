@@ -5,24 +5,14 @@ namespace Trader.Domain.Infrastucture
 {
     public sealed class PropertyValue<TObject, TValue> : IEquatable<PropertyValue<TObject, TValue>>
     {
-        private readonly TObject _sender;
-        private readonly TValue _value;
-
         public PropertyValue(TObject sender, TValue value)
         {
-            _sender = sender;
-            _value = value;
+            Sender = sender;
+            Value = value;
         }
 
-        public TObject Sender
-        {
-            get { return _sender; }
-        }
-
-        public TValue Value
-        {
-            get { return _value; }
-        }
+        public TObject Sender { get; }
+        public TValue Value { get; }
 
         #region Equality
 
@@ -30,7 +20,7 @@ namespace Trader.Domain.Infrastucture
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return EqualityComparer<TObject>.Default.Equals(_sender, other._sender) && EqualityComparer<TValue>.Default.Equals(_value, other._value);
+            return EqualityComparer<TObject>.Default.Equals(Sender, other.Sender) && EqualityComparer<TValue>.Default.Equals(Value, other.Value);
         }
 
         public override bool Equals(object obj)
@@ -44,7 +34,7 @@ namespace Trader.Domain.Infrastucture
         {
             unchecked
             {
-                return (EqualityComparer<TObject>.Default.GetHashCode(_sender) * 397) ^ EqualityComparer<TValue>.Default.GetHashCode(_value);
+                return (EqualityComparer<TObject>.Default.GetHashCode(Sender) * 397) ^ EqualityComparer<TValue>.Default.GetHashCode(Value);
             }
         }
 
@@ -62,7 +52,7 @@ namespace Trader.Domain.Infrastucture
 
         public override string ToString()
         {
-            return string.Format("{0} ({1})", _sender, _value);
+            return $"{Sender} ({Value})";
         }
     }
 }
