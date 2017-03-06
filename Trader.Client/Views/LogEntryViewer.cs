@@ -64,19 +64,14 @@ namespace Trader.Client.Views
 
 
             //make a command out of selected items - enabling the command when there is a selection 
-            DeleteCommand = selectedItems
-                                    .QueryWhenChanged(query => query.Count > 0)
-                                    .ToCommand();
- 
-            //Assign action when the command is invoked
-           var commandInvoker =  this.WhenAnyObservable(x => x.DeleteCommand)
-                    .ObserveOn(RxApp.TaskpoolScheduler)
-                    .Subscribe(_ =>
-                    {
-                        var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Original).ToArray();
-                       _selectionController.Clear();
-                        logEntryService.Remove(toRemove);
-                    });
+            DeleteCommand = ReactiveCommand.Create(() =>
+            {
+                var toRemove = _selectionController.SelectedItems.Items.Select(proxy => proxy.Original).ToArray();
+                _selectionController.Clear();
+                logEntryService.Remove(toRemove);
+            }, selectedItems.QueryWhenChanged(query => query.Count > 0));
+
+           // .ToCommand();
 
             var connected = selectedItems.Connect();
 
@@ -86,7 +81,6 @@ namespace Trader.Client.Views
                 connected.Dispose();
                 _deleteItemsText.Dispose();
                 DeleteCommand.Dispose();
-                commandInvoker.Dispose();
                 _selectionController.Dispose();
                 summariser.Dispose();
             });
@@ -117,7 +111,7 @@ namespace Trader.Client.Views
 
         public ReactiveList<LogEntryProxy> Data { get; } = new ReactiveList<LogEntryProxy>();
 
-        public ReactiveCommand<object> DeleteCommand { get; }
+        public ReactiveCommand DeleteCommand { get; }
 
         public IAttachedSelector Selector => _selectionController;
 

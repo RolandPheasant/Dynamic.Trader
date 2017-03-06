@@ -2,7 +2,6 @@ using System;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using TradeExample.Annotations;
 using Trader.Domain.Infrastucture;
 
@@ -14,8 +13,7 @@ namespace Trader.Domain.Model
         private readonly IObservableCollection<TradeProxy> _data= new ObservableCollectionExtended<TradeProxy>();
         private readonly IDisposable _cleanUp;
 
-        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group,
-            [NotNull] ISchedulerProvider schedulerProvider)
+        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group, [NotNull] ISchedulerProvider schedulerProvider, ILogger logger)
         {
             if (@group == null) throw new ArgumentNullException(nameof(@group));
             if (schedulerProvider == null) throw new ArgumentNullException(nameof(schedulerProvider));
@@ -25,11 +23,12 @@ namespace Trader.Domain.Model
            
             _cleanUp = @group.Cache.Connect()
                         .Transform(trade => new TradeProxy(trade))
-                        .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp),SortOptimisations.ComparesImmutableValuesOnly,500)
+                        .Batch(TimeSpan.FromMilliseconds(250))
+                        .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                         .ObserveOn(schedulerProvider.MainThread)
                         .Bind(_data)
                         .DisposeMany()
-                        .Subscribe();
+                        .Subscribe(_ => { }, ex => logger.Error(ex, "Error in TradesByPercentDiff"));
         }
 
         public int PercentBand { get; }

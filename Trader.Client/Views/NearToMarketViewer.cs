@@ -15,7 +15,7 @@ namespace Trader.Client.Views
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private decimal _nearToMarketPercent=0.01M;
 
-        public NearToMarketViewer(INearToMarketService nearToMarketService, ISchedulerProvider schedulerProvider)
+        public NearToMarketViewer(INearToMarketService nearToMarketService, ISchedulerProvider schedulerProvider, ILogger logger)
         {
             _cleanUp = nearToMarketService.Query(() => NearToMarketPercent) 
                 .Transform(trade => new TradeProxy(trade))
@@ -23,7 +23,7 @@ namespace Trader.Client.Views
                 .ObserveOn(schedulerProvider.MainThread)
                 .Bind(out _data)  
                 .DisposeMany() 
-                .Subscribe();
+                .Subscribe(_=> {}, ex => logger.Error(ex,"Error in near to market viewer"));
         }
 
         public decimal NearToMarketPercent
