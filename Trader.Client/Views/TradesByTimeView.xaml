@@ -33,11 +33,8 @@
 
                             <CheckBox    Grid.Row="0" 
                                   Grid.Column="0"
-                                 x:Name="ShowData"
-      
-                                >
-                                    <TextBlock VerticalAlignment="Center" FontWeight="DemiBold"
-                                         >
+                                 x:Name="ShowData" >
+                                    <TextBlock VerticalAlignment="Center" FontWeight="DemiBold">
 
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} ({1})">

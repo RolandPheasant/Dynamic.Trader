@@ -32,9 +32,21 @@ namespace Trader.Client.Views
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
+                .RemoveKey()
                 .Bind(_data)        //bind the results to the ReactiveList 
                 .DisposeMany()      //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
+
+            _data.ItemsAdded.Subscribe(item =>
+            {
+
+            });
+
+
+            _data.ShouldReset.Subscribe(item =>
+            {
+
+            });
         }
 
 
