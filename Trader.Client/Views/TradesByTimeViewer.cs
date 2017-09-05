@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Controllers;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 using Trader.Domain.Services;

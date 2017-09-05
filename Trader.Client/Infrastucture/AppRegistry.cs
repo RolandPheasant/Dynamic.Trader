@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 using Trader.Domain.Services;
 using ILogger = Trader.Domain.Infrastucture.ILogger;
 

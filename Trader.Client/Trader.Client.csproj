@@ -1,362 +1,93 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D227E424-B360-4B6D-BFAC-92096515DA89}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Trader.Client</RootNamespace>
-    <AssemblyName>Trader.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>
+    <TargetFramework>net461</TargetFramework>
+    <OutputType>exe</OutputType>
+    <StartupObject />
+    <ApplicationIcon>MyExe.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Trader.Client.Infrastucture.BootStrap</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>dynamic.data.BLUE.ico</ApplicationIcon>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Dragablz, Version=0.0.3.171, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dragablz.0.0.3.171\lib\net45\Dragablz.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="DynamicData, Version=4.12.0.1210, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.4.12.0.1210\lib\net45\DynamicData.dll</HintPath>
-    </Reference>
-    <Reference Include="DynamicData.Plinq, Version=4.12.0.1210, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.Plinq.4.12.0.1210\lib\net45\DynamicData.Plinq.dll</HintPath>
-    </Reference>
-    <Reference Include="DynamicData.ReactiveUI, Version=2.5.0.2009, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.ReactiveUI.2.5.0.2009\lib\portable45-net45+win8+wp8+wpa81\DynamicData.ReactiveUI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MahApps.Metro.1.0.0.0\lib\net45\MahApps.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=2.1.0.657, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.2.1.0.657\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ReactiveUI, Version=7.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\reactiveui-core.7.2.0\lib\Net45\ReactiveUI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Splat.1.6.2\lib\Net45\Splat.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StructureMap, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Net4, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.Net4.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Windows.Threading, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-XAML.2.2.5\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.0.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\Trader.Domain\Trader.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DynamicData" Version="6.0.1.2317-beta" />
+    <PackageReference Include="DynamicData.ReactiveUI" Version="6.0.1.2317-beta" />
+    <PackageReference Include="ReactiveUI" Version="8.0.0-alpha0073" />
+    <PackageReference Include="ReactiveUI-WPF" Version="8.0.0-alpha0073" />
+    <PackageReference Include="Dragablz" Version="0.0.3.197" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="MahApps.Metro" Version="1.5.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="2.3.1.953" />
+
+    <PackageReference Include="StructureMap" Version="4.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TransformOnBuild>True</TransformOnBuild>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+  </PropertyGroup>
+  
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Infrastucture\AnimatedWrapPanel.cs" />
-    <Compile Include="Infrastucture\AppConventions.cs" />
-    <Compile Include="Infrastucture\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Infrastucture\DependencyObjectHook.cs" />
-    <Compile Include="Infrastucture\DynamicDataEx.cs" />
-    <Compile Include="Infrastucture\HyperlinkExtensions.cs" />
-    <Compile Include="Infrastucture\IAttachedSelector.cs" />
-    <Compile Include="Infrastucture\Link.cs" />
-    <Compile Include="Infrastucture\LogEntryProxy.cs" />
-    <Compile Include="Infrastucture\MenuItems.cs" />
-    <Compile Include="Infrastucture\PageParameterData.cs" />
-    <Compile Include="Infrastucture\SelectorHelper.cs" />
-    <Compile Include="Infrastucture\ReactiveUIDependencyResolver.cs" />
-    <Compile Include="Infrastucture\SelectionController.cs" />
-    <Compile Include="Infrastucture\IWindowFactory.cs" />
-    <Compile Include="Infrastucture\VisibleRowsAccessor.cs" />
-    <Compile Include="Views\LiveTradesView.xaml.cs">
-      <DependentUpon>LiveTradesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LiveTradesViewer.cs" />
-    <Compile Include="Views\LogEntryView.xaml.cs">
-      <DependentUpon>LogEntryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LogEntryViewer.cs" />
-    <Compile Include="Views\MenuView.xaml.cs">
-      <DependentUpon>MenuView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NearToMarketView.xaml.cs">
-      <DependentUpon>NearToMarketView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PagedDataView.xaml.cs">
-      <DependentUpon>PagedDataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PagedDataViewer.cs" />
-    <Compile Include="Views\RxUiHostView.xaml.cs">
-      <DependentUpon>RxUiHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RxUIHostViewModel.cs" />
-    <Compile Include="Infrastucture\WindowFactory.cs" />
-    <Compile Include="Infrastucture\WindowViewModel.cs" />
-    <Compile Include="Infrastucture\Log4NetLogger.cs" />
-    <Compile Include="Infrastucture\ObjectProvider.cs" />
-    <Compile Include="Infrastucture\BootStrap.cs" />
-    <Compile Include="Infrastucture\AppRegistry.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Infrastucture\Command.cs" />
-    <Compile Include="Infrastucture\ViewContainer.cs" />
-    <Compile Include="Infrastucture\MenuItem.cs" />
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Infrastucture\IntertabClient.cs" />
-    <Compile Include="Views\NearToMarketViewer.cs" />
-    <Compile Include="Views\PositionsView.xaml.cs">
-      <DependentUpon>PositionsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PositionsViewer.cs" />
-    <Compile Include="Views\RecentTrades.xaml.cs">
-      <DependentUpon>RecentTrades.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RecentTradesViewer.cs" />
-    <Compile Include="Views\RxUiView.xaml.cs">
-      <DependentUpon>RxUiView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RxUiViewer.cs" />
-    <Compile Include="Views\SearchHints.cs" />
-    <Compile Include="Views\TradesByPercentDiff.xaml.cs">
-      <DependentUpon>TradesByPercentDiff.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TradesByPercentViewer.cs" />
-    <Compile Include="Views\TradesByTimeView.xaml.cs">
-      <DependentUpon>TradesByTimeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TradesByTimeViewer.cs" />
-    <Compile Include="Views\TradesGrid.xaml.cs">
-      <DependentUpon>TradesGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VisibleRowsView.xaml.cs">
-      <DependentUpon>VisibleRowsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VisibleRowsViewer.cs" />
-    <Page Include="Themes\Colours.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LiveTradesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LogEntryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MenuView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NearToMarketView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PagedDataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PositionsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RxUiHostView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RecentTrades.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RxUiView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TradesByPercentDiff.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TradesByTimeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TradesGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VisibleRowsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Log4Net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <!-- App.xaml -->
+    <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:UpdateDesignTimeXaml" />
+
+    <!-- XAML elements -->
+    <Page Include="**\*.xaml" SubType="Designer" Generator="MSBuild:UpdateDesignTimeXaml" Exclude="App.xaml" />
+    <Compile Update="**\*.xaml.cs" SubType="Designer" DependentUpon="%(Filename)" />
+    <Compile Include="$(IntermediateOutputPath)**\*.g.cs" Visible="false" />
+    <None Include="$(ProjectDir)obj" Visible="false" />
+
+    <!-- Resources -->
+    <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+    <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
+
+    <!-- Settings -->
+    <None Update="Properties\Settings.settings" Generator="SettingsSingleFileGenerator" LastGenOutput="Settings.Designer.cs" />
+    <Compile Update="Properties\Settings.Designer.cs" AutoGen="True" DependentUpon="Settings.settings" />
+
+    <None Update="App.config">
+      <TransformOnBuild>true</TransformOnBuild>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
+    <None Update="App.Debug.config">
+      <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <None Update="App.Release.config">
+      <IsTransformFile>True</IsTransformFile>
     </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="App.config" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Trader.Domain\Trader.Domain.csproj">
-      <Project>{0CF230F0-1A2D-4843-8F36-62F831E8CB23}</Project>
-      <Name>Trader.Domain</Name>
-    </ProjectReference>
+    <Compile Remove="obj\**" />
+    <Compile Remove="Publish\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="Publish\**" />
+    <None Remove="obj\**" />
+    <None Remove="Publish\**" />
+    <Page Remove="obj\**" />
+    <Page Remove="Publish\**" />
   </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="dynamic.data.BLUE.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <PropertyGroup>
+    <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:reactiveUi="clr-namespace:ReactiveUI;assembly=ReactiveUI"
              xmlns:views="clr-namespace:Trader.Client.Views"
+             xmlns:reactiveUi1="http://reactiveui.net"
              mc:Ignorable="d" 
              x:Name="ContentHolder"
               d:DataContext="{d:DesignInstance views:RxUiHostViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <reactiveUi:ViewModelViewHost ViewModel="{Binding Content}"
+    <reactiveUi1:ViewModelViewHost ViewModel="{Binding Content}"
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Stretch"/>
 

@@ -21,7 +21,7 @@ namespace Trader.Client.Views
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp))
                 .ObserveOn(schedulerProvider.MainThread)
-                .Bind(out _data)  
+                .Bind(out _data)
                 .DisposeMany() 
                 .Subscribe(_=> {}, ex => logger.Error(ex,"Error in near to market viewer"));
         }
