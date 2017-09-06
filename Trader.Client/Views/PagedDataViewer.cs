@@ -60,14 +60,11 @@ namespace Trader.Client.Views
 
         public string SearchText
         {
-            get { return _searchText; }
-            set { SetAndRaise(ref _searchText, value); }
+            get => _searchText;
+            set => SetAndRaise(ref _searchText, value);
         }
 
-        public ReadOnlyObservableCollection<TradeProxy> Data
-        {
-            get { return _data; }
-        }
+        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
         public PageParameterData PageParameters { get; } = new PageParameterData(1,25);
 

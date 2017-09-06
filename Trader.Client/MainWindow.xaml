@@ -9,7 +9,7 @@
         xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
         xmlns:client="clr-namespace:Trader.Client"
         mc:Ignorable="d"
-        Icon="dynamic.data.BLUE.ico"
+       
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"   
