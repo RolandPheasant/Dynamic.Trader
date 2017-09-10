@@ -32,13 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicData, Version=4.11.1.1203, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.4.11.1.1203\lib\net45\DynamicData.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DynamicData, Version=4.13.0.1211, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.4.13.0.1211-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
-    <Reference Include="DynamicData.Plinq, Version=4.11.1.1203, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.Plinq.4.11.1.1203\lib\net45\DynamicData.Plinq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DynamicData.Plinq, Version=4.13.0.1211, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.Plinq.4.13.0.1211-beta\lib\net45\DynamicData.Plinq.dll</HintPath>
     </Reference>
     <Reference Include="DynamicData.ReactiveUI, Version=2.5.0.2009, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicData.ReactiveUI.2.5.0.2009\lib\portable45-net45+win8+wp8+wpa81\DynamicData.ReactiveUI.dll</HintPath>

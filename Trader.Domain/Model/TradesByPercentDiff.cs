@@ -33,7 +33,7 @@ namespace Trader.Domain.Model
 
         public int PercentBand { get; }
 
-        private int PercentBandUpperBound => _group.Key + 1;
+        public int PercentBandUpperBound => _group.Key + 1;
 
         public IObservableCollection<TradeProxy> Data => _data;
 
