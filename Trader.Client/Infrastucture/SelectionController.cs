@@ -36,10 +36,7 @@ namespace Trader.Client.Infrastucture
                 .Subscribe(HandleSelectionChanged);
         }
 
-        public IObservableList<T> SelectedItems
-        {
-            get { return _sourceList; }
-        }
+        public IObservableList<T> SelectedItems => _sourceList;
 
         private void HandleSelectionChanged(SelectionChangedEventArgs args)
         {

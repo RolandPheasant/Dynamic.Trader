@@ -51,10 +51,7 @@ namespace Trader.Domain.Infrastucture
             if (level == Level.Error)
                 return LogLevel.Error;
 
-            if (level == Level.Fatal)
-                return LogLevel.Fatal;
-
-            return LogLevel.Info;
+            return level == Level.Fatal ? LogLevel.Fatal : LogLevel.Info;
         }
 
         #endregion

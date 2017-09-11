@@ -5,7 +5,6 @@ namespace Trader.Domain.Model
 {
     public class SortParameterData : AbstractNotifyPropertyChanged
     {
-        private SortContainer _selectedItem;
         private readonly IList<SortContainer> _sortItems = new List<SortContainer>
         {
             new SortContainer("Customer, Currency Pair", SortExpressionComparer<TradeProxy>
@@ -18,12 +17,14 @@ namespace Trader.Domain.Model
                 .ThenByDescending(p => p.Amount)
                 .ThenByAscending(p => p.Id)),
 
-                           
+
             new SortContainer("Recently Changed", SortExpressionComparer<TradeProxy>
                 .Descending(l => l.Timestamp)
                 .ThenByAscending(p => p.Customer)
-                .ThenByAscending(p => p.Id)),
+                .ThenByAscending(p => p.Id))
         };
+
+        private SortContainer _selectedItem;
 
 
         public SortParameterData()
@@ -33,8 +34,8 @@ namespace Trader.Domain.Model
 
         public SortContainer SelectedItem
         {
-            get { return _selectedItem; }
-            private set { SetAndRaise(ref _selectedItem, value); }
+            get => _selectedItem;
+            private set => SetAndRaise(ref _selectedItem, value);
         }
 
         public IEnumerable<SortContainer> SortItems => _sortItems;

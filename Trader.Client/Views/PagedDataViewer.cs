@@ -66,7 +66,7 @@ namespace Trader.Client.Views
 
         public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
-        public PageParameterData PageParameters { get; } = new PageParameterData(1,25);
+        public PageParameterData PageParameters { get;} = new PageParameterData(1,25);
 
         public SortParameterData SortParameters { get; } = new SortParameterData();
 

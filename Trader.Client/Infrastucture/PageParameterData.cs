@@ -6,12 +6,12 @@ namespace Trader.Client.Infrastucture
 {
     public class PageParameterData : AbstractNotifyPropertyChanged
     {
+        private readonly Command _nextPageCommand;
+        private readonly Command _previousPageCommand;
         private int _currentPage;
         private int _pageCount;
         private int _pageSize;
         private int _totalCount;
-        private readonly Command _nextPageCommand;
-        private readonly Command _previousPageCommand;
 
         public PageParameterData(int currentPage, int pageSize)
         {
@@ -20,6 +20,35 @@ namespace Trader.Client.Infrastucture
 
             _nextPageCommand = new Command(() => CurrentPage = CurrentPage + 1, () => CurrentPage < PageCount);
             _previousPageCommand = new Command(() => CurrentPage = CurrentPage - 1, () => CurrentPage > 1);
+        }
+
+        public ICommand NextPageCommand => _nextPageCommand;
+
+        public ICommand PreviousPageCommand => _previousPageCommand;
+
+        public int TotalCount
+        {
+            get => _totalCount;
+            private set => SetAndRaise(ref _totalCount, value);
+        }
+
+        public int PageCount
+        {
+            get => _pageCount;
+            private set => SetAndRaise(ref _pageCount, value);
+        }
+
+        public int CurrentPage
+        {
+            get => _currentPage;
+            private set => SetAndRaise(ref _currentPage, value);
+        }
+
+
+        public int PageSize
+        {
+            get => _pageSize;
+            private set => SetAndRaise(ref _pageSize, value);
         }
 
 
@@ -32,36 +61,5 @@ namespace Trader.Client.Infrastucture
             _nextPageCommand.Refresh();
             _previousPageCommand.Refresh();
         }
-
-        public ICommand NextPageCommand => _nextPageCommand;
-
-        public ICommand PreviousPageCommand => _previousPageCommand;
-
-        public int TotalCount
-        {
-            get { return _totalCount; }
-            private set { SetAndRaise(ref _totalCount, value); }
-        }
-
-        public int PageCount
-        {
-            get { return _pageCount; }
-            private set { SetAndRaise(ref _pageCount, value); }
-        }
-
-        public int CurrentPage
-        {
-            get { return _currentPage; }
-            private set { SetAndRaise(ref _currentPage, value); }
-        }
-
-
-        public int PageSize
-        {
-            get { return _pageSize; }
-            private set { SetAndRaise(ref _pageSize, value); }
-        }
-
-
     }
 }

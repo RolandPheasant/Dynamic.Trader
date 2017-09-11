@@ -16,8 +16,8 @@ namespace Trader.Domain.Model
         public decimal PercentFromMarket { get; private set; }
         public decimal Amount { get; }
         public BuyOrSell BuyOrSell { get; }
-        public TradeStatus Status { get; private set; }
-        public DateTime Timestamp { get; private set; }
+        public TradeStatus Status { get; }
+        public DateTime Timestamp { get; }
 
         public Trade(Trade trade, TradeStatus status)
         {

@@ -54,14 +54,12 @@ namespace Trader.Domain.Services
             //initally load some trades 
             _tradesSource.AddOrUpdate(_tradeGenerator.Generate(5000, true));
 
-            Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds( random.Next(1000, 2500));
-
-           // Func<TimeSpan> randomInterval = () => TimeSpan.FromMilliseconds(random.Next(100, 200));
+            TimeSpan RandomInterval() => TimeSpan.FromMilliseconds(random.Next(1000, 2500));
 
 
             // create a random number of trades at a random interval
             var tradeGenerator = _schedulerProvider.Background
-                            .ScheduleRecurringAction(randomInterval, () =>
+                            .ScheduleRecurringAction(RandomInterval, () =>
                             {
                                 var number = random.Next(1,5);
                                 var trades = _tradeGenerator.Generate(number);
@@ -70,7 +68,7 @@ namespace Trader.Domain.Services
            
             // close a random number of trades at a random interval
             var tradeCloser = _schedulerProvider.Background
-                .ScheduleRecurringAction(randomInterval, () =>
+                .ScheduleRecurringAction(RandomInterval, () =>
                 {
                     var number = random.Next(1, 2);
                     _tradesSource.Edit(updater =>

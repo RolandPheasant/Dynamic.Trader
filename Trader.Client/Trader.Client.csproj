@@ -19,7 +19,6 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="MahApps.Metro" Version="1.5.0" />
     <PackageReference Include="MaterialDesignThemes" Version="2.3.1.953" />
-
     <PackageReference Include="StructureMap" Version="4.5.2" />
   </ItemGroup>
 
@@ -55,18 +54,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
 
-    <!-- Settings -->
-    <None Update="Properties\Settings.settings" Generator="SettingsSingleFileGenerator" LastGenOutput="Settings.Designer.cs" />
-    <Compile Update="Properties\Settings.Designer.cs" AutoGen="True" DependentUpon="Settings.settings" />
-
     <None Update="App.config">
       <TransformOnBuild>true</TransformOnBuild>
-    </None>
-    <None Update="App.Debug.config">
-      <IsTransformFile>True</IsTransformFile>
-    </None>
-    <None Update="App.Release.config">
-      <IsTransformFile>True</IsTransformFile>
     </None>
   </ItemGroup>
 
@@ -79,18 +68,10 @@
 
   <ItemGroup>
     <Compile Remove="obj\**" />
-    <Compile Remove="Publish\**" />
     <EmbeddedResource Remove="obj\**" />
-    <EmbeddedResource Remove="Publish\**" />
     <None Remove="obj\**" />
-    <None Remove="Publish\**" />
     <Page Remove="obj\**" />
-    <Page Remove="Publish\**" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
-  </PropertyGroup>
-
+  
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

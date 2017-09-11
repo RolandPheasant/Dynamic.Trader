@@ -2,20 +2,21 @@ using System;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.Operators;
 using DynamicData.PLinq;
+using DynamicData.ReactiveUI;
 using ReactiveUI;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
-using DynamicData.ReactiveUI;
 
 namespace Trader.Client.Views
 {
     public class RxUiViewer : ReactiveObject, IDisposable
     {
+        private readonly IDisposable _cleanUp;
+
         //this is the target list which we will populate from the dynamic data stream
         private readonly ReactiveList<TradeProxy> _data = new ReactiveList<TradeProxy>();
-        private readonly IDisposable _cleanUp;
+
         private string _searchText;
 
         public RxUiViewer(ITradeService tradeService)
@@ -27,26 +28,28 @@ namespace Trader.Client.Views
 
             _cleanUp = tradeService.All
                 .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
-                .Filter(filter)    // apply user filter
+                .Filter(filter) // apply user filter
                 //if targetting Net4 or Net45 platform can use parallelisation for transforms 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .RemoveKey()
-                .Bind(_data)        //bind the results to the ReactiveList 
-                .DisposeMany()      //since TradeProxy is disposable dispose when no longer required
+                .Bind(_data) //bind the results to the ReactiveList 
+                .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
+        }
 
-            _data.ItemsAdded.Subscribe(item =>
-            {
+        public string SearchText
+        {
+            get => _searchText;
+            set => this.RaiseAndSetIfChanged(ref _searchText, value);
+        }
 
-            });
+        public IReadOnlyReactiveList<TradeProxy> Data => _data;
 
-
-            _data.ShouldReset.Subscribe(item =>
-            {
-
-            });
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
         }
 
 
@@ -57,19 +60,6 @@ namespace Trader.Client.Views
 
             return t => t.CurrencyPair.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                         t.Customer.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
-        }
-
-        public string SearchText
-        {
-            get { return _searchText; }
-            set { this.RaiseAndSetIfChanged(ref _searchText, value); }
-        }
-
-        public IReadOnlyReactiveList<TradeProxy> Data => _data;
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
         }
     }
 }

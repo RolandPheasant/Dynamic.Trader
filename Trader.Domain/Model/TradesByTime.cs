@@ -10,16 +10,15 @@ namespace Trader.Domain.Model
 {
     public class TradesByTime : IDisposable, IEquatable<TradesByTime>
     {
-        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private readonly IDisposable _cleanUp;
+        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
-        public TradesByTime([NotNull] IGroup<Trade, long, TimePeriod> @group,
+        public TradesByTime([NotNull] IGroup<Trade, long, TimePeriod> group,
             ISchedulerProvider schedulerProvider)
         {
-            if (@group == null) throw new ArgumentNullException(nameof(@group));
-            Period = @group.Key;
+            Period = group?.Key ?? throw new ArgumentNullException(nameof(group));
 
-            _cleanUp = @group.Cache.Connect()
+            _cleanUp = group.Cache.Connect()
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
                 .ObserveOn(schedulerProvider.MainThread)
@@ -27,7 +26,6 @@ namespace Trader.Domain.Model
                 .DisposeMany()
                 .Subscribe();
         }
-
 
 
         public TimePeriod Period { get; }
@@ -41,7 +39,8 @@ namespace Trader.Domain.Model
                     case TimePeriod.LastMinute:
                         return "Last Minute";
                     case TimePeriod.LastHour:
-                        return "Last Hour"; ;
+                        return "Last Hour";
+                        ;
                     case TimePeriod.Older:
                         return "Old";
                     default:
@@ -51,6 +50,11 @@ namespace Trader.Domain.Model
         }
 
         public ReadOnlyObservableCollection<TradeProxy> Data => _data;
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
 
         #region Equality
 
@@ -65,13 +69,13 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((TradesByTime)obj);
+            if (obj.GetType() != GetType()) return false;
+            return Equals((TradesByTime) obj);
         }
 
         public override int GetHashCode()
         {
-            return (int)Period;
+            return (int) Period;
         }
 
         public static bool operator ==(TradesByTime left, TradesByTime right)
@@ -85,10 +89,5 @@ namespace Trader.Domain.Model
         }
 
         #endregion
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
     }
 }

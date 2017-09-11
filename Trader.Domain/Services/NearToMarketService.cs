@@ -14,8 +14,7 @@ namespace Trader.Domain.Services
 
         public NearToMarketService([NotNull] ITradeService tradeService , ILogger logger)
         {
-            if (tradeService == null) throw new ArgumentNullException(nameof(tradeService));
-            _tradeService = tradeService;
+            _tradeService = tradeService ?? throw new ArgumentNullException(nameof(tradeService));
             _logger = logger;
         }
 
@@ -28,13 +27,13 @@ namespace Trader.Domain.Services
                  {
                      var locker = new object();
 
-                     Func<Trade, bool> predicate = t => Math.Abs(t.PercentFromMarket) <= percentFromMarket();
+                     bool Predicate(Trade t) => Math.Abs(t.PercentFromMarket) <= percentFromMarket();
 
                      //re-evaluate filter periodically
                      var reevaluator = Observable.Interval(TimeSpan.FromMilliseconds(250))
                          .Synchronize(locker)
-                         .Select(_ => predicate)
-                         .StartWith(predicate); ;
+                         .Select(_ => (Func<Trade, bool>) Predicate)
+                         .StartWith((Func<Trade, bool>) Predicate); ;
 
                      //filter on live trades matching % specified
                      return _tradeService.All.Connect(trade => trade.Status == TradeStatus.Live)

@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-
              xmlns:views="clr-namespace:Trader.Client.Views"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              d:DataContext="{d:DesignInstance views:RxUiViewer, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
@@ -36,21 +34,25 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-       
-        <TextBox 
-               wpf:HintAssist.Hint="Enter search text..."
-                controls:TextBoxHelper.ClearTextButton="True"
-                Margin="4 0 0 0"
-                MinWidth="125"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Orientation="Horizontal">
+            <wpf:PackIcon Width="24" Height="24" Margin="4 4 0 0" Kind="Magnify" Foreground="{Binding ElementName=SearchBox, Path=BorderBrush}"/>
+            <ComboBox x:Name="SearchBox" HorizontalAlignment="Left"
+                      IsEditable="True" 
+                      wpf:HintAssist.Hint="Enter search text..."   
+                      Height="25"
+                      Width="150"
+                      MaxDropDownHeight="250"
+                      Margin="4 0 0 0"
+                      ItemsSource="{Binding  Hints}"
+                      Text="{Binding  SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
 
         <TextBlock
             Grid.Row="0" Grid.Column="1" Margin="0 0 4 0"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right"
-                Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}">
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}">
 
         </TextBlock>
 

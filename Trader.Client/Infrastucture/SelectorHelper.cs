@@ -20,8 +20,7 @@ namespace Trader.Client.Infrastucture
 
         public static void PropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            var receiver = args.NewValue as IAttachedSelector;
-            if (receiver == null) return;
+            if (!(args.NewValue is IAttachedSelector receiver)) return;
             receiver.Receive((Selector)sender);
         }
     }

@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData.Binding;
 
 namespace Trader.Domain.Model
 {
-
-
-    public class TradeProxy:AbstractNotifyPropertyChanged, IDisposable, IEquatable<TradeProxy>
+    public class TradeProxy : AbstractNotifyPropertyChanged, IDisposable, IEquatable<TradeProxy>
     {
-        private readonly Trade _trade;
         private readonly IDisposable _cleanUp;
-        private bool _recent;
         private readonly long _id;
+        private readonly Trade _trade;
         private decimal _marketPrice;
         private decimal _pcFromMarketPrice;
+        private bool _recent;
 
         public TradeProxy(Trade trade)
         {
@@ -23,8 +20,8 @@ namespace Trader.Domain.Model
             _trade = trade;
 
             var isRecent = DateTime.Now.Subtract(trade.Timestamp).TotalSeconds < 2;
-            var recentIndicator= Disposable.Empty;
-                         
+            var recentIndicator = Disposable.Empty;
+
             if (isRecent)
             {
                 Recent = true;
@@ -39,72 +36,53 @@ namespace Trader.Domain.Model
                     MarketPrice = trade.MarketPrice;
                     PercentFromMarket = trade.PercentFromMarket;
                 });
-        
-            _cleanUp = Disposable.Create(() =>
-                                         {
-                                             recentIndicator.Dispose();
-                                             priceRefresher.Dispose();
-                                         });
 
+            _cleanUp = Disposable.Create(() =>
+            {
+                recentIndicator.Dispose();
+                priceRefresher.Dispose();
+            });
         }
 
         public bool Recent
         {
-            get { return _recent; }
-            set { SetAndRaise(ref _recent, value); }
+            get => _recent;
+            set => SetAndRaise(ref _recent, value);
         }
 
         public decimal MarketPrice
         {
-            get { return _marketPrice; }
-            set { SetAndRaise(ref _marketPrice, value); }
+            get => _marketPrice;
+            set => SetAndRaise(ref _marketPrice, value);
         }
 
         public decimal PercentFromMarket
         {
-            get { return _pcFromMarketPrice; }
-            set { SetAndRaise(ref _pcFromMarketPrice, value); }
+            get => _pcFromMarketPrice;
+            set => SetAndRaise(ref _pcFromMarketPrice, value);
         }
-        
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
+        }
+
 
         #region Delegating Members
-        
-        public long Id
-        {
-            get { return _trade.Id; }
-        }
 
-        public string CurrencyPair
-        {
-            get { return _trade.CurrencyPair; }
-        }
+        public long Id => _trade.Id;
 
-        public string Customer
-        {
-            get { return _trade.Customer; }
-        }
+        public string CurrencyPair => _trade.CurrencyPair;
 
-        public decimal Amount
-        {
-            get { return _trade.Amount; }
-        }
+        public string Customer => _trade.Customer;
 
-        public TradeStatus Status
-        {
-            get { return _trade.Status; }
-        }
+        public decimal Amount => _trade.Amount;
 
-        public DateTime Timestamp
-        {
-            get { return _trade.Timestamp; }
-        }
+        public TradeStatus Status => _trade.Status;
 
-        public decimal TradePrice
-        {
-            get { return _trade.TradePrice; }
-        }
+        public DateTime Timestamp => _trade.Timestamp;
 
-
+        public decimal TradePrice => _trade.TradePrice;
 
         #endregion
 
@@ -121,7 +99,7 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((TradeProxy) obj);
         }
 
@@ -141,10 +119,5 @@ namespace Trader.Domain.Model
         }
 
         #endregion
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
     }
 }

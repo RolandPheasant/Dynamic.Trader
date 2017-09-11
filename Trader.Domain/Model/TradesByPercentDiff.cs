@@ -7,34 +7,32 @@ using Trader.Domain.Infrastucture;
 
 namespace Trader.Domain.Model
 {
-    public class TradesByPercentDiff: IDisposable, IEquatable<TradesByPercentDiff>
+    public class TradesByPercentDiff : IDisposable, IEquatable<TradesByPercentDiff>
     {
-        private readonly IGroup<Trade, long, int> _group;
-        private readonly IObservableCollection<TradeProxy> _data= new ObservableCollectionExtended<TradeProxy>();
         private readonly IDisposable _cleanUp;
+        private readonly IGroup<Trade, long, int> _group;
 
-        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> @group, [NotNull] ISchedulerProvider schedulerProvider, ILogger logger)
+        public TradesByPercentDiff([NotNull] IGroup<Trade, long, int> group, [NotNull] ISchedulerProvider schedulerProvider, ILogger logger)
         {
-            if (@group == null) throw new ArgumentNullException(nameof(@group));
             if (schedulerProvider == null) throw new ArgumentNullException(nameof(schedulerProvider));
 
-            _group = @group;
-            PercentBand = @group.Key;
-           
-            _cleanUp = @group.Cache.Connect()
-                        .Transform(trade => new TradeProxy(trade))
-                        .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp))
-                        .ObserveOn(schedulerProvider.MainThread)
-                        .Bind(_data)
-                        .DisposeMany()
-                        .Subscribe(_ => { }, ex => logger.Error(ex, "Error in TradesByPercentDiff"));
+            _group = @group ?? throw new ArgumentNullException(nameof(@group));
+            PercentBand = group.Key;
+
+            _cleanUp = group.Cache.Connect()
+                .Transform(trade => new TradeProxy(trade))
+                .Sort(SortExpressionComparer<TradeProxy>.Descending(p => p.Timestamp))
+                .ObserveOn(schedulerProvider.MainThread)
+                .Bind(Data)
+                .DisposeMany()
+                .Subscribe(_ => { }, ex => logger.Error(ex, "Error in TradesByPercentDiff"));
         }
 
         public int PercentBand { get; }
 
         private int PercentBandUpperBound => _group.Key + 1;
 
-        public IObservableCollection<TradeProxy> Data => _data;
+        public IObservableCollection<TradeProxy> Data { get; } = new ObservableCollectionExtended<TradeProxy>();
 
         public void Dispose()
         {
@@ -54,7 +52,7 @@ namespace Trader.Domain.Model
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((TradesByPercentDiff) obj);
         }
 
@@ -74,6 +72,5 @@ namespace Trader.Domain.Model
         }
 
         #endregion
-
     }
 }

@@ -32,7 +32,7 @@ namespace Trader.Domain.Services
 
         public IEnumerable<Trade> Generate(int numberToGenerate, bool initialLoad = false)
         {
-            Func<Trade> newTrade = () =>
+            Trade NewTrade()
             {
                 var id = _counter++;
                 var bank = _staticData.Customers[_random.Next(0, _staticData.Customers.Length)];
@@ -48,13 +48,13 @@ namespace Trader.Domain.Services
                     return new Trade(id, bank, pair.Code, status, buySell, GererateRandomPrice(pair, buySell), amount, timeStamp: time);
                 }
                 return new Trade(id, bank, pair.Code, TradeStatus.Live, buySell, GererateRandomPrice(pair, buySell), amount);
-            };
+            }
 
 
             IEnumerable<Trade> result;
             lock (_locker)
             {
-                result = Enumerable.Range(1, numberToGenerate).Select(_ => newTrade()).ToArray();
+                result = Enumerable.Range(1, numberToGenerate).Select(_ => NewTrade()).ToArray();
             }
             return result;
         }

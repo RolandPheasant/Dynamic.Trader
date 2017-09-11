@@ -27,8 +27,8 @@ namespace Trader.Domain.Model
 
         public TradesPosition Position
         {
-            get { return _position; }
-            set { SetAndRaise(ref  _position,value); }
+            get => _position;
+            set => SetAndRaise(ref  _position,value);
         }
 
         public string CurrencyPair { get; }

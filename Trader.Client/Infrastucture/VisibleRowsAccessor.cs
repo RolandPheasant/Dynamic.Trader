@@ -28,8 +28,7 @@ namespace Trader.Client.Infrastucture
 
         void IDependencyObjectReceiver.Receive(DependencyObject value)
         {
-            var grid = value as DataGrid;
-            if (grid == null) return;
+            if (!(value is DataGrid grid)) return;
             _grid = grid;
 
             var rowsAdded = Observable.FromEventPattern<DataGridRowEventArgs>

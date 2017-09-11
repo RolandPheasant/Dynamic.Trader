@@ -16,7 +16,7 @@ namespace Trader.Client.Infrastucture
             Content = content;
             Category = MenuCategory.DynamicData;
             Link = link ?? Enumerable.Empty<Link>();
-            Command = new Command(action); ;
+            Command = new Command(action);
         }
 
         public MenuItem(string title,string description ,Action action, MenuCategory category,
@@ -27,7 +27,7 @@ namespace Trader.Client.Infrastucture
             Description = description;
             Category = category;
             Link = link ?? Enumerable.Empty<Link>();
-            Command = new Command(action); ;
+            Command = new Command(action);
         }
         
 

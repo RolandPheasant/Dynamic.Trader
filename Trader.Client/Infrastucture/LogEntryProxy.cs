@@ -8,24 +8,23 @@ namespace Trader.Client.Infrastucture
 {
     public class LogEntryProxy : ReactiveObject, IDisposable, IEquatable<LogEntryProxy>
     {
-        private readonly LogEntry _original;
         private readonly IDisposable _cleanUp;
-        private bool _removing;
 
         private readonly ObservableAsPropertyHelper<bool> _recent;
+        private bool _removing;
 
         public LogEntryProxy(LogEntry original)
         {
-            _original = original;
-            
+            Original = original;
+
             //create a lazy observable property 
-             _recent = Observable.Create<bool>(observer =>
-                                {
-                                    var isRecent = DateTime.Now.Subtract(original.TimeStamp).TotalSeconds < 2;
-                                    if (!isRecent)   return Disposable.Empty;
-                                    observer.OnNext(true);
-                                    return Observable.Timer(TimeSpan.FromSeconds(2)).Select(_=>false).SubscribeSafe(observer);
-                                }).ToProperty(this,lep=>lep.Recent);
+            _recent = Observable.Create<bool>(observer =>
+            {
+                var isRecent = DateTime.Now.Subtract(original.TimeStamp).TotalSeconds < 2;
+                if (!isRecent) return Disposable.Empty;
+                observer.OnNext(true);
+                return Observable.Timer(TimeSpan.FromSeconds(2)).Select(_ => false).SubscribeSafe(observer);
+            }).ToProperty(this, lep => lep.Recent);
 
             //dispose after use
             _cleanUp = _recent;
@@ -35,8 +34,13 @@ namespace Trader.Client.Infrastucture
 
         public bool Removing
         {
-            get { return _removing; }
-            set { this.RaiseAndSetIfChanged(ref _removing, value); }
+            get => _removing;
+            set => this.RaiseAndSetIfChanged(ref _removing, value);
+        }
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
         }
 
         public void FlagForRemove()
@@ -46,50 +50,23 @@ namespace Trader.Client.Infrastucture
 
         #region Delegated Members
 
-        public string Message
-        {
-            get { return _original.Message; }
-        }
+        public string Message => Original.Message;
 
-        public string LoggerName
-        {
-            get { return _original.LoggerName; }
-        }
+        public string LoggerName => Original.LoggerName;
 
-        public string ThreadName
-        {
-            get { return _original.ThreadName; }
-        }
+        public string ThreadName => Original.ThreadName;
 
-        public DateTime TimeStamp
-        {
-            get { return _original.TimeStamp; }
-        }
+        public DateTime TimeStamp => Original.TimeStamp;
 
-        public LogLevel Level
-        {
-            get { return _original.Level; }
-        }
+        public LogLevel Level => Original.Level;
 
-        public long Key
-        {
-            get { return _original.Key; }
-        }
+        public long Key => Original.Key;
 
-        public long Counter
-        {
-            get { return _original.Counter; }
-        }
+        public long Counter => Original.Counter;
 
-        public Exception Exception
-        {
-            get { return _original.Exception; }
-        }
+        public Exception Exception => Original.Exception;
 
-        public LogEntry Original
-        {
-            get { return _original; }
-        }
+        public LogEntry Original { get; }
 
         #endregion
 
@@ -99,20 +76,20 @@ namespace Trader.Client.Infrastucture
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _original.Equals(other._original);
+            return Original.Equals(other.Original);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((LogEntryProxy)obj);
+            if (obj.GetType() != GetType()) return false;
+            return Equals((LogEntryProxy) obj);
         }
 
         public override int GetHashCode()
         {
-            return _original.GetHashCode();
+            return Original.GetHashCode();
         }
 
         public static bool operator ==(LogEntryProxy left, LogEntryProxy right)
@@ -126,10 +103,5 @@ namespace Trader.Client.Infrastucture
         }
 
         #endregion
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
     }
 }
