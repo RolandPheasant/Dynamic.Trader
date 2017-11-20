@@ -26,14 +26,12 @@ namespace Trader.Client.Views
                 .Throttle(TimeSpan.FromMilliseconds(250))
                 .Select(BuildFilter);
 
-            _cleanUp = tradeService.All
-                .Connect(trade => trade.Status == TradeStatus.Live) //prefilter live trades only
+            _cleanUp = tradeService.Live.Connect()
                 .Filter(filter) // apply user filter
                 //if targetting Net4 or Net45 platform can use parallelisation for transforms 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
-                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
+                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly, 25)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .RemoveKey()
                 .Bind(_data) //bind the results to the ReactiveList 
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();
@@ -47,12 +45,6 @@ namespace Trader.Client.Views
 
         public IReadOnlyReactiveList<TradeProxy> Data => _data;
 
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
-
-
         private Func<Trade, bool> BuildFilter(string searchText)
         {
             if (string.IsNullOrEmpty(SearchText))
@@ -60,6 +52,11 @@ namespace Trader.Client.Views
 
             return t => t.CurrencyPair.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                         t.Customer.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+        }
+        
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
         }
     }
 }

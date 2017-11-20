@@ -24,7 +24,7 @@ namespace Trader.Client.Infrastucture
                 if (!isRecent) return Disposable.Empty;
                 observer.OnNext(true);
                 return Observable.Timer(TimeSpan.FromSeconds(2)).Select(_ => false).SubscribeSafe(observer);
-            }).ToProperty(this, lep => lep.Recent);
+            }).ToProperty(this, lep => lep.Recent,deferSubscription:true);
 
             //dispose after use
             _cleanUp = _recent;

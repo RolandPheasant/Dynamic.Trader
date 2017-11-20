@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Windows.Input;
 using DynamicData.Binding;
 using ReactiveUI;
 using Trader.Client.Views;
@@ -30,6 +31,7 @@ namespace Trader.Client.Infrastucture
         private MenuCategory _category= MenuCategory.DynamicData;
         private IEnumerable<MenuItem> _items;
 
+
         public MenuItems(ILogger logger, IObjectProvider objectProvider)
         {
             _logger = logger;
@@ -45,10 +47,7 @@ namespace Trader.Client.Infrastucture
                             new Link("View Model","LiveTradesViewer.cs", "https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Client/Views/LiveTradesViewer.cs "), 
                             new Link("Blog","Ui Integration", "http://dynamic-data.org/2014/11/24/trading-example-part-3-integrate-with-ui/"), 
                         }),
-
-
-
-
+                
                 new MenuItem("Near to Market",
                      "Dynamic filtering of calculated values.",
                      () => Open<NearToMarketViewer>("Near to Market"),new []
@@ -174,26 +173,23 @@ namespace Trader.Client.Infrastucture
 
         public MenuCategory Category
         {
-            get { return _category; }
-            set { SetAndRaise(ref _category, value); }
+            get => _category;
+            set => SetAndRaise(ref _category, value);
         }
 
         public IEnumerable<MenuItem> Items
         {
-            get { return _items; }
-            set { SetAndRaise(ref _items, value); }
+            get => _items;
+            set => SetAndRaise(ref _items, value);
         }
 
         public bool ShowLinks
         {
-            get { return _showLinks; }
-            set { SetAndRaise(ref _showLinks, value); }
+            get => _showLinks;
+            set => SetAndRaise(ref _showLinks, value);
         }
         
-        public IObservable<ViewContainer> ItemCreated
-        {
-            get { return _viewCreatedSubject.AsObservable(); }
-        }
+        public IObservable<ViewContainer> ItemCreated => _viewCreatedSubject.AsObservable();
 
         public void Dispose()
         {

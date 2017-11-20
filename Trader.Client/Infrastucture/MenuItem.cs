@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using DynamicData.Binding;
 
 namespace Trader.Client.Infrastucture
 {
-    public class MenuItem
+    public class MenuItem: AbstractNotifyPropertyChanged
     {
         public MenuItem(string title, string description, Action action,  
             IEnumerable<Link> link = null,

@@ -14,7 +14,7 @@ namespace Trader.Domain.Services
         private readonly ILogger _logger;
         private readonly TradeGenerator _tradeGenerator;
         private readonly ISchedulerProvider _schedulerProvider;
-        private readonly ISourceCache<Trade, long> _tradesSource;
+
         private readonly IDisposable _cleanup;
 
         public TradeService(ILogger logger,TradeGenerator tradeGenerator, ISchedulerProvider schedulerProvider)
@@ -23,67 +23,75 @@ namespace Trader.Domain.Services
             _tradeGenerator = tradeGenerator;
             _schedulerProvider = schedulerProvider;
 
-            //construct a cache specifying that the primary key is Trade.Id
-            _tradesSource = new SourceCache<Trade, long>(trade => trade.Id);
+            //emulate a trade service which asynchronously 
+            var tradesData = GenerateTradesAndMaintainCache().Publish();
 
-            //call AsObservableCache() to hide the update methods as we are exposing the cache
-            All = _tradesSource.AsObservableCache();
+            //call AsObservableCache() so the cache can be directly exposed
+            All = tradesData.AsObservableCache();
 
             //create a derived cache  
-            Live = _tradesSource.Connect(trade => trade.Status == TradeStatus.Live).AsObservableCache();
-
-            //code to emulate an external trade provider
-            var tradeLoader = GenerateTradesAndMaintainCache();
-
-            //expire closed items from the cache ro avoid unbounded data
-           var expirer = _tradesSource
-               .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?)null,TimeSpan.FromMinutes(1),schedulerProvider.Background)
-               .Subscribe(x=>_logger.Info("{0} filled trades have been removed from memory",x.Count()));
-
+            Live = tradesData.Filter(trade => trade.Status == TradeStatus.Live).AsObservableCache();
+            
             //log changes
             var loggerWriter = LogChanges();
 
-            _cleanup = new CompositeDisposable(All, _tradesSource, tradeLoader, loggerWriter, expirer);
+            _cleanup = new CompositeDisposable(All, tradesData.Connect(), loggerWriter);
         }
         
-        private IDisposable GenerateTradesAndMaintainCache()
+        private IObservable<IChangeSet<Trade, long>> GenerateTradesAndMaintainCache()
         {
-            //bit of code to generate trades
-            var random = new Random();
+            //construct an cache datasource specifying that the primary key is Trade.Id
+            return ObservableChangeSet.Create<Trade, long>(cache =>
+            {
+                /*
+                    The following code emulates an external trade provider. 
+                    Alternatively you can use "new SourceCacheTrade, long>(t=>t.Id)" and manually maintain the cache.
 
-            //initally load some trades 
-            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(50_000, true));
+                    For examples of creating a observable change sets, see https://github.com/RolandPheasant/DynamicData.Snippets
+                */
 
-            TimeSpan RandomInterval() => TimeSpan.FromMilliseconds(random.Next(1000, 2500));
+                //bit of code to generate trades
+                var random = new Random();
+
+                //initally load some trades 
+                cache.AddOrUpdate(_tradeGenerator.Generate(5_000, true));
+
+                TimeSpan RandomInterval() => TimeSpan.FromMilliseconds(random.Next(2500, 5000));
 
 
-            // create a random number of trades at a random interval
-            var tradeGenerator = _schedulerProvider.Background
-                            .ScheduleRecurringAction(RandomInterval, () =>
-                            {
-                                var number = random.Next(1,5);
-                                var trades = _tradeGenerator.Generate(number);
-                                _tradesSource.AddOrUpdate(trades);
-                            });
-           
-            // close a random number of trades at a random interval
-            var tradeCloser = _schedulerProvider.Background
-                .ScheduleRecurringAction(RandomInterval, () =>
-                {
-                    var number = random.Next(1, 2);
-                    _tradesSource.Edit(updater =>
-                                              {
-                                                  var trades = updater.Items
-                                                    .Where(trade => trade.Status == TradeStatus.Live)
-                                                    .OrderBy(t => Guid.NewGuid()).Take(number).ToArray();
+                // create a random number of trades at a random interval
+                var tradeGenerator = _schedulerProvider.Background
+                    .ScheduleRecurringAction(RandomInterval, () =>
+                    {
+                        var number = random.Next(1, 5);
+                        var trades = _tradeGenerator.Generate(number);
+                        cache.AddOrUpdate(trades);
+                    });
 
-                                                  var toClose = trades.Select(trade => new Trade(trade, TradeStatus.Closed));
+                // close a random number of trades at a random interval
+                var tradeCloser = _schedulerProvider.Background
+                    .ScheduleRecurringAction(RandomInterval, () =>
+                    {
+                        var number = random.Next(1, 2);
+                        cache.Edit(innerCache =>
+                        {
+                            var trades = innerCache.Items
+                                .Where(trade => trade.Status == TradeStatus.Live)
+                                .OrderBy(t => Guid.NewGuid()).Take(number).ToArray();
 
-                                                  _tradesSource.AddOrUpdate(toClose);
-                                              });
-                });
+                            var toClose = trades.Select(trade => new Trade(trade, TradeStatus.Closed));
 
-            return new CompositeDisposable(tradeGenerator, tradeCloser);
+                            cache.AddOrUpdate(toClose);
+                        });
+                    });
+
+                //expire closed items from the cache to avoid unbounded data
+                var expirer = cache
+                    .ExpireAfter(t => t.Status == TradeStatus.Closed ? TimeSpan.FromMinutes(1) : (TimeSpan?)null, TimeSpan.FromMinutes(1), _schedulerProvider.Background)
+                    .Subscribe(x => _logger.Info("{0} filled trades have been removed from memory", x.Count()));
+
+                return new CompositeDisposable(tradeGenerator, tradeCloser, expirer);
+            }, trade=>trade.Id);
         }
 
         private IDisposable LogChanges()

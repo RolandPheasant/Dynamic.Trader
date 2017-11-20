@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Reactive.Linq;
 using DynamicData;
+using DynamicData.Aggregation;
 using DynamicData.Binding;
 
 namespace Trader.Domain.Model
@@ -15,10 +17,11 @@ namespace Trader.Domain.Model
             CurrencyPair = tradesByCurrencyPair.Key;
 
             _cleanUp = tradesByCurrencyPair.Cache.Connect()
-                .QueryWhenChanged(query =>
+                .ToCollection()
+                .Select(query =>
                 {
-                    var buy = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Buy).Sum(trade=>trade.Amount);
-                    var sell = query.Items.Where(trade => trade.BuyOrSell == BuyOrSell.Sell).Sum(trade => trade.Amount);
+                    var buy = query.Where(trade => trade.BuyOrSell == BuyOrSell.Buy).Sum(trade=>trade.Amount);
+                    var sell = query.Where(trade => trade.BuyOrSell == BuyOrSell.Sell).Sum(trade => trade.Amount);
                     var count = query.Count;
                     return new TradesPosition(buy,sell,count);
                 })

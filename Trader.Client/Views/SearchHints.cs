@@ -50,8 +50,8 @@ namespace Trader.Client.Views
 
         public string SearchText
         {
-            get { return _searchText; }
-            set { SetAndRaise(ref _searchText, value); }
+            get => _searchText;
+            set => SetAndRaise(ref _searchText, value);
         }
 
         public ReadOnlyObservableCollection<string> Hints => _hints;

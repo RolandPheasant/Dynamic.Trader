@@ -1,144 +1,159 @@
-﻿<UserControl x:Class="Trader.Client.Views.MenuView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
-             mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance infrastucture:MenuItems, IsDesignTimeCreatable=False}"
-             d:DesignHeight="300">
+﻿<UserControl
+    x:Class="Trader.Client.Views.MenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance infrastucture:MenuItems,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    mc:Ignorable="d">
     <UserControl.Resources>
-    
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.togglebutton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter"/>
-        
+            <infrastucture:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter" />
+
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <Grid Margin="4">
 
-    <Grid  Margin="4"  >
-      
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
-        <Grid Margin="4" >
-            
+        <Grid Margin="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel  Grid.Column="1" Orientation="Horizontal" 
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Right">
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
 
                 <TextBlock VerticalAlignment="Center">Show Details</TextBlock>
 
-                <ToggleButton x:Name="showLinks"
-                              Margin="4 0 0 0"
-                              Style="{StaticResource MaterialDesignSwitchToggleButton}"          
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Right"
-                              ToolTip="Show hyperlinks to code behind and to any relevent blog posts"
-                              IsChecked="{Binding ShowLinks}"/>
+                <ToggleButton
+                    x:Name="showLinks"
+                    Margin="4,0,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding ShowLinks}"
+                    Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                    ToolTip="Show hyperlinks to code behind and to any relevent blog posts" />
 
             </StackPanel>
-            
-           
-            <StackPanel Grid.Column="0" 
-                        Orientation="Horizontal" 
-                        Margin="0 0 8 0">
 
-                <RadioButton GroupName="Type" 
-                             Margin="4 0 4 0"
-                             Content="Dynamic Data Only"
-                             IsChecked="{Binding Category, Converter={StaticResource EqualityToBooleanConverter},ConverterParameter={x:Static infrastucture:MenuCategory.DynamicData}}"
-                             ToolTip="Filter menu on items which illustrate Dynamic Data only"/>
 
-                <RadioButton GroupName="Type" 
-                             Content="With Reactive UI"
-                             IsChecked="{Binding Category, Converter={StaticResource EqualityToBooleanConverter},ConverterParameter={x:Static infrastucture:MenuCategory.ReactiveUi}}"
-                             ToolTip="Filter menu on items which illustrate integration between Dynamic Data and Reactive UI"/>
+            <StackPanel
+                Grid.Column="0"
+                Margin="0,0,8,0"
+                Orientation="Horizontal">
+
+                <RadioButton
+                    Margin="4,0,4,0"
+                    Content="Dynamic Data Only"
+                    GroupName="Type"
+                    IsChecked="{Binding Category, Converter={StaticResource EqualityToBooleanConverter}, ConverterParameter={x:Static infrastucture:MenuCategory.DynamicData}}"
+                    ToolTip="Filter menu on items which illustrate Dynamic Data only" />
+
+                <RadioButton
+                    Content="With Reactive UI"
+                    GroupName="Type"
+                    IsChecked="{Binding Category, Converter={StaticResource EqualityToBooleanConverter}, ConverterParameter={x:Static infrastucture:MenuCategory.ReactiveUi}}"
+                    ToolTip="Filter menu on items which illustrate integration between Dynamic Data and Reactive UI" />
             </StackPanel>
         </Grid>
-        
+
         <ScrollViewer Grid.Row="1">
-            <ItemsControl  ItemsSource="{Binding Items}">
+            <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <infrastucture:AnimatedWrapPanel/>
+                        <infrastucture:AnimatedWrapPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0 4 4 0"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Left">
+                        <Grid
+                            Margin="0,4,4,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
 
-                            <Grid.ColumnDefinitions >
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
 
-                            <Button Grid.Column="0" x:Name="tile"  
-                                    Command="{Binding Command}" 
-                                    ToolTip="{Binding Description}"
-                                    HorizontalContentAlignment="Center"
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Margin="5"
-                                    Width="85"
-                                    Height="85"
-                                    Padding="8">
+                            <Button
+                                x:Name="tile"
+                                Grid.Column="0"
+                                Width="85"
+                                Height="85"
+                                Margin="5"
+                                Padding="8"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding Command}"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                ToolTip="{Binding Description}">
 
-                                <TextBlock FontSize="14"
-                                           FontWeight="Normal"
-                                           Text="{Binding Title}"
-                                           TextWrapping="WrapWithOverflow" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="Normal"
+                                    Text="{Binding Title}"
+                                    TextWrapping="WrapWithOverflow" />
                             </Button>
 
-                            <Grid Margin="5 4 5 0"
-                                  Visibility="{Binding ElementName=showLinks,Path=IsChecked, Converter={StaticResource  BooleanToVisibilityConverter}}"
-                                  VerticalAlignment="Top"
-                                  Grid.Column="1" >
+                            <Grid
+                                Grid.Column="1"
+                                Margin="5,4,5,0"
+                                VerticalAlignment="Top"
+                                Visibility="{Binding ElementName=showLinks, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" 
-                                           HorizontalAlignment="Left"
-                                           TextWrapping="WrapWithOverflow"
-                                           Text="{Binding Description}"/>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    HorizontalAlignment="Left"
+                                    Text="{Binding Description}"
+                                    TextWrapping="WrapWithOverflow" />
 
-                                <ItemsControl Grid.Row="1" 
-                                              Margin="0 3 0 0"
-                                              HorizontalAlignment="Left"
-                                              ItemsSource="{Binding Link}">
+                                <ItemsControl
+                                    Grid.Row="1"
+                                    Margin="0,3,0,0"
+                                    HorizontalAlignment="Left"
+                                    ItemsSource="{Binding Link}">
 
 
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="75"/>
-                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="75" />
+                                                    <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
 
-                                                <TextBlock  Text="{Binding Text}"/>
-                                                <TextBlock  Grid.Column="1" Margin="4 0 0 0"
-                                                            ToolTip="{Binding Url}">
-                                                    <Hyperlink  NavigateUri="{Binding Url}" infrastucture:HyperlinkExtensions.IsExternal="true">
-                                                        <TextBlock Text="{Binding Display}"></TextBlock>
+                                                <TextBlock Text="{Binding Text}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    Margin="4,0,0,0"
+                                                    ToolTip="{Binding Url}">
+                                                    <Hyperlink infrastucture:HyperlinkExtensions.IsExternal="true" NavigateUri="{Binding Url}">
+                                                        <TextBlock Text="{Binding Display}" />
                                                     </Hyperlink>
                                                 </TextBlock>
                                             </Grid>

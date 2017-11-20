@@ -18,6 +18,14 @@ namespace Trader.Client.Infrastucture
         private readonly IDisposable _cleanUp;
         private ViewContainer _selected;
 
+        public ICommand MemoryCollectCommand { get; } = new Command(() =>
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        });
+
+
         public WindowViewModel(IObjectProvider objectProvider, IWindowFactory windowFactory)
         {
             _objectProvider = objectProvider;
@@ -61,10 +69,7 @@ namespace Trader.Client.Infrastucture
         }
 
 
-        public ItemActionCallback ClosingTabItemHandler
-        {
-            get { return ClosingTabItemHandlerImpl; }
-        }
+        public ItemActionCallback ClosingTabItemHandler => ClosingTabItemHandlerImpl;
 
         private void ClosingTabItemHandlerImpl(ItemActionCallbackArgs<TabablzControl> args)
         {
@@ -81,8 +86,8 @@ namespace Trader.Client.Infrastucture
 
         public ViewContainer Selected
         {
-            get { return _selected; }
-            set { SetAndRaise(ref _selected, value); }
+            get => _selected;
+            set => SetAndRaise(ref _selected, value);
         }
 
         public IInterTabClient InterTabClient { get; }

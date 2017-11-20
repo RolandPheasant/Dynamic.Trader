@@ -13,7 +13,10 @@ namespace Trader.Domain.Model
             _count = count;
             Position = Buy - Sell;
         }
-        
+
+        public bool Negative => Position < 0;
+
+
         public decimal Position { get; }
         public decimal Buy { get; }
         public decimal Sell { get; }
