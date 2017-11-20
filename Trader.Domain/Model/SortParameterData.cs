@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using DynamicData.Binding;
 
 namespace Trader.Domain.Model
 {
     public class SortParameterData : AbstractNotifyPropertyChanged
     {
-        private readonly IList<SortContainer> _sortItems = new List<SortContainer>
+        private readonly IList<SortContainer> _sortItems = new ObservableCollection<SortContainer>
         {
             new SortContainer("Customer, Currency Pair", SortExpressionComparer<TradeProxy>
                 .Ascending(l => l.Customer)
@@ -35,7 +36,7 @@ namespace Trader.Domain.Model
         public SortContainer SelectedItem
         {
             get => _selectedItem;
-            private set => SetAndRaise(ref _selectedItem, value);
+            set => SetAndRaise(ref _selectedItem, value);
         }
 
         public IEnumerable<SortContainer> SortItems => _sortItems;

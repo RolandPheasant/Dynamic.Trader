@@ -29,10 +29,7 @@ namespace Trader.Client.Views
                 .Select(prop => prop.Comparer)
                 .ObserveOn(schedulerProvider.Background);
 
-            //build observable comparer
-            var currentPageChanged = PageParameters.WhenValueChanged(p => p.CurrentPage);
-            var pageSizeChanged = PageParameters.WhenValueChanged(p => p.PageSize);
-            var pager = currentPageChanged.CombineLatest(pageSizeChanged,(page, size) => new PageRequest(page, size))
+            var pager = PageParameters.WhenChanged(vm=>vm.PageSize,vm=>vm.CurrentPage, (_,size, pge) => new PageRequest(pge, size))
                 .StartWith(new PageRequest(1, 25))
                 .DistinctUntilChanged()
                 .Sample(TimeSpan.FromMilliseconds(100));
