@@ -52,7 +52,7 @@ namespace Trader.Domain.Services
             var random = new Random();
 
             //initally load some trades 
-            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(5000, true));
+            _tradesSource.AddOrUpdate(_tradeGenerator.Generate(50_000, true));
 
             TimeSpan RandomInterval() => TimeSpan.FromMilliseconds(random.Next(1000, 2500));
 

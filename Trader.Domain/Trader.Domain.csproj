@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DynamicData" Version="6.0.1.2317-beta" />
+    <PackageReference Include="DynamicData" Version="6.0.4.2351" />
     <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
 
