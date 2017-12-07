@@ -17,6 +17,8 @@
   - cmd: 
   build_script:
   - cmd: >-
+      cd %APPVEYOR_BUILD_FOLDER%
+
       dotnet --info
 
       dotnet build Dynamic.Trader.sln --configuration Release /p:Version=%APPVEYOR_BUILD_VERSION%
