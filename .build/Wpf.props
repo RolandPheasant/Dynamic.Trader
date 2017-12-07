@@ -9,6 +9,6 @@
 		<EnableDefaultCompileItems>true</EnableDefaultCompileItems>
 	</PropertyGroup>
 		
-	<Import Project="$(MSBuildThisFileDirectory)\CustomProject.targets" />
+	<Import Project="$(MSBuildThisFileDirectory)\Wpf.targets" />
 	
 </Project>
