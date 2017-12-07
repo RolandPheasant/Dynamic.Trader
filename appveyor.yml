@@ -1,23 +1,11 @@
-# configuration for master
--
-  branches:
-    only:
-    - master
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+build:
+  verbosity: minimal
+after_build:
+- cmd: >-
+    7z a TraderDemo.zip %APPVEYOR_BUILD_FOLDER%\Trader.Client\bin\release\net46\*.*
 
-  environment:
-    # Set the DOTNET_SKIP_FIRST_TIME_EXPERIENCE environment variable to stop wasting time caching packages
-    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-    # Disable sending usage data to Microsoft
-    DOTNET_CLI_TELEMETRY_OPTOUT: true
-
-  version: 1.0.0.{build}
-  image: Visual Studio 2017
-  configuration: Release
-
-  build_script:
-  - cmd: >-
-      dotnet --info
-
-      dotnet build Dynamic.Trader.sln --configuration Release /p:Version=%APPVEYOR_BUILD_VERSION%
-
-  test: off
+    appveyor PushArtifact TraderDemo.zip
