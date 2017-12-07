@@ -14,9 +14,6 @@
   image: Visual Studio 2017
   configuration: Release
 
-  before_build:
-  - ps: cd %APPVEYOR_BUILD_FOLDER%
-
   build_script:
   - cmd: >-
       dotnet --info
