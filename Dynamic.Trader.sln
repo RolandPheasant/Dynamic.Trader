@@ -12,6 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".other", ".other", "{F84001
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trader.Client", "Trader.Client\Trader.Client.csproj", "{D227E424-B360-4B6D-BFAC-92096515DA89}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{D801B9A0-D368-4EEB-93C7-7D463E4CAA22}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		.build\Lib.props = .build\Lib.props
+		.build\Wpf.props = .build\Wpf.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
