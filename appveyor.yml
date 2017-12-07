@@ -13,12 +13,12 @@
   version: 1.0.0.{build}
   image: Visual Studio 2017
   configuration: Release
-  install:
-  - cmd: 
+
+  before_build:
+  - ps: cd %APPVEYOR_BUILD_FOLDER%
+
   build_script:
   - cmd: >-
-      cd %APPVEYOR_BUILD_FOLDER%
-
       dotnet --info
 
       dotnet build Dynamic.Trader.sln --configuration Release /p:Version=%APPVEYOR_BUILD_VERSION%
