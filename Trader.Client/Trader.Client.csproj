@@ -1,13 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <CustomProjectExtensionsPath>$(SolutionDir)\CustomProjectSystem\</CustomProjectExtensionsPath>
+  </PropertyGroup>
+
+  <Import Project="$(CustomProjectExtensionsPath)CustomProject.props" />
+  
   <PropertyGroup>
-    <LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>
-    <TargetFramework>net461</TargetFramework>
     <OutputType>winexe</OutputType>
     <ApplicationIcon>dynamic.data.BLUE.ico</ApplicationIcon>
     <StartupObject />
-    
   </PropertyGroup>
 
+  <ItemGroup>
+    <!-- App.xaml -->
+    <Page Remove="App.xaml" />
+    <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Log4Net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App.config">
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\Trader.Domain\Trader.Domain.csproj" />
   </ItemGroup>
@@ -24,55 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <TransformOnBuild>True</TransformOnBuild>
-    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <!-- App.xaml -->
-    <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:UpdateDesignTimeXaml" />
-
-    <!-- XAML elements -->
-    <Page Include="**\*.xaml" SubType="Designer" Generator="MSBuild:UpdateDesignTimeXaml" Exclude="App.xaml" />
-    <Compile Update="**\*.xaml.cs" SubType="Designer" DependentUpon="%(Filename)" />
-    <Compile Include="$(IntermediateOutputPath)**\*.g.cs" Visible="false" />
-    <None Include="$(ProjectDir)obj" Visible="false" />
-
-    <!-- Resources -->
-    <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-    <Compile Update="Properties\Resources.Designer.cs" AutoGen="True" DependentUpon="Resources.resx" DesignTime="True" />
-    
-    <None Update="Log4Net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-
-    <None Update="App.config">
-      <TransformOnBuild>true</TransformOnBuild>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="obj\**" />
-    <EmbeddedResource Remove="obj\**" />
-    <None Remove="obj\**" />
-    <Page Remove="obj\**" />
   </ItemGroup>
-  
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

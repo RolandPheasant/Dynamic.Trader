@@ -1,63 +1,74 @@
-﻿<UserControl x:Class="Trader.Client.Views.TradesByPercentDiff"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:views="clr-namespace:Trader.Client.Views"
-             xmlns:model="clr-namespace:Trader.Domain.Model;assembly=Trader.Domain"
-             mc:Ignorable="d" 
-              d:DataContext="{d:DesignInstance views:TradesByPercentViewer, IsDesignTimeCreatable=False}"
-             d:DesignHeight="300" d:DesignWidth="300">
+﻿<UserControl
+    x:Class="Trader.Client.Views.TradesByPercentDiff"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:Trader.Domain.Model;assembly=Trader.Domain"
+    xmlns:views="clr-namespace:Trader.Client.Views"
+    d:DataContext="{d:DesignInstance views:TradesByPercentViewer,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
             <DataTemplate DataType="{x:Type model:TradesByPercentDiff}">
-                <Border Margin="4 4 4 0" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="0">
-                    <Grid >
+                <Border
+                    Margin="4,4,4,0"
+                    BorderBrush="{DynamicResource AccentColorBrush}"
+                    BorderThickness="0">
+                    <Grid>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*" MaxHeight="225"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" MaxHeight="225" />
                         </Grid.RowDefinitions>
 
 
-                        <Grid  Height="25" Margin="5">
+                        <Grid Height="25" Margin="5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox    Grid.Row="0" Grid.Column="0" x:Name="ShowData" IsChecked="False">
-                                    <TextBlock 
-
-                                                VerticalAlignment="Center" FontWeight="DemiBold"
-                                                Margin="5 0 0 0">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat=" {0}-{1} % diff from market">
-                                                <Binding Path="PercentBand"/>
-                                                <Binding Path="PercentBandUpperBound"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                            <CheckBox
+                                x:Name="ShowData"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                IsChecked="False">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontWeight="DemiBold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=" {0}-{1} % diff from market">
+                                            <Binding Path="PercentBand" />
+                                            <Binding Path="PercentBandUpperBound" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </CheckBox>
 
-
-                            <TextBlock  Margin ="4 0 0 0"  Grid.Column="2"
-                                               HorizontalAlignment="Right" 
-                                                VerticalAlignment="Center"
-                                                Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}"/>
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="4,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Text="{Binding Data.Count, StringFormat='The are \{0} live trades in this range'}" />
 
 
                         </Grid>
 
-                        <views:TradesGrid 
-                            Grid.Row="1" 
+                        <views:TradesGrid
+                            Grid.Row="1"
                             MaxHeight="225"
                             Margin="4"
-                            Visibility="{Binding Path=IsChecked,ElementName=ShowData, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            DataContext="{Binding Data}"/>
+                            DataContext="{Binding Data}"
+                            Visibility="{Binding Path=IsChecked, ElementName=ShowData, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     </Grid>
                 </Border>
@@ -68,7 +79,7 @@
 
 
     <ScrollViewer>
-        <ItemsControl ItemsSource="{Binding  Data}"/>
+        <ItemsControl ItemsSource="{Binding Data}" />
     </ScrollViewer>
 
 </UserControl>
