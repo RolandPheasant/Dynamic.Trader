@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0"	encoding="utf-8"?>
 
-<Project ToolsVersion="15.3" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>		
-		<TargetFramework>net46</TargetFramework>
+		<TargetFramework>net461</TargetFramework>
 	</PropertyGroup>
+
+  <PropertyGroup>
+    <LanguageTargets>$(MSBuildExtensionsPath)\$(VisualStudioVersion)\Bin\Microsoft.CSharp.targets</LanguageTargets>
+  </PropertyGroup>
 </Project>

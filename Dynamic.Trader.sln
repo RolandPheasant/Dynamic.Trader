@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trader.Domain", "Trader.Domain\Trader.Domain.csproj", "{0CF230F0-1A2D-4843-8F36-62F831E8CB23}"
 EndProject
@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{D801B9
 		appveyor.yml = appveyor.yml
 		.build\Lib.props = .build\Lib.props
 		.build\Wpf.props = .build\Wpf.props
+		.build\Wpf.targets = .build\Wpf.targets
 	EndProjectSection
 EndProject
 Global
