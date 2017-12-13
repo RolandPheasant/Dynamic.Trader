@@ -8,7 +8,11 @@
 		<EnableDefaultItems>true</EnableDefaultItems>
 		<EnableDefaultCompileItems>true</EnableDefaultCompileItems>
 	</PropertyGroup>
-		
+
+	<PropertyGroup Label="BasePath">
+		<SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)</SolutionDir>
+	</PropertyGroup>
+	
 	<Import Project="$(MSBuildThisFileDirectory)\Wpf.targets" />
 	
 </Project>

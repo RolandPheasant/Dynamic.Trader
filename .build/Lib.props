@@ -4,4 +4,9 @@
 	<PropertyGroup>		
 		<TargetFramework>net46</TargetFramework>
 	</PropertyGroup>
+
+	<PropertyGroup Label="BasePath">
+		<SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)</SolutionDir>
+	</PropertyGroup>
+	
 </Project>

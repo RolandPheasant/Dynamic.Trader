@@ -1,11 +1,14 @@
 version: 1.0.{build}
-image: Visual Studio 2017
+os: Visual Studio 2017
 configuration: Release
 platform: Any CPU
+before_build:
+- ps: cd %APPVEYOR_BUILD_FOLDER%
 build:
+  project: Dynamic.Trader.sln
   verbosity: minimal
 after_build:
 - cmd: >-
-    7z a TraderDemo.zip %APPVEYOR_BUILD_FOLDER%\Trader.Client\bin\release\net46\*.*
+    7z a DynamicTrader.zip %APPVEYOR_BUILD_FOLDER%\Trader.Client\bin\release\net46\*.*
 
-    appveyor PushArtifact TraderDemo.zip
+    appveyor PushArtifact DynamicTrader.zip
