@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0"	encoding="utf-8"?>
 
-<Project ToolsVersion="15.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.3" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>		
-		<TargetFramework>net461</TargetFramework>
+		<TargetFramework>net46</TargetFramework>
         <!-- you can disable these two properties if you don't want to use default VS behavior for adding your files -->
 		<EnableDefaultItems>true</EnableDefaultItems>
 		<EnableDefaultCompileItems>true</EnableDefaultCompileItems>
 	</PropertyGroup>
-
-	<PropertyGroup Label="BasePath">
-		<SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)</SolutionDir>
-	</PropertyGroup>
-	
+		
 	<Import Project="$(MSBuildThisFileDirectory)\Wpf.targets" />
 </Project>
