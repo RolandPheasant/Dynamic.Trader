@@ -2,8 +2,6 @@ version: 1.0.{build}
 image: Visual Studio 2017 Preview
 configuration: Release
 platform: Any CPU
-before_build:
-- ps: cd %APPVEYOR_BUILD_FOLDER%
 build:
   project: Dynamic.Trader.sln
   verbosity: minimal
