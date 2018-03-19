@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
              d:DataContext="{d:DesignInstance views:NearToMarketViewer, IsDesignTimeCreatable=False}"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" >
     <Grid>
 
         <Grid.RowDefinitions>
@@ -18,26 +17,24 @@
                                 Orientation="Horizontal">
 
             <Slider Width="100" 
-                                Margin="4 0 0 0"
-                                VerticalAlignment="Center"
-                                Minimum="0.01"
-                                Maximum="0.1"
-                                ToolTip="Move slider to filter by % from the market"
-                                TickFrequency=".01"
-                                Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                Margin="4 0 0 0"
+                VerticalAlignment="Center"
+                Minimum="0.01"
+                Maximum="0.1" IsSnapToTickEnabled="True"
+                ToolTip="Move slider to filter by % from the market"
+                TickFrequency=".01"
+                Value="{Binding NearToMarketPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             </Slider>
 
-            <TextBlock
-                             Margin="4 0 0 0"
-                             VerticalAlignment="Center"
-                             Height="18"
-                             Text="{Binding NearToMarketPercent, StringFormat='\{0} %'}"/>
+            <TextBlock Margin="4 0 0 0"
+                    VerticalAlignment="Center"
+                    Height="18"
+                    Text="{Binding NearToMarketPercent, StringFormat='\{0} %'}"/>
 
-            <TextBlock  
-                             Margin="4 0 0 0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Text="{Binding Data.Count, StringFormat='The are \{0} live in within this range'}"/>
+            <TextBlock  Margin="4 0 0 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Text="{Binding Data.Count, StringFormat='The are \{0} live in within this range'}"/>
 
 
         </StackPanel>

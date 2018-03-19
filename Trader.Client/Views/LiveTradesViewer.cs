@@ -25,7 +25,7 @@ namespace Trader.Client.Views
             var loader = tradeService.Live.Connect()
                 .Filter(filter) // apply user filter
                 //if targeting dotnet 4.5 can parallelise 'cause it's quicker
-                .Transform(trade => new TradeProxy(trade),new ParallelisationOptions(ParallelType.Ordered,5))
+                .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
                 .ObserveOnDispatcher()
                 .Bind(out _data)   // update observable collection bindings

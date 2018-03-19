@@ -8,10 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Trader.Client.Views"
     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-    d:DataContext="{d:DesignInstance views:LogEntryViewer,
-                                     IsDesignTimeCreatable=False}"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
+    d:DataContext="{d:DesignInstance views:LogEntryViewer,IsDesignTimeCreatable=False}"
     mc:Ignorable="d">
 
     <Control.Resources>
@@ -82,8 +79,8 @@
         </Grid>
 
         <ListView
-            Grid.RowSpan="2"
-            Margin="0,27,0,5"
+            Grid.Row="1" Grid.RowSpan="2"
+
             infrastucture:SelectorHelper.Binding="{Binding Selector}"
             ItemsSource="{Binding Data}"
             ScrollViewer.CanContentScroll="True"
