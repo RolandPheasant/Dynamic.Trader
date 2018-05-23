@@ -26,10 +26,10 @@ namespace Trader.Client.Views
                         .Select(BuildFilter);
 
             var loader = tradeService.Live.Connect()
-                .BatchIf(this.WhenValueChanged(x=>x.Paused),null,null) //I need to fix the API, so nulls do noy have to be passed in
+                .BatchIf(this.WhenValueChanged(x=>x.Paused),null,null) //I need to fix the API, so nulls do not have to be passed in
                 .Filter(filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade))
-                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp).ThenByDescending(t=>t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
+                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
                 .ObserveOnDispatcher()
                 .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
