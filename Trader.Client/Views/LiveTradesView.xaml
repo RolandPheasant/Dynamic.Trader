@@ -19,15 +19,18 @@
         </Grid.ColumnDefinitions>
 
         <!--Search hints template defined in App.xaml-->
-        <ContentControl Content="{Binding SearchHints}"/>
-        
-        <TextBlock
-            Grid.Row="0" Grid.Column="1" Margin="0 0 4 0"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right"
-                Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}">
+        <ContentControl Content="{Binding SearchHints}" HorizontalAlignment="Right"/>
 
-        </TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+            <TextBlock Text="Pause updates:" VerticalAlignment="Center"/>
+            <CheckBox  Margin="4 0 0 0" IsChecked="{Binding Paused}" />
+
+            <TextBlock Margin="4 0 4 0"
+                    VerticalAlignment="Center"
+                    Text="{Binding Data.Count, StringFormat='The are \{0} live trades matching filter'}">
+
+            </TextBlock>
+        </StackPanel>
 
         <views:TradesGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding Data}"/>
 
