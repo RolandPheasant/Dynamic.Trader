@@ -28,10 +28,12 @@ namespace Trader.Client.Views
                 .Select(BuildFilter);
 
             //filter, sort and populate reactive list.
-            var loader = logEntryService.Items.Connect()
+            var shared = logEntryService.Items.Connect()
                 .Transform(le => new LogEntryProxy(le))
                 .DelayRemove(TimeSpan.FromSeconds(0.75), proxy => proxy.FlagForRemove())
-                .Filter(filter)
+                .Publish();
+
+            var loader = shared.Filter(filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le => le.TimeStamp).ThenByDescending(l => l.Key), SortOptions.UseBinarySearch)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(Data)
@@ -39,8 +41,8 @@ namespace Trader.Client.Views
                 .Subscribe();
 
             //aggregate total items
-            var summariser = logEntryService.Items.Connect()
-                .QueryWhenChanged(items =>
+            var summariser = shared
+				.QueryWhenChanged(items =>
                 {
                     var debug = items.Count(le => le.Level == LogLevel.Debug);
                     var info = items.Count(le => le.Level == LogLevel.Info);
@@ -72,7 +74,7 @@ namespace Trader.Client.Views
             }, selectedItems.QueryWhenChanged(query => query.Count > 0));
 
             var connected = selectedItems.Connect();
-
+            var connectedItems = shared.Connect();
             _cleanUp = Disposable.Create(() =>
             {
                 loader.Dispose();
@@ -81,7 +83,10 @@ namespace Trader.Client.Views
                 DeleteCommand.Dispose();
                 _selectionController.Dispose();
                 summariser.Dispose();
-            });
+                connectedItems.Dispose();
+
+
+			});
         }
 
         public string SearchText

@@ -84,7 +84,7 @@ namespace DynamicData
                                     var toRemove = changes.SelectMany(change =>
                                     {
                                         return change.Type == ChangeType.Item ? new[] { change.Item.Current } : change.Range.Select(t => t);
-                                    });
+                                    }).ToArray();
                                     //remove in one hit
                                     localList.RemoveMany(toRemove);
                                 });
