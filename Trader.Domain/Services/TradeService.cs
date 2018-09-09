@@ -82,7 +82,7 @@ namespace Trader.Domain.Services
                             var toClose = trades.Select(trade => new Trade(trade, TradeStatus.Closed));
 
                             cache.AddOrUpdate(toClose);
-                        });
+                         });
                     });
 
                 //expire closed items from the cache to avoid unbounded data

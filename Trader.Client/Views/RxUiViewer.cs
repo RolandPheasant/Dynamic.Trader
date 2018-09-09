@@ -28,7 +28,6 @@ namespace Trader.Client.Views
 
             _cleanUp = tradeService.Live.Connect()
                 .Filter(filter) // apply user filter
-                //if targetting Net4 or Net45 platform can use parallelisation for transforms 'cause it's quicker
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly, 25)
                 .ObserveOn(RxApp.MainThreadScheduler)

@@ -5,8 +5,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using DynamicData.PLinq;
-using ReactiveUI;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
 
