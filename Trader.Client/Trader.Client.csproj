@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="DynamicData.ReactiveUI" Version="6.6.0.2492" />
+    <PackageReference Include="DynamicData" Version="6.6.0.2492" />
     <PackageReference Include="ReactiveUI" Version="9.0.1" />
     <PackageReference Include="ReactiveUI.WPF" Version="9.0.1" />
     <PackageReference Include="Dragablz" Version="0.0.3.197" />

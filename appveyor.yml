@@ -12,6 +12,6 @@ build:
   verbosity: minimal
 after_build:
 - cmd: >-
-    7z a DynamicTrader.zip %APPVEYOR_BUILD_FOLDER%\Trader.Client\bin\release\net461\*.*
+    7z a DynamicTrader.zip %APPVEYOR_BUILD_FOLDER%\Trader.Client\bin\release\net462\*.*
 
     appveyor PushArtifact DynamicTrader.zip
