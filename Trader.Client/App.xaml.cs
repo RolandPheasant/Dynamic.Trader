@@ -20,7 +20,15 @@ namespace Trader.Client
         /// <exception cref="T:System.InvalidOperationException">More than one instance of the <see cref="T:System.Windows.Application" /> class is created per <see cref="T:System.AppDomain" />.</exception>
         public App()
         {
+            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+
+
             ShutdownMode = ShutdownMode.OnLastWindowClose;
+        }
+
+        private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        {
+            Console.WriteLine(args.LoadedAssembly);
         }
 
         /// <summary>Raises the <see cref="E:System.Windows.Application.Startup" /> event.</summary>

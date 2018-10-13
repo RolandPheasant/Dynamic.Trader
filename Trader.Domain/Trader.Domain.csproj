@@ -1,11 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
-  <!--<PropertyGroup Label="Globals">
-    <CustomProjectExtensionsPath>$(MSBuildThisFileDirectory)\..\.build\</CustomProjectExtensionsPath>
-  </PropertyGroup>
-
-  <Import Project="$(CustomProjectExtensionsPath)Lib.props" />-->
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

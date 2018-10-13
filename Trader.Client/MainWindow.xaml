@@ -2,7 +2,6 @@
     x:Class="Trader.Client.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:client="clr-namespace:Trader.Client"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
@@ -27,15 +26,13 @@
         <KeyBinding Key="F10" Command="{Binding MemoryCollectCommand}" />
     </Window.InputBindings>
 
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
-            <Canvas
-                x:Key="showMenubutton"
+
+            <Canvas x:Key="ShowMenubutton"
                 Width="100"
                 Height="76"
                 Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
@@ -72,13 +69,12 @@
                     <Rectangle
                         Width="22"
                         Height="22"
-                        Fill="White">
+                        Fill="White"> 
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_github}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-
 
                 <Button
                     Command="{Binding ShowMenuCommand}"
@@ -89,7 +85,7 @@
                         Height="14"
                         Fill="White">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{StaticResource showMenubutton}" />
+                            <VisualBrush Stretch="Uniform" Visual="{StaticResource ShowMenubutton}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
 
