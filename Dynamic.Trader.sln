@@ -15,6 +15,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{D801B9A0-D368-4EEB-93C7-7D463E4CAA22}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
+		Directory.build.targets = Directory.build.targets
+		global.json = global.json
 		.build\Lib.props = .build\Lib.props
 		.build\Wpf.props = .build\Wpf.props
 		.build\Wpf.targets = .build\Wpf.targets

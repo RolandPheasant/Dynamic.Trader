@@ -1,29 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
-  <PropertyGroup Label="Globals">
-    <CustomProjectExtensionsPath>$(MSBuildThisFileDirectory)\..\.build\</CustomProjectExtensionsPath>
-  </PropertyGroup>
-
-  <Import Project="$(CustomProjectExtensionsPath)Wpf.props" />
-  
   <PropertyGroup>
     <OutputType>winexe</OutputType>
     <ApplicationIcon>dynamic.data.BLUE.ico</ApplicationIcon>
     <StartupObject />
+    <TargetFramework>net461</TargetFramework>
+    <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
   </PropertyGroup>
-
-  <ItemGroup>
-    <!-- App.xaml -->
-    <Page Remove="App.xaml" />
-    <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App.config">
-      <TransformOnBuild>true</TransformOnBuild>
     </None>
   </ItemGroup>
   
@@ -40,9 +27,5 @@
     <PackageReference Include="MahApps.Metro" Version="1.5.0" />
     <PackageReference Include="MaterialDesignThemes" Version="2.3.1.953" />
     <PackageReference Include="StructureMap" Version="4.5.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="obj\**" />
   </ItemGroup>
 </Project>

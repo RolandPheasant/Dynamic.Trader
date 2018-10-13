@@ -6,8 +6,7 @@
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              d:DataContext="{d:DesignInstance views:RxUiViewer, IsDesignTimeCreatable=False}"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" >
+             mc:Ignorable="d"  >
 
     <Control.Resources>
 

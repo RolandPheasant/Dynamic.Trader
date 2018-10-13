@@ -1,9 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup Label="Globals">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <!--<PropertyGroup Label="Globals">
     <CustomProjectExtensionsPath>$(MSBuildThisFileDirectory)\..\.build\</CustomProjectExtensionsPath>
   </PropertyGroup>
 
-  <Import Project="$(CustomProjectExtensionsPath)Lib.props" />
+  <Import Project="$(CustomProjectExtensionsPath)Lib.props" />-->
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DynamicData" Version="6.6.0.2492" />
