@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -6,7 +7,7 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.ReactiveUI;
 using ReactiveUI;
-using ReactiveUI.Legacy;
+
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
@@ -20,6 +21,10 @@ namespace Trader.Client.Views
         private string _searchText = string.Empty;
 
         private LogEntrySummary _summary = LogEntrySummary.Empty;
+
+        public ReadOnlyObservableCollection<LogEntryProxy> Data { get; }
+        public ReactiveCommand DeleteCommand { get; }
+        public IAttachedSelector Selector => _selectionController;
 
         public LogEntryViewer(ILogEntryService logEntryService)
         {
@@ -37,13 +42,14 @@ namespace Trader.Client.Views
             var loader = shared.Filter(filter)
                 .Sort(SortExpressionComparer<LogEntryProxy>.Descending(le => le.TimeStamp).ThenByDescending(l => l.Key), SortOptions.UseBinarySearch)
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(Data)
+                .Bind(out var data)
                 .DisposeMany()
                 .Subscribe();
 
+            Data = data;
+
             //aggregate total items
-            var summariser = shared
-				.QueryWhenChanged(items =>
+            var summariser = shared.QueryWhenChanged(items =>
                 {
                     var debug = items.Count(le => le.Level == LogLevel.Debug);
                     var info = items.Count(le => le.Level == LogLevel.Info);
@@ -104,17 +110,8 @@ namespace Trader.Client.Views
             set => this.RaiseAndSetIfChanged(ref _summary, value);
         }
 
-        public ReactiveList<LogEntryProxy> Data { get; } = new ReactiveList<LogEntryProxy>();
-
-        public ReactiveCommand DeleteCommand { get; }
-
-        public IAttachedSelector Selector => _selectionController;
 
 
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
 
         private Func<LogEntryProxy, bool> BuildFilter(string searchText)
         {
@@ -123,6 +120,14 @@ namespace Trader.Client.Views
 
             return logentry => logentry.Message.Contains(searchText, StringComparison.OrdinalIgnoreCase)
                                || logentry.Level.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase);
+        }
+
+
+
+
+        public void Dispose()
+        {
+            _cleanUp.Dispose();
         }
     }
 }

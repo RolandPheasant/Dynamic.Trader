@@ -101,22 +101,6 @@ namespace Trader.Client.Infrastucture
                             new Link("Blog","Sort Filter and Page Data", " http://dynamic-data.org/2015/04/22/dynamically-sort-filter-and-page-data/"),
                         }),
 
-                  //new MenuItem("Visible Rows Example",
-                  //  "An example of how to use dynamic data to intercept and manipulate visible rows",
-                  //  () => Open<VisibleRowsViewer>("Paged Data"),new []
-                  //      {
-                  //          new Link("View Model","VisibleRowsViewer.cs", "https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Client/Views/VisibleRowsViewer.cs "),
-                  //      }),
-
-                    new MenuItem("Live Trades (RxUI)",
-                    "A basic example, illustrating where reactive-ui and dynamic data can work together",
-                    () => OpenRxUI<RxUiViewer>("Live Trades (RxUI)"),
-                    MenuCategory.ReactiveUi,
-                    new []
-                        {
-                             new Link("View Model","RxUiViewer.cs", "https://github.com/RolandPheasant/Dynamic.Trader/blob/master/Trader.Client/Views/RxUiViewer.cs "), 
-                            new Link("Blog","Integration with reactive ui", "http://dynamic-data.org/2015/01/18/integration-with-reactiveui/"), 
-                        }),
 
                     new MenuItem("Log Entry",   
                        "Visualiser for log files. Also accumulates log entries and handles user interaction.",

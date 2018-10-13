@@ -46,10 +46,6 @@
                 <views:TradesByTimeView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type views:RxUiViewer}">
-                <views:RxUiView/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type views:PositionsViewer}">
                 <views:PositionsView/>
             </DataTemplate>

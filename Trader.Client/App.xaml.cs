@@ -43,7 +43,6 @@ namespace Trader.Client
             //configure dependency resolver for RxUI / Splat
             var resolver = new ReactiveUIDependencyResolver(container);
             resolver.Register(() => new LogEntryView(), typeof(IViewFor<LogEntryViewer>));
-            resolver.Register(() => new RxUiView(), typeof(IViewFor<RxUiViewer>));
             Locator.Current = resolver;
             RxApp.SupportsRangeNotifications = false;
             //run start up jobs
