@@ -5,6 +5,7 @@ using DynamicData.Binding;
 using DynamicData.PLinq;
 using DynamicData.ReactiveUI;
 using ReactiveUI;
+using ReactiveUI.Legacy;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
 

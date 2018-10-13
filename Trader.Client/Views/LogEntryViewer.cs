@@ -6,6 +6,7 @@ using DynamicData;
 using DynamicData.Binding;
 using DynamicData.ReactiveUI;
 using ReactiveUI;
+using ReactiveUI.Legacy;
 using Trader.Client.Infrastucture;
 using Trader.Domain.Infrastucture;
 
