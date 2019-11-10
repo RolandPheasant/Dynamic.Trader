@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:reactiveUi1="http://reactiveui.net"
+             xmlns:views1="clr-namespace:Trader.Client.Views"
              mc:Ignorable="d" 
              x:Name="ContentHolder"
               d:DataContext="{d:DesignInstance views:RxUiHostViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <reactiveUi1:ViewModelViewHost ViewModel="{Binding Content}"
+    <views1:RxUiHostView Content="{Binding Content}"
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Stretch"/>
 

@@ -31,7 +31,11 @@ namespace Trader.Client.Infrastucture
             _objectProvider = objectProvider;
             InterTabClient = new InterTabClient(windowFactory);
             _showMenuCommand =  new Command(ShowMenu,()=> Selected!=null && !(Selected.Content is MenuItems));
-            ShowInGitHubCommand = new Command(()=>   Process.Start("https://github.com/RolandPheasant"));
+            ShowInGitHubCommand = new Command(()=>   Process.Start( new ProcessStartInfo
+            {
+                FileName = "cmd",
+                Arguments = "/c start https://github.com/RolandPheasant"
+            }));
 
             var menuController = Views.ToObservableChangeSet()
                                         .Filter(vc => vc.Content is MenuItems)

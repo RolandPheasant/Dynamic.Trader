@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using log4net;
 using Trader.Domain.Infrastucture;
 
@@ -17,15 +18,15 @@ namespace Trader.Client.Infrastucture
 
             if (!genericArgs.Any())
             {
-                _log = LogManager.GetLogger(name);
+                _log = LogManager.GetLogger(type);
             }
             else
             {
-
-                var startOfGeneric = name.IndexOf("`");
-                name = name.Substring(0,startOfGeneric);
-                var generics = genericArgs.Select(t=>t.Name).ToDelimited();
-                _log = LogManager.GetLogger($"{name}<{generics}>");
+                _log = LogManager.GetLogger(type);
+                //var startOfGeneric = name.IndexOf("`");
+                //name = name.Substring(0,startOfGeneric);
+                //var generics = genericArgs.Select(t=>t.Name).ToDelimited();
+                //_log = LogManager.GetLogger("",$"{name}<{generics}>");
             }
         }
 

@@ -19,12 +19,12 @@ namespace Trader.Client.Views
         private readonly IVisibleRowsAccessor<TradeProxy> _visibleRowsAccessor = new VisibleRowsAccessor<TradeProxy>();
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
 
-        public VisibleRowsViewer(ITradeService tradeService, ILogger logger)
+        public VisibleRowsViewer(ITradeService tradeService, ILogger logger, ISchedulerProvider schedulerProvider)
         {
             var loader = tradeService.All.Connect()
                 .Transform(trade => new TradeProxy(trade), new ParallelisationOptions(ParallelType.Ordered, 5))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp), SortOptimisations.ComparesImmutableValuesOnly)
-                .ObserveOnDispatcher()
+                .ObserveOn(schedulerProvider.MainThread)
                 .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();

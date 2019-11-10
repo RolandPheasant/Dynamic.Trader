@@ -35,9 +35,24 @@ namespace Trader.Client.Infrastucture
             return _container.GetAllInstances(serviceType).Cast<object>();
         }
 
+        public bool HasRegistration(Type serviceType, string contract = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Register(Func<object> factory, Type serviceType, string contract = null)
         {
             _container.Configure(x => x.For(serviceType).Use((ctx)=>factory()));
+        }
+
+        public void UnregisterCurrent(Type serviceType, string contract = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnregisterAll(Type serviceType, string contract = null)
+        {
+            throw new NotImplementedException();
         }
 
         public IDisposable ServiceRegistrationCallback(Type serviceType, string contract, Action<IDisposable> callback)

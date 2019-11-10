@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
+using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
 
@@ -16,7 +17,7 @@ namespace Trader.Client.Views
         private readonly ReadOnlyObservableCollection<TradeProxy> _data;
         private bool _paused;
 
-        public LiveTradesViewer(ITradeService tradeService,SearchHints searchHints)
+        public LiveTradesViewer(ITradeService tradeService,SearchHints searchHints,ISchedulerProvider schedulerProvider)
         {
             SearchHints = searchHints;
 
@@ -28,7 +29,7 @@ namespace Trader.Client.Views
                 .Filter(filter) // apply user filter
                 .Transform(trade => new TradeProxy(trade))
                 .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
-                .ObserveOnDispatcher()
+                .ObserveOn(schedulerProvider.MainThread)
                 .Bind(out _data)   // update observable collection bindings
                 .DisposeMany() //since TradeProxy is disposable dispose when no longer required
                 .Subscribe();

@@ -1,5 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
+using log4net;
+using log4net.Repository;
+using log4net.Repository.Hierarchy;
 using StructureMap;
 using Trader.Domain.Services;
 using ILogger = Trader.Domain.Infrastucture.ILogger;
@@ -15,7 +19,8 @@ namespace Trader.Client.Infrastucture
             if (!File.Exists(path))
                 throw new FileNotFoundException("The log4net.config file was not found" + path);
 
-            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(path));
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(logRepository, new FileInfo(path));
             For<ILogger>().Use<Log4NetLogger>().Ctor<Type>("type").Is(x => x.RootType).AlwaysUnique();
 
             //
