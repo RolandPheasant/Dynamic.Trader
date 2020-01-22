@@ -72,7 +72,7 @@ namespace Trader.Client.Infrastucture
             {
                 ((ListView)_selector).SelectedItems.Add(item);
             }
-            else if (item is MultiSelector)
+            else if (_selector is MultiSelector)
             {
                 ((MultiSelector)_selector).SelectedItems.Add(item);
             }
