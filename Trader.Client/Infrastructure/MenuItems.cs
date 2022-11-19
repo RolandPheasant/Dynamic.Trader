@@ -10,7 +10,7 @@ using ReactiveUI;
 using Trader.Client.Views;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public enum MenuCategory
     {

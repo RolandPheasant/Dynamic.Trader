@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     /// <summary>
     /// A command wich accepts no parameter - assumes the view model will do the work

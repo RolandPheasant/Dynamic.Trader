@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class LogEntryProxy : ReactiveObject, IDisposable, IEquatable<LogEntryProxy>
     {

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Documents;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     /// <summary>
     /// Thanks to http://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf
@@ -34,7 +34,11 @@ namespace Trader.Client.Infrastucture
 
         private static void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd",
+                Arguments = $"/c start {e.Uri.AbsoluteUri}"
+            });
             e.Handled = true;
         }
     }

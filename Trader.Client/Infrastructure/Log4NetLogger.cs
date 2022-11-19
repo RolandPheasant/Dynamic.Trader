@@ -5,7 +5,7 @@ using System.Reflection;
 using log4net;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class Log4NetLogger : ILogger
     {

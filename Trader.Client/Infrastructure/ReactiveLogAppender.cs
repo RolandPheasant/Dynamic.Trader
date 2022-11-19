@@ -6,7 +6,7 @@ using log4net.Appender;
 using log4net.Core;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class ReactiveLogAppender : AppenderSkeleton
     {

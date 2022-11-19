@@ -88,8 +88,8 @@
                 <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="{x:Type ListViewItem}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource SecondaryAccentForegroundBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidForegroundBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

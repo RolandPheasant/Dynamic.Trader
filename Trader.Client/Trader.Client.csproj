@@ -1,19 +1,15 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <ApplicationIcon>dd-logo.ico</ApplicationIcon>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>dd-logo.ico</ApplicationIcon>
+    <ImplicitUsings>true</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Views\LogEntryView.xaml.cs" />
-    <Compile Remove="Views\LogEntryViewer.cs" />
-  </ItemGroup>
+
   <ItemGroup>
     <None Remove="dd-logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Remove="Views\LogEntryView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dd-logo.ico" />
@@ -30,21 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DynamicData" Version="6.13.18" />
     <PackageReference Include="ReactiveUI" Version="10.5.7" />
-    <PackageReference Include="Dragablz" Version="0.0.3.197" />
-    <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0589" />
-    <PackageReference Include="MaterialDesignThemes" Version="2.3.1.953" />
+    <PackageReference Include="Dragablz" Version="0.0.3.234" />
+    <!--<PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0589" />-->
+    <PackageReference Include="MaterialDesignThemes" Version="4.7.0-ci364" />
+    <PackageReference Include="MaterialDesignExtensions" Version="3.3.0" />
     <PackageReference Include="StructureMap" Version="4.7.1" />
   </ItemGroup>
 </Project>

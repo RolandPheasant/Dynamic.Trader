@@ -7,7 +7,7 @@ using StructureMap.Graph;
 using StructureMap.Graph.Scanning;
 using StructureMap.TypeRules;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class AppConventions : IRegistrationConvention
     {

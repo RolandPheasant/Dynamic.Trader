@@ -4,7 +4,7 @@ using System.Windows.Threading;
 using ReactiveUI;
 using Splat;
 using StructureMap;
-using Trader.Client.Infrastucture;
+using Trader.Client.Infrastructure;
 using Trader.Client.Views;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Services;

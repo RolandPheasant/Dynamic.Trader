@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DynamicData;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public interface IVisibleRowsAccessor<T>: IDisposable
     {

@@ -1,6 +1,6 @@
 using System.Windows.Controls.Primitives;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public interface IAttachedSelector
     {

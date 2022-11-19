@@ -8,7 +8,7 @@ using StructureMap;
 using Trader.Domain.Services;
 using ILogger = Trader.Domain.Infrastucture.ILogger;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     internal class AppRegistry : Registry
     {

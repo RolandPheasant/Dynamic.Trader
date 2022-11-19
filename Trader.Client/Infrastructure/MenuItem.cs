@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using DynamicData.Binding;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class MenuItem: AbstractNotifyPropertyChanged
     {
