@@ -1,7 +1,7 @@
 ﻿using System;
 using DynamicData.Binding;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class ViewContainer: AbstractNotifyPropertyChanged
     {

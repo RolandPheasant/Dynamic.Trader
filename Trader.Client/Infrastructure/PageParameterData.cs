@@ -2,7 +2,7 @@
 using DynamicData.Binding;
 using DynamicData.Operators;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class PageParameterData : AbstractNotifyPropertyChanged
     {

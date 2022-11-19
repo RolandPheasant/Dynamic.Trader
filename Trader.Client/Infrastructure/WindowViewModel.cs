@@ -9,7 +9,7 @@ using DynamicData;
 using DynamicData.Binding;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class WindowViewModel: AbstractNotifyPropertyChanged, IDisposable
     {
@@ -34,7 +34,7 @@ namespace Trader.Client.Infrastucture
             ShowInGitHubCommand = new Command(()=>   Process.Start( new ProcessStartInfo
             {
                 FileName = "cmd",
-                Arguments = "/c start https://github.com/RolandPheasant"
+                Arguments = "/c start https://github.com/RolandPheasant/Dynamic.Trader"
             }));
 
             var menuController = Views.ToObservableChangeSet()

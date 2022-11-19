@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

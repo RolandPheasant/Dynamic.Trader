@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Trader.Client.Views"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:infrastucture="clr-namespace:Trader.Client.Infrastucture"
+             xmlns:infrastucture="clr-namespace:Trader.Client.Infrastructure"
              mc:Ignorable="d" 
                           d:DataContext="{d:DesignInstance views:VisibleRowsViewer, IsDesignTimeCreatable=False}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -51,8 +51,8 @@
                     
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                            <Setter Property="Background" Value="{DynamicResource SecondaryAccentBrush}"/>
-                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryAccentForegroundBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryHueMidForegroundBrush}"/>
                         </DataTrigger>
                         
                         

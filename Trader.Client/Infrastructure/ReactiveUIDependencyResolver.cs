@@ -5,7 +5,7 @@ using System.Reactive.Disposables;
 using Splat;
 using StructureMap;
 
-namespace Trader.Client.Infrastucture
+namespace Trader.Client.Infrastructure
 {
     /// <summary>
     /// Adapted from http://www.temporalcohesion.co.uk/2013/07/04/custom-structuremap-dependency-resolver-for-reactiveui-5/

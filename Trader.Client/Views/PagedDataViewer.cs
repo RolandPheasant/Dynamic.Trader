@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using DynamicData.PLinq;
-using Trader.Client.Infrastucture;
+using Trader.Client.Infrastructure;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
