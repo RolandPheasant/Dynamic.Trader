@@ -7,135 +7,134 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using DynamicData;
 
-namespace Trader.Client.Infrastructure
-{
-    public class SelectionController<T> : IDisposable, IAttachedSelector
-    {
-        private readonly ISourceList<T> _sourceList = new SourceList<T>();
-        private readonly IDisposable _cleanUp;
-        private readonly SerialDisposable _serialDisposable = new SerialDisposable();
+namespace Trader.Client.Infrastructure;
 
-        private bool _isSelecting;
-        private Selector _selector;
+public class SelectionController<T> : IDisposable, IAttachedSelector
+{
+    private readonly ISourceList<T> _sourceList = new SourceList<T>();
+    private readonly IDisposable _cleanUp;
+    private readonly SerialDisposable _serialDisposable = new SerialDisposable();
+
+    private bool _isSelecting;
+    private Selector _selector;
     
 
-        public SelectionController()
+    public SelectionController()
+    {
+        _cleanUp = new CompositeDisposable(_sourceList, _serialDisposable);
+    }
+
+    void IAttachedSelector.Receive(Selector selector)
+    {
+        _selector = selector;
+
+        _serialDisposable.Disposable = Observable
+            .FromEventPattern<SelectionChangedEventHandler, SelectionChangedEventArgs>(
+                h => selector.SelectionChanged += h,
+                h => selector.SelectionChanged -= h)
+            .Select(evt => evt.EventArgs)
+            .Subscribe(HandleSelectionChanged);
+    }
+
+    public IObservableList<T> SelectedItems => _sourceList;
+
+    private void HandleSelectionChanged(SelectionChangedEventArgs args)
+    {
+        if (_isSelecting) return;
+        try
         {
-            _cleanUp = new CompositeDisposable(_sourceList, _serialDisposable);
+            _isSelecting = true;
+
+            _sourceList.Edit(list =>
+            {
+                list.AddRange(args.AddedItems.OfType<T>().ToList());
+                list.RemoveMany(args.RemovedItems.OfType<T>().ToList());
+            });
         }
-
-        void IAttachedSelector.Receive(Selector selector)
+        finally
         {
-            _selector = selector;
-
-            _serialDisposable.Disposable = Observable
-                .FromEventPattern<SelectionChangedEventHandler, SelectionChangedEventArgs>(
-                    h => selector.SelectionChanged += h,
-                    h => selector.SelectionChanged -= h)
-                .Select(evt => evt.EventArgs)
-                .Subscribe(HandleSelectionChanged);
+            _isSelecting = false;
         }
+    }
 
-        public IObservableList<T> SelectedItems => _sourceList;
+    public void Select(T item)
+    {
+        if (_selector == null) return;
 
-        private void HandleSelectionChanged(SelectionChangedEventArgs args)
+        if (!_selector.Dispatcher.CheckAccess())
         {
-            if (_isSelecting) return;
-            try
-            {
-                _isSelecting = true;
-
-                _sourceList.Edit(list =>
-                {
-                        list.AddRange(args.AddedItems.OfType<T>().ToList());
-                        list.RemoveMany(args.RemovedItems.OfType<T>().ToList());
-                });
-            }
-            finally
-            {
-                _isSelecting = false;
-            }
-        }
-
-        public void Select(T item)
-        {
-            if (_selector == null) return;
-
-            if (!_selector.Dispatcher.CheckAccess())
-            {
-                _selector.Dispatcher.BeginInvoke(new Action(() => Select(item)));
-                return;
-            }
-
-
-            if (_selector is ListView)
-            {
-                ((ListView)_selector).SelectedItems.Add(item);
-            }
-            else if (_selector is MultiSelector)
-            {
-                ((MultiSelector)_selector).SelectedItems.Add(item);
-            }
-            else
-            {
-                _selector.SelectedItem = item;
-            }
-
-        }
-
-        public void DeSelect(T item)
-        {
-            if (_selector == null) return;
-            if (!_selector.Dispatcher.CheckAccess())
-            {
-                _selector.Dispatcher.BeginInvoke(new Action(() => DeSelect(item)));
-                return;
-            }
-
-            if (_selector is ListView)
-            {
-                ((ListView)_selector).SelectedItems.Remove(item);
-            }
-            else if (_selector is MultiSelector)
-            {
-                ((MultiSelector)_selector).SelectedItems.Remove(item);
-            }
-            else
-            {
-                _selector.SelectedItem = null;
-            }
-        }
-
-        public void Clear()
-        {
-            if (_selector == null) return;
-            if (!_selector.Dispatcher.CheckAccess())
-            {
-                _selector.Dispatcher.BeginInvoke(new Action(Clear));
-                return;
-            }
-
-            if (_selector is ListView)
-            {
-                ((ListView)_selector).SelectedItems.Clear();
-            }
-            else if (_selector is MultiSelector)
-            {
-                ((MultiSelector)_selector).SelectedItems.Clear();
-            }
-            else
-            {
-                _selector.SelectedItem = null;
-            }
+            _selector.Dispatcher.BeginInvoke(new Action(() => Select(item)));
+            return;
         }
 
 
-
-
-
-        public void Dispose()
+        if (_selector is ListView)
         {
-            _cleanUp.Dispose();
+            ((ListView)_selector).SelectedItems.Add(item);
         }
+        else if (_selector is MultiSelector)
+        {
+            ((MultiSelector)_selector).SelectedItems.Add(item);
+        }
+        else
+        {
+            _selector.SelectedItem = item;
+        }
+
+    }
+
+    public void DeSelect(T item)
+    {
+        if (_selector == null) return;
+        if (!_selector.Dispatcher.CheckAccess())
+        {
+            _selector.Dispatcher.BeginInvoke(new Action(() => DeSelect(item)));
+            return;
+        }
+
+        if (_selector is ListView)
+        {
+            ((ListView)_selector).SelectedItems.Remove(item);
+        }
+        else if (_selector is MultiSelector)
+        {
+            ((MultiSelector)_selector).SelectedItems.Remove(item);
+        }
+        else
+        {
+            _selector.SelectedItem = null;
+        }
+    }
+
+    public void Clear()
+    {
+        if (_selector == null) return;
+        if (!_selector.Dispatcher.CheckAccess())
+        {
+            _selector.Dispatcher.BeginInvoke(new Action(Clear));
+            return;
+        }
+
+        if (_selector is ListView)
+        {
+            ((ListView)_selector).SelectedItems.Clear();
+        }
+        else if (_selector is MultiSelector)
+        {
+            ((MultiSelector)_selector).SelectedItems.Clear();
+        }
+        else
+        {
+            _selector.SelectedItem = null;
+        }
+    }
+
+
+
+
+
+    public void Dispose()
+    {
+        _cleanUp.Dispose();
     }
 }

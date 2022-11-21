@@ -1,9 +1,8 @@
-namespace Trader.Domain.Model
+namespace Trader.Domain.Model;
+
+public enum TimePeriod
 {
-    public enum TimePeriod
-    {
-        LastMinute,
-        LastHour,
-        Older
-    }
+    LastMinute,
+    LastHour,
+    Older
 }

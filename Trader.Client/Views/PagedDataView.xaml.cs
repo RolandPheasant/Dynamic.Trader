@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for PagedDataView.xaml
+/// </summary>
+public partial class PagedDataView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for PagedDataView.xaml
-    /// </summary>
-    public partial class PagedDataView : UserControl
+    public PagedDataView()
     {
-        public PagedDataView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

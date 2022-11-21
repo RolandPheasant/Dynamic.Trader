@@ -1,10 +1,9 @@
 using Trader.Domain.Model;
 
-namespace Trader.Domain.Services
+namespace Trader.Domain.Services;
+
+public interface IStaticData
 {
-    public interface IStaticData
-    {
-        string[] Customers { get; }
-        CurrencyPair[] CurrencyPairs { get; }
-    }
+    string[] Customers { get; }
+    CurrencyPair[] CurrencyPairs { get; }
 }

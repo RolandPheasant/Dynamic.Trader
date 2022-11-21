@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for TradesGrid.xaml
+/// </summary>
+public partial class TradesGrid : UserControl
 {
-    /// <summary>
-    /// Interaction logic for TradesGrid.xaml
-    /// </summary>
-    public partial class TradesGrid : UserControl
+    public TradesGrid()
     {
-        public TradesGrid()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

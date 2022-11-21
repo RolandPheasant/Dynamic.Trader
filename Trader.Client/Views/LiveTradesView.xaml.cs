@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for LiveTradesView.xaml
+/// </summary>
+public partial class LiveTradesView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for LiveTradesView.xaml
-    /// </summary>
-    public partial class LiveTradesView : UserControl
+    public LiveTradesView()
     {
-        public LiveTradesView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

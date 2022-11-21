@@ -1,9 +1,8 @@
 using System.Windows.Controls.Primitives;
 
-namespace Trader.Client.Infrastructure
+namespace Trader.Client.Infrastructure;
+
+public interface IAttachedSelector
 {
-    public interface IAttachedSelector
-    {
-        void Receive(Selector selector);
-    }
+    void Receive(Selector selector);
 }

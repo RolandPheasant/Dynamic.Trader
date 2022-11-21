@@ -5,43 +5,42 @@ using TradeExample.Annotations;
 using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 
-namespace Trader.Domain.Services
+namespace Trader.Domain.Services;
+
+public class NearToMarketService : INearToMarketService
 {
-    public class NearToMarketService : INearToMarketService
+    private readonly ITradeService _tradeService;
+    private readonly ILogger _logger;
+
+    public NearToMarketService([NotNull] ITradeService tradeService , ILogger logger)
     {
-        private readonly ITradeService _tradeService;
-        private readonly ILogger _logger;
+        _tradeService = tradeService ?? throw new ArgumentNullException(nameof(tradeService));
+        _logger = logger;
+    }
 
-        public NearToMarketService([NotNull] ITradeService tradeService , ILogger logger)
+    public IObservable<IChangeSet<Trade, long>> Query(Func<decimal> percentFromMarket)
+    {
+        if (percentFromMarket == null) throw new ArgumentNullException(nameof(percentFromMarket));
+
+        return Observable.Create<IChangeSet<Trade, long>>
+        (observer =>
         {
-            _tradeService = tradeService ?? throw new ArgumentNullException(nameof(tradeService));
-            _logger = logger;
-        }
+            var locker = new object();
 
-        public IObservable<IChangeSet<Trade, long>> Query(Func<decimal> percentFromMarket)
-        {
-            if (percentFromMarket == null) throw new ArgumentNullException(nameof(percentFromMarket));
+            bool Predicate(Trade t) => Math.Abs(t.PercentFromMarket) <= percentFromMarket();
 
-            return Observable.Create<IChangeSet<Trade, long>>
-                (observer =>
-                 {
-                     var locker = new object();
+            //re-evaluate filter periodically
+            var reevaluator = Observable.Interval(TimeSpan.FromMilliseconds(250))
+                .Synchronize(locker)
+                .Select(_ => (Func<Trade, bool>) Predicate)
+                .StartWith((Func<Trade, bool>) Predicate); ;
 
-                     bool Predicate(Trade t) => Math.Abs(t.PercentFromMarket) <= percentFromMarket();
-
-                     //re-evaluate filter periodically
-                     var reevaluator = Observable.Interval(TimeSpan.FromMilliseconds(250))
-                         .Synchronize(locker)
-                         .Select(_ => (Func<Trade, bool>) Predicate)
-                         .StartWith((Func<Trade, bool>) Predicate); ;
-
-                     //filter on live trades matching % specified
-                     return _tradeService.All.Connect(trade => trade.Status == TradeStatus.Live)
-                         .Synchronize(locker)
-                         .Filter(reevaluator)
-                         .Do(_ => { }, ex => _logger.Error(ex, ex.Message))
-                         .SubscribeSafe(observer);
-                 });
-        }
+            //filter on live trades matching % specified
+            return _tradeService.All.Connect(trade => trade.Status == TradeStatus.Live)
+                .Synchronize(locker)
+                .Filter(reevaluator)
+                .Do(_ => { }, ex => _logger.Error(ex, ex.Message))
+                .SubscribeSafe(observer);
+        });
     }
 }

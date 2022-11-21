@@ -3,10 +3,9 @@ using DynamicData;
 using TradeExample.Annotations;
 using Trader.Domain.Model;
 
-namespace Trader.Domain.Services
+namespace Trader.Domain.Services;
+
+public interface INearToMarketService
 {
-    public interface INearToMarketService
-    {
-        IObservable<IChangeSet<Trade, long>> Query([NotNull] Func<decimal> percentFromMarket);
-    }
+    IObservable<IChangeSet<Trade, long>> Query([NotNull] Func<decimal> percentFromMarket);
 }

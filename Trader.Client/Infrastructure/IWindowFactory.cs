@@ -1,7 +1,6 @@
-namespace Trader.Client.Infrastructure
+namespace Trader.Client.Infrastructure;
+
+public interface IWindowFactory
 {
-    public interface IWindowFactory
-    {
-        MainWindow Create(bool showMenu=false);
-    }
+    MainWindow Create(bool showMenu=false);
 }

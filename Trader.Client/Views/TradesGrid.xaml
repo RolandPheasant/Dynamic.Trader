@@ -15,68 +15,69 @@
             </ResourceDictionary>
     </UserControl.Resources>
     
+
+    <DataGrid
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        EnableColumnVirtualization="True"
+          EnableRowVirtualization="True"
+          ItemsSource="{Binding}">
+    <DataGrid.RowStyle>
+        <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MaterialDesignDataGridRow }">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
+                    <Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}"/>
+                    <Setter Property="Foreground"  Value="{DynamicResource SecondaryHueMidForegroundBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </DataGrid.RowStyle>
     
-    <Grid>
-            <DataGrid
-                AutoGenerateColumns="False"
-                IsReadOnly="True"    
-                EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True"
-                              ItemsSource="{Binding}">
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MaterialDesignDataGridRow }">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Recent}" Value="{x:Static system:Boolean.TrueString}">
-                            <Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}"/>
-                            <Setter Property="Foreground"  Value="{DynamicResource SecondaryHueMidForegroundBrush}"/>
-                        </DataTrigger>
-                    </Style.Triggers>
+
+    <DataGrid.Columns>
+        <DataGridTextColumn
+                                    Header="Customer"  
+                                    Binding="{Binding Customer,Mode=OneWay}"/>
+
+        <DataGridTextColumn 
+                                    Header="Currency Pair" 
+                                    Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+
+        <DataGridTextColumn         Header="Amount" 
+
+                                    Binding="{Binding Amount,Mode=OneWay, StringFormat='N'}">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+        </DataGridTextColumn>
+
+        <DataGridTextColumn 
+                                    Header="Trade Price" 
+                                    TextBlock.TextAlignment="Right"
+                                    Binding="{Binding  TradePrice,Mode=OneWay}"/>
+        <DataGridTextColumn 
+                                    Header="Market Price" 
+                                    TextBlock.TextAlignment="Right"
+                                    Binding="{Binding  MarketPrice,Mode=OneWay}"/>
+        <DataGridTextColumn Header="%" 
+                                    Binding="{Binding   PercentFromMarket,Mode=OneWay}">
+            <DataGridTextColumn.ElementStyle>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Right" />
                 </Style>
-            </DataGrid.RowStyle>
-            
+            </DataGridTextColumn.ElementStyle>
+        </DataGridTextColumn>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn
-                                            Header="Customer"  
-                                            Binding="{Binding Customer,Mode=OneWay}"/>
-                
+        <DataGridTextColumn 
+                                    Header="Status" 
+                                    Binding="{Binding  Status,Mode=OneWay}"/>
 
-                <DataGridTextColumn 
-                                            Header="Currency Pair" 
-                                            Binding="{Binding CurrencyPair,Mode=OneWay}"/>
+        <DataGridTextColumn 
+                                    Header="Created At" 
+                                    Binding="{Binding  Timestamp,Mode=OneWay}"/>
+    </DataGrid.Columns>
 
-                <DataGridTextColumn         Header="Amount" 
-
-                                            Binding="{Binding Amount,Mode=OneWay, StringFormat='N'}">
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <DataGridTextColumn 
-                                            Header="Trade Price" 
-                                            TextBlock.TextAlignment="Right"
-                                            Binding="{Binding  TradePrice,Mode=OneWay}"/>
-                <DataGridTextColumn 
-                                            Header="Market Price" 
-                                            TextBlock.TextAlignment="Right"
-                                            Binding="{Binding  MarketPrice,Mode=OneWay}"/>
-                <DataGridTextColumn 
-                                            Header="%" 
-                                            TextBlock.TextAlignment="Right"
-                                            Binding="{Binding   PercentFromMarket,Mode=OneWay}"/>
-
-                <DataGridTextColumn 
-                                            Header="Status" 
-                                            Binding="{Binding  Status,Mode=OneWay}"/>
-
-                <DataGridTextColumn 
-                                            Header="Created At" 
-                                            Binding="{Binding  Timestamp,Mode=OneWay}"/>
-            </DataGrid.Columns>
-
-        </DataGrid>
-    </Grid>
+</DataGrid>
 </UserControl>

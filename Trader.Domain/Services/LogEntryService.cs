@@ -6,60 +6,59 @@ using System.Reactive.Linq;
 using DynamicData;
 using Trader.Domain.Infrastucture;
 
-namespace Trader.Domain.Services
+namespace Trader.Domain.Services;
+
+public class LogEntryService : IDisposable, ILogEntryService
 {
-    public class LogEntryService : IDisposable, ILogEntryService
-    {
-        private readonly ILogger _logger;
-        private readonly ISourceList<LogEntry> _source = new SourceList<LogEntry>();
-        private readonly IDisposable _disposer;
-        private readonly object _locker = new object();
+    private readonly ILogger _logger;
+    private readonly ISourceList<LogEntry> _source = new SourceList<LogEntry>();
+    private readonly IDisposable _disposer;
+    private readonly object _locker = new object();
         
-        public LogEntryService(ILogger logger)
-        {
-            _logger = logger;
-            Items = _source.AsObservableList();
+    public LogEntryService(ILogger logger)
+    {
+        _logger = logger;
+        Items = _source.AsObservableList();
 
-            var loader = ReactiveLogAppender.LogEntryObservable
-                            .Buffer(TimeSpan.FromMilliseconds(250))
-                            .Synchronize(_locker)
-                            .Subscribe(_source.AddRange);
+        var loader = ReactiveLogAppender.LogEntryObservable
+            .Buffer(TimeSpan.FromMilliseconds(250))
+            .Synchronize(_locker)
+            .Subscribe(_source.AddRange);
             
-            //limit size of cache to prevent too many items being created
-            var sizeLimiter = _source.LimitSizeTo(10000).Subscribe();
+        //limit size of cache to prevent too many items being created
+        var sizeLimiter = _source.LimitSizeTo(10000).Subscribe();
 
-            // alternatively could expire by time
-            //var timeExpirer = _source.ExpireAfter(le => TimeSpan.FromSeconds(le.Level == LogLevel.Debug ? 5 : 60), TimeSpan.FromSeconds(5), TaskPoolScheduler.Default)
-            //                            .Subscribe(removed => logger.Debug("{0} log items have been automatically removed", removed.Count()));
+        // alternatively could expire by time
+        //var timeExpirer = _source.ExpireAfter(le => TimeSpan.FromSeconds(le.Level == LogLevel.Debug ? 5 : 60), TimeSpan.FromSeconds(5), TaskPoolScheduler.Default)
+        //                            .Subscribe(removed => logger.Debug("{0} log items have been automatically removed", removed.Count()));
 
-            _disposer = new CompositeDisposable(sizeLimiter, _source, loader);
-            logger.Info("Log cache has been constructed");
-        }
+        _disposer = new CompositeDisposable(sizeLimiter, _source, loader);
+        logger.Info("Log cache has been constructed");
+    }
 
 
-        public IObservableList<LogEntry> Items { get; }
+    public IObservableList<LogEntry> Items { get; }
 
-        public void Remove(IEnumerable<LogEntry> items)
+    public void Remove(IEnumerable<LogEntry> items)
+    {
+        try
         {
-            try
+            lock (_locker)
             {
-                lock (_locker)
-                {
-                    var itemsToRemove = items as LogEntry[] ?? items.ToArray();
-                    _logger.Info("Removing {0} log entry items", itemsToRemove.Length);
-                    _source.RemoveMany(itemsToRemove);
-                    _logger.Info("Removed {0} log entry items", itemsToRemove.Length);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Problem removing log entries: {0}", ex.Message);
+                var itemsToRemove = items as LogEntry[] ?? items.ToArray();
+                _logger.Info("Removing {0} log entry items", itemsToRemove.Length);
+                _source.RemoveMany(itemsToRemove);
+                _logger.Info("Removed {0} log entry items", itemsToRemove.Length);
             }
         }
-
-        public void Dispose()
+        catch (Exception ex)
         {
-            _disposer.Dispose();
+            _logger.Error(ex, "Problem removing log entries: {0}", ex.Message);
         }
+    }
+
+    public void Dispose()
+    {
+        _disposer.Dispose();
     }
 }

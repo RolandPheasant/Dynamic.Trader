@@ -10,8 +10,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <wpf:BundledTheme BaseTheme="Light" 
-                                             PrimaryColor="Blue" 
-                                             SecondaryColor="Amber" />
+                                             PrimaryColor="LightBlue" 
+                                             SecondaryColor="LightGreen" />
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />

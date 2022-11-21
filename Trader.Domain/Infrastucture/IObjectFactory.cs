@@ -1,7 +1,6 @@
-﻿namespace Trader.Domain.Infrastucture
+﻿namespace Trader.Domain.Infrastucture;
+
+public interface IObjectProvider
 {
-    public interface IObjectProvider
-    {
-        T Get<T>();
-    }
+    T Get<T>();
 }

@@ -1,10 +1,9 @@
 ﻿using System.Reactive.Concurrency;
 
-namespace Trader.Domain.Infrastucture
+namespace Trader.Domain.Infrastucture;
+
+public interface ISchedulerProvider
 {
-    public interface ISchedulerProvider
-    {
-        IScheduler MainThread { get; }
-        IScheduler Background { get; }
-    }
+    IScheduler MainThread { get; }
+    IScheduler Background { get; }
 }

@@ -1,8 +1,7 @@
-﻿namespace Trader.Domain.Model
+﻿namespace Trader.Domain.Model;
+
+public enum BuyOrSell
 {
-    public enum BuyOrSell
-    {
-        Buy,
-        Sell
-    }
+    Buy,
+    Sell
 }

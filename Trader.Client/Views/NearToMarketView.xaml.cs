@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for NearToMarketView.xaml
+/// </summary>
+public partial class NearToMarketView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for NearToMarketView.xaml
-    /// </summary>
-    public partial class NearToMarketView : UserControl
+    public NearToMarketView()
     {
-        public NearToMarketView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

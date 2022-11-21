@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Reactive;
+﻿using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData;
@@ -9,56 +7,55 @@ using Trader.Domain.Infrastucture;
 using Trader.Domain.Model;
 using Trader.Domain.Services;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+public class LiveTradesViewer :AbstractNotifyPropertyChanged, IDisposable
 {
-    public class LiveTradesViewer :AbstractNotifyPropertyChanged, IDisposable
+    private readonly IDisposable _cleanUp;
+    private readonly ReadOnlyObservableCollection<TradeProxy> _data;
+    private bool _paused;
+
+    public LiveTradesViewer(ITradeService tradeService,SearchHints searchHints,ISchedulerProvider schedulerProvider)
     {
-        private readonly IDisposable _cleanUp;
-        private readonly ReadOnlyObservableCollection<TradeProxy> _data;
-        private bool _paused;
+        SearchHints = searchHints;
 
-        public LiveTradesViewer(ITradeService tradeService,SearchHints searchHints,ISchedulerProvider schedulerProvider)
-        {
-            SearchHints = searchHints;
+        var filter = SearchHints.WhenValueChanged(t => t.SearchText)
+            .Select(BuildFilter);
 
-            var filter = SearchHints.WhenValueChanged(t => t.SearchText)
-                        .Select(BuildFilter);
+        var loader = tradeService.Live.Connect()
+            .BatchIf(this.WhenValueChanged(x=>x.Paused),null,null) //I need to fix the API, so nulls do not have to be passed in
+            .Filter(filter) // apply user filter
+            .Transform(trade => new TradeProxy(trade))
+            .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
+            .ObserveOn(schedulerProvider.MainThread)
+            .Bind(out _data)   // update observable collection bindings
+            .DisposeMany() //since TradeProxy is disposable dispose when no longer required
+            .Subscribe();
 
-            var loader = tradeService.Live.Connect()
-                .BatchIf(this.WhenValueChanged(x=>x.Paused),null,null) //I need to fix the API, so nulls do not have to be passed in
-                .Filter(filter) // apply user filter
-                .Transform(trade => new TradeProxy(trade))
-                .Sort(SortExpressionComparer<TradeProxy>.Descending(t => t.Timestamp),SortOptimisations.ComparesImmutableValuesOnly, 25)
-                .ObserveOn(schedulerProvider.MainThread)
-                .Bind(out _data)   // update observable collection bindings
-                .DisposeMany() //since TradeProxy is disposable dispose when no longer required
-                .Subscribe();
+        _cleanUp = new CompositeDisposable(loader, searchHints);
+    }
 
-            _cleanUp = new CompositeDisposable(loader, searchHints);
-        }
+    private static Func<Trade, bool> BuildFilter(string searchText)
+    {
+        if (string.IsNullOrEmpty(searchText)) return trade => true;
 
-        private Func<Trade, bool> BuildFilter(string searchText)
-        {
-            if (string.IsNullOrEmpty(searchText)) return trade => true;
+        return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) 
+                    || t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+    }
 
-            return t => t.CurrencyPair.Contains(searchText, StringComparison.OrdinalIgnoreCase) 
-                            || t.Customer.Contains(searchText, StringComparison.OrdinalIgnoreCase);
-        }
+    public ReadOnlyObservableCollection<TradeProxy> Data => _data;
 
-        public ReadOnlyObservableCollection<TradeProxy> Data => _data;
-
-        public SearchHints SearchHints { get; }
+    public SearchHints SearchHints { get; }
 
 
-        public bool Paused
-        {
-            get => _paused;
-            set => SetAndRaise(ref _paused, value);
-        }
+    public bool Paused
+    {
+        get => _paused;
+        set => SetAndRaise(ref _paused, value);
+    }
 
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
+    public void Dispose()
+    {
+        _cleanUp.Dispose();
     }
 }

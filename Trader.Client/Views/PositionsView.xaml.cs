@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for PositionsView.xaml
+/// </summary>
+public partial class PositionsView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for PositionsView.xaml
-    /// </summary>
-    public partial class PositionsView : UserControl
+    public PositionsView()
     {
-        public PositionsView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

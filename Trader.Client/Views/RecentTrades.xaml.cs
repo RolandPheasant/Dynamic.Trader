@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for RecentTrades.xaml
+/// </summary>
+public partial class RecentTrades : UserControl
 {
-    /// <summary>
-    /// Interaction logic for RecentTrades.xaml
-    /// </summary>
-    public partial class RecentTrades : UserControl
+    public RecentTrades()
     {
-        public RecentTrades()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Trader.Client.Views
+namespace Trader.Client.Views;
+
+/// <summary>
+/// Interaction logic for VisibleRowsView.xaml
+/// </summary>
+public partial class VisibleRowsView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for VisibleRowsView.xaml
-    /// </summary>
-    public partial class VisibleRowsView : UserControl
+    public VisibleRowsView()
     {
-        public VisibleRowsView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

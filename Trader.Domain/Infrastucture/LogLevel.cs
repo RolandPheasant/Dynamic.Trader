@@ -1,11 +1,10 @@
-﻿namespace Trader.Domain.Infrastucture
+﻿namespace Trader.Domain.Infrastucture;
+
+public enum LogLevel
 {
-    public enum LogLevel
-    {
-        Debug,
-        Info,
-        Warning,
-        Error,
-        Fatal
-    }
+    Debug,
+    Info,
+    Warning,
+    Error,
+    Fatal
 }

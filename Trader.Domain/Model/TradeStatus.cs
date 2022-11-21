@@ -1,9 +1,8 @@
-﻿namespace Trader.Domain.Model
+﻿namespace Trader.Domain.Model;
+
+public enum TradeStatus
 {
-    public enum TradeStatus
-    {
-        Live=0,
-        Closed=1,
-        Filled=2
-    }
+    Live=0,
+    Closed=1,
+    Filled=2
 }

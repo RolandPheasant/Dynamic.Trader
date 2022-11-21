@@ -4,91 +4,90 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Trader.Client.Infrastructure
+namespace Trader.Client.Infrastructure;
+
+/// <summary>
+/// Lifted from http://tech.pro/tutorial/736/wpf-tutorial-creating-a-custom-panel-control
+/// </summary>
+public class AnimatedWrapPanel : Panel
 {
-    /// <summary>
-    /// Lifted from http://tech.pro/tutorial/736/wpf-tutorial-creating-a-custom-panel-control
-    /// </summary>
-    public class AnimatedWrapPanel : Panel
+    private readonly TimeSpan _animationLength = TimeSpan.FromMilliseconds(250);
+
+    protected override Size MeasureOverride(Size availableSize)
     {
-        private readonly TimeSpan _animationLength = TimeSpan.FromMilliseconds(250);
-
-        protected override Size MeasureOverride(Size availableSize)
+        var infiniteSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
+        double curX = 0, curY = 0, curLineHeight = 0;
+        foreach (UIElement child in Children)
         {
-            var infiniteSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
-            double curX = 0, curY = 0, curLineHeight = 0;
-            foreach (UIElement child in Children)
-            {
-                child.Measure(infiniteSize);
+            child.Measure(infiniteSize);
 
-                if (curX + child.DesiredSize.Width > availableSize.Width)
-                { //Wrap to next line
-                    curY += curLineHeight;
-                    curX = 0;
-                    curLineHeight = 0;
-                }
-
-                curX += child.DesiredSize.Width;
-                if(child.DesiredSize.Height > curLineHeight)
-                    curLineHeight = child.DesiredSize.Height;
+            if (curX + child.DesiredSize.Width > availableSize.Width)
+            { //Wrap to next line
+                curY += curLineHeight;
+                curX = 0;
+                curLineHeight = 0;
             }
 
-            curY += curLineHeight;
-
-            var resultSize = new Size
-            {
-                Width = double.IsPositiveInfinity(availableSize.Width)
-                    ? curX
-                    : availableSize.Width,
-                Height = double.IsPositiveInfinity(availableSize.Height)
-                    ? curY
-                    : availableSize.Height
-            };
-
-            return resultSize;
+            curX += child.DesiredSize.Width;
+            if(child.DesiredSize.Height > curLineHeight)
+                curLineHeight = child.DesiredSize.Height;
         }
 
-        protected override Size ArrangeOverride(Size finalSize)
+        curY += curLineHeight;
+
+        var resultSize = new Size
         {
-            if (this.Children == null || this.Children.Count == 0)
-                return finalSize;
+            Width = double.IsPositiveInfinity(availableSize.Width)
+                ? curX
+                : availableSize.Width,
+            Height = double.IsPositiveInfinity(availableSize.Height)
+                ? curY
+                : availableSize.Height
+        };
 
-            double curX = 0, curY = 0, curLineHeight = 0;
+        return resultSize;
+    }
 
-            foreach (UIElement child in Children)
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        if (this.Children == null || this.Children.Count == 0)
+            return finalSize;
+
+        double curX = 0, curY = 0, curLineHeight = 0;
+
+        foreach (UIElement child in Children)
+        {
+            var trans = child.RenderTransform as TranslateTransform;
+
+
+            if (trans == null)
             {
-                var trans = child.RenderTransform as TranslateTransform;
-
-
-                if (trans == null)
-                {
-                    child.RenderTransformOrigin = new Point(0, 0);
-                    trans = new TranslateTransform();
-                    child.RenderTransform = trans;
-                }
-
-                if (curX + child.DesiredSize.Width > finalSize.Width)
-                { //Wrap to next line
-                    curY += curLineHeight;
-                    curX = 0;
-                    curLineHeight = 0;
-                }
-
-                child.Arrange(new Rect(0, 0, child.DesiredSize.Width, 
-                    child.DesiredSize.Height));
-
-
-                trans.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(curX, _animationLength), HandoffBehavior.Compose);
-                trans.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(curY, _animationLength), HandoffBehavior.Compose);
-
-
-
-                curX += child.DesiredSize.Width;
-                if (child.DesiredSize.Height > curLineHeight)
-                    curLineHeight = child.DesiredSize.Height;       
+                child.RenderTransformOrigin = new Point(0, 0);
+                trans = new TranslateTransform();
+                child.RenderTransform = trans;
             }
 
-            return finalSize;
-        } 
-    }
+            if (curX + child.DesiredSize.Width > finalSize.Width)
+            { //Wrap to next line
+                curY += curLineHeight;
+                curX = 0;
+                curLineHeight = 0;
+            }
+
+            child.Arrange(new Rect(0, 0, child.DesiredSize.Width, 
+                child.DesiredSize.Height));
+
+
+            trans.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(curX, _animationLength), HandoffBehavior.Compose);
+            trans.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(curY, _animationLength), HandoffBehavior.Compose);
+
+
+
+            curX += child.DesiredSize.Width;
+            if (child.DesiredSize.Height > curLineHeight)
+                curLineHeight = child.DesiredSize.Height;       
+        }
+
+        return finalSize;
+    } 
 }

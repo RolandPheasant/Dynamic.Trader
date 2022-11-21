@@ -1,27 +1,26 @@
 ﻿using System.Windows;
 using Dragablz;
 
-namespace Trader.Client.Infrastructure
+namespace Trader.Client.Infrastructure;
+
+public class InterTabClient : IInterTabClient
 {
-    public class InterTabClient : IInterTabClient
+    private readonly IWindowFactory _factory;
+
+    public InterTabClient(IWindowFactory tradeWindowFactory)
     {
-        private readonly IWindowFactory _factory;
+        _factory = tradeWindowFactory;
+    }
 
-        public InterTabClient(IWindowFactory tradeWindowFactory)
-        {
-            _factory = tradeWindowFactory;
-        }
+    public INewTabHost<Window> GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
+    {
+        var window = _factory.Create();
 
-        public INewTabHost<Window> GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
-        {
-            var window = _factory.Create();
+        return new NewTabHost<Window>(window, window.InitialTabablzControl);
+    }
 
-            return new NewTabHost<Window>(window, window.InitialTabablzControl);
-        }
-
-        public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)
-        {
-            return TabEmptiedResponse.CloseWindowOrLayoutBranch;
-        }
+    public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)
+    {
+        return TabEmptiedResponse.CloseWindowOrLayoutBranch;
     }
 }
